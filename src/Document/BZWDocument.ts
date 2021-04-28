@@ -1,12 +1,16 @@
-import { Box } from './Obstacles/Box';
+import { Base } from './Obstacles/Base';
 import { BaseObject } from './Obstacles/BaseObject';
+import { Box } from './Obstacles/Box';
 import { Pyramid } from './Obstacles/Pyramid';
 import { Teleporter } from './Obstacles/Teleporter';
+import { Zone } from './Obstacles/Zone';
 
 const ObjectMapping: Record<string, { new(): BaseObject }> = {
+  base: Base,
   box: Box,
   pyramid: Pyramid,
   teleporter: Teleporter,
+  zone: Zone,
 };
 
 export class BZWDocument {

@@ -2,6 +2,8 @@ import { BZWDocument } from '../BZWDocument';
 import { Box } from '../Obstacles/Box';
 import { Pyramid } from '../Obstacles/Pyramid';
 import { Teleporter } from '../Obstacles/Teleporter';
+import { Zone } from '../Obstacles/Zone';
+import { Base } from '../Obstacles/Base';
 
 describe('BZW Document Parser', () => {
   it('should handle a box', () => {
@@ -35,6 +37,62 @@ describe('BZW Document Parser', () => {
       position: [3, 4, 5],
       size: [10, 5, 7],
       zflip: true,
+    });
+  });
+
+  it('should handle a base', () => {
+    const bzwBody = `\
+    base
+     position 10 20 30
+     rotation 45
+     size 1 2 3
+     color 1
+     oncap SW
+    end
+    `;
+    const parser = new BZWDocument(bzwBody);
+    const base: Base = parser.objects.pop() as Base;
+
+    expect(base.attributes).toEqual({
+      position: [10, 20, 30],
+      rotation: 45,
+      size: [1, 2, 3],
+      color: 1,
+      oncap: "SW",
+    });
+  });
+
+  it('should handle a zone', () => {
+    const bzwBody = `\
+    zone 
+      name example_zone
+      position 0.0 0.0 0.0
+      size 1.0 1.0 1.0
+      rotation 0.0
+
+      zoneflag GM 2
+      zoneflag OO
+
+      flag L
+      flag SW
+      flag good
+      flag bad
+      team 0 1 2 3 4
+      safety 1 2 3 4
+    end
+    `;
+    const parser = new BZWDocument(bzwBody);
+    const zone: Zone = parser.objects.pop() as Zone;
+
+    expect(zone.attributes).toEqual({
+      name: 'example_zone',
+      position: [0.0, 0.0, 0.0],
+      size: [1.0, 1.0, 1.0],
+      rotation: 0.0,
+      zoneflag: ["GM 2", "OO"],
+      flag: ["L", "SW", "good", "bad"],
+      team: [0, 1, 2, 3, 4],
+      safety: [1, 2, 3, 4],
     });
   });
 

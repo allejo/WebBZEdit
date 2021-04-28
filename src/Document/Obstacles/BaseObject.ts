@@ -1,4 +1,4 @@
-import { parseString } from '../attributeParsers';
+import { bzwString, ParserCallback, Repeatable } from '../attributeParsers';
 
 export abstract class BaseObject {
   public abstract readonly objectType: string;
@@ -6,7 +6,7 @@ export abstract class BaseObject {
   public infoString: string = '';
   public parent: any[] = [];
 
-  protected readonly definitions: Record<string, (line: string) => any> = {};
+  protected readonly definitions: Record<string, Repeatable<any> | ParserCallback<any>> = {};
   protected readonly endTerminator: string = 'end';
 
   public finalize(): void {}
@@ -16,9 +16,19 @@ export abstract class BaseObject {
     const attribute = line.substring(0, spacePos).toLowerCase();
     const restOfLine = line.substr(spacePos + 1);
 
-    const parser = this.definitions?.[attribute] ?? parseString;
+    const parser = this.definitions?.[attribute] ?? bzwString;
 
-    this.attributes[attribute] = parser(restOfLine);
+    if (typeof parser === 'function') {
+      this.attributes[attribute] = parser(restOfLine);
+    } else {
+      if (parser.type === "repeatable") {
+        if (!this.attributes.hasOwnProperty(attribute)) {
+          this.attributes[attribute] = [];
+        }
+
+        this.attributes[attribute].push(parser.callback(restOfLine));
+      }
+    }
   }
 
   public get terminator(): string {
