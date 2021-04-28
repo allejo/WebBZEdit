@@ -1,16 +1,42 @@
-export function parseBool(_: string): boolean {
+export type ParserCallback<T> = (line: string) => T;
+
+export interface Repeatable<T> {
+  type: 'repeatable',
+  callback: ParserCallback<T>;
+}
+
+export function bzwRepeatable<T>(callback: Repeatable<T>['callback']): Repeatable<T> {
+  return {
+    type: 'repeatable',
+    callback: callback,
+  };
+}
+
+export function bzwBool(_: string): boolean {
   return true;
 }
 
-export function parseFloat(line: string): number {
+export function bzwFloat(line: string): number {
   return Number.parseFloat(line);
 }
 
-export function parseString(line: string): string {
+export function bzwInt(line: string): number {
+  return Number.parseInt(line);
+}
+
+export function bzwString(line: string): string {
   return line;
 }
 
-export function parseVector3F(line: string): [number, number, number] {
+export function bzwStringVector(line: string): string[] {
+  return line.split(' ');
+}
+
+export function bzwIntVector(line: string): number[] {
+  return bzwStringVector(line).map(value => Number.parseInt(value));
+}
+
+export function bzwVector3F(line: string): [number, number, number] {
   const tokens = line.split(' ');
 
   return [

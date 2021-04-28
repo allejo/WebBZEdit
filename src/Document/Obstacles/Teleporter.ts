@@ -1,13 +1,13 @@
 import { BaseObject } from './BaseObject';
-import { parseFloat, parseVector3F } from '../attributeParsers';
+import { bzwFloat, bzwVector3F } from '../attributeParsers';
 
 export class Teleporter extends BaseObject {
   objectType = 'teleporter';
   definitions = {
-    position: parseVector3F,
-    rotation: parseFloat,
-    size: parseVector3F,
-    border: parseFloat,
+    position: bzwVector3F,
+    rotation: bzwFloat,
+    size: bzwVector3F,
+    border: bzwFloat,
   };
 
   public finalize(): void {
