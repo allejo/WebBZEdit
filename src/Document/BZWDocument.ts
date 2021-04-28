@@ -28,6 +28,10 @@ export class BZWDocument {
       const line = _line.trim();
       const currObject: BaseObject | null = objectStack[objectStack.length - 1] ?? null;
 
+      if (line === "") {
+        continue;
+      }
+
       if (currObject && line === currObject.terminator) {
         currObject.parent.push(currObject);
         currObject.finalize();
