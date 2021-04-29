@@ -150,7 +150,7 @@ describe('BZW Document Parser', () => {
       endface
 
       face
-        vertices 1 4 0 3 5
+        vertices 5 3 0 4 1
         normals 2 6 0 4 7
         texcoords 0 3 2 4 9
         phydrv example_phydrv
@@ -198,6 +198,30 @@ describe('BZW Document Parser', () => {
       phydrv: "example_phydrv",
       smoothbounce: true,
       noclusters: true,
+    });
+    expect(mesh.faces[0].attributes).toEqual({
+      vertices: [1, 4, 0, 3, 5],
+      normals: [2, 6, 0, 4, 7],
+      texcoords: [0, 3, 2, 4, 9],
+      phydrv: 'example_phydrv',
+      smoothbounce: true,
+      noclusters: true,
+      drivethrough: true,
+      shootthrough: true,
+      passable: true,
+      matref: '',
+    });
+    expect(mesh.faces[1].attributes).toEqual({
+      vertices: [5, 3, 0, 4, 1],
+      normals: [2, 6, 0, 4, 7],
+      texcoords: [0, 3, 2, 4, 9],
+      phydrv: 'example_phydrv',
+      smoothbounce: true,
+      noclusters: true,
+      drivethrough: true,
+      shootthrough: true,
+      passable: true,
+      matref: '',
     });
   });
 
