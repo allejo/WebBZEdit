@@ -2,8 +2,8 @@ import React, { Suspense } from 'react';
 import { Canvas } from 'react-three-fiber';
 import Controls from './Components/Controls';
 
-import Box from './Objects/Box';
-import Pyramid from './Objects/Pyramid';
+import Box from './3DModels/Box';
+import Pyramid from './3DModels/Pyramid';
 
 import './App.css';
 
