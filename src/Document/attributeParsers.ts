@@ -36,6 +36,10 @@ export function bzwIntVector(line: string): number[] {
   return bzwStringVector(line).map(value => Number.parseInt(value));
 }
 
+export function bzwFloatVector(line: string): number[] {
+  return bzwStringVector(line).map(value => Number.parseFloat(value));
+}
+
 export function bzwVector3F(line: string): [number, number, number] {
   const tokens = line.split(' ');
 

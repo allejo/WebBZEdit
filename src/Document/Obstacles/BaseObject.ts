@@ -4,7 +4,8 @@ export abstract class BaseObject {
   public abstract readonly objectType: string;
   public readonly attributes: Record<string, any> = {};
   public infoString: string = '';
-  public parent: any[] = [];
+  public parent: BaseObject | null = null;
+  public children: BaseObject[] = [];
 
   protected readonly definitions: Record<string, Repeatable<any> | ParserCallback<any>> = {};
   protected readonly endTerminator: string = 'end';

@@ -4,6 +4,8 @@ import { Pyramid } from '../Obstacles/Pyramid';
 import { Teleporter } from '../Obstacles/Teleporter';
 import { Zone } from '../Obstacles/Zone';
 import { Base } from '../Obstacles/Base';
+import { Mesh } from '../Obstacles/Mesh';
+import { World } from '../Obstacles/World';
 
 describe('BZW Document Parser', () => {
   it('should handle a box', () => {
@@ -114,6 +116,110 @@ describe('BZW Document Parser', () => {
       size: [0.125, 5, 20],
       rotation: 45,
       border: 1.12,
+    });
+  });
+
+  it('should handle a mesh', () => {
+    const bzwBody = `\
+    mesh
+      name example_mesh
+      inside 5.5 4.5 1.2
+      outside 0 0 1000
+      vertex 100 200 300
+      normal 1.0 0 0
+      texcoord 0.1 0.75
+      shift 0 0 0
+      scale 1 1 1
+      shear 0 0 0
+      spin 45 0 0 0
+      phydrv example_phydrv
+      smoothbounce
+      noclusters
+
+      face
+        vertices 1 4 0 3 5
+        normals 2 6 0 4 7
+        texcoords 0 3 2 4 9
+        phydrv example_phydrv
+        smoothbounce
+        noclusters
+        drivethrough
+        shootthrough
+        passable
+        matref
+      endface
+
+      face
+        vertices 1 4 0 3 5
+        normals 2 6 0 4 7
+        texcoords 0 3 2 4 9
+        phydrv example_phydrv
+        smoothbounce
+        noclusters
+        drivethrough
+        shootthrough
+        passable
+        matref
+      endface
+    end
+    `;
+    const parser = new BZWDocument(bzwBody);
+    const mesh: Mesh = parser.objects.pop() as Mesh;
+
+    expect(mesh.attributes).toEqual({
+      name: "example_mesh",
+      inside: [
+        [5.5, 4.5, 1.2],
+      ],
+      outside: [
+        [0, 0, 1000],
+      ],
+      vertex: [
+        [100, 200, 300],
+      ],
+      normal: [
+        [1.0, 0, 0],
+      ],
+      texcoord: [
+        [0.1, 0.75],
+      ],
+      shift: [
+        [0, 0, 0],
+      ],
+      scale: [
+        [1, 1, 1],
+      ],
+      shear: [
+        [0, 0, 0],
+      ],
+      spin: [
+        [45, 0, 0, 0],
+      ],
+      phydrv: "example_phydrv",
+      smoothbounce: true,
+      noclusters: true,
+    });
+  });
+
+  it('should handle a world', () => {
+    const bzwBody = `\
+    world
+      name example_world
+      size 400.0
+      flagHeight 10.0
+      noWalls
+      freeCtfSpawns
+    end
+    `;
+    const parser = new BZWDocument(bzwBody);
+    const world: World = parser.world;
+
+    expect(world.attributes).toEqual({
+      name: 'example_world',
+      size: 400.0,
+      flagheight: 10.0,
+      nowalls: true,
+      freectfspawns: true,
     });
   });
 });
