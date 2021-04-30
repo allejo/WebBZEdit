@@ -2,16 +2,14 @@ import React from 'react';
 import { useLoader } from 'react-three-fiber';
 import { RepeatWrapping, TextureLoader } from 'three';
 
-import { Vector3F } from '../Utilities/types';
+import { deg2rad } from '../Utilities/math';
+import { IBox } from '../Document/Obstacles/Box';
 
 import boxRoof from '../assets/roof.png';
 import boxWall from '../assets/boxwall.png';
-import { deg2rad } from '../Utilities/math';
 
 interface Props {
-  position: Vector3F;
-  size: Vector3F;
-  rotation?: number;
+  obstacle: IBox;
 }
 
 /**
@@ -19,9 +17,11 @@ interface Props {
  * @see https://threejs.org/docs/#api/en/geometries/BoxGeometry
  */
 const Box = ({
-  position: [posX, posY, posZ],
-  size: [sizeX, sizeY, sizeZ],
-  rotation = 0,
+  obstacle: {
+    position: [posX, posY, posZ],
+    size: [sizeX, sizeY, sizeZ],
+    rotation = 0,
+  },
 }: Props) => {
   const roofTexture = useLoader(TextureLoader, boxRoof);
   const wallTexture = useLoader(TextureLoader, boxWall);
