@@ -7,10 +7,10 @@ import {
   bzwVector3F,
 } from '../attributeParsers';
 import { MeshFace } from './MeshFace';
+import { INameable, IPhysicsDriverFriendly } from './partials';
+import { Vector3F } from '../../Utilities/types';
 
-export class Mesh extends BaseObject {
-  objectType = 'mesh';
-  definitions = {
+export const MeshProperties = {
     name: bzwString,
     inside: bzwRepeatable(bzwVector3F),
     outside: bzwRepeatable(bzwVector3F),
@@ -24,7 +24,39 @@ export class Mesh extends BaseObject {
     phydrv: bzwString,
     smoothbounce: bzwBool,
     noclusters: bzwBool,
-  };
+};
+
+export interface IMesh extends INameable, IPhysicsDriverFriendly {
+  inside?: Vector3F[];
+  outside?: Vector3F[];
+  vertex?: Vector3F[];
+  normal?: number[];
+  texcoord?: number[];
+  shift?: Vector3F[];
+  scale?: Vector3F[];
+  shear?: Vector3F[];
+  spin?: number[]
+  smoothbounce?: boolean;
+  noclusters?: boolean;
+}
+
+export class Mesh extends BaseObject implements IMesh {
+  objectType = 'mesh';
+  definitions = MeshProperties;
+
+  name?: string;
+  phydrv?: string;
+  inside?: Vector3F[];
+  outside?: Vector3F[];
+  vertex?: Vector3F[];
+  normal?: number[];
+  texcoord?: number[];
+  shift?: Vector3F[];
+  scale?: Vector3F[];
+  shear?: Vector3F[];
+  spin?: number[]
+  smoothbounce?: boolean;
+  noclusters?: boolean;
 
   get faces(): MeshFace[] {
     return this.children as MeshFace[];

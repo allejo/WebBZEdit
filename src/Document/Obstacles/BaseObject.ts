@@ -1,6 +1,10 @@
 import { bzwString, ParserCallback, Repeatable } from '../attributeParsers';
 
 export abstract class BaseObject {
+  // TODO: Figure out a better way of handling properties
+  //   https://github.com/microsoft/TypeScript/pull/26797
+  [key: string]: any;
+
   public abstract readonly objectType: string;
   public infoString: string = '';
   public parent: BaseObject | null = null;
@@ -8,8 +12,6 @@ export abstract class BaseObject {
 
   protected readonly definitions: Record<string, Repeatable<any> | ParserCallback<any>> = {};
   protected readonly endTerminator: string = 'end';
-
-  constructor(readonly attributes: Record<string, any> = {}) {}
 
   public finalize(): void {}
 
@@ -21,14 +23,14 @@ export abstract class BaseObject {
     const parser = this.definitions?.[attribute] ?? bzwString;
 
     if (typeof parser === 'function') {
-      this.attributes[attribute] = parser(restOfLine);
+      this[attribute] = parser(restOfLine);
     } else {
       if (parser.type === "repeatable") {
-        if (!this.attributes.hasOwnProperty(attribute)) {
-          this.attributes[attribute] = [];
+        if (!this[attribute]) {
+          this[attribute] = [];
         }
 
-        this.attributes[attribute].push(parser.callback(restOfLine));
+        this[attribute].push(parser.callback(restOfLine));
       }
     }
   }

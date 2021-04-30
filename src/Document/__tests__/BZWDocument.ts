@@ -18,10 +18,8 @@ describe('BZW Document Parser', () => {
     const parser = new BZWDocument(bzwBody);
     const box: Box = parser.objects.pop() as Box;
 
-    expect(box.attributes).toEqual({
-      position: [5, 10, 15],
-      size: [2, 7, 1],
-    });
+    expect(box.position).toEqual([5, 10, 15]);
+    expect(box.size).toEqual([2, 7, 1]);
   });
 
   it('should handle a pyramid', () => {
@@ -35,11 +33,9 @@ describe('BZW Document Parser', () => {
     const parser = new BZWDocument(bzwBody);
     const pyramid: Pyramid = parser.objects.pop() as Pyramid;
 
-    expect(pyramid.attributes).toEqual({
-      position: [3, 4, 5],
-      size: [10, 5, 7],
-      zflip: true,
-    });
+    expect(pyramid.position).toEqual([3, 4, 5]);
+    expect(pyramid.size).toEqual([10, 5, 7]);
+    expect(pyramid.zflip).toEqual(true);
   });
 
   it('should handle a base', () => {
@@ -55,13 +51,11 @@ describe('BZW Document Parser', () => {
     const parser = new BZWDocument(bzwBody);
     const base: Base = parser.objects.pop() as Base;
 
-    expect(base.attributes).toEqual({
-      position: [10, 20, 30],
-      rotation: 45,
-      size: [1, 2, 3],
-      color: 1,
-      oncap: "SW",
-    });
+    expect(base.position).toEqual([10, 20, 30]);
+    expect(base.rotation).toEqual(45);
+    expect(base.size).toEqual([1, 2, 3]);
+    expect(base.color).toEqual(1);
+    expect(base.oncap).toEqual("SW");
   });
 
   it('should handle a zone', () => {
@@ -86,16 +80,14 @@ describe('BZW Document Parser', () => {
     const parser = new BZWDocument(bzwBody);
     const zone: Zone = parser.objects.pop() as Zone;
 
-    expect(zone.attributes).toEqual({
-      name: 'example_zone',
-      position: [0.0, 0.0, 0.0],
-      size: [1.0, 1.0, 1.0],
-      rotation: 0.0,
-      zoneflag: ["GM 2", "OO"],
-      flag: ["L", "SW", "good", "bad"],
-      team: [0, 1, 2, 3, 4],
-      safety: [1, 2, 3, 4],
-    });
+    expect(zone.name).toEqual('example_zone');
+    expect(zone.position).toEqual([0.0, 0.0, 0.0]);
+    expect(zone.size).toEqual([1.0, 1.0, 1.0]);
+    expect(zone.rotation).toEqual(0.0);
+    expect(zone.zoneflag).toEqual(["GM 2", "OO"]);
+    expect(zone.flag).toEqual(["L", "SW", "good", "bad"]);
+    expect(zone.team).toEqual([0, 1, 2, 3, 4]);
+    expect(zone.safety).toEqual([1, 2, 3, 4]);
   });
 
   it('should handle a teleporter', () => {
@@ -110,13 +102,11 @@ describe('BZW Document Parser', () => {
     const parser = new BZWDocument(bzwBody);
     const teleporter: Teleporter = parser.objects.pop() as Teleporter;
 
-    expect(teleporter.attributes).toEqual({
-      name: 'tele0',
-      position: [0, 0, 10],
-      size: [0.125, 5, 20],
-      rotation: 45,
-      border: 1.12,
-    });
+    expect(teleporter.name).toEqual('tele0');
+    expect(teleporter.position).toEqual([0, 0, 10]);
+    expect(teleporter.size).toEqual([0.125, 5, 20]);
+    expect(teleporter.rotation).toEqual(45);
+    expect(teleporter.border).toEqual(1.12);
   });
 
   it('should handle a mesh', () => {
@@ -166,63 +156,41 @@ describe('BZW Document Parser', () => {
     const parser = new BZWDocument(bzwBody);
     const mesh: Mesh = parser.objects.pop() as Mesh;
 
-    expect(mesh.attributes).toEqual({
-      name: "example_mesh",
-      inside: [
-        [5.5, 4.5, 1.2],
-      ],
-      outside: [
-        [0, 0, 1000],
-      ],
-      vertex: [
-        [100, 200, 300],
-      ],
-      normal: [
-        [1.0, 0, 0],
-      ],
-      texcoord: [
-        [0.1, 0.75],
-      ],
-      shift: [
-        [0, 0, 0],
-      ],
-      scale: [
-        [1, 1, 1],
-      ],
-      shear: [
-        [0, 0, 0],
-      ],
-      spin: [
-        [45, 0, 0, 0],
-      ],
-      phydrv: "example_phydrv",
-      smoothbounce: true,
-      noclusters: true,
-    });
-    expect(mesh.faces[0].attributes).toEqual({
-      vertices: [1, 4, 0, 3, 5],
-      normals: [2, 6, 0, 4, 7],
-      texcoords: [0, 3, 2, 4, 9],
-      phydrv: 'example_phydrv',
-      smoothbounce: true,
-      noclusters: true,
-      drivethrough: true,
-      shootthrough: true,
-      passable: true,
-      matref: '',
-    });
-    expect(mesh.faces[1].attributes).toEqual({
-      vertices: [5, 3, 0, 4, 1],
-      normals: [2, 6, 0, 4, 7],
-      texcoords: [0, 3, 2, 4, 9],
-      phydrv: 'example_phydrv',
-      smoothbounce: true,
-      noclusters: true,
-      drivethrough: true,
-      shootthrough: true,
-      passable: true,
-      matref: '',
-    });
+    expect(mesh.name).toEqual("example_mesh");
+    expect(mesh.inside).toEqual([[5.5, 4.5, 1.2]]);
+    expect(mesh.outside).toEqual([[0, 0, 1000]]);
+    expect(mesh.vertex).toEqual([[100, 200, 300]]);
+    expect(mesh.normal).toEqual([[1.0, 0, 0]]);
+    expect(mesh.texcoord).toEqual([[0.1, 0.75]]);
+    expect(mesh.shift).toEqual([[0, 0, 0]]);
+    expect(mesh.scale).toEqual([[1, 1, 1]]);
+    expect(mesh.shear).toEqual([[0, 0, 0]]);
+    expect(mesh.spin).toEqual([[45, 0, 0, 0]]);
+    expect(mesh.phydrv).toEqual("example_phydrv");
+    expect(mesh.smoothbounce).toEqual(true);
+    expect(mesh.noclusters).toEqual(true);
+
+    expect(mesh.faces[0].vertices).toEqual([1, 4, 0, 3, 5]);
+    expect(mesh.faces[0].normals).toEqual([2, 6, 0, 4, 7]);
+    expect(mesh.faces[0].texcoords).toEqual([0, 3, 2, 4, 9]);
+    expect(mesh.faces[0].phydrv).toEqual('example_phydrv');
+    expect(mesh.faces[0].smoothbounce).toEqual(true);
+    expect(mesh.faces[0].noclusters).toEqual(true);
+    expect(mesh.faces[0].drivethrough).toEqual(true);
+    expect(mesh.faces[0].shootthrough).toEqual(true);
+    expect(mesh.faces[0].passable).toEqual(true);
+    expect(mesh.faces[0].matref).toEqual('');
+
+    expect(mesh.faces[1].vertices).toEqual([5, 3, 0, 4, 1]);
+    expect(mesh.faces[1].normals).toEqual([2, 6, 0, 4, 7]);
+    expect(mesh.faces[1].texcoords).toEqual([0, 3, 2, 4, 9]);
+    expect(mesh.faces[1].phydrv).toEqual('example_phydrv');
+    expect(mesh.faces[1].smoothbounce).toEqual(true);
+    expect(mesh.faces[1].noclusters).toEqual(true);
+    expect(mesh.faces[1].drivethrough).toEqual(true);
+    expect(mesh.faces[1].shootthrough).toEqual(true);
+    expect(mesh.faces[1].passable).toEqual(true);
+    expect(mesh.faces[1].matref).toEqual('');
   });
 
   it('should handle a world', () => {
@@ -238,12 +206,10 @@ describe('BZW Document Parser', () => {
     const parser = new BZWDocument(bzwBody);
     const world: World = parser.world;
 
-    expect(world.attributes).toEqual({
-      name: 'example_world',
-      size: 400.0,
-      flagheight: 10.0,
-      nowalls: true,
-      freectfspawns: true,
-    });
+    expect(world.name).toEqual('example_world');
+    expect(world.size).toEqual(400.0);
+    expect(world.flagheight).toEqual(10.0);
+    expect(world.nowalls).toEqual(true);
+    expect(world.freectfspawns).toEqual(true);
   });
 });
