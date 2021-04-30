@@ -24,7 +24,7 @@ interface OrbitRef {
 
 extend({ OrbitControls });
 
-const Controls: React.FC<any> = (props) => {
+const OrbitalControls: React.FC<any> = (props) => {
   const ref = useRef<OrbitRef>(null);
   const { camera, gl } = useThree();
   useFrame(() => {
@@ -33,4 +33,4 @@ const Controls: React.FC<any> = (props) => {
   return <orbitControls ref={ref} args={[camera, gl.domElement]} {...props} />;
 };
 
-export default Controls;
+export default OrbitalControls;

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { IPositionable } from '../Document/Obstacles/partials';
-import { Vector3F } from '../Utilities/types';
+import { IPositionable } from '../../Document/Obstacles/partials';
+import { Vector3F } from '../../Utilities/types';
 import Vector3FControls from './Vector3FControls';
 import NumericalControl from './NumericalControl';
 
