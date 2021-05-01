@@ -41,7 +41,8 @@ export class BZWDocument {
       const line = _line.trim();
       const currObject: BaseObject | null = objStack.peek();
 
-      if (line === "") {
+      // It's a comment or an empty line, ignore it
+      if (line[0] === "#" || line === "") {
         continue;
       }
 
@@ -51,7 +52,10 @@ export class BZWDocument {
         }
 
         currObject.finalize();
-        objStack.pop();
+
+        if (!(currObject instanceof World)) {
+          objStack.pop();
+        }
       } else {
         const tokens = line.match(/([^ ]+)(?: (.+))?/);
         const object = tokens?.[1] ?? '';

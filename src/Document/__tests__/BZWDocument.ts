@@ -212,4 +212,39 @@ describe('BZW Document Parser', () => {
     expect(world.nowalls).toEqual(true);
     expect(world.freectfspawns).toEqual(true);
   });
+
+  it('should ignore comments', () => {
+    const bzwBody = `\
+    # HiX2 experimental world
+    # Copyright (c) 1993-2020 Tim Riker
+    # by Tim Riker Tim@Rikers.org
+    #
+    # This is a team play world
+    
+    # Typical World definition
+    #
+    world
+    name HiX 2.0
+    size 400.0
+    flagHeight 0.0
+    end
+    
+    # top of the world
+    box
+    name A Box # this comment should not be part of the string
+    position 0.0 0.0 29.0 # A comment at the end of the line
+    rotation 0.0
+    size     9.6568542495 4.0 16.0
+    end
+    `;
+    const parser = new BZWDocument(bzwBody);
+
+    expect(parser.world.name).toEqual('HiX 2.0');
+    expect(parser.world.size).toEqual(400);
+    expect(parser.world.flagheight).toEqual(0);
+
+    const box: Box = Object.values(parser.world.children).pop() as Box;
+    expect(box.name).toEqual("A Box");
+    expect(box.position).toEqual([0, 0, 29]);
+  });
 });

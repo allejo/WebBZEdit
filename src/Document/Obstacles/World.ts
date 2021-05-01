@@ -21,6 +21,7 @@ export class World extends BaseObject implements IWorld {
   objectType = 'world';
   definitions = WorldProperties;
 
+  name?: string;
   size: number = 800;
   flagheight?: number;
   nowalls: boolean = false;

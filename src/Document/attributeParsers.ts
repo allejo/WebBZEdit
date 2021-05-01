@@ -25,11 +25,12 @@ export function bzwInt(line: string): number {
 }
 
 export function bzwString(line: string): string {
-  return line;
+  // Only use any string value before the `#`; i.e. the non-comment content
+  return line.match(/([^#\n]+)(?!#)/)?.[0] ?? line;
 }
 
 export function bzwStringVector(line: string): string[] {
-  return line.split(' ');
+  return bzwString(line).split(' ');
 }
 
 export function bzwIntVector(line: string): number[] {
