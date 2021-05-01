@@ -10,42 +10,48 @@ import boxWall from '../assets/boxwall.png';
 
 interface Props {
   obstacle: IBox;
+  onClick: (obstacle: IBox) => void;
 }
 
 /**
  * @constructor
  * @see https://threejs.org/docs/#api/en/geometries/BoxGeometry
  */
-const Box = ({
-  obstacle: {
-    position: [posX, posY, posZ],
-    size: [sizeX, sizeZ, sizeY],
+const Box = ({ obstacle, onClick }: Props) => {
+  const {
+    position: [bzwPosX, bzwPosY, bzwPosZ],
+    size: [bzwSizeX, bzwSizeY, bzwSizeZ],
     rotation = 0,
-  },
-}: Props) => {
+  } = obstacle;
+  const handleOnClick = () => onClick(obstacle);
+
   const roofTexture = useLoader(TextureLoader, boxRoof);
   const wallTexture = useLoader(TextureLoader, boxWall);
 
   roofTexture.wrapS = roofTexture.wrapT = RepeatWrapping;
   wallTexture.wrapS = wallTexture.wrapT = RepeatWrapping;
 
-  roofTexture.repeat.set(sizeX, sizeY);
+  roofTexture.repeat.set(bzwSizeX / 2, bzwSizeY / 2);
 
   const xTexture = wallTexture;
   const yTexture = wallTexture.clone();
 
-  xTexture.repeat.set(sizeZ, sizeY);
+  xTexture.repeat.set(bzwSizeZ, bzwSizeY);
   xTexture.needsUpdate = true;
 
-  yTexture.repeat.set(sizeX, sizeY);
+  yTexture.repeat.set(bzwSizeX, bzwSizeY);
   yTexture.needsUpdate = true;
 
   return (
     <mesh
-      position={[posX, (sizeZ / 2) + posZ, posY]}
-      rotation={[0, deg2rad(rotation), 0]}
+      position={[bzwPosX, bzwPosZ + (bzwSizeZ / 2), bzwPosY]}
+      rotation={[0, -deg2rad(rotation), 0]}
+      onClick={handleOnClick}
     >
-      <boxBufferGeometry attach="geometry" args={[sizeX, sizeY, sizeZ]} />
+      <boxBufferGeometry
+        attach="geometry"
+        args={[bzwSizeX * 2, bzwSizeZ, bzwSizeY * 2]}
+      />
 
       <meshBasicMaterial attachArray="material" map={xTexture} />    {/* +z */}
       <meshBasicMaterial attachArray="material" map={xTexture} />    {/* -z */}

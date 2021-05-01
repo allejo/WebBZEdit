@@ -11,9 +11,13 @@ interface Props {
   document: BZWDocument;
 }
 
+function handleOnClick(obstacle: any) {
+  console.log(obstacle);
+}
+
 function obstacleToModel(obstacle: BaseObject): JSX.Element | null {
   if (obstacle instanceof BZWBox) {
-    return <Box key={obstacle.uuid} obstacle={obstacle} />;
+    return <Box key={obstacle.uuid} obstacle={obstacle} onClick={handleOnClick} />;
   } else if (obstacle instanceof BZWPyramid) {
     return <Pyramid key={obstacle.uuid} obstacle={obstacle} />;
   }
