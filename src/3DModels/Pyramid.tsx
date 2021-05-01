@@ -2,16 +2,12 @@ import React from 'react';
 import { useLoader } from 'react-three-fiber';
 import { RepeatWrapping, TextureLoader } from 'three';
 
-import { Vector3F } from '../Utilities/types';
-
 import pyrWall from '../assets/pyrwall.png';
 import { deg2rad } from '../Utilities/math';
+import { IPyramid } from '../Document/Obstacles/Pyramid';
 
 interface Props {
-  position: Vector3F;
-  size: Vector3F;
-  rotation?: number;
-  zFlip?: boolean;
+  obstacle: IPyramid;
 }
 
 // The "radius" of this pyramid is from the base's center to one of the four
@@ -34,10 +30,12 @@ const ROTATION_OFFSET = 45;
  * @see https://threejs.org/docs/#api/en/geometries/ConeGeometry
  */
 const Pyramid = ({
-  position: [posX, posY, posZ],
-  size: [sizeX, sizeY, sizeZ],
-  rotation = 0,
-  zFlip = false,
+  obstacle: {
+    position: [posX, posY, posZ],
+    size: [sizeX, sizeY, sizeZ],
+    rotation = 0,
+    zflip = false,
+  },
 }: Props) => {
   const texture = useLoader(TextureLoader, pyrWall);
   texture.wrapS = texture.wrapT = RepeatWrapping;
@@ -47,7 +45,7 @@ const Pyramid = ({
     <mesh
       position={[posX, (sizeZ / 2) + posZ, posY]}
       scale={[sizeX, 1, sizeY]}
-      rotation={[0, 0, zFlip ? Math.PI : 0]}
+      rotation={[0, 0, zflip ? Math.PI : 0]}
     >
       <coneBufferGeometry
         attach='geometry'
@@ -67,4 +65,3 @@ const Pyramid = ({
 
 export default Pyramid;
 export type { Props as IPyramidProps };
-

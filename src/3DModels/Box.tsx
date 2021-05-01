@@ -19,7 +19,7 @@ interface Props {
 const Box = ({
   obstacle: {
     position: [posX, posY, posZ],
-    size: [sizeX, sizeY, sizeZ],
+    size: [sizeX, sizeZ, sizeY],
     rotation = 0,
   },
 }: Props) => {
@@ -60,3 +60,4 @@ const Box = ({
 };
 
 export default Box;
+export type { Props as IBoxProps };
