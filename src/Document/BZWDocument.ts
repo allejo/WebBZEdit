@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 import { Base } from './Obstacles/Base';
 import { BaseObject } from './Obstacles/BaseObject';
 import { Box } from './Obstacles/Box';
@@ -27,7 +29,7 @@ export class BZWDocument {
     this.parseLines(document);
   }
 
-  get objects(): BaseObject[] {
+  get objects(): Record<string, BaseObject> {
     return this.world.children;
   }
 
@@ -44,9 +46,11 @@ export class BZWDocument {
       }
 
       if (currObject && line === currObject.terminator) {
-        currObject.parent?.children.push(currObject);
-        currObject.finalize();
+        if (currObject.parent) {
+          currObject.parent.children[currObject.uuid] = currObject;
+        }
 
+        currObject.finalize();
         objStack.pop();
       } else {
         const tokens = line.match(/([^ ]+)(?: (.+))?/);
@@ -55,6 +59,7 @@ export class BZWDocument {
 
         if (ObjectMapping.hasOwnProperty(object)) {
           const newObject = new ObjectMapping[object.toLowerCase()]();
+          newObject.uuid = nanoid();
           newObject.infoString = infoString;
 
           // We create a World object by default, but a map file can have its

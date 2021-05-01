@@ -59,6 +59,6 @@ export class Mesh extends BaseObject implements IMesh {
   noclusters?: boolean;
 
   get faces(): MeshFace[] {
-    return this.children as MeshFace[];
+    return Object.values(this.children) as MeshFace[];
   }
 }

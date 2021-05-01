@@ -16,7 +16,7 @@ describe('BZW Document Parser', () => {
     end
     `;
     const parser = new BZWDocument(bzwBody);
-    const box: Box = parser.objects.pop() as Box;
+    const box: Box = Object.values(parser.objects).pop() as Box;
 
     expect(box.position).toEqual([5, 10, 15]);
     expect(box.size).toEqual([2, 7, 1]);
@@ -31,7 +31,7 @@ describe('BZW Document Parser', () => {
     end
     `;
     const parser = new BZWDocument(bzwBody);
-    const pyramid: Pyramid = parser.objects.pop() as Pyramid;
+    const pyramid: Pyramid = Object.values(parser.objects).pop() as Pyramid;
 
     expect(pyramid.position).toEqual([3, 4, 5]);
     expect(pyramid.size).toEqual([10, 5, 7]);
@@ -49,7 +49,7 @@ describe('BZW Document Parser', () => {
     end
     `;
     const parser = new BZWDocument(bzwBody);
-    const base: Base = parser.objects.pop() as Base;
+    const base: Base = Object.values(parser.objects).pop() as Base;
 
     expect(base.position).toEqual([10, 20, 30]);
     expect(base.rotation).toEqual(45);
@@ -78,7 +78,7 @@ describe('BZW Document Parser', () => {
     end
     `;
     const parser = new BZWDocument(bzwBody);
-    const zone: Zone = parser.objects.pop() as Zone;
+    const zone: Zone = Object.values(parser.objects).pop() as Zone;
 
     expect(zone.name).toEqual('example_zone');
     expect(zone.position).toEqual([0.0, 0.0, 0.0]);
@@ -100,7 +100,7 @@ describe('BZW Document Parser', () => {
     end
     `;
     const parser = new BZWDocument(bzwBody);
-    const teleporter: Teleporter = parser.objects.pop() as Teleporter;
+    const teleporter: Teleporter = Object.values(parser.objects).pop() as Teleporter;
 
     expect(teleporter.name).toEqual('tele0');
     expect(teleporter.position).toEqual([0, 0, 10]);
@@ -154,7 +154,7 @@ describe('BZW Document Parser', () => {
     end
     `;
     const parser = new BZWDocument(bzwBody);
-    const mesh: Mesh = parser.objects.pop() as Mesh;
+    const mesh: Mesh = Object.values(parser.objects).pop() as Mesh;
 
     expect(mesh.name).toEqual("example_mesh");
     expect(mesh.inside).toEqual([[5.5, 4.5, 1.2]]);

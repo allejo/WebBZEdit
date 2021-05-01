@@ -6,9 +6,10 @@ export abstract class BaseObject {
   [key: string]: any;
 
   public abstract readonly objectType: string;
+  public uuid: string = '';
   public infoString: string = '';
   public parent: BaseObject | null = null;
-  public children: BaseObject[] = [];
+  public children: Record<string, BaseObject> = {};
 
   protected readonly definitions: Record<string, Repeatable<any> | ParserCallback<any>> = {};
   protected readonly endTerminator: string = 'end';
