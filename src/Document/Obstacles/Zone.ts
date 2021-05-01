@@ -1,17 +1,23 @@
 import { BaseObject } from './BaseObject';
-import { bzwFloat, bzwIntVector, bzwRepeatable, bzwString, bzwVector3F } from '../attributeParsers';
+import {
+  bzwFloat,
+  bzwIntVector,
+  bzwRepeatable,
+  bzwString,
+  bzwVector3F,
+} from '../attributeParsers';
 import { INameable, IPositionable } from '../attributePartials';
 import { Vector3F } from '../../Utilities/types';
 
 export const ZoneProperties = {
-    name: bzwString,
-    position: bzwVector3F,
-    size: bzwVector3F,
-    rotation: bzwFloat,
-    zoneflag: bzwRepeatable(bzwString),
-    flag: bzwRepeatable(bzwString),
-    team: bzwIntVector,
-    safety: bzwIntVector,
+  name: bzwString,
+  position: bzwVector3F,
+  size: bzwVector3F,
+  rotation: bzwFloat,
+  zoneflag: bzwRepeatable(bzwString),
+  flag: bzwRepeatable(bzwString),
+  team: bzwIntVector,
+  safety: bzwIntVector,
 };
 
 export interface IZone extends INameable, IPositionable {
@@ -32,5 +38,5 @@ export class Zone extends BaseObject implements IZone {
   zoneflag: string[] = [];
   flag: string[] = [];
   team?: IZone['team'];
-  safety?: IZone['safety']
+  safety?: IZone['safety'];
 }

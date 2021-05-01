@@ -21,21 +21,21 @@ const Vector3FControls = ({ name, onChange, value }: Props) => {
       <legend>{name}</legend>
 
       <NumericalControl
-        label='X-axis'
+        label="X-axis"
         prefix={name}
         onChange={handleOnChange(0)}
         value={value[0]}
       />
 
       <NumericalControl
-        label='Y-axis'
+        label="Y-axis"
         prefix={name}
         onChange={handleOnChange(1)}
         value={value[1]}
       />
 
       <NumericalControl
-        label='Z-axis'
+        label="Z-axis"
         prefix={name}
         onChange={handleOnChange(2)}
         value={value[2]}

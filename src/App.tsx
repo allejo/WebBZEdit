@@ -15,8 +15,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     fetch(hix)
-      .then(res => res.text())
-      .then(body => {
+      .then((res) => res.text())
+      .then((body) => {
         const document = new BZWDocument(body);
         setDocument(document);
         console.log('roar');

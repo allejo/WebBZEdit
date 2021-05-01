@@ -4,7 +4,9 @@ export interface IMaterialFriendly {
   matref?: string;
 }
 
-export function implementsIMaterialFriendly(value: any): value is IMaterialFriendly {
+export function implementsIMaterialFriendly(
+  value: any,
+): value is IMaterialFriendly {
   return value.hasOwnProperty('matref');
 }
 
@@ -20,7 +22,9 @@ export interface IPhysicsDriverFriendly {
   phydrv?: string;
 }
 
-export function implementsIPhysicsDriverFriendly(value: any): value is IPhysicsDriverFriendly {
+export function implementsIPhysicsDriverFriendly(
+  value: any,
+): value is IPhysicsDriverFriendly {
   return value.hasOwnProperty('phydrv');
 }
 
@@ -30,7 +34,9 @@ export interface IPassableObject {
   passable: boolean;
 }
 
-export function implementsIPassableObject(value: any): value is IPassableObject {
+export function implementsIPassableObject(
+  value: any,
+): value is IPassableObject {
   return (
     value.hasOwnProperty('drivethrough') &&
     value.hasOwnProperty('shootthrough') &&

@@ -15,17 +15,10 @@ const NumericalControl = ({ label, onChange, prefix, value }: Props) => {
 
   return (
     <div>
-      <label htmlFor={id}>
-        {label}
-      </label>
-      <input
-        id={id}
-        type="number"
-        onChange={callback}
-        value={value}
-      />
+      <label htmlFor={id}>{label}</label>
+      <input id={id} type="number" onChange={callback} value={value} />
     </div>
   );
-}
+};
 
 export default NumericalControl;

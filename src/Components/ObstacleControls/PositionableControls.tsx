@@ -11,18 +11,21 @@ interface Props {
 }
 
 const PositionableControls = ({ data, onChange }: Props) => {
-  const handlePositionOnChange = (position: Vector3F) => onChange({
-    ...data,
-    position,
-  });
-  const handleSizeOnChange = (size: Vector3F) => onChange({
-    ...data,
-    size,
-  });
-  const handleRotationOnChange = (rotation: number) => onChange({
-    ...data,
-    rotation,
-  })
+  const handlePositionOnChange = (position: Vector3F) =>
+    onChange({
+      ...data,
+      position,
+    });
+  const handleSizeOnChange = (size: Vector3F) =>
+    onChange({
+      ...data,
+      size,
+    });
+  const handleRotationOnChange = (rotation: number) =>
+    onChange({
+      ...data,
+      rotation,
+    });
 
   return (
     <div>

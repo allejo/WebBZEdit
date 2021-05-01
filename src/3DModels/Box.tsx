@@ -44,7 +44,7 @@ const Box = ({ obstacle, onClick }: Props) => {
 
   return (
     <mesh
-      position={[bzwPosX, bzwPosZ + (bzwSizeZ / 2), bzwPosY]}
+      position={[bzwPosX, bzwPosZ + bzwSizeZ / 2, bzwPosY]}
       rotation={[0, -deg2rad(rotation), 0]}
       onClick={handleOnClick}
     >
@@ -52,15 +52,12 @@ const Box = ({ obstacle, onClick }: Props) => {
         attach="geometry"
         args={[bzwSizeX * 2, bzwSizeZ, bzwSizeY * 2]}
       />
-
-      <meshBasicMaterial attachArray="material" map={xTexture} />    {/* +z */}
-      <meshBasicMaterial attachArray="material" map={xTexture} />    {/* -z */}
-
+      <meshBasicMaterial attachArray="material" map={xTexture} /> {/* +z */}
+      <meshBasicMaterial attachArray="material" map={xTexture} /> {/* -z */}
       <meshBasicMaterial attachArray="material" map={roofTexture} /> {/* +y */}
       <meshBasicMaterial attachArray="material" map={roofTexture} /> {/* -y */}
-
-      <meshBasicMaterial attachArray="material" map={yTexture} />    {/* +x */}
-      <meshBasicMaterial attachArray="material" map={yTexture} />    {/* -x */}
+      <meshBasicMaterial attachArray="material" map={yTexture} /> {/* +x */}
+      <meshBasicMaterial attachArray="material" map={yTexture} /> {/* -x */}
     </mesh>
   );
 };

@@ -11,7 +11,7 @@ import { MeshFace } from './Obstacles/MeshFace';
 import { Stack } from '../Utilities/Stack';
 import { World } from './Obstacles/World';
 
-const ObjectMapping: Record<string, { new(): BaseObject }> = {
+const ObjectMapping: Record<string, { new (): BaseObject }> = {
   base: Base,
   box: Box,
   face: MeshFace,
@@ -34,7 +34,7 @@ export class BZWDocument {
   }
 
   private parseLines(document: string): void {
-    const lines = document.split("\n");
+    const lines = document.split('\n');
     const objStack = new Stack<BaseObject>([this.world]);
 
     for (const _line of lines) {
@@ -42,7 +42,7 @@ export class BZWDocument {
       const currObject: BaseObject | null = objStack.peek();
 
       // It's a comment or an empty line, ignore it
-      if (line[0] === "#" || line === "") {
+      if (line[0] === '#' || line === '') {
         continue;
       }
 

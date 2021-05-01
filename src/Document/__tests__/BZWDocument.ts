@@ -55,7 +55,7 @@ describe('BZW Document Parser', () => {
     expect(base.rotation).toEqual(45);
     expect(base.size).toEqual([1, 2, 3]);
     expect(base.color).toEqual(1);
-    expect(base.oncap).toEqual("SW");
+    expect(base.oncap).toEqual('SW');
   });
 
   it('should handle a zone', () => {
@@ -84,8 +84,8 @@ describe('BZW Document Parser', () => {
     expect(zone.position).toEqual([0.0, 0.0, 0.0]);
     expect(zone.size).toEqual([1.0, 1.0, 1.0]);
     expect(zone.rotation).toEqual(0.0);
-    expect(zone.zoneflag).toEqual(["GM 2", "OO"]);
-    expect(zone.flag).toEqual(["L", "SW", "good", "bad"]);
+    expect(zone.zoneflag).toEqual(['GM 2', 'OO']);
+    expect(zone.flag).toEqual(['L', 'SW', 'good', 'bad']);
     expect(zone.team).toEqual([0, 1, 2, 3, 4]);
     expect(zone.safety).toEqual([1, 2, 3, 4]);
   });
@@ -100,7 +100,9 @@ describe('BZW Document Parser', () => {
     end
     `;
     const parser = new BZWDocument(bzwBody);
-    const teleporter: Teleporter = Object.values(parser.objects).pop() as Teleporter;
+    const teleporter: Teleporter = Object.values(
+      parser.objects,
+    ).pop() as Teleporter;
 
     expect(teleporter.name).toEqual('tele0');
     expect(teleporter.position).toEqual([0, 0, 10]);
@@ -156,7 +158,7 @@ describe('BZW Document Parser', () => {
     const parser = new BZWDocument(bzwBody);
     const mesh: Mesh = Object.values(parser.objects).pop() as Mesh;
 
-    expect(mesh.name).toEqual("example_mesh");
+    expect(mesh.name).toEqual('example_mesh');
     expect(mesh.inside).toEqual([[5.5, 4.5, 1.2]]);
     expect(mesh.outside).toEqual([[0, 0, 1000]]);
     expect(mesh.vertex).toEqual([[100, 200, 300]]);
@@ -166,7 +168,7 @@ describe('BZW Document Parser', () => {
     expect(mesh.scale).toEqual([[1, 1, 1]]);
     expect(mesh.shear).toEqual([[0, 0, 0]]);
     expect(mesh.spin).toEqual([[45, 0, 0, 0]]);
-    expect(mesh.phydrv).toEqual("example_phydrv");
+    expect(mesh.phydrv).toEqual('example_phydrv');
     expect(mesh.smoothbounce).toEqual(true);
     expect(mesh.noclusters).toEqual(true);
 
@@ -244,7 +246,7 @@ describe('BZW Document Parser', () => {
     expect(parser.world.flagheight).toEqual(0);
 
     const box: Box = Object.values(parser.world.children).pop() as Box;
-    expect(box.name).toEqual("A Box");
+    expect(box.name).toEqual('A Box');
     expect(box.position).toEqual([0, 0, 29]);
     expect(box.size).toEqual([9.6568542495, 4.0, 16.0]);
   });

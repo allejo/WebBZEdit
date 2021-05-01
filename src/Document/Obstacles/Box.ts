@@ -1,7 +1,13 @@
 import { BaseObject } from './BaseObject';
 import { bzwBool, bzwFloat, bzwString, bzwVector3F } from '../attributeParsers';
 import { Vector3F } from '../../Utilities/types';
-import { IMaterialFriendly, INameable, IPassableObject, IPhysicsDriverFriendly, IPositionable } from '../attributePartials';
+import {
+  IMaterialFriendly,
+  INameable,
+  IPassableObject,
+  IPhysicsDriverFriendly,
+  IPositionable,
+} from '../attributePartials';
 
 export const BoxProperties = {
   name: bzwString,
@@ -14,13 +20,12 @@ export const BoxProperties = {
   shootthrough: bzwBool,
 };
 
-export interface IBox extends
-  IMaterialFriendly,
-  INameable,
-  IPassableObject,
-  IPositionable,
-  IPhysicsDriverFriendly {
-}
+export interface IBox
+  extends IMaterialFriendly,
+    INameable,
+    IPassableObject,
+    IPositionable,
+    IPhysicsDriverFriendly {}
 
 export class Box extends BaseObject implements IBox {
   objectType = 'box';

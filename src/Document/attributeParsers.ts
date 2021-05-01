@@ -1,11 +1,13 @@
 export type ParserCallback<T> = (line: string) => T;
 
 export interface Repeatable<T> {
-  type: 'repeatable',
+  type: 'repeatable';
   callback: ParserCallback<T>;
 }
 
-export function bzwRepeatable<T>(callback: Repeatable<T>['callback']): Repeatable<T> {
+export function bzwRepeatable<T>(
+  callback: Repeatable<T>['callback'],
+): Repeatable<T> {
   return {
     type: 'repeatable',
     callback: callback,
@@ -34,11 +36,11 @@ export function bzwStringVector(line: string): string[] {
 }
 
 export function bzwIntVector(line: string): number[] {
-  return bzwStringVector(line).map(value => Number.parseInt(value));
+  return bzwStringVector(line).map((value) => Number.parseInt(value));
 }
 
 export function bzwFloatVector(line: string): number[] {
-  return bzwStringVector(line).map(value => Number.parseFloat(value));
+  return bzwStringVector(line).map((value) => Number.parseFloat(value));
 }
 
 export function bzwVector3F(line: string): [number, number, number] {

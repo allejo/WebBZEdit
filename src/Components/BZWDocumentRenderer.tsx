@@ -17,9 +17,17 @@ function handleOnClick(obstacle: any) {
 
 function obstacleToModel(obstacle: BaseObject): JSX.Element | null {
   if (obstacle instanceof BZWBox) {
-    return <Box key={obstacle.uuid} obstacle={obstacle} onClick={handleOnClick} />;
+    return (
+      <Box key={obstacle.uuid} obstacle={obstacle} onClick={handleOnClick} />
+    );
   } else if (obstacle instanceof BZWPyramid) {
-    return <Pyramid key={obstacle.uuid} obstacle={obstacle} />;
+    return (
+      <Pyramid
+        key={obstacle.uuid}
+        obstacle={obstacle}
+        onClick={handleOnClick}
+      />
+    );
   }
 
   return null;
@@ -27,7 +35,7 @@ function obstacleToModel(obstacle: BaseObject): JSX.Element | null {
 
 const BZWDocumentRenderer = ({ document }: Props) => (
   <>
-    {Object.values(document.objects).map(object => obstacleToModel(object))}
+    {Object.values(document.objects).map((object) => obstacleToModel(object))}
   </>
 );
 

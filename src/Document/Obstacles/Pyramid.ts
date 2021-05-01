@@ -1,6 +1,12 @@
 import { BaseObject } from './BaseObject';
 import { bzwBool, bzwString, bzwVector3F } from '../attributeParsers';
-import { IMaterialFriendly, INameable, IPassableObject, IPhysicsDriverFriendly, IPositionable } from '../attributePartials';
+import {
+  IMaterialFriendly,
+  INameable,
+  IPassableObject,
+  IPhysicsDriverFriendly,
+  IPositionable,
+} from '../attributePartials';
 import { Vector3F } from '../../Utilities/types';
 
 export const PyramidProperties = {
@@ -15,13 +21,12 @@ export const PyramidProperties = {
   zflip: bzwBool,
 };
 
-export interface IPyramid extends
-  IMaterialFriendly,
-  INameable,
-  IPhysicsDriverFriendly,
-  IPassableObject,
-  IPositionable
-{
+export interface IPyramid
+  extends IMaterialFriendly,
+    INameable,
+    IPhysicsDriverFriendly,
+    IPassableObject,
+    IPositionable {
   zflip: boolean;
 }
 

@@ -11,7 +11,10 @@ export abstract class BaseObject {
   public parent: BaseObject | null = null;
   public children: Record<string, BaseObject> = {};
 
-  protected readonly definitions: Record<string, Repeatable<any> | ParserCallback<any>> = {};
+  protected readonly definitions: Record<
+    string,
+    Repeatable<any> | ParserCallback<any>
+  > = {};
   protected readonly endTerminator: string = 'end';
 
   public finalize(): void {}
@@ -26,7 +29,7 @@ export abstract class BaseObject {
     if (typeof parser === 'function') {
       this[attribute] = parser(restOfLine);
     } else {
-      if (parser.type === "repeatable") {
+      if (parser.type === 'repeatable') {
         if (!this[attribute]) {
           this[attribute] = [];
         }
