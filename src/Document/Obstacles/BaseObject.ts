@@ -19,7 +19,7 @@ export abstract class BaseObject {
   public parseLine(line: string): void {
     const spacePos = line.search(/[ ]|$/);
     const attribute = line.substring(0, spacePos).toLowerCase();
-    const restOfLine = line.substr(spacePos + 1);
+    const restOfLine = line.substr(spacePos + 1).trim();
 
     const parser = this.definitions?.[attribute] ?? bzwString;
 

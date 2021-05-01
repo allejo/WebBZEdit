@@ -246,5 +246,6 @@ describe('BZW Document Parser', () => {
     const box: Box = Object.values(parser.world.children).pop() as Box;
     expect(box.name).toEqual("A Box");
     expect(box.position).toEqual([0, 0, 29]);
+    expect(box.size).toEqual([9.6568542495, 4.0, 16.0]);
   });
 });
