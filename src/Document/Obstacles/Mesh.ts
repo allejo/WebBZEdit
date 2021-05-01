@@ -7,7 +7,7 @@ import {
   bzwVector3F,
 } from '../attributeParsers';
 import { MeshFace } from './MeshFace';
-import { INameable, IPhysicsDriverFriendly } from './partials';
+import { INameable, IPhysicsDriverFriendly } from '../attributePartials';
 import { Vector3F } from '../../Utilities/types';
 
 export const MeshProperties = {

@@ -1,6 +1,6 @@
 import { BaseObject } from './BaseObject';
 import { bzwFloat, bzwIntVector, bzwRepeatable, bzwString, bzwVector3F } from '../attributeParsers';
-import { INameable, IPositionable } from './partials';
+import { INameable, IPositionable } from '../attributePartials';
 import { Vector3F } from '../../Utilities/types';
 
 export const ZoneProperties = {

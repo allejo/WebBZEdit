@@ -1,6 +1,6 @@
 import { BaseObject } from './BaseObject';
 import { bzwBool, bzwString, bzwVector3F } from '../attributeParsers';
-import { IMaterialFriendly, INameable, IPassableObject, IPhysicsDriverFriendly, IPositionable } from './partials';
+import { IMaterialFriendly, INameable, IPassableObject, IPhysicsDriverFriendly, IPositionable } from '../attributePartials';
 import { Vector3F } from '../../Utilities/types';
 
 export const PyramidProperties = {

@@ -1,7 +1,7 @@
 import { BaseObject } from './BaseObject';
 import { bzwBool, bzwFloat, bzwString, bzwVector3F } from '../attributeParsers';
 import { Vector3F } from '../../Utilities/types';
-import { IMaterialFriendly, INameable, IPassableObject, IPhysicsDriverFriendly, IPositionable } from './partials';
+import { IMaterialFriendly, INameable, IPassableObject, IPhysicsDriverFriendly, IPositionable } from '../attributePartials';
 
 export const BoxProperties = {
   name: bzwString,

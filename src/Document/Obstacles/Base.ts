@@ -1,7 +1,7 @@
 import { BaseObject } from './BaseObject';
 import { bzwFloat, bzwInt, bzwString, bzwVector3F } from '../attributeParsers';
 import { Vector3F } from '../../Utilities/types';
-import { INameable, IPositionable } from './partials';
+import { INameable, IPositionable } from '../attributePartials';
 
 export const BaseProperties = {
   position: bzwVector3F,
