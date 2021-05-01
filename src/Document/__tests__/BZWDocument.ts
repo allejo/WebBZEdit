@@ -27,7 +27,7 @@ describe('BZW Document Parser', () => {
     pyramid
       position 3 4 5
       size 10 5 7
-      zflip
+      flipz
     end
     `;
     const parser = new BZWDocument(bzwBody);
@@ -35,7 +35,7 @@ describe('BZW Document Parser', () => {
 
     expect(pyramid.position).toEqual([3, 4, 5]);
     expect(pyramid.size).toEqual([10, 5, 7]);
-    expect(pyramid.zflip).toEqual(true);
+    expect(pyramid.flipz).toEqual(true);
   });
 
   it('should handle a base', () => {

@@ -8,6 +8,7 @@ import { IPyramid } from '../Document/Obstacles/Pyramid';
 
 interface Props {
   obstacle: IPyramid;
+  onClick: (obstacle: IPyramid) => void;
 }
 
 // The "radius" of this pyramid is from the base's center to one of the four
@@ -29,36 +30,38 @@ const ROTATION_OFFSET = 45;
  * @constructor
  * @see https://threejs.org/docs/#api/en/geometries/ConeGeometry
  */
-const Pyramid = ({
-  obstacle: {
+const Pyramid = ({ obstacle, onClick }: Props) => {
+  const {
     position: [posX, posY, posZ],
     size: [sizeX, sizeY, sizeZ],
     rotation = 0,
-    zflip = false,
-  },
-}: Props) => {
+    flipz = false,
+  } = obstacle;
+  const handleOnClick = () => onClick(obstacle);
+
   const texture = useLoader(TextureLoader, pyrWall);
   texture.wrapS = texture.wrapT = RepeatWrapping;
   texture.repeat.set(sizeX, sizeY);
 
   return (
     <mesh
-      position={[posX, (sizeZ / 2) + posZ, posY]}
-      scale={[sizeX, 1, sizeY]}
-      rotation={[0, 0, zflip ? Math.PI : 0]}
+      position={[posX, (Math.abs(sizeZ) / 2) + posZ, posY]}
+      scale={[sizeX * 2, 1, sizeY * 2]}
+      rotation={[0, deg2rad(rotation), flipz ? Math.PI : 0]}
+      onClick={handleOnClick}
     >
       <coneBufferGeometry
-        attach='geometry'
+        attach="geometry"
         args={[
-          /* radius */         PYRAMID_BASE_RADIUS,
-          /* height */         sizeZ,
+          /* radius */ PYRAMID_BASE_RADIUS,
+          /* height */ sizeZ,
           /* radialSegments */ 4,
           /* heightSegments */ 1,
-          /* openEnded */      false,
-          /* thetaStart */     deg2rad(rotation + ROTATION_OFFSET),
+          /* openEnded */ false,
+          /* thetaStart */ deg2rad(ROTATION_OFFSET),
         ]}
       />
-      <meshBasicMaterial attach='material' map={texture} />
+      <meshBasicMaterial attach="material" map={texture} />
     </mesh>
   );
 };

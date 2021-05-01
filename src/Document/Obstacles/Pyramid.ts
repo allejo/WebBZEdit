@@ -1,5 +1,5 @@
 import { BaseObject } from './BaseObject';
-import { bzwBool, bzwString, bzwVector3F } from '../attributeParsers';
+import { bzwBool, bzwFloat, bzwString, bzwVector3F } from '../attributeParsers';
 import {
   IMaterialFriendly,
   INameable,
@@ -13,12 +13,12 @@ export const PyramidProperties = {
   name: bzwString,
   position: bzwVector3F,
   size: bzwVector3F,
-  rotate: bzwVector3F,
+  rotation: bzwFloat,
   matref: bzwString,
   phydrv: bzwString,
   drivethrough: bzwBool,
   shootthrough: bzwBool,
-  zflip: bzwBool,
+  flipz: bzwBool,
 };
 
 export interface IPyramid
@@ -27,7 +27,7 @@ export interface IPyramid
     IPhysicsDriverFriendly,
     IPassableObject,
     IPositionable {
-  zflip: boolean;
+  flipz: boolean;
 }
 
 export class Pyramid extends BaseObject implements IPyramid {
@@ -42,7 +42,7 @@ export class Pyramid extends BaseObject implements IPyramid {
   phydrv?: string;
   drivethrough: boolean = false;
   shootthrough: boolean = false;
-  zflip: boolean = false;
+  flipz: boolean = false;
 
   get passable(): boolean {
     return this.driveThrough && this.shootThrough;
