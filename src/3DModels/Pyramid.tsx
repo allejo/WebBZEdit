@@ -45,7 +45,7 @@ const Pyramid = ({ obstacle, onClick }: Props) => {
 
   return (
     <mesh
-      position={[posX, (Math.abs(sizeZ) / 2) + posZ, posY]}
+      position={[posX, Math.abs(sizeZ) / 2 + posZ, posY]}
       scale={[sizeX * 2, 1, sizeY * 2]}
       rotation={[0, deg2rad(rotation), flipz ? Math.PI : 0]}
       onClick={handleOnClick}
