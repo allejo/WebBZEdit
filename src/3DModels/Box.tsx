@@ -1,9 +1,9 @@
 import React from 'react';
 import { useLoader } from 'react-three-fiber';
-import { RepeatWrapping, TextureLoader } from 'three';
+import { RepeatWrapping, Texture, TextureLoader } from 'three';
 
-import { deg2rad } from '../Utilities/math';
 import { IBox } from '../Document/Obstacles/Box';
+import SkinnableBox from '../Document/Obstacles/Abstract/SkinnableBox';
 
 import boxRoof from '../assets/roof.png';
 import boxWall from '../assets/boxwall.png';
@@ -18,15 +18,14 @@ interface Props {
  * @see https://threejs.org/docs/#api/en/geometries/BoxGeometry
  */
 const Box = ({ obstacle, onClick }: Props) => {
-  const {
-    position: [bzwPosX, bzwPosY, bzwPosZ],
-    size: [bzwSizeX, bzwSizeY, bzwSizeZ],
-    rotation = 0,
-  } = obstacle;
+  const { position, size, rotation = 0 } = obstacle;
+  const [bzwSizeX, bzwSizeY, bzwSizeZ] = size;
   const handleOnClick = () => onClick(obstacle);
 
-  const roofTexture = useLoader(TextureLoader, boxRoof);
-  const wallTexture = useLoader(TextureLoader, boxWall);
+  const [roofTexture, wallTexture] = useLoader<Texture[]>(TextureLoader, [
+    boxRoof,
+    boxWall,
+  ]);
 
   roofTexture.wrapS = roofTexture.wrapT = RepeatWrapping;
   wallTexture.wrapS = wallTexture.wrapT = RepeatWrapping;
@@ -43,22 +42,18 @@ const Box = ({ obstacle, onClick }: Props) => {
   yTexture.needsUpdate = true;
 
   return (
-    <mesh
-      position={[bzwPosX, bzwPosZ + bzwSizeZ / 2, bzwPosY]}
-      rotation={[0, -deg2rad(rotation), 0]}
+    <SkinnableBox
+      position={position}
+      size={size}
+      rotation={rotation}
       onClick={handleOnClick}
-    >
-      <boxBufferGeometry
-        attach="geometry"
-        args={[bzwSizeX * 2, bzwSizeZ, bzwSizeY * 2]}
-      />
-      <meshBasicMaterial attachArray="material" map={xTexture} /> {/* +z */}
-      <meshBasicMaterial attachArray="material" map={xTexture} /> {/* -z */}
-      <meshBasicMaterial attachArray="material" map={roofTexture} /> {/* +y */}
-      <meshBasicMaterial attachArray="material" map={roofTexture} /> {/* -y */}
-      <meshBasicMaterial attachArray="material" map={yTexture} /> {/* +x */}
-      <meshBasicMaterial attachArray="material" map={yTexture} /> {/* -x */}
-    </mesh>
+      topMaterial={roofTexture}
+      botMaterial={roofTexture}
+      xPosMaterial={wallTexture}
+      xNegMaterial={wallTexture}
+      yPosMaterial={wallTexture}
+      yNegMaterial={wallTexture}
+    />
   );
 };
 
