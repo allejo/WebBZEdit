@@ -31,7 +31,9 @@ function obstacleToModel(obstacle: BaseObject): JSX.Element | null {
       />
     );
   } else if (obstacle instanceof BZWBase) {
-    return <Base obstacle={obstacle} onClick={handleOnClick} />;
+    return (
+      <Base key={obstacle.uuid} obstacle={obstacle} onClick={handleOnClick} />
+    );
   }
 
   return null;
