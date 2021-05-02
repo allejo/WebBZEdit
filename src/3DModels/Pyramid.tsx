@@ -9,6 +9,7 @@ import pyrWall from '../assets/pyrwall.png';
 
 interface Props {
   obstacle: IPyramid;
+  isSelected: boolean;
   onClick: (obstacle: IPyramid) => void;
 }
 

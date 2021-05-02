@@ -16,6 +16,7 @@ import redBaseWall from '../assets/red_basewall.png';
 
 interface Props {
   obstacle: IBase;
+  isSelected: boolean;
   onClick: (obstacle: IBase) => void;
 }
 

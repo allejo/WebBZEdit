@@ -10,6 +10,7 @@ import boxRoof from '../assets/roof.png';
 
 interface Props {
   obstacle: IBox;
+  isSelected: boolean;
   onClick: (obstacle: IBox) => void;
 }
 

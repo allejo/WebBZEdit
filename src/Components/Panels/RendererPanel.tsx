@@ -1,19 +1,20 @@
 import React, { Suspense } from 'react';
 import { Canvas } from 'react-three-fiber';
-import { useRecoilValue } from 'recoil';
+import { useRecoilBridgeAcrossReactRoots_UNSTABLE } from 'recoil';
 
-import { documentState } from '../../atoms';
 import BZWDocumentRenderer from '../BZWDocumentRenderer';
 import OrbitalControls from '../CameraControls/OrbitalControls';
 
 const RendererPanel = () => {
-  const document = useRecoilValue(documentState);
+  const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
   return (
     <Canvas>
-      <Suspense fallback={null}>
-        {document && <BZWDocumentRenderer document={document} />}
-      </Suspense>
+      <RecoilBridge>
+        <Suspense fallback={null}>
+          <BZWDocumentRenderer />
+        </Suspense>
+      </RecoilBridge>
 
       <OrbitalControls />
       <gridHelper args={[800, 40]} />

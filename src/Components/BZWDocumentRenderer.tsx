@@ -1,48 +1,52 @@
 import React from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Base from '../3DModels/Base';
 import Box from '../3DModels/Box';
 import Pyramid from '../3DModels/Pyramid';
-import { BZWDocument } from '../Document/BZWDocument';
 import { Base as BZWBase } from '../Document/Obstacles/Base';
-import { BaseObject } from '../Document/Obstacles/BaseObject';
 import { Box as BZWBox } from '../Document/Obstacles/Box';
 import { Pyramid as BZWPyramid } from '../Document/Obstacles/Pyramid';
+import { documentState, selectionState } from '../atoms';
 
-interface Props {
-  document: BZWDocument;
+function handleOnClick(uuid: string | null, setter: any) {
+  return (obstacle: any) => {
+    console.log(obstacle);
+    setter(uuid);
+  };
 }
 
-function handleOnClick(obstacle: any) {
-  console.log(obstacle);
-}
+const BZWDocumentRenderer = () => {
+  const [selection, setSelection] = useRecoilState(selectionState);
+  const document = useRecoilValue(documentState);
 
-function obstacleToModel(obstacle: BaseObject): JSX.Element | null {
-  if (obstacle instanceof BZWBox) {
-    return (
-      <Box key={obstacle.uuid} obstacle={obstacle} onClick={handleOnClick} />
-    );
-  } else if (obstacle instanceof BZWPyramid) {
-    return (
-      <Pyramid
-        key={obstacle.uuid}
-        obstacle={obstacle}
-        onClick={handleOnClick}
-      />
-    );
-  } else if (obstacle instanceof BZWBase) {
-    return (
-      <Base key={obstacle.uuid} obstacle={obstacle} onClick={handleOnClick} />
-    );
+  if (document === null) {
+    return null;
   }
 
-  return null;
-}
+  return (
+    <>
+      {Object.values(document.objects).map((obstacle) => {
+        const callback = handleOnClick(obstacle.uuid, setSelection);
+        const isSelected = selection === obstacle.uuid;
+        const props = {
+          key: obstacle.uuid,
+          onClick: callback,
+          isSelected: isSelected,
+        };
 
-const BZWDocumentRenderer = ({ document }: Props) => (
-  <>
-    {Object.values(document.objects).map((object) => obstacleToModel(object))}
-  </>
-);
+        if (obstacle instanceof BZWBox) {
+          return <Box {...props} obstacle={obstacle} />;
+        } else if (obstacle instanceof BZWPyramid) {
+          return <Pyramid {...props} obstacle={obstacle} />;
+        } else if (obstacle instanceof BZWBase) {
+          return <Base {...props} obstacle={obstacle} />;
+        }
+
+        return null;
+      })}
+    </>
+  );
+};
 
 export default BZWDocumentRenderer;
