@@ -1,4 +1,4 @@
-import { BaseObject } from './BaseObject';
+import { Vector3F } from '../../Utilities/types';
 import {
   bzwBool,
   bzwFloatVector,
@@ -6,9 +6,9 @@ import {
   bzwString,
   bzwVector3F,
 } from '../attributeParsers';
-import { MeshFace } from './MeshFace';
 import { INameable, IPhysicsDriverFriendly } from '../attributePartials';
-import { Vector3F } from '../../Utilities/types';
+import { BaseObject } from './BaseObject';
+import { MeshFace } from './MeshFace';
 
 export const MeshProperties = {
   name: bzwString,

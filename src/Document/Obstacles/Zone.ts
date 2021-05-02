@@ -1,4 +1,4 @@
-import { BaseObject } from './BaseObject';
+import { Vector3F } from '../../Utilities/types';
 import {
   bzwFloat,
   bzwIntVector,
@@ -7,7 +7,7 @@ import {
   bzwVector3F,
 } from '../attributeParsers';
 import { INameable, IPositionable } from '../attributePartials';
-import { Vector3F } from '../../Utilities/types';
+import { BaseObject } from './BaseObject';
 
 export const ZoneProperties = {
   name: bzwString,

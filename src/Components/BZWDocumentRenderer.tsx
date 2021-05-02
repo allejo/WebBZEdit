@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { BZWDocument } from '../Document/BZWDocument';
-import { BaseObject } from '../Document/Obstacles/BaseObject';
-import { Base as BZWBase } from '../Document/Obstacles/Base';
-import { Box as BZWBox } from '../Document/Obstacles/Box';
-import { Pyramid as BZWPyramid } from '../Document/Obstacles/Pyramid';
+import Base from '../3DModels/Base';
 import Box from '../3DModels/Box';
 import Pyramid from '../3DModels/Pyramid';
-import Base from '../3DModels/Base';
+import { BZWDocument } from '../Document/BZWDocument';
+import { Base as BZWBase } from '../Document/Obstacles/Base';
+import { BaseObject } from '../Document/Obstacles/BaseObject';
+import { Box as BZWBox } from '../Document/Obstacles/Box';
+import { Pyramid as BZWPyramid } from '../Document/Obstacles/Pyramid';
 
 interface Props {
   document: BZWDocument;

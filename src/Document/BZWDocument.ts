@@ -1,15 +1,15 @@
 import { nanoid } from 'nanoid';
 
+import { Stack } from '../Utilities/Stack';
 import { Base } from './Obstacles/Base';
 import { BaseObject } from './Obstacles/BaseObject';
 import { Box } from './Obstacles/Box';
-import { Pyramid } from './Obstacles/Pyramid';
-import { Teleporter } from './Obstacles/Teleporter';
-import { Zone } from './Obstacles/Zone';
 import { Mesh } from './Obstacles/Mesh';
 import { MeshFace } from './Obstacles/MeshFace';
-import { Stack } from '../Utilities/Stack';
+import { Pyramid } from './Obstacles/Pyramid';
+import { Teleporter } from './Obstacles/Teleporter';
 import { World } from './Obstacles/World';
+import { Zone } from './Obstacles/Zone';
 
 const ObjectMapping: Record<string, { new (): BaseObject }> = {
   base: Base,

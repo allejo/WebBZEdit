@@ -2,11 +2,11 @@ import React from 'react';
 import { useLoader } from 'react-three-fiber';
 import { RepeatWrapping, Texture, TextureLoader } from 'three';
 
-import { IBox } from '../Document/Obstacles/Box';
 import SkinnableBox from '../Document/Obstacles/Abstract/SkinnableBox';
+import { IBox } from '../Document/Obstacles/Box';
 
-import boxRoof from '../assets/roof.png';
 import boxWall from '../assets/boxwall.png';
+import boxRoof from '../assets/roof.png';
 
 interface Props {
   obstacle: IBox;

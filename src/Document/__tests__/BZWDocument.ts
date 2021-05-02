@@ -1,11 +1,11 @@
 import { BZWDocument } from '../BZWDocument';
+import { Base } from '../Obstacles/Base';
 import { Box } from '../Obstacles/Box';
+import { Mesh } from '../Obstacles/Mesh';
 import { Pyramid } from '../Obstacles/Pyramid';
 import { Teleporter } from '../Obstacles/Teleporter';
-import { Zone } from '../Obstacles/Zone';
-import { Base } from '../Obstacles/Base';
-import { Mesh } from '../Obstacles/Mesh';
 import { World } from '../Obstacles/World';
+import { Zone } from '../Obstacles/Zone';
 
 describe('BZW Document Parser', () => {
   it('should handle a box', () => {

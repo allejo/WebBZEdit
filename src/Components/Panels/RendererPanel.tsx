@@ -2,10 +2,9 @@ import React, { Suspense } from 'react';
 import { Canvas } from 'react-three-fiber';
 import { useRecoilValue } from 'recoil';
 
+import { documentState } from '../../atoms';
 import BZWDocumentRenderer from '../BZWDocumentRenderer';
 import OrbitalControls from '../CameraControls/OrbitalControls';
-
-import { documentState } from '../../atoms';
 
 const RendererPanel = () => {
   const document = useRecoilValue(documentState);

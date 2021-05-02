@@ -2,8 +2,8 @@ import React from 'react';
 
 import { IPositionable } from '../../Document/attributePartials';
 import { Vector3F } from '../../Utilities/types';
-import Vector3FControls from './Vector3FControls';
 import NumericalControl from './NumericalControl';
+import Vector3FControls from './Vector3FControls';
 
 interface Props {
   data: IPositionable;

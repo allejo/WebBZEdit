@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 
-import { documentState } from '../atoms';
 import { BZWDocument } from '../Document/BZWDocument';
+import { documentState } from '../atoms';
 
 import hix from '../assets/hix.bzw';
 

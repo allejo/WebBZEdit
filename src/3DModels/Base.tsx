@@ -1,7 +1,9 @@
 import React from 'react';
+import { useLoader } from 'react-three-fiber';
+import { RepeatWrapping, Texture, TextureLoader } from 'three';
 
-import { IBase } from '../Document/Obstacles/Base';
 import SkinnableBox from '../Document/Obstacles/Abstract/SkinnableBox';
+import { IBase } from '../Document/Obstacles/Base';
 
 import blueBaseTop from '../assets/blue_basetop.png';
 import blueBaseWall from '../assets/blue_basewall.png';
@@ -11,8 +13,6 @@ import purpleBaseTop from '../assets/purple_basetop.png';
 import purpleBaseWall from '../assets/purple_basewall.png';
 import redBaseTop from '../assets/red_basetop.png';
 import redBaseWall from '../assets/red_basewall.png';
-import { useLoader } from 'react-three-fiber';
-import { RepeatWrapping, Texture, TextureLoader } from 'three';
 
 interface Props {
   obstacle: IBase;

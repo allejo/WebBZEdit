@@ -1,6 +1,6 @@
-import { BaseObject } from './BaseObject';
 import { bzwBool, bzwIntVector, bzwString } from '../attributeParsers';
 import { IMaterialFriendly, IPassableObject } from '../attributePartials';
+import { BaseObject } from './BaseObject';
 
 export const MeshFaceProperties = {
   vertices: bzwIntVector,

@@ -1,7 +1,7 @@
-import { BaseObject } from './BaseObject';
+import { Vector3F } from '../../Utilities/types';
 import { bzwFloat, bzwVector3F } from '../attributeParsers';
 import { IPositionable } from '../attributePartials';
-import { Vector3F } from '../../Utilities/types';
+import { BaseObject } from './BaseObject';
 
 export const TeleporterProperties = {
   position: bzwVector3F,

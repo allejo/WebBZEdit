@@ -2,9 +2,10 @@ import React from 'react';
 import { useLoader } from 'react-three-fiber';
 import { RepeatWrapping, TextureLoader } from 'three';
 
-import pyrWall from '../assets/pyrwall.png';
-import { deg2rad } from '../Utilities/math';
 import { IPyramid } from '../Document/Obstacles/Pyramid';
+import { deg2rad } from '../Utilities/math';
+
+import pyrWall from '../assets/pyrwall.png';
 
 interface Props {
   obstacle: IPyramid;
