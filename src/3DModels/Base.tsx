@@ -33,7 +33,6 @@ function getTeamTextures(team: IBase['color']): string[] {
 
 const Base = ({ obstacle, onClick }: Props) => {
   const { position, size, rotation = 0 } = obstacle;
-  const [bzwSizeX, bzwSizeY, bzwSizeZ] = size;
   const handleOnClick = () => onClick(obstacle);
 
   const [roofTexture, wallTexture] = useLoader<Texture[]>(
@@ -43,6 +42,15 @@ const Base = ({ obstacle, onClick }: Props) => {
 
   wallTexture.wrapS = wallTexture.wrapT = RepeatWrapping;
 
+  const xTexture = wallTexture;
+  const yTexture = wallTexture.clone();
+
+  xTexture.repeat.set(size[1], size[2]);
+  xTexture.needsUpdate = true;
+
+  yTexture.repeat.set(size[0], size[2]);
+  yTexture.needsUpdate = true;
+
   return (
     <SkinnableBox
       position={position}
@@ -51,10 +59,10 @@ const Base = ({ obstacle, onClick }: Props) => {
       onClick={handleOnClick}
       topMaterial={roofTexture}
       botMaterial={roofTexture}
-      xPosMaterial={wallTexture}
-      xNegMaterial={wallTexture}
-      yPosMaterial={wallTexture}
-      yNegMaterial={wallTexture}
+      xPosMaterial={xTexture}
+      xNegMaterial={xTexture}
+      yPosMaterial={yTexture}
+      yNegMaterial={yTexture}
     />
   );
 };
