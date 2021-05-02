@@ -1,0 +1,33 @@
+$size-menu-bar: 30px;
+$size-toolbox: 175px;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+.menubar {
+  border-bottom: 1px solid gray;
+  height: $size-menu-bar;
+}
+
+.hud {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.application {
+  height: 100%;
+}
+
+.renderer {
+  height: calc(100vh - #{$size-menu-bar} - #{$size-toolbox});
+}
+
+.toolbar {
+  background: lightgray;
+  height: $size-toolbox;
+}

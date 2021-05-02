@@ -4,6 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import { BZWDocument } from '../Document/BZWDocument';
 import { documentState } from '../atoms';
 
+// @ts-ignore
 import hix from '../assets/hix.bzw';
 
 const HixDocumentLoader = () => {

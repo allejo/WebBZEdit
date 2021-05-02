@@ -10,6 +10,7 @@
     "react-scripts": "^4.0.1",
     "react-three-fiber": "^4.0.12",
     "recoil": "^0.2.0",
+    "sass": "^1.32.12",
     "three": "^0.112.1"
   },
   "scripts": {
