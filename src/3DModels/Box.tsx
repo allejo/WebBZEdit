@@ -35,10 +35,10 @@ const Box = ({ obstacle, onClick }: Props) => {
   const xTexture = wallTexture;
   const yTexture = wallTexture.clone();
 
-  xTexture.repeat.set(bzwSizeZ, bzwSizeY);
+  xTexture.repeat.set(bzwSizeZ / 4, bzwSizeZ / 7.5);
   xTexture.needsUpdate = true;
 
-  yTexture.repeat.set(bzwSizeX, bzwSizeY);
+  yTexture.repeat.set(bzwSizeY / 4, bzwSizeZ / 7.5);
   yTexture.needsUpdate = true;
 
   return (
