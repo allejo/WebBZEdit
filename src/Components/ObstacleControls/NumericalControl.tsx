@@ -10,7 +10,13 @@ interface Props {
   value: number;
 }
 
-const NumericalControl = ({ className = '', label, onChange, prefix, value }: Props) => {
+const NumericalControl = ({
+  className = '',
+  label,
+  onChange,
+  prefix,
+  value,
+}: Props) => {
   const id = [prefix, label].join('-').toLowerCase();
   const callback = (event: SyntheticEvent<HTMLInputElement>) => {
     onChange(+event.currentTarget.value);
@@ -18,7 +24,9 @@ const NumericalControl = ({ className = '', label, onChange, prefix, value }: Pr
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
-      <label className={styles.label} htmlFor={id}>{label}</label>
+      <label className={styles.label} htmlFor={id}>
+        {label}
+      </label>
       <input
         id={id}
         className={styles.input}
