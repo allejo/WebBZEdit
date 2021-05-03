@@ -1,33 +1,30 @@
-$size-menu-bar: 30px;
-$size-toolbox: 175px;
-
 .wrapper {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   height: 100vh;
+  grid-template-columns: 1.7fr 0.3fr;
+  grid-template-rows: 0.1fr 2.3fr 0.6fr;
+  gap: 0 0;
+  grid-template-areas:
+    'Menubar Menubar'
+    'Renderer Sidebar'
+    'Toolbox Toolbox';
   width: 100vw;
 }
 
-.menubar {
-  border-bottom: 1px solid gray;
-  height: $size-menu-bar;
+.Menubar {
+  grid-area: Menubar;
 }
 
-.hud {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+.Toolbox {
+  grid-area: Toolbox;
 }
 
-.application {
-  height: 100%;
+.Renderer {
+  grid-area: Renderer;
 }
 
-.renderer {
-  height: calc(100vh - #{$size-menu-bar} - #{$size-toolbox});
-}
-
-.toolbar {
-  background: lightgray;
-  height: $size-toolbox;
+.Sidebar {
+  grid-area: Sidebar;
+  max-height: 100%;
+  overflow-y: auto;
 }

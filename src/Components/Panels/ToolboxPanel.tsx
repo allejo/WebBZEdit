@@ -7,7 +7,7 @@ import {
   IPositionable,
 } from '../../Document/attributePartials';
 import { documentState, selectionState } from '../../atoms';
-import PositionableControls from '../ObstacleControls/PositionableControls';
+import PositionableControls from './Toolbox/PositionableControls';
 
 const ToolboxPanel = () => {
   const bzwDocument = useRecoilValue(documentState);
