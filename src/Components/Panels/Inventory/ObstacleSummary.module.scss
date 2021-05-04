@@ -1,10 +1,15 @@
 .wrapper {
   align-items: center;
   border-bottom: 1px solid lightgrey;
+  cursor: pointer;
   display: flex;
   font-size: 0.9rem;
   font-weight: bold;
   padding: 10px;
+
+  &.selected {
+    background-color: lightblue;
+  }
 }
 
 .thumbnail {

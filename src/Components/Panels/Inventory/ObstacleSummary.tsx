@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent, forwardRef } from 'react';
 
 import { BaseObject } from '../../../Document/Obstacles/BaseObject';
 
@@ -9,6 +9,8 @@ import styles from './ObstacleSummary.module.scss';
 
 interface Props {
   obstacle: BaseObject;
+  onClick: (event: MouseEvent, obstacle: BaseObject) => void;
+  selected: boolean;
 }
 
 const obstacleThumbs: Record<string, string> = {
@@ -31,13 +33,22 @@ function getThumbnail(type: string): JSX.Element {
   return <span className={styles.empty} />;
 }
 
-const ObstacleSummary = ({ obstacle }: Props) => (
-  <div className={styles.wrapper}>
-    <div>{getThumbnail(obstacle.objectType)}</div>
-    <div className={styles.body}>
-      {obstacle.name ?? `${obstacle.objectType} ${obstacle.uuid.substr(0, 8)}`}
-    </div>
-  </div>
+const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
+  ({ obstacle, onClick, selected }: Props, ref) => {
+    const displayName =
+      obstacle.name ?? `${obstacle.objectType} ${obstacle.uuid.substr(0, 8)}`;
+
+    return (
+      <div
+        ref={ref}
+        className={`${styles.wrapper} ${selected && styles.selected}`}
+        onClick={(event) => onClick(event, obstacle)}
+      >
+        <div>{getThumbnail(obstacle.objectType)}</div>
+        <div className={styles.body}>{displayName}</div>
+      </div>
+    );
+  },
 );
 
 export default ObstacleSummary;
