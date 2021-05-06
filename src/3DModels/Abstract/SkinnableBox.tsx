@@ -1,8 +1,8 @@
 import React from 'react';
 import { Texture } from 'three';
 
-import { deg2rad } from '../../../Utilities/math';
-import { Vector3F } from '../../../Utilities/types';
+import { deg2rad } from '../../Utilities/math';
+import { Vector3F } from '../../Utilities/types';
 
 interface Props {
   position: Vector3F;

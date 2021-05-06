@@ -2,8 +2,8 @@ import React from 'react';
 import { useLoader } from 'react-three-fiber';
 import { RepeatWrapping, Texture, TextureLoader } from 'three';
 
-import SkinnableBox from '../Document/Obstacles/Abstract/SkinnableBox';
 import { IBase } from '../Document/Obstacles/Base';
+import SkinnableBox from './Abstract/SkinnableBox';
 
 import blueBaseTop from '../assets/blue_basetop.png';
 import blueBaseWall from '../assets/blue_basewall.png';
