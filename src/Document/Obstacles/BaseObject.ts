@@ -7,7 +7,6 @@ export interface IBaseObject {
   _objectType: string;
   _infoString: string;
   _terminator: string;
-  _parent: IBaseObject | null;
   children: Record<string, IBaseObject>;
 }
 
@@ -34,7 +33,6 @@ export function newIBaseObject(
     _objectType: objectType,
     _infoString: '',
     _terminator: 'end',
-    _parent: null,
     children: {},
   };
 }

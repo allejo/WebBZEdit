@@ -111,8 +111,8 @@ export function parseBZWDocument(document: string): IWorld {
     }
 
     if (currObject && line === currObject._terminator) {
-      if (currObject._parent) {
-        currObject._parent.children[currObject._uuid] = currObject;
+      if (objStack.peek(1)) {
+        objStack.peek(1)!.children[currObject._uuid] = currObject;
       }
 
       ObjectBuilders[currObject._objectType].finalize(currObject);
@@ -135,8 +135,6 @@ export function parseBZWDocument(document: string): IWorld {
         if (newObject._objectType === 'world') {
           world = newObject;
           objStack.pop();
-        } else {
-          newObject._parent = currObject;
         }
 
         objStack.push(newObject);
