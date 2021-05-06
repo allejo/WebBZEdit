@@ -1,7 +1,8 @@
+import produce from 'immer';
 import React, { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { BaseObject } from '../../Document/Obstacles/BaseObject';
+import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import {
   implementsIPositionable,
   IPositionable,
@@ -10,25 +11,31 @@ import { documentState, selectionState } from '../../atoms';
 import PositionableControls from './Toolbox/PositionableControls';
 
 const ToolboxPanel = () => {
-  const bzwDocument = useRecoilValue(documentState);
+  const [world, setBZWDocument] = useRecoilState(documentState);
   const selectedUUID = useRecoilValue(selectionState);
 
-  const [selection, setSelection] = useState<BaseObject | null>(null);
+  const [selection, setSelection] = useState<IBaseObject | null>(null);
 
   useEffect(() => {
-    if (bzwDocument && selectedUUID) {
-      setSelection(bzwDocument.objects[selectedUUID]);
+    if (world && selectedUUID) {
+      setSelection(world.children[selectedUUID]);
     }
-  }, [bzwDocument, selectedUUID]);
+  }, [world, selectedUUID]);
 
   const handlePositionableOnChange = (data: IPositionable) => {
-    // const obj: BaseObject & IPositionable = Object.assign(
-    //   null,
-    //   selected,
-    // );
-    // obj.position = data.position;
-    // obj.size = data.size;
-    // obj.rotation = data.rotation;
+    if (!world || !selectedUUID) {
+      return;
+    }
+
+    const nextWorld = produce(world, (draftWorld) => {
+      const obstacle: IPositionable = draftWorld.children[selectedUUID] as any;
+
+      obstacle.position = data.position;
+      obstacle.size = data.size;
+      obstacle.rotation = data.rotation;
+    });
+
+    setBZWDocument(nextWorld);
   };
 
   return (
