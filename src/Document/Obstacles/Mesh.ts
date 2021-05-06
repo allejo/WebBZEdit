@@ -7,8 +7,8 @@ import {
   bzwVector3F,
 } from '../attributeParsers';
 import { INameable, IPhysicsDriverFriendly } from '../attributePartials';
-import { BaseObject } from './BaseObject';
-import { MeshFace } from './MeshFace';
+import { IBaseObject, newIBaseObject } from './BaseObject';
+import { IMeshFace } from './MeshFace';
 
 export const MeshProperties = {
   name: bzwString,
@@ -26,7 +26,7 @@ export const MeshProperties = {
   noclusters: bzwBool,
 };
 
-export interface IMesh extends INameable, IPhysicsDriverFriendly {
+export interface IMesh extends IBaseObject, INameable, IPhysicsDriverFriendly {
   inside?: Vector3F[];
   outside?: Vector3F[];
   vertex?: Vector3F[];
@@ -40,25 +40,11 @@ export interface IMesh extends INameable, IPhysicsDriverFriendly {
   noclusters?: boolean;
 }
 
-export class Mesh extends BaseObject implements IMesh {
-  objectType = 'mesh';
-  definitions = MeshProperties;
-
-  name?: string;
-  phydrv?: string;
-  inside?: Vector3F[];
-  outside?: Vector3F[];
-  vertex?: Vector3F[];
-  normal?: number[];
-  texcoord?: number[];
-  shift?: Vector3F[];
-  scale?: Vector3F[];
-  shear?: Vector3F[];
-  spin?: number[];
-  smoothbounce?: boolean;
-  noclusters?: boolean;
-
-  get faces(): MeshFace[] {
-    return Object.values(this.children) as MeshFace[];
-  }
+export function newIMesh(): IMesh {
+  return {
+    ...newIBaseObject('mesh'),
+    get faces(): IMeshFace[] {
+      return Object.values(this.children) as IMeshFace[];
+    },
+  };
 }

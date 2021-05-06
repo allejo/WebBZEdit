@@ -1,7 +1,6 @@
-import { Vector3F } from '../../Utilities/types';
 import { bzwFloat, bzwInt, bzwString, bzwVector3F } from '../attributeParsers';
 import { INameable, IPositionable } from '../attributePartials';
-import { BaseObject } from './BaseObject';
+import { IBaseObject, newIBaseObject } from './BaseObject';
 
 export const BaseProperties = {
   position: bzwVector3F,
@@ -11,19 +10,17 @@ export const BaseProperties = {
   oncap: bzwString,
 };
 
-export interface IBase extends INameable, IPositionable {
+export interface IBase extends IBaseObject, INameable, IPositionable {
   color: 1 | 2 | 3 | 4;
   oncap?: string;
 }
 
-export class Base extends BaseObject implements IBase {
-  objectType = 'base';
-  definitions = BaseProperties;
-
-  name?: string;
-  position: Vector3F = [0, 0, 0];
-  size: Vector3F = [16, 16, 4];
-  rotation: number = 0;
-  color: 1 | 2 | 3 | 4 = 1;
-  oncap?: string;
+export function newIBase(): IBase {
+  return {
+    ...newIBaseObject('base'),
+    position: [0, 0, 0],
+    size: [16, 16, 4],
+    rotation: 0,
+    color: 1,
+  };
 }

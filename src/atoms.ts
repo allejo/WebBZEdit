@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 
-import { BZWDocument } from './Document/BZWDocument';
+import { IWorld } from './Document/Obstacles/World';
 
-export const documentState = atom<BZWDocument | null>({
+export const documentState = atom<IWorld | null>({
   key: 'document',
   default: null,
 });

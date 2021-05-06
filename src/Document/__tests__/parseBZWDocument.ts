@@ -1,11 +1,10 @@
-import { BZWDocument } from '../BZWDocument';
-import { Base } from '../Obstacles/Base';
-import { Box } from '../Obstacles/Box';
-import { Mesh } from '../Obstacles/Mesh';
-import { Pyramid } from '../Obstacles/Pyramid';
-import { Teleporter } from '../Obstacles/Teleporter';
-import { World } from '../Obstacles/World';
-import { Zone } from '../Obstacles/Zone';
+import { IBase } from '../Obstacles/Base';
+import { IBox } from '../Obstacles/Box';
+import { IMesh } from '../Obstacles/Mesh';
+import { IPyramid } from '../Obstacles/Pyramid';
+import { ITeleporter } from '../Obstacles/Teleporter';
+import { IZone } from '../Obstacles/Zone';
+import { parseBZWDocument } from '../parseBZWDocument';
 
 describe('BZW Document Parser', () => {
   it('should handle a box', () => {
@@ -15,8 +14,8 @@ describe('BZW Document Parser', () => {
       size 2 7 1
     end
     `;
-    const parser = new BZWDocument(bzwBody);
-    const box: Box = Object.values(parser.objects).pop() as Box;
+    const world = parseBZWDocument(bzwBody);
+    const box: IBox = Object.values(world.children).pop() as IBox;
 
     expect(box.position).toEqual([5, 10, 15]);
     expect(box.size).toEqual([2, 7, 1]);
@@ -30,8 +29,8 @@ describe('BZW Document Parser', () => {
       flipz
     end
     `;
-    const parser = new BZWDocument(bzwBody);
-    const pyramid: Pyramid = Object.values(parser.objects).pop() as Pyramid;
+    const world = parseBZWDocument(bzwBody);
+    const pyramid: IPyramid = Object.values(world.children).pop() as IPyramid;
 
     expect(pyramid.position).toEqual([3, 4, 5]);
     expect(pyramid.size).toEqual([10, 5, 7]);
@@ -48,8 +47,8 @@ describe('BZW Document Parser', () => {
      oncap SW
     end
     `;
-    const parser = new BZWDocument(bzwBody);
-    const base: Base = Object.values(parser.objects).pop() as Base;
+    const world = parseBZWDocument(bzwBody);
+    const base: IBase = Object.values(world.children).pop() as IBase;
 
     expect(base.position).toEqual([10, 20, 30]);
     expect(base.rotation).toEqual(45);
@@ -77,8 +76,8 @@ describe('BZW Document Parser', () => {
       safety 1 2 3 4
     end
     `;
-    const parser = new BZWDocument(bzwBody);
-    const zone: Zone = Object.values(parser.objects).pop() as Zone;
+    const world = parseBZWDocument(bzwBody);
+    const zone: IZone = Object.values(world.children).pop() as IZone;
 
     expect(zone.name).toEqual('example_zone');
     expect(zone.position).toEqual([0.0, 0.0, 0.0]);
@@ -99,10 +98,10 @@ describe('BZW Document Parser', () => {
       border 1.12
     end
     `;
-    const parser = new BZWDocument(bzwBody);
-    const teleporter: Teleporter = Object.values(
-      parser.objects,
-    ).pop() as Teleporter;
+    const world = parseBZWDocument(bzwBody);
+    const teleporter: ITeleporter = Object.values(
+      world.children,
+    ).pop() as ITeleporter;
 
     expect(teleporter.name).toEqual('tele0');
     expect(teleporter.position).toEqual([0, 0, 10]);
@@ -155,8 +154,8 @@ describe('BZW Document Parser', () => {
       endface
     end
     `;
-    const parser = new BZWDocument(bzwBody);
-    const mesh: Mesh = Object.values(parser.objects).pop() as Mesh;
+    const world = parseBZWDocument(bzwBody);
+    const mesh: IMesh = Object.values(world.children).pop() as IMesh;
 
     expect(mesh.name).toEqual('example_mesh');
     expect(mesh.inside).toEqual([[5.5, 4.5, 1.2]]);
@@ -205,8 +204,7 @@ describe('BZW Document Parser', () => {
       freeCtfSpawns
     end
     `;
-    const parser = new BZWDocument(bzwBody);
-    const world: World = parser.world;
+    const world = parseBZWDocument(bzwBody);
 
     expect(world.name).toEqual('example_world');
     expect(world.size).toEqual(400.0);
@@ -239,13 +237,13 @@ describe('BZW Document Parser', () => {
     size     9.6568542495 4.0 16.0
     end
     `;
-    const parser = new BZWDocument(bzwBody);
+    const world = parseBZWDocument(bzwBody);
 
-    expect(parser.world.name).toEqual('HiX 2.0');
-    expect(parser.world.size).toEqual(400);
-    expect(parser.world.flagheight).toEqual(0);
+    expect(world.name).toEqual('HiX 2.0');
+    expect(world.size).toEqual(400);
+    expect(world.flagheight).toEqual(0);
 
-    const box: Box = Object.values(parser.world.children).pop() as Box;
+    const box: IBox = Object.values(world.children).pop() as IBox;
     expect(box.name).toEqual('A Box');
     expect(box.position).toEqual([0, 0, 29]);
     expect(box.size).toEqual([9.6568542495, 4.0, 16.0]);

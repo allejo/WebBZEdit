@@ -1,6 +1,6 @@
 import { bzwBool, bzwFloat, bzwString } from '../attributeParsers';
 import { INameable } from '../attributePartials';
-import { BaseObject } from './BaseObject';
+import { IBaseObject, newIBaseObject } from './BaseObject';
 
 export const WorldProperties = {
   name: bzwString,
@@ -10,20 +10,18 @@ export const WorldProperties = {
   freectfspawns: bzwBool,
 };
 
-export interface IWorld extends INameable {
+export interface IWorld extends IBaseObject, INameable {
   size: number;
   flagheight?: number;
   nowalls: boolean;
   freectfspawns: boolean;
 }
 
-export class World extends BaseObject implements IWorld {
-  objectType = 'world';
-  definitions = WorldProperties;
-
-  name?: string;
-  size: number = 800;
-  flagheight?: number;
-  nowalls: boolean = false;
-  freectfspawns: boolean = false;
+export function newIWorld(): IWorld {
+  return {
+    ...newIBaseObject('world'),
+    size: 800,
+    nowalls: false,
+    freectfspawns: false,
+  };
 }

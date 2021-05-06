@@ -1,6 +1,6 @@
 import { bzwBool, bzwIntVector, bzwString } from '../attributeParsers';
 import { IMaterialFriendly, IPassableObject } from '../attributePartials';
-import { BaseObject } from './BaseObject';
+import { IBaseObject, newIBaseObject, newIPassableObject } from './BaseObject';
 
 export const MeshFaceProperties = {
   vertices: bzwIntVector,
@@ -15,7 +15,10 @@ export const MeshFaceProperties = {
   matref: bzwString,
 };
 
-export interface IMeshFace extends IMaterialFriendly, IPassableObject {
+export interface IMeshFace
+  extends IBaseObject,
+    IMaterialFriendly,
+    IPassableObject {
   vertices?: number[];
   normals?: number[];
   texcoords?: number[];
@@ -23,28 +26,12 @@ export interface IMeshFace extends IMaterialFriendly, IPassableObject {
   noclusters?: boolean;
 }
 
-export class MeshFace extends BaseObject {
-  protected endTerminator = 'endface';
-
-  objectType = 'face';
-  definitions = MeshFaceProperties;
-
-  vertices?: number[];
-  normals?: number[];
-  texcoords?: number[];
-  smoothbounce?: boolean;
-  noclusters?: boolean;
-  phydrv?: string;
-  matref?: string;
-  drivethrough: boolean = false;
-  shootthrough: boolean = false;
-
-  get passable(): boolean {
-    return this.drivethrough && this.shootthrough;
-  }
-
-  set passable(value: boolean) {
-    this.drivethrough = value;
-    this.shootthrough = value;
-  }
+export function newIMeshFace(): IMeshFace {
+  return {
+    ...newIBaseObject('face'),
+    ...newIPassableObject(),
+    _terminator: 'endface',
+    drivethrough: false,
+    shootthrough: false,
+  };
 }

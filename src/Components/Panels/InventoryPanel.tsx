@@ -1,7 +1,7 @@
 import React, { MouseEvent, useEffect, useRef } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { BaseObject } from '../../Document/Obstacles/BaseObject';
+import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { documentState, selectionState } from '../../atoms';
 import ObstacleSummary from './Inventory/ObstacleSummary';
 
@@ -25,7 +25,7 @@ const InventoryPanel = () => {
   const [selection, setSelection] = useRecoilState(selectionState);
   const refs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  const handleOnClick = (event: MouseEvent, obstacle: BaseObject) => {
+  const handleOnClick = (event: MouseEvent, obstacle: IBaseObject) => {
     setSelection(obstacle.uuid);
   };
 
@@ -48,13 +48,13 @@ const InventoryPanel = () => {
 
   return (
     <div className={styles.wrapper}>
-      {Object.values(bzwDocument?.objects).map((object) => (
+      {Object.values(bzwDocument.children).map((object) => (
         <ObstacleSummary
-          key={object.uuid}
-          ref={(el) => (refs.current[object.uuid] = el)}
+          key={object._uuid}
+          ref={(el) => (refs.current[object._uuid] = el)}
           onClick={handleOnClick}
           obstacle={object}
-          selected={object.uuid === selection}
+          selected={object._uuid === selection}
         />
       ))}
     </div>

@@ -4,16 +4,13 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import Base from '../3DModels/Base';
 import Box from '../3DModels/Box';
 import Pyramid from '../3DModels/Pyramid';
-import { Base as BZWBase } from '../Document/Obstacles/Base';
-import { Box as BZWBox } from '../Document/Obstacles/Box';
-import { Pyramid as BZWPyramid } from '../Document/Obstacles/Pyramid';
+import { IBase } from '../Document/Obstacles/Base';
+import { IBox } from '../Document/Obstacles/Box';
+import { IPyramid } from '../Document/Obstacles/Pyramid';
 import { documentState, selectionState } from '../atoms';
 
 function handleOnClick(uuid: string | null, setter: any) {
-  return (obstacle: any) => {
-    console.log(obstacle);
-    setter(uuid);
-  };
+  return () => setter(uuid);
 }
 
 const BZWDocumentRenderer = () => {
@@ -26,21 +23,21 @@ const BZWDocumentRenderer = () => {
 
   return (
     <>
-      {Object.values(document.objects).map((obstacle) => {
-        const callback = handleOnClick(obstacle.uuid, setSelection);
+      {Object.values(document.children).map((obstacle) => {
+        const callback = handleOnClick(obstacle._uuid, setSelection);
         const isSelected = selection === obstacle.uuid;
         const props = {
-          key: obstacle.uuid,
+          key: obstacle._uuid,
           onClick: callback,
           isSelected: isSelected,
         };
 
-        if (obstacle instanceof BZWBox) {
-          return <Box {...props} obstacle={obstacle} />;
-        } else if (obstacle instanceof BZWPyramid) {
-          return <Pyramid {...props} obstacle={obstacle} />;
-        } else if (obstacle instanceof BZWBase) {
-          return <Base {...props} obstacle={obstacle} />;
+        if (obstacle._objectType === 'box') {
+          return <Box {...props} obstacle={obstacle as IBox} />;
+        } else if (obstacle._objectType === 'pyramid') {
+          return <Pyramid {...props} obstacle={obstacle as IPyramid} />;
+        } else if (obstacle._objectType === 'base') {
+          return <Base {...props} obstacle={obstacle as IBase} />;
         }
 
         return null;

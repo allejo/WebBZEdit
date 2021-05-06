@@ -1,4 +1,3 @@
-import { Vector3F } from '../../Utilities/types';
 import {
   bzwFloat,
   bzwIntVector,
@@ -7,7 +6,7 @@ import {
   bzwVector3F,
 } from '../attributeParsers';
 import { INameable, IPositionable } from '../attributePartials';
-import { BaseObject } from './BaseObject';
+import { IBaseObject, newIBaseObject } from './BaseObject';
 
 export const ZoneProperties = {
   name: bzwString,
@@ -20,23 +19,20 @@ export const ZoneProperties = {
   safety: bzwIntVector,
 };
 
-export interface IZone extends INameable, IPositionable {
+export interface IZone extends IBaseObject, INameable, IPositionable {
   zoneflag: string[];
   flag: string[];
   team?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   safety?: 1 | 2 | 3 | 4;
 }
 
-export class Zone extends BaseObject implements IZone {
-  objectType = 'zone';
-  definitions = ZoneProperties;
-
-  name?: string;
-  position: Vector3F = [0, 0, 0];
-  size: Vector3F = [10, 10, 4];
-  rotation: number = 0;
-  zoneflag: string[] = [];
-  flag: string[] = [];
-  team?: IZone['team'];
-  safety?: IZone['safety'];
+export function newIZone(): IZone {
+  return {
+    ...newIBaseObject('zone'),
+    position: [0, 0, 0],
+    size: [10, 10, 4],
+    rotation: 0,
+    zoneflag: [],
+    flag: [],
+  };
 }

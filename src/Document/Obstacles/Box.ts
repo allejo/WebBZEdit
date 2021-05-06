@@ -1,4 +1,3 @@
-import { Vector3F } from '../../Utilities/types';
 import { bzwBool, bzwFloat, bzwString, bzwVector3F } from '../attributeParsers';
 import {
   IMaterialFriendly,
@@ -7,7 +6,7 @@ import {
   IPhysicsDriverFriendly,
   IPositionable,
 } from '../attributePartials';
-import { BaseObject } from './BaseObject';
+import { IBaseObject, newIBaseObject, newIPassableObject } from './BaseObject';
 
 export const BoxProperties = {
   name: bzwString,
@@ -21,31 +20,19 @@ export const BoxProperties = {
 };
 
 export interface IBox
-  extends IMaterialFriendly,
+  extends IBaseObject,
+    IMaterialFriendly,
     INameable,
     IPassableObject,
     IPositionable,
     IPhysicsDriverFriendly {}
 
-export class Box extends BaseObject implements IBox {
-  objectType = 'box';
-  definitions = BoxProperties;
-
-  name?: string;
-  position: Vector3F = [0, 0, 0];
-  size: Vector3F = [5, 5, 5];
-  rotation: number = 0;
-  matref?: string;
-  phydrv?: string;
-  drivethrough: boolean = false;
-  shootthrough: boolean = false;
-
-  get passable(): boolean {
-    return this.drivethrough && this.shootthrough;
-  }
-
-  set passable(value: boolean) {
-    this.drivethrough = value;
-    this.shootthrough = value;
-  }
+export function newIBox(): IBox {
+  return {
+    ...newIBaseObject('box'),
+    ...newIPassableObject(),
+    position: [0, 0, 0],
+    size: [5, 5, 5],
+    rotation: 0,
+  };
 }

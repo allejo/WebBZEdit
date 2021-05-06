@@ -1,4 +1,3 @@
-import { Vector3F } from '../../Utilities/types';
 import { bzwBool, bzwFloat, bzwString, bzwVector3F } from '../attributeParsers';
 import {
   IMaterialFriendly,
@@ -7,7 +6,7 @@ import {
   IPhysicsDriverFriendly,
   IPositionable,
 } from '../attributePartials';
-import { BaseObject } from './BaseObject';
+import { IBaseObject, newIBaseObject, newIPassableObject } from './BaseObject';
 
 export const PyramidProperties = {
   name: bzwString,
@@ -22,7 +21,8 @@ export const PyramidProperties = {
 };
 
 export interface IPyramid
-  extends IMaterialFriendly,
+  extends IBaseObject,
+    IMaterialFriendly,
     INameable,
     IPhysicsDriverFriendly,
     IPassableObject,
@@ -30,26 +30,13 @@ export interface IPyramid
   flipz: boolean;
 }
 
-export class Pyramid extends BaseObject implements IPyramid {
-  objectType = 'pyramid';
-  definitions = PyramidProperties;
-
-  name?: string;
-  position: Vector3F = [0, 0, 0];
-  size: Vector3F = [7, 7, 12];
-  rotation: number = 0;
-  matref?: string;
-  phydrv?: string;
-  drivethrough: boolean = false;
-  shootthrough: boolean = false;
-  flipz: boolean = false;
-
-  get passable(): boolean {
-    return this.driveThrough && this.shootThrough;
-  }
-
-  set passable(value: boolean) {
-    this.drivethrough = value;
-    this.shootthrough = value;
-  }
+export function newIPyramid(): IPyramid {
+  return {
+    ...newIBaseObject('pyramid'),
+    ...newIPassableObject(),
+    position: [0, 0, 0],
+    size: [7, 7, 12],
+    rotation: 0,
+    flipz: false,
+  };
 }

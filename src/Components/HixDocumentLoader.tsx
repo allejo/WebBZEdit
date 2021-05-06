@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 
-import { BZWDocument } from '../Document/BZWDocument';
+import { parseBZWDocument } from '../Document/parseBZWDocument';
 import { documentState } from '../atoms';
 
 // @ts-ignore
@@ -13,7 +13,7 @@ const HixDocumentLoader = () => {
   useEffect(() => {
     fetch(hix)
       .then((res) => res.text())
-      .then((body) => setDocument(new BZWDocument(body)));
+      .then((body) => setDocument(parseBZWDocument(body)));
   }, [setDocument]);
 
   return <div />;
