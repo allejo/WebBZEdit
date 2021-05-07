@@ -1,8 +1,12 @@
 import React, { MouseEvent, forwardRef } from 'react';
 
+import { IBase } from '../../../Document/Obstacles/Base';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
 
-import thumbBase from '../../../assets/thumb_base.png';
+import thumbBaseBlue from '../../../assets/thumb_base_blue.png';
+import thumbBaseGreen from '../../../assets/thumb_base_green.png';
+import thumbBasePurple from '../../../assets/thumb_base_purple.png';
+import thumbBaseRed from '../../../assets/thumb_base_red.png';
 import thumbBox from '../../../assets/thumb_box.png';
 import thumbPyramid from '../../../assets/thumb_pyramid.png';
 import styles from './ObstacleSummary.module.scss';
@@ -14,19 +18,30 @@ interface Props {
 }
 
 const obstacleThumbs: Record<string, string> = {
-  base: thumbBase,
+  base: '',
   box: thumbBox,
   pyramid: thumbPyramid,
 };
 
-function getThumbnail(type: string): JSX.Element {
-  if (obstacleThumbs[type]) {
+const baseThumbs: Record<IBase['color'], string> = {
+  1: thumbBaseRed,
+  2: thumbBaseGreen,
+  3: thumbBaseBlue,
+  4: thumbBasePurple,
+};
+
+function getThumbnail(object: IBaseObject): JSX.Element {
+  const { _objectType: type } = object;
+
+  if (obstacleThumbs[type] !== undefined) {
+    let src = obstacleThumbs[type];
+
+    if (type === 'base') {
+      src = baseThumbs[(object as IBase).color];
+    }
+
     return (
-      <img
-        className={styles.thumbnail}
-        src={obstacleThumbs[type]}
-        alt={`${type} thumbnail`}
-      />
+      <img className={styles.thumbnail} src={src} alt={`${type} thumbnail`} />
     );
   }
 
@@ -44,7 +59,7 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
         className={`${styles.wrapper} ${selected && styles.selected}`}
         onClick={(event) => onClick(event, obstacle)}
       >
-        <div>{getThumbnail(obstacle._objectType)}</div>
+        <div>{getThumbnail(obstacle)}</div>
         <div className={styles.body}>{displayName}</div>
       </div>
     );
