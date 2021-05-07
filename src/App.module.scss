@@ -1,7 +1,9 @@
+@import 'sass/variables';
+
 .wrapper {
   display: grid;
   height: 100vh;
-  grid-template-columns: 1.7fr 0.3fr;
+  grid-template-columns: 1.6fr 0.4fr;
   grid-template-rows: 0.1fr 2.3fr 0.6fr;
   gap: 0 0;
   grid-template-areas:
@@ -12,11 +14,16 @@
 }
 
 .Menubar {
+  background-color: $color-grey-dark;
+  color: $color-white;
   grid-area: Menubar;
 }
 
 .Toolbox {
+  background-color: $color-grey-dark;
+  color: $color-white;
   grid-area: Toolbox;
+  padding: 1rem;
 }
 
 .Renderer {
@@ -24,6 +31,8 @@
 }
 
 .Sidebar {
+  background-color: $color-grey-light;
+  padding: 1rem;
   grid-area: Sidebar;
   max-height: 100%;
   overflow-y: auto;

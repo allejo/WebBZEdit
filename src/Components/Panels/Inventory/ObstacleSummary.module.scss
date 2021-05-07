@@ -1,6 +1,10 @@
+@import '../../../sass/variables';
+
 .wrapper {
   align-items: center;
-  border-bottom: 1px solid lightgrey;
+  background-color: $color-grey-medium;
+  border-bottom: 1px solid $color-grey-light;
+  color: $color-white;
   cursor: pointer;
   display: flex;
   font-size: 0.9rem;
@@ -8,11 +12,17 @@
   padding: 10px;
 
   &.selected {
-    background-color: lightblue;
+    background-color: $color-red;
   }
 }
 
 .thumbnail {
   margin-right: 10px;
   width: 40px;
+}
+
+.body {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

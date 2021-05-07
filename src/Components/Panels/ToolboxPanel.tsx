@@ -39,7 +39,7 @@ const ToolboxPanel = () => {
   };
 
   return (
-    <div className="d-flex p-3">
+    <div className="d-flex">
       {selection && implementsIPositionable(selection) && (
         <PositionableControls
           data={selection}
