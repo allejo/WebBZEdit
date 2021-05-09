@@ -1,0 +1,30 @@
+@import '../../../sass/variables';
+
+.menuButton {
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  color: $color-white;
+}
+
+.menuDropdown {
+  background-color: $color-grey-medium;
+  z-index: 10;
+
+  [role="menuitem"] {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    color: $color-white;
+    display: block;
+    padding: 0.5rem 1.5rem 0;
+
+    &:last-child {
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  [role="separator"] {
+    margin: 0.5rem 0.75rem 0;
+  }
+}

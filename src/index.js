@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap-reboot.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { RecoilRoot } from 'recoil';
