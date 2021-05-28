@@ -26,7 +26,7 @@ const InventoryPanel = () => {
   const refs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const handleOnClick = (event: MouseEvent, obstacle: IBaseObject) => {
-    setSelection(obstacle.uuid);
+    setSelection(obstacle._uuid);
   };
 
   // If the selection changes, scroll to the element in our inventory if it's
