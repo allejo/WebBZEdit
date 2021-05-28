@@ -11,7 +11,7 @@
   background-color: $color-grey-medium;
   z-index: 10;
 
-  [role="menuitem"] {
+  [role='menuitem'] {
     appearance: none;
     background-color: transparent;
     border: 0;
@@ -24,7 +24,7 @@
     }
   }
 
-  [role="separator"] {
+  [role='separator'] {
     margin: 0.5rem 0.75rem 0;
   }
 }

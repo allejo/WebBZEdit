@@ -18,7 +18,7 @@ interface Props {
  * @constructor
  * @see https://threejs.org/docs/#api/en/geometries/BoxGeometry
  */
-const Box = ({ obstacle, onClick }: Props) => {
+const Box = ({ obstacle, isSelected, onClick }: Props) => {
   const { position, size, rotation = 0 } = obstacle;
   const [bzwSizeX, bzwSizeY, bzwSizeZ] = size;
   const handleOnClick = () => onClick(obstacle);
@@ -48,6 +48,7 @@ const Box = ({ obstacle, onClick }: Props) => {
       size={size}
       rotation={rotation}
       onClick={handleOnClick}
+      isSelected={isSelected}
       topMaterial={roofTexture}
       botMaterial={roofTexture}
       xPosMaterial={wallTexture}

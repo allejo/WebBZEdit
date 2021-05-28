@@ -32,7 +32,7 @@ function getTeamTextures(team: IBase['color']): string[] {
   return [purpleBaseTop, purpleBaseWall];
 }
 
-const Base = ({ obstacle, onClick }: Props) => {
+const Base = ({ obstacle, isSelected, onClick }: Props) => {
   const { position, size, rotation = 0 } = obstacle;
   const handleOnClick = () => onClick(obstacle);
 
@@ -58,6 +58,7 @@ const Base = ({ obstacle, onClick }: Props) => {
       size={size}
       rotation={rotation}
       onClick={handleOnClick}
+      isSelected={isSelected}
       topMaterial={roofTexture}
       botMaterial={roofTexture}
       xPosMaterial={xTexture}

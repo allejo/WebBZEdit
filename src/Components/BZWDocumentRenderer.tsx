@@ -25,11 +25,10 @@ const BZWDocumentRenderer = () => {
     <>
       {Object.values(document.children).map((obstacle) => {
         const callback = handleOnClick(obstacle._uuid, setSelection);
-        const isSelected = selection === obstacle.uuid;
         const props = {
           key: obstacle._uuid,
           onClick: callback,
-          isSelected: isSelected,
+          isSelected: selection === obstacle._uuid,
         };
 
         if (obstacle._objectType === 'box') {
