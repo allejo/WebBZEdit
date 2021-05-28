@@ -3,11 +3,13 @@ import { MenuBar, MenuItem, useMenuBarState } from 'reakit';
 
 import FileMenu from './Menubar/FileMenu';
 
+import styles from './MenubarPanel.module.scss';
+
 const MenubarPanel = () => {
   const menu = useMenuBarState();
 
   return (
-    <MenuBar {...menu}>
+    <MenuBar {...menu} className={styles.wrapper}>
       <MenuItem {...menu} as={FileMenu} />
     </MenuBar>
   );
