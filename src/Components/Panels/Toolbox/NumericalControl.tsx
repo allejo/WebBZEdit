@@ -1,7 +1,8 @@
 import React, { KeyboardEvent, SyntheticEvent } from 'react';
 
-import styles from './NumericalControl.module.scss';
 import keyboard from '../../../Utilities/keyboard';
+
+import styles from './NumericalControl.module.scss';
 
 interface Props {
   className?: string;
@@ -25,10 +26,7 @@ const NumericalControl = ({
     onChange(+event.currentTarget.value);
   };
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
-    const allowList = [
-      keyboard.UP,
-      keyboard.DOWN,
-    ];
+    const allowList = [keyboard.UP, keyboard.DOWN];
 
     if (allowList.indexOf(event.keyCode) >= 0) {
       event.preventDefault();
