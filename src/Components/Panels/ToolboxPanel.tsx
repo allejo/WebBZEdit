@@ -10,6 +10,8 @@ import {
 import { documentState, selectionState } from '../../atoms';
 import PositionableControls from './Toolbox/PositionableControls';
 
+import styles from './ToolboxPanel.module.scss';
+
 const ToolboxPanel = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
   const selectedUUID = useRecoilValue(selectionState);
@@ -39,7 +41,7 @@ const ToolboxPanel = () => {
   };
 
   return (
-    <div className="d-flex">
+    <div className={styles.container}>
       {selection && implementsIPositionable(selection) && (
         <PositionableControls
           data={selection}

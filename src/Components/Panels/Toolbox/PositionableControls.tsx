@@ -33,20 +33,22 @@ const PositionableControls = ({ data, onChange }: Props) => {
     <div className={styles.wrapper}>
       <Vector3FControls
         name="Position"
-        className="mr-3"
+        className={styles.position}
         onChange={handlePositionOnChange}
         value={data.position}
       />
 
       <Vector3FControls
         name="Size"
-        className="mr-3"
+        className={styles.size}
         onChange={handleSizeOnChange}
         value={data.size}
       />
 
       <NumericalControl
+        className={styles.rotation}
         label="Rotation"
+        layout="vertical"
         onChange={handleRotationOnChange}
         value={data.rotation ?? 0}
       />

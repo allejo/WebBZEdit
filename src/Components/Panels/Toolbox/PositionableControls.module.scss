@@ -1,3 +1,17 @@
 .wrapper {
+  border: 1px solid rgba(#fff, 0.3);
   display: flex;
+  padding: 1rem 1.25rem;
+}
+
+.position,
+.size {
+  margin-right: 1.5rem;
+}
+
+.rotation {
+  label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
 }

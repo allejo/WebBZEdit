@@ -25,7 +25,7 @@ const Vector3FControls = ({ className = '', name, onChange, value }: Props) => {
       <legend className={styles.legend}>{name}</legend>
 
       <NumericalControl
-        className="mb-1"
+        className={styles.numericalControl}
         label="X"
         prefix={name}
         onChange={handleOnChange(0)}
@@ -33,7 +33,7 @@ const Vector3FControls = ({ className = '', name, onChange, value }: Props) => {
       />
 
       <NumericalControl
-        className="mb-1"
+        className={styles.numericalControl}
         label="Y"
         prefix={name}
         onChange={handleOnChange(1)}
@@ -41,6 +41,7 @@ const Vector3FControls = ({ className = '', name, onChange, value }: Props) => {
       />
 
       <NumericalControl
+        className={styles.numericalControl}
         label="Z"
         prefix={name}
         onChange={handleOnChange(2)}

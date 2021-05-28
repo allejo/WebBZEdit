@@ -1,6 +1,15 @@
 .wrapper {
   display: flex;
-  align-items: center;
+
+  &[data-layout="horizontal"] {
+    align-items: center;
+    flex-direction: row;
+  }
+
+  &[data-layout="vertical"] {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 .label {

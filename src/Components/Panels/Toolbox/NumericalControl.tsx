@@ -4,6 +4,7 @@ import styles from './NumericalControl.module.scss';
 
 interface Props {
   className?: string;
+  layout?: 'horizontal' | 'vertical';
   label: string;
   onChange: (value: number) => void;
   prefix?: string;
@@ -12,6 +13,7 @@ interface Props {
 
 const NumericalControl = ({
   className = '',
+  layout = 'horizontal',
   label,
   onChange,
   prefix,
@@ -23,7 +25,7 @@ const NumericalControl = ({
   };
 
   return (
-    <div className={`${styles.wrapper} ${className}`}>
+    <div className={`${styles.wrapper} ${className}`} data-layout={layout}>
       <label className={styles.label} htmlFor={id}>
         {label}
       </label>
