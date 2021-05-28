@@ -1,6 +1,7 @@
-import React, { SyntheticEvent } from 'react';
+import React, { KeyboardEvent, SyntheticEvent } from 'react';
 
 import styles from './NumericalControl.module.scss';
+import keyboard from '../../../Utilities/keyboard';
 
 interface Props {
   className?: string;
@@ -20,8 +21,27 @@ const NumericalControl = ({
   value,
 }: Props) => {
   const id = [prefix, label].join('-').toLowerCase();
-  const callback = (event: SyntheticEvent<HTMLInputElement>) => {
+  const handleOnChange = (event: SyntheticEvent<HTMLInputElement>) => {
     onChange(+event.currentTarget.value);
+  };
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    const allowList = [
+      keyboard.UP,
+      keyboard.DOWN,
+    ];
+
+    if (allowList.indexOf(event.keyCode) >= 0) {
+      event.preventDefault();
+
+      const value = +event.currentTarget.value;
+      const modifier = event.shiftKey ? 10 : 1;
+
+      if (event.keyCode === keyboard.UP) {
+        onChange(value + modifier);
+      } else if (event.keyCode === keyboard.DOWN) {
+        onChange(value - modifier);
+      }
+    }
   };
 
   return (
@@ -33,7 +53,8 @@ const NumericalControl = ({
         id={id}
         className={styles.input}
         type="number"
-        onChange={callback}
+        onChange={handleOnChange}
+        onKeyDown={handleKeyPress}
         value={value}
       />
     </div>
