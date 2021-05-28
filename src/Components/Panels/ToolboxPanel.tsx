@@ -40,8 +40,16 @@ const ToolboxPanel = () => {
     setBZWDocument(nextWorld);
   };
 
+  if (!selection) {
+    return (
+      <div className={styles.noSelectionContainer}>
+        Select an object to edit
+      </div>
+    );
+  }
+
   return (
-    <div className={styles.container}>
+    <div className={styles.toolContainer}>
       {selection && implementsIPositionable(selection) && (
         <PositionableControls
           data={selection}

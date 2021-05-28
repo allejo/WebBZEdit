@@ -1,4 +1,17 @@
-.container {
+.noSelectionContainer {
+  align-items: center;
+  border: 1px dashed rgba(#fff, 0.5);
+  color: rgba(#fff, 0.5);
+  display: flex;
+  font-size: 1.25rem;
+  font-style: italic;
+  height: 100%;
+  justify-content: center;
+  margin: 0 auto;
+  width: 75%;
+}
+
+.toolContainer {
   display: flex;
   height: 100%;
 
