@@ -3,16 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
+  implementsIPassableObject,
+  IPassableObject,
+} from '../../Document/Attributes/IPassableObject';
+import {
   implementsIPositionable,
   IPositionable,
 } from '../../Document/Attributes/IPositionable';
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { documentState, selectionState } from '../../atoms';
+import PassabilityControls from './Toolbox/PassabilityControl';
 import PositionableControls from './Toolbox/PositionableControls';
 
 import styles from './ToolboxPanel.module.scss';
-import { implementsIPassableObject, IPassableObject } from '../../Document/Attributes/IPassableObject';
-import PassabilityControls from './Toolbox/PassabilityControl';
 
 const ToolboxPanel = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
@@ -48,7 +51,9 @@ const ToolboxPanel = () => {
     }
 
     const nextWorld = produce(world, (draftWorld) => {
-      const obstacle: IPassableObject = draftWorld.children[selectedUUID] as any;
+      const obstacle: IPassableObject = draftWorld.children[
+        selectedUUID
+      ] as any;
 
       obstacle.drivethrough = data.drivethrough;
       obstacle.shootthrough = data.shootthrough;
@@ -56,7 +61,7 @@ const ToolboxPanel = () => {
     });
 
     setBZWDocument(nextWorld);
-  }
+  };
 
   if (!selection) {
     return (
