@@ -11,7 +11,8 @@ import { documentState, selectionState } from '../../atoms';
 import PositionableControls from './Toolbox/PositionableControls';
 
 import styles from './ToolboxPanel.module.scss';
-import { IPassableObject } from '../../Document/Attributes/IPassableObject';
+import { implementsIPassableObject, IPassableObject } from '../../Document/Attributes/IPassableObject';
+import PassabilityControls from './Toolbox/PassabilityControl';
 
 const ToolboxPanel = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
@@ -67,6 +68,12 @@ const ToolboxPanel = () => {
 
   return (
     <div className={styles.toolContainer}>
+      {selection && implementsIPassableObject(selection) && (
+        <PassabilityControls
+          data={selection}
+          onChange={handlePassabilityOnChange}
+        />
+      )}
       {selection && implementsIPositionable(selection) && (
         <PositionableControls
           data={selection}
