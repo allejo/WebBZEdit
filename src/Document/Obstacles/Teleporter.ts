@@ -1,6 +1,7 @@
 import { bzwFloat, bzwVector3F } from '../attributeParsers';
-import { INameable, IPositionable } from '../attributePartials';
 import { IBaseObject, newIBaseObject } from './BaseObject';
+import { IPositionable } from '../Attributes/IPositionable';
+import { INameable } from '../Attributes/INameable';
 
 export const TeleporterProperties = {
   position: bzwVector3F,

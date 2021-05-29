@@ -6,9 +6,10 @@ import {
   bzwString,
   bzwVector3F,
 } from '../attributeParsers';
-import { INameable, IPhysicsDriverFriendly } from '../attributePartials';
 import { IBaseObject, newIBaseObject } from './BaseObject';
 import { IMeshFace } from './MeshFace';
+import { IPhysicsDriverFriendly } from '../Attributes/IPhysicsDriverFriendly';
+import { INameable } from '../Attributes/INameable';
 
 export const MeshProperties = {
   name: bzwString,

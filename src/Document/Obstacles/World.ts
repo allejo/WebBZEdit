@@ -1,6 +1,6 @@
 import { bzwBool, bzwFloat, bzwString } from '../attributeParsers';
-import { INameable } from '../attributePartials';
 import { IBaseObject, newIBaseObject } from './BaseObject';
+import { INameable } from '../Attributes/INameable';
 
 export const WorldProperties = {
   name: bzwString,

@@ -3,14 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
-import {
-  implementsIPositionable,
-  IPositionable,
-} from '../../Document/attributePartials';
 import { documentState, selectionState } from '../../atoms';
 import PositionableControls from './Toolbox/PositionableControls';
 
 import styles from './ToolboxPanel.module.scss';
+import { implementsIPositionable, IPositionable } from '../../Document/Attributes/IPositionable';
 
 const ToolboxPanel = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);

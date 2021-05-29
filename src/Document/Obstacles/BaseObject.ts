@@ -1,4 +1,4 @@
-import { IPassableObject } from '../attributePartials';
+import { IPassableObject } from '../Attributes/IPassableObject';
 
 export interface IBaseObject {
   [key: string]: any;
