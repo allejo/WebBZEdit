@@ -1,13 +1,13 @@
 import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import Base from '../3DModels/Base';
-import Box from '../3DModels/Box';
-import Pyramid from '../3DModels/Pyramid';
-import { IBase } from '../Document/Obstacles/Base';
-import { IBox } from '../Document/Obstacles/Box';
-import { IPyramid } from '../Document/Obstacles/Pyramid';
-import { documentState, selectionState } from '../atoms';
+import Base from '../../../3DModels/Base';
+import Box from '../../../3DModels/Box';
+import Pyramid from '../../../3DModels/Pyramid';
+import { IBase } from '../../../Document/Obstacles/Base';
+import { IBox } from '../../../Document/Obstacles/Box';
+import { IPyramid } from '../../../Document/Obstacles/Pyramid';
+import { documentState, selectionState } from '../../../atoms';
 
 function handleOnClick(uuid: string | null, setter: any) {
   return () => setter(uuid);

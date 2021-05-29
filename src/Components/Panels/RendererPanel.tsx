@@ -2,8 +2,8 @@ import React, { Suspense } from 'react';
 import { Canvas } from 'react-three-fiber';
 import { useRecoilBridgeAcrossReactRoots_UNSTABLE } from 'recoil';
 
-import BZWDocumentRenderer from '../BZWDocumentRenderer';
-import OrbitalControls from '../CameraControls/OrbitalControls';
+import BZWDocumentRenderer from './Renderer/BZWDocumentRenderer';
+import OrbitalControls from './Renderer/OrbitalControls';
 
 const RendererPanel = () => {
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
