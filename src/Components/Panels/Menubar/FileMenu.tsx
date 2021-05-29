@@ -7,6 +7,8 @@ import {
   useMenuState,
 } from 'reakit/Menu';
 
+import OpenMapMenuItem from './FileMenu/OpenMapMenuItem';
+
 import styles from './menu-styles.module.scss';
 
 const FileMenu = forwardRef<HTMLButtonElement>((props, ref) => {
@@ -19,7 +21,7 @@ const FileMenu = forwardRef<HTMLButtonElement>((props, ref) => {
       </MenuButton>
       <Menu {...menu} aria-label="File" className={styles.menuDropdown}>
         <MenuItem {...menu}>New Map</MenuItem>
-        <MenuItem {...menu}>Open Map</MenuItem>
+        <OpenMapMenuItem menu={menu} />
         <MenuSeparator />
         <MenuItem {...menu}>Save</MenuItem>
         <MenuItem {...menu}>Save As</MenuItem>
