@@ -41,7 +41,7 @@ const ToolboxPanel = () => {
     setBZWDocument(nextWorld);
   };
 
-  const handlePassabilityOChange = (data: IPassableObject) => {
+  const handlePassabilityOnChange = (data: IPassableObject) => {
     if (!world || !selectedUUID) {
       return;
     }
