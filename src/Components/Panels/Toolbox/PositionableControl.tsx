@@ -12,7 +12,7 @@ interface Props {
   onChange: (changes: IPositionable) => void;
 }
 
-const PositionableControls = ({ data, onChange }: Props) => {
+const PositionableControl = ({ data, onChange }: Props) => {
   const handlePositionOnChange = (position: Vector3F) =>
     onChange({
       ...data,
@@ -56,4 +56,4 @@ const PositionableControls = ({ data, onChange }: Props) => {
   );
 };
 
-export default PositionableControls;
+export default PositionableControl;

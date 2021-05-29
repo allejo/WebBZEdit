@@ -13,7 +13,7 @@ import {
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { documentState, selectionState } from '../../atoms';
 import PassabilityControls from './Toolbox/PassabilityControl';
-import PositionableControls from './Toolbox/PositionableControls';
+import PositionableControls from './Toolbox/PositionableControl';
 
 import styles from './ToolboxPanel.module.scss';
 
@@ -57,7 +57,6 @@ const ToolboxPanel = () => {
 
       obstacle.drivethrough = data.drivethrough;
       obstacle.shootthrough = data.shootthrough;
-      obstacle.passable = data.passable;
     });
 
     setBZWDocument(nextWorld);
@@ -73,16 +72,16 @@ const ToolboxPanel = () => {
 
   return (
     <div className={styles.toolContainer}>
-      {selection && implementsIPassableObject(selection) && (
-        <PassabilityControls
-          data={selection}
-          onChange={handlePassabilityOnChange}
-        />
-      )}
       {selection && implementsIPositionable(selection) && (
         <PositionableControls
           data={selection}
           onChange={handlePositionableOnChange}
+        />
+      )}
+      {selection && implementsIPassableObject(selection) && (
+        <PassabilityControls
+          data={selection}
+          onChange={handlePassabilityOnChange}
         />
       )}
     </div>

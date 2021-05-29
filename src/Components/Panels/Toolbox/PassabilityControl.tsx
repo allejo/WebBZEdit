@@ -10,23 +10,21 @@ interface Props {
 }
 
 const PassabilityControls = ({ data, onChange }: Props) => {
-  const handleDriveThroughOnChange = (_: ChangeEvent) => {
-    const drivethrough = !data.drivethrough;
+  const handleDriveThroughOnChange = () => {
     onChange({
       ...data,
-      drivethrough,
+      drivethrough: !data.drivethrough,
     });
   };
-  const handleShootThroughOnChange = (_: ChangeEvent) => {
-    const shootthrough = !data.shootthrough;
+  const handleShootThroughOnChange = () => {
     onChange({
       ...data,
-      shootthrough,
+      shootthrough: !data.shootthrough,
     });
   };
 
   return (
-    <div className={styles.wrapper}>
+    <fieldset className={styles.wrapper}>
       <legend className={styles.legend}>Passability</legend>
       <div>
         <input
@@ -45,9 +43,9 @@ const PassabilityControls = ({ data, onChange }: Props) => {
           checked={data.shootthrough}
           onChange={handleShootThroughOnChange}
         />
-        <label htmlFor="shootthrough">Pass Through</label>
+        <label htmlFor="shootthrough">Shoot Through</label>
       </div>
-    </div>
+    </fieldset>
   );
 };
 
