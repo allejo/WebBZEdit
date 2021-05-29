@@ -20,16 +20,25 @@ const OpenMapMenuItem = ({ ...menu }: Props) => {
 
   const handleMenuItemClick = async () => {
     if (supportsFileSystem) {
-      const [fileHandle] = await window.showOpenFilePicker({
-        types: [
-          {
-            description: 'BZFlag World File',
-            accept: { 'text/plain': ['.bzw'] },
-          },
-        ],
-      });
-      const file = await fileHandle.getFile();
-      handleWorldFileContents(await file.text());
+      try {
+        const [fileHandle] = await window.showOpenFilePicker({
+          types: [
+            {
+              description: 'BZFlag World File',
+              accept: { 'text/plain': ['.bzw'] },
+            },
+          ],
+        });
+        const file = await fileHandle.getFile();
+        handleWorldFileContents(await file.text());
+      } catch (e) {
+        if (e instanceof DOMException) {
+          // User aborted the file open operation
+        } else {
+          // An unexpected exception was thrown
+          throw e;
+        }
+      }
     } else if (inputRef.current) {
       inputRef.current.click();
     }
