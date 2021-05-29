@@ -1,15 +1,15 @@
+import { faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import React, { useRef } from 'react';
-import { MenuItem, MenuStateReturn } from 'reakit/Menu';
+import { MenuStateReturn } from 'reakit/Menu';
 import { useSetRecoilState } from 'recoil';
 
 import { parseBZWDocument } from '../../../../Document/parseBZWDocument';
 import { documentState } from '../../../../atoms';
+import MenuItem from '../MenuItem';
 
-interface Props {
-  menu: MenuStateReturn;
-}
+interface Props extends MenuStateReturn {}
 
-const OpenMapMenuItem = ({ menu }: Props) => {
+const OpenMapMenuItem = ({ ...menu }: Props) => {
   const setDocument = useSetRecoilState(documentState);
   const supportsFileSystem = typeof window.showOpenFilePicker !== 'undefined';
   const inputRef = useRef<HTMLInputElement>(null);
@@ -58,7 +58,15 @@ const OpenMapMenuItem = ({ menu }: Props) => {
   };
 
   return (
-    <MenuItem {...menu} onClick={handleMenuItemClick}>
+    <MenuItem
+      {...menu}
+      icon={faFolderOpen}
+      shortcut={{
+        meta: true,
+        key: 'O',
+      }}
+      onTrigger={handleMenuItemClick}
+    >
       Open Map
       {!supportsFileSystem && (
         <input

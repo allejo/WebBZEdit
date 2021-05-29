@@ -21,7 +21,7 @@ const FileMenu = forwardRef<HTMLButtonElement>((props, ref) => {
       </MenuButton>
       <Menu {...menu} aria-label="File" className={styles.menuDropdown}>
         <MenuItem {...menu}>New Map</MenuItem>
-        <OpenMapMenuItem menu={menu} />
+        <OpenMapMenuItem {...menu} />
         <MenuSeparator />
         <MenuItem {...menu}>Save</MenuItem>
         <MenuItem {...menu}>Save As</MenuItem>
