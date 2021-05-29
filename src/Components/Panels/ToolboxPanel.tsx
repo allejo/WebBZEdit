@@ -11,6 +11,7 @@ import { documentState, selectionState } from '../../atoms';
 import PositionableControls from './Toolbox/PositionableControls';
 
 import styles from './ToolboxPanel.module.scss';
+import { IPassableObject } from '../../Document/Attributes/IPassableObject';
 
 const ToolboxPanel = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
@@ -39,6 +40,22 @@ const ToolboxPanel = () => {
 
     setBZWDocument(nextWorld);
   };
+
+  const handlePassabilityOChange = (data: IPassableObject) => {
+    if (!world || !selectedUUID) {
+      return;
+    }
+
+    const nextWorld = produce(world, (draftWorld) => {
+      const obstacle: IPassableObject = draftWorld.children[selectedUUID] as any;
+
+      obstacle.drivethrough = data.drivethrough;
+      obstacle.shootthrough = data.shootthrough;
+      obstacle.passable = data.passable;
+    });
+
+    setBZWDocument(nextWorld);
+  }
 
   if (!selection) {
     return (
