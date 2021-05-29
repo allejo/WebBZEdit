@@ -24,10 +24,11 @@ const PassabilityControls = ({ data, onChange }: Props) => {
   };
 
   return (
-    <fieldset className={styles.wrapper}>
+    <div className={styles.wrapper}>
+    <fieldset className={styles.passability}>
       <legend className={styles.legend}>Passability</legend>
       <div>
-        <input
+        <input className={styles.checkbox}
           type="checkbox"
           id="drivethrough"
           checked={data.drivethrough}
@@ -37,7 +38,7 @@ const PassabilityControls = ({ data, onChange }: Props) => {
       </div>
 
       <div>
-        <input
+        <input className={styles.checkbox}
           type="checkbox"
           id="shootthrough"
           checked={data.shootthrough}
@@ -46,6 +47,7 @@ const PassabilityControls = ({ data, onChange }: Props) => {
         <label htmlFor="shootthrough">Shoot Through</label>
       </div>
     </fieldset>
+    </div>
   );
 };
 

@@ -3,11 +3,24 @@
   display: flex;
   flex-direction: column;
   padding: 1rem 1.25rem;
-  margin: auto;
+  margin: auto 0;
 }
 
 .legend {
   font-size: 0.85rem;
   font-weight: bold;
   width: auto;
+}
+
+.passability {
+  margin-bottom: 0.5rem;
+  padding-bottom:  2rem;
+  padding-right: 2rem;
+
+}
+
+.checkbox{
+  margin-right: 0.5rem;
+  border-radius: 100px;
+
 }
