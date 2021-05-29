@@ -2,12 +2,15 @@ import produce from 'immer';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import {
+  implementsIPositionable,
+  IPositionable,
+} from '../../Document/Attributes/IPositionable';
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { documentState, selectionState } from '../../atoms';
 import PositionableControls from './Toolbox/PositionableControls';
 
 import styles from './ToolboxPanel.module.scss';
-import { implementsIPositionable, IPositionable } from '../../Document/Attributes/IPositionable';
 
 const ToolboxPanel = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);

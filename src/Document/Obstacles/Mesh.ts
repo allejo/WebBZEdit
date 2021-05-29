@@ -1,4 +1,6 @@
 import { Vector3F } from '../../Utilities/types';
+import { INameable } from '../Attributes/INameable';
+import { IPhysicsDriverFriendly } from '../Attributes/IPhysicsDriverFriendly';
 import {
   bzwBool,
   bzwFloatVector,
@@ -8,8 +10,6 @@ import {
 } from '../attributeParsers';
 import { IBaseObject, newIBaseObject } from './BaseObject';
 import { IMeshFace } from './MeshFace';
-import { IPhysicsDriverFriendly } from '../Attributes/IPhysicsDriverFriendly';
-import { INameable } from '../Attributes/INameable';
 
 export const MeshProperties = {
   name: bzwString,

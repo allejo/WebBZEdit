@@ -1,3 +1,5 @@
+import { INameable } from '../Attributes/INameable';
+import { IPositionable } from '../Attributes/IPositionable';
 import {
   bzwFloat,
   bzwIntVector,
@@ -6,8 +8,6 @@ import {
   bzwVector3F,
 } from '../attributeParsers';
 import { IBaseObject, newIBaseObject } from './BaseObject';
-import { IPositionable } from '../Attributes/IPositionable';
-import { INameable } from '../Attributes/INameable';
 
 export const ZoneProperties = {
   name: bzwString,

@@ -1,10 +1,10 @@
-import { bzwBool, bzwFloat, bzwString, bzwVector3F } from '../attributeParsers';
-import { IBaseObject, newIBaseObject, newIPassableObject } from './BaseObject';
-import { IPositionable } from '../Attributes/IPositionable';
+import { IMaterialFriendly } from '../Attributes/IMaterialFriendly';
+import { INameable } from '../Attributes/INameable';
 import { IPassableObject } from '../Attributes/IPassableObject';
 import { IPhysicsDriverFriendly } from '../Attributes/IPhysicsDriverFriendly';
-import { INameable } from '../Attributes/INameable';
-import { IMaterialFriendly } from '../Attributes/IMaterialFriendly';
+import { IPositionable } from '../Attributes/IPositionable';
+import { bzwBool, bzwFloat, bzwString, bzwVector3F } from '../attributeParsers';
+import { IBaseObject, newIBaseObject, newIPassableObject } from './BaseObject';
 
 export const PyramidProperties = {
   name: bzwString,
