@@ -12,10 +12,12 @@ import {
 } from '../../Document/Attributes/IPositionable';
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { documentState, selectionState } from '../../atoms';
-import PassabilityControls from './Toolbox/PassabilityControl';
-import PositionableControls from './Toolbox/PositionableControl';
+import PassabilityControl from './Toolbox/PassabilityControl';
+import PositionableControl from './Toolbox/PositionableControl';
 
 import styles from './ToolboxPanel.module.scss';
+import PyramidControl from './Toolbox/PyramidControls';
+import { IPyramid } from '../../Document/Obstacles/Pyramid';
 
 const ToolboxPanel = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
@@ -62,6 +64,22 @@ const ToolboxPanel = () => {
     setBZWDocument(nextWorld);
   };
 
+  const handleFlipZOnChange = (data: IPyramid) => {
+    if (!world || !selectedUUID) {
+      return;
+    }
+
+    const nextWorld = produce(world, (draftWorld) => {
+      const obstacle: IPyramid = draftWorld.children[
+        selectedUUID
+        ] as any;
+
+      obstacle.flipz = data.flipz;
+    });
+
+    setBZWDocument(nextWorld);
+  };
+
   if (!selection) {
     return (
       <div className={styles.noSelectionContainer}>
@@ -73,17 +91,23 @@ const ToolboxPanel = () => {
   return (
     <div className={styles.toolContainer}>
       {selection && implementsIPositionable(selection) && (
-        <PositionableControls
+        <PositionableControl
           data={selection}
           onChange={handlePositionableOnChange}
         />
       )}
       {selection && implementsIPassableObject(selection) && (
-        <PassabilityControls
+        <PassabilityControl
           data={selection}
           onChange={handlePassabilityOnChange}
         />
       )}
+      {selection && selection.hasOwnProperty('flipz') && (
+      <PyramidControl
+        data={selection as IPyramid}
+        onChange={handleFlipZOnChange}
+        />
+        )}
     </div>
   );
 };
