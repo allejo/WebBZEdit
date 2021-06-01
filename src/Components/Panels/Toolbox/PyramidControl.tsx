@@ -1,8 +1,8 @@
 import React from 'react';
 
+import { IPyramid } from '../../../Document/Obstacles/Pyramid';
 
 import styles from './PyramidControl.module.scss';
-import { IPyramid } from '../../../Document/Obstacles/Pyramid';
 
 interface Props {
   data: IPyramid;

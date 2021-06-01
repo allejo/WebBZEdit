@@ -11,13 +11,13 @@ import {
   IPositionable,
 } from '../../Document/Attributes/IPositionable';
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
+import { IPyramid } from '../../Document/Obstacles/Pyramid';
 import { documentState, selectionState } from '../../atoms';
 import PassabilityControl from './Toolbox/PassabilityControl';
 import PositionableControl from './Toolbox/PositionableControl';
+import PyramidControl from './Toolbox/PyramidControl';
 
 import styles from './ToolboxPanel.module.scss';
-import PyramidControl from './Toolbox/PyramidControl';
-import { IPyramid } from '../../Document/Obstacles/Pyramid';
 
 const ToolboxPanel = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
@@ -70,9 +70,7 @@ const ToolboxPanel = () => {
     }
 
     const nextWorld = produce(world, (draftWorld) => {
-      const obstacle: IPyramid = draftWorld.children[
-        selectedUUID
-        ] as any;
+      const obstacle: IPyramid = draftWorld.children[selectedUUID] as any;
 
       obstacle.flipz = data.flipz;
     });
@@ -103,11 +101,11 @@ const ToolboxPanel = () => {
         />
       )}
       {selection && selection.hasOwnProperty('flipz') && (
-      <PyramidControl
-        data={selection as IPyramid}
-        onChange={handleFlipZOnChange}
+        <PyramidControl
+          data={selection as IPyramid}
+          onChange={handleFlipZOnChange}
         />
-        )}
+      )}
     </div>
   );
 };
