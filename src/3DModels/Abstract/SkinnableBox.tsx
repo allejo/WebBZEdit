@@ -34,13 +34,16 @@ const SkinnableBox = ({
 }: Props) => {
   const [hover, setHover] = useState(false);
   const mesh = useRef<Mesh>();
-  const segments = useUpdate<LineSegments>((s) => {
-    if (!mesh.current) {
-      return;
-    }
+  const segments = useUpdate<LineSegments>(
+    (s) => {
+      if (!mesh.current) {
+        return;
+      }
 
-    s.geometry = new EdgesGeometry(mesh.current.geometry);
-  }, [mesh.current?.geometry]);
+      s.geometry = new EdgesGeometry(mesh.current.geometry);
+    },
+    [mesh.current?.geometry],
+  );
   const isHighlighted = hover || isSelected;
 
   return (
