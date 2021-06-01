@@ -2,7 +2,7 @@ import React from 'react';
 
 import { IPassableObject } from '../../../Document/Attributes/IPassableObject';
 
-import styles from './PassabilityControls.module.scss';
+import styles from './PassabilityControl.module.scss';
 
 interface Props {
   data: IPassableObject;

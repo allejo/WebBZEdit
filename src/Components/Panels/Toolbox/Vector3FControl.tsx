@@ -3,7 +3,7 @@ import React from 'react';
 import { Vector3F } from '../../../Utilities/types';
 import NumericalControl from './NumericalControl';
 
-import styles from './Vector3FControls.module.scss';
+import styles from './Vector3FControl.module.scss';
 
 interface Props {
   className?: string;
@@ -12,7 +12,7 @@ interface Props {
   value: Vector3F;
 }
 
-const Vector3FControls = ({ className = '', name, onChange, value }: Props) => {
+const Vector3FControl = ({ className = '', name, onChange, value }: Props) => {
   const handleOnChange = (arrIdx: number) => (newValue: number) => {
     const dupe: Vector3F = [...value];
     dupe[arrIdx] = newValue;
@@ -51,4 +51,4 @@ const Vector3FControls = ({ className = '', name, onChange, value }: Props) => {
   );
 };
 
-export default Vector3FControls;
+export default Vector3FControl;
