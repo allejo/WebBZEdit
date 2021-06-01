@@ -1,7 +1,15 @@
-import React, { MouseEvent, forwardRef } from 'react';
+import React, {
+  FocusEvent,
+  KeyboardEvent,
+  MouseEvent,
+  forwardRef,
+  useState,
+  SyntheticEvent,
+} from 'react';
 
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
+import { classList } from '../../../Utilities/cssClasses';
 import LinkSummary from './LinkSummary';
 
 import thumbBaseBlue from '../../../assets/thumb_base_blue.png';
@@ -78,13 +86,46 @@ function getSummary(obstacle: IBaseObject): JSX.Element {
 
 const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
   ({ obstacle, onClick, selected }: Props, ref) => {
+    const [editMode, setEditMode] = useState(false);
+    const [nameEdit, setNameEdit] = useState(obstacle.name ?? '');
+    const classes = classList([
+      styles.wrapper,
+      [styles.selected, selected],
+      [styles.editMode, selected],
+    ]);
+
+    const handleDoubleClick = () => {
+      // @TODO: Enable `editMode` when it's double clicked
+    };
+    const handleOnBlur = (e: FocusEvent<HTMLInputElement>) => {
+      // @TODO: When the input box looses focus, persist the new name in
+      //    `nameEdit` to the BZW document in global state.
+    };
+    const handleOnNameChange = (e: SyntheticEvent<HTMLInputElement>) => {
+      setNameEdit(e.currentTarget.value);
+    };
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+      // @TODO: When ESC is hit, disable `editMode`
+      // @TODO: When Enter is hit, persist the new name in `nameEdit` to the BZW
+      //    document in global state.
+    };
+
     return (
       <div
         ref={ref}
-        className={`${styles.wrapper} ${selected && styles.selected}`}
+        className={classes}
         onClick={(event) => onClick(event, obstacle)}
+        onDoubleClick={handleDoubleClick}
       >
         {getSummary(obstacle)}
+        <input
+          type="text"
+          className={styles.editor}
+          onBlur={handleOnBlur}
+          onChange={handleOnNameChange}
+          onKeyDown={handleKeyDown}
+          value={nameEdit}
+        />
       </div>
     );
   },
