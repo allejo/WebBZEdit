@@ -64,7 +64,7 @@ const ToolboxPanel = () => {
     setBZWDocument(nextWorld);
   };
 
-  const handleFlipZOnChange = (data: IPyramid) => {
+  const handlePyramidOnChange = (data: IPyramid) => {
     if (!world || !selectedUUID) {
       return;
     }
@@ -103,7 +103,7 @@ const ToolboxPanel = () => {
       {selection && selection._objectType === 'pyramid' && (
         <PyramidControl
           data={selection as IPyramid}
-          onChange={handleFlipZOnChange}
+          onChange={handlePyramidOnChange}
         />
       )}
     </div>
