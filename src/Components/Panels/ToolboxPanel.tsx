@@ -10,9 +10,11 @@ import {
   implementsIPositionable,
   IPositionable,
 } from '../../Document/Attributes/IPositionable';
+import { IBase } from '../../Document/Obstacles/Base';
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { IPyramid } from '../../Document/Obstacles/Pyramid';
 import { documentState, selectionState } from '../../atoms';
+import BaseControl from './Toolbox/BaseControl';
 import PassabilityControl from './Toolbox/PassabilityControl';
 import PositionableControl from './Toolbox/PositionableControl';
 import PyramidControl from './Toolbox/PyramidControl';
@@ -78,6 +80,20 @@ const ToolboxPanel = () => {
     setBZWDocument(nextWorld);
   };
 
+  const handleBaseOnChange = (data: IBase) => {
+    if (!world || !selectedUUID) {
+      return;
+    }
+
+    const nextWorld = produce(world, (draftWorld) => {
+      const obstacle: IBase = draftWorld.children[selectedUUID] as any;
+
+      obstacle.color = data.color;
+    });
+
+    setBZWDocument(nextWorld);
+  };
+
   if (!selection) {
     return (
       <div className={styles.noSelectionContainer}>
@@ -105,6 +121,9 @@ const ToolboxPanel = () => {
           data={selection as IPyramid}
           onChange={handlePyramidOnChange}
         />
+      )}
+      {selection && selection._objectType === 'base' && (
+        <BaseControl data={selection as IBase} onChange={handleBaseOnChange} />
       )}
     </div>
   );
