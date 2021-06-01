@@ -16,7 +16,7 @@ import PassabilityControl from './Toolbox/PassabilityControl';
 import PositionableControl from './Toolbox/PositionableControl';
 
 import styles from './ToolboxPanel.module.scss';
-import PyramidControl from './Toolbox/PyramidControls';
+import PyramidControl from './Toolbox/PyramidControl';
 import { IPyramid } from '../../Document/Obstacles/Pyramid';
 
 const ToolboxPanel = () => {

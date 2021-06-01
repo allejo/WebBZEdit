@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import styles from './PassabilityControl.module.scss';
+import styles from './PyramidControl.module.scss';
 import { IPyramid } from '../../../Document/Obstacles/Pyramid';
 
 interface Props {
@@ -19,7 +19,7 @@ const PyramidControl = ({ data, onChange }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <fieldset className={styles.passability}>
+      <fieldset className={styles.pyramid}>
         <legend className={styles.legend}>Pyramid</legend>
         <div>
           <input
