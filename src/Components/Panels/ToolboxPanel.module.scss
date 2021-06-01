@@ -16,6 +16,11 @@
   height: 100%;
 
   & > div {
-    margin: auto 0;
+    margin: auto 1rem auto 0;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
   }
 }
