@@ -9,6 +9,7 @@ import {
 
 import NewMapMenuItem from './FileMenu/NewMapMenuItem';
 import OpenMapMenuItem from './FileMenu/OpenMapMenuItem';
+import SaveMapMenuItem from './FileMenu/SaveMapMenuItem';
 
 import styles from './menu-styles.module.scss';
 
@@ -24,7 +25,7 @@ const FileMenu = forwardRef<HTMLButtonElement>((props, ref) => {
         <NewMapMenuItem {...menu} />
         <OpenMapMenuItem {...menu} />
         <MenuSeparator />
-        <MenuItem {...menu}>Save</MenuItem>
+        <SaveMapMenuItem {...menu} />
         <MenuItem {...menu}>Save As</MenuItem>
       </Menu>
     </>
