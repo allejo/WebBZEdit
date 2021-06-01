@@ -13,7 +13,7 @@ const PyramidControl = ({ data, onChange }: Props) => {
   const handleFlipZOnChange = () => {
     onChange({
       ...data,
-      flipz: !data.drivethrough,
+      flipz: !data.flipz,
     });
   };
 

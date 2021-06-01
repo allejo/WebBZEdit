@@ -100,7 +100,7 @@ const ToolboxPanel = () => {
           onChange={handlePassabilityOnChange}
         />
       )}
-      {selection && selection.hasOwnProperty('flipz') && (
+      {selection && selection._objectType === 'pyramid' && (
         <PyramidControl
           data={selection as IPyramid}
           onChange={handleFlipZOnChange}
