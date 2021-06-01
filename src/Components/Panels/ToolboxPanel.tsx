@@ -3,12 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
+  implementsIPassableObject,
+  IPassableObject,
+} from '../../Document/Attributes/IPassableObject';
+import {
   implementsIPositionable,
   IPositionable,
 } from '../../Document/Attributes/IPositionable';
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { documentState, selectionState } from '../../atoms';
-import PositionableControls from './Toolbox/PositionableControls';
+import PassabilityControls from './Toolbox/PassabilityControl';
+import PositionableControls from './Toolbox/PositionableControl';
 
 import styles from './ToolboxPanel.module.scss';
 
@@ -40,6 +45,23 @@ const ToolboxPanel = () => {
     setBZWDocument(nextWorld);
   };
 
+  const handlePassabilityOnChange = (data: IPassableObject) => {
+    if (!world || !selectedUUID) {
+      return;
+    }
+
+    const nextWorld = produce(world, (draftWorld) => {
+      const obstacle: IPassableObject = draftWorld.children[
+        selectedUUID
+      ] as any;
+
+      obstacle.drivethrough = data.drivethrough;
+      obstacle.shootthrough = data.shootthrough;
+    });
+
+    setBZWDocument(nextWorld);
+  };
+
   if (!selection) {
     return (
       <div className={styles.noSelectionContainer}>
@@ -54,6 +76,12 @@ const ToolboxPanel = () => {
         <PositionableControls
           data={selection}
           onChange={handlePositionableOnChange}
+        />
+      )}
+      {selection && implementsIPassableObject(selection) && (
+        <PassabilityControls
+          data={selection}
+          onChange={handlePassabilityOnChange}
         />
       )}
     </div>

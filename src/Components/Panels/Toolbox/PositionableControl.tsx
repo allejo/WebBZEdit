@@ -3,16 +3,16 @@ import React from 'react';
 import { IPositionable } from '../../../Document/Attributes/IPositionable';
 import { Vector3F } from '../../../Utilities/types';
 import NumericalControl from './NumericalControl';
-import Vector3FControls from './Vector3FControls';
+import Vector3FControl from './Vector3FControl';
 
-import styles from './PositionableControls.module.scss';
+import styles from './PositionableControl.module.scss';
 
 interface Props {
   data: IPositionable;
   onChange: (changes: IPositionable) => void;
 }
 
-const PositionableControls = ({ data, onChange }: Props) => {
+const PositionableControl = ({ data, onChange }: Props) => {
   const handlePositionOnChange = (position: Vector3F) =>
     onChange({
       ...data,
@@ -31,14 +31,14 @@ const PositionableControls = ({ data, onChange }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <Vector3FControls
+      <Vector3FControl
         name="Position"
         className={styles.position}
         onChange={handlePositionOnChange}
         value={data.position}
       />
 
-      <Vector3FControls
+      <Vector3FControl
         name="Size"
         className={styles.size}
         onChange={handleSizeOnChange}
@@ -56,4 +56,4 @@ const PositionableControls = ({ data, onChange }: Props) => {
   );
 };
 
-export default PositionableControls;
+export default PositionableControl;
