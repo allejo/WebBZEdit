@@ -9,7 +9,7 @@ interface Props {
   onChange: (changes: IPassableObject) => void;
 }
 
-const PassabilityControls = ({ data, onChange }: Props) => {
+const PassabilityControl = ({ data, onChange }: Props) => {
   const handleDriveThroughOnChange = () => {
     onChange({
       ...data,
@@ -53,4 +53,4 @@ const PassabilityControls = ({ data, onChange }: Props) => {
   );
 };
 
-export default PassabilityControls;
+export default PassabilityControl;
