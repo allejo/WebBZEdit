@@ -40,7 +40,7 @@ const SkinnableBox = ({
     }
 
     s.geometry = new EdgesGeometry(mesh.current.geometry);
-  }, []);
+  }, [mesh.current?.geometry]);
   const isHighlighted = hover || isSelected;
 
   return (
