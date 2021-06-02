@@ -23,7 +23,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettify": "prettier --write src/"
+    "prettify": "prettier --write src/",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,6 +49,7 @@
     "@types/jest": "^26.0.23",
     "@types/wicg-file-system-access": "^2020.9.1",
     "prettier": "^2.2.1",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.2",
+    "husky": "^6.0.0"
   }
 }

@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+git stash --keep-index --include-untracked
+yarn prettify
+git add .
+git stash pop
