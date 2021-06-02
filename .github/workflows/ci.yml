@@ -1,0 +1,65 @@
+name: Continuous Integration
+on:
+  push: ~
+
+jobs:
+  build:
+    name: Production Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout Code
+
+      - uses: actions/setup-node@v2
+        name: Setup Node
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: |
+          yarn install
+
+      - name: Compile Production Build
+        run: |
+          yarn build
+
+  formatting:
+    name: Code Formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout Code
+
+      - uses: actions/setup-node@v2
+        name: Setup Node
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: |
+          yarn install
+
+      - name: Format Code
+        run: |
+          yarn prettify
+          git diff --exit-code
+
+  unit-tests:
+    name: Unit testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout Code
+
+      - uses: actions/setup-node@v2
+        name: Setup Node
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: |
+          yarn install
+
+      - name: Run tests
+        run: |
+          yarn test
