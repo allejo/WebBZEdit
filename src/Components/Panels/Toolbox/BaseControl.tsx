@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
 import { IBase } from '../../../Document/Obstacles/Base';
 
@@ -10,10 +10,10 @@ interface Props {
 }
 
 const BaseControl = ({ data, onChange }: Props) => {
-  const handleBaseColourOnChange = (value: number) => {
+  const handleBaseColorOnChange = (event: ChangeEvent<HTMLSelectElement>) => {
     onChange({
       ...data,
-      color: value as IBase['color'],
+      color: +event.currentTarget.value as IBase['color'],
     });
   };
 
@@ -26,9 +26,7 @@ const BaseControl = ({ data, onChange }: Props) => {
             className={styles.dropdown}
             id="base-color"
             value={data.color}
-            onChange={(event) =>
-              handleBaseColourOnChange(parseInt(event.target.value))
-            }
+            onChange={handleBaseColorOnChange}
           >
             <option value={1}>Red</option>
             <option value={2}>Green</option>
