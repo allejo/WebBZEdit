@@ -1,4 +1,4 @@
-import { writeNumber } from '../attributeWriters';
+import { writeNumber } from '../Writing/attributeWriters';
 
 describe('BZW Attribute Writer functions', () => {
   const values: [number, string][] = [
