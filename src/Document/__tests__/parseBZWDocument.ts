@@ -59,7 +59,7 @@ describe('BZW Document Parser', () => {
 
   it('should handle a zone', () => {
     const bzwBody = `\
-    zone 
+    zone
       name example_zone
       position 0.0 0.0 0.0
       size 1.0 1.0 1.0
@@ -220,7 +220,7 @@ describe('BZW Document Parser', () => {
     # by Tim Riker Tim@Rikers.org
     #
     # This is a team play world
-    
+
     # Typical World definition
     #
     world
@@ -228,7 +228,7 @@ describe('BZW Document Parser', () => {
     size 400.0
     flagHeight 0.0
     end
-    
+
     # top of the world
     box
     name A Box # this comment should not be part of the string
@@ -247,5 +247,36 @@ describe('BZW Document Parser', () => {
     expect(box.name).toEqual('A Box');
     expect(box.position).toEqual([0, 0, 29]);
     expect(box.size).toEqual([9.6568542495, 4.0, 16.0]);
+  });
+
+  it('should handle multiple spaces between parameters for attributes', () => {
+    const bzwBody = `\
+    teleporter
+      position     390.0 390.0 0.0
+      rotation     45.0
+      size         0.56  4.48  27.7
+      border       1.12
+    end
+    teleporter
+      position     390.0 390.0 30.0
+      rotation     45.0
+      size         0.56  4.48  15.0
+      border       1.12
+    end
+    `;
+    const world = parseBZWDocument(bzwBody);
+    const teleporters = Object.values(world.children);
+
+    const tele1: ITeleporter = teleporters[0] as ITeleporter;
+    expect(tele1.position).toEqual([390, 390, 0]);
+    expect(tele1.size).toEqual([0.56, 4.48, 27.7]);
+    expect(tele1.rotation).toEqual(45);
+    expect(tele1.border).toEqual(1.12);
+
+    const tele2: ITeleporter = teleporters[1] as ITeleporter;
+    expect(tele2.position).toEqual([390, 390, 30]);
+    expect(tele2.size).toEqual([0.56, 4.48, 15]);
+    expect(tele2.rotation).toEqual(45);
+    expect(tele2.border).toEqual(1.12);
   });
 });

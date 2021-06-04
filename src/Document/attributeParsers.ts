@@ -32,7 +32,7 @@ export function bzwString(line: string): string {
 }
 
 export function bzwStringVector(line: string): string[] {
-  return bzwString(line).split(' ');
+  return bzwString(line).split(/[ ]+/);
 }
 
 export function bzwIntVector(line: string): number[] {
@@ -44,7 +44,7 @@ export function bzwFloatVector(line: string): number[] {
 }
 
 export function bzwVector3F(line: string): [number, number, number] {
-  const tokens = line.split(' ');
+  const tokens = line.split(/[ ]+/);
 
   return [
     Number.parseFloat(tokens[0]),
