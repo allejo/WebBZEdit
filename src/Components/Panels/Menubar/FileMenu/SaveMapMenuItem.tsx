@@ -2,18 +2,20 @@ import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { saveAs } from 'file-saver';
 import React from 'react';
 import { MenuStateReturn } from 'reakit/Menu';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { writeBZWDocument } from '../../../../Document/writeBZWDocument';
 import {
   defaultFilePickerOptions,
   supportsFilesystemAPI,
 } from '../../../../Utilities/filesystem';
-import { fileHandleState } from '../../../../atoms';
+import { documentState, fileHandleState } from '../../../../atoms';
 import MenuItem from '../MenuItem';
 
 interface Props extends MenuStateReturn {}
 
 const SaveMapMenuItem = ({ ...menu }: Props) => {
+  const document = useRecoilValue(documentState);
   const [activeFileHandle, setActiveFileHandle] = useRecoilState(
     fileHandleState,
   );
@@ -34,7 +36,9 @@ const SaveMapMenuItem = ({ ...menu }: Props) => {
     return fileHandle;
   };
   const handleMenuItemClick = async () => {
-    const bzwRaw = ''; // @TODO: Actually export the BZW document
+    // @TODO: Can our document state be null in this situation? Should we
+    //    disable the Save button at that point?
+    const bzwRaw = document ? writeBZWDocument(document) : '';
 
     if (supportsFilesystemAPI()) {
       const fileHandle = await getFileHandle();
