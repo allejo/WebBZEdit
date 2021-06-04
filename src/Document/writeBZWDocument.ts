@@ -60,7 +60,9 @@ function writeObstacle(
     } else if (value === true) {
       body.push(writePriority, attribute);
     } else if (typeof value === 'number') {
-      if (attribute === 'rotation' && value === 0) {
+      const ignoreZeroValues = ['flagheight', 'rotation'];
+
+      if (ignoreZeroValues.indexOf(attribute) >= 0 && value === 0) {
         return;
       }
 
