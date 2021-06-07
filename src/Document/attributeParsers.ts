@@ -1,3 +1,5 @@
+import { TeleporterReference, TeleporterSide } from '../Utilities/types';
+
 export type ParserCallback<T> = (line: string) => T;
 
 export interface Repeatable<T> {
@@ -51,4 +53,21 @@ export function bzwVector3F(line: string): [number, number, number] {
     Number.parseFloat(tokens[1]),
     Number.parseFloat(tokens[2]),
   ];
+}
+
+export function bzwTeleRef(line: string): TeleporterReference {
+  let i = line.lastIndexOf(':'),
+    name = line.substring(0, i),
+    sideStr = line.substring(i + 1),
+    side =
+      sideStr == 'f'
+        ? TeleporterSide.Forward
+        : sideStr == 'b'
+        ? TeleporterSide.Backward
+        : TeleporterSide.Both;
+
+  return {
+    name: name,
+    side: side,
+  };
 }
