@@ -1,4 +1,7 @@
-import { TeleporterReference, TeleporterSide } from '../Utilities/types';
+import {
+  TeleporterReference,
+  TeleporterSide,
+} from './Obstacles/TeleporterLink';
 
 export type ParserCallback<T> = (line: string) => T;
 
@@ -59,12 +62,13 @@ export function bzwTeleRef(line: string): TeleporterReference {
   let i = line.lastIndexOf(':'),
     name = line.substring(0, i),
     sideStr = line.substring(i + 1),
-    side =
-      sideStr == 'f'
-        ? TeleporterSide.Forward
-        : sideStr == 'b'
-        ? TeleporterSide.Backward
-        : TeleporterSide.Both;
+    side = TeleporterSide.Both;
+
+  if (sideStr === 'f') {
+    side = TeleporterSide.Forward;
+  } else if (sideStr === 'b') {
+    side = TeleporterSide.Backward;
+  }
 
   return {
     name: name,

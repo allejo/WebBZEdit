@@ -48,7 +48,9 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   link: {
     factory: newITeleporterLink,
     parsers: TeleporterLinkProperties,
-    finalize: noop,
+    finalize: (link: ITeleporterLink) => {
+      link.name = link._infoString;
+    },
   },
   mesh: {
     factory: newIMesh,

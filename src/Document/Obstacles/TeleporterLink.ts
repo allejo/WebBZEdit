@@ -1,4 +1,3 @@
-import { TeleporterReference, TeleporterSide } from '../../Utilities/types';
 import { INameable } from '../Attributes/INameable';
 import { bzwString, bzwTeleRef } from '../attributeParsers';
 import { IBaseObject, newIBaseObject } from './BaseObject';
@@ -8,6 +7,17 @@ export const TeleporterLinkProperties = {
   from: bzwTeleRef,
   to: bzwTeleRef,
 };
+
+export type TeleporterReference = {
+  name: string;
+  side: TeleporterSide;
+};
+
+export enum TeleporterSide {
+  Both = '*',
+  Forward = 'f',
+  Backward = 'b',
+}
 
 export interface ITeleporterLink extends IBaseObject, INameable {
   from: TeleporterReference;
