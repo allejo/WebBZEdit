@@ -13,5 +13,5 @@ export function writeNumber(value: number): string {
     return value.toFixed(0);
   }
 
-  return value.toFixed(6).replace(/0+$/, '');
+  return value.toFixed(10).replace(/0+$/, '');
 }
