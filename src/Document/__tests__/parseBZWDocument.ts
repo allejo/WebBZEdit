@@ -113,7 +113,8 @@ describe('BZW Document Parser', () => {
 
   it('should handle a link', () => {
     const bzwBody = `\
-    link link0
+    link
+      name link0
       from green:tele:f
       to red:tele:b
     end
