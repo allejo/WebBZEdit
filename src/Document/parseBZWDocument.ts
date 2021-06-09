@@ -13,7 +13,6 @@ import {
   TeleporterProperties,
 } from './Obstacles/Teleporter';
 import {
-  ITeleporterLink,
   newITeleporterLink,
   TeleporterLinkProperties,
 } from './Obstacles/TeleporterLink';
