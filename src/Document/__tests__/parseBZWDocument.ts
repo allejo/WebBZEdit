@@ -131,6 +131,27 @@ describe('BZW Document Parser', () => {
     expect(link.to.side).toEqual(TeleporterSide.Backward);
   });
 
+  it('should handle a link with no sides', () => {
+    const bzwBody = `\
+    link
+      name link0
+      from tele1
+      to tele2
+    end
+    `;
+
+    const world = parseBZWDocument(bzwBody);
+    const link: ITeleporterLink = Object.values(
+      world.children,
+    ).pop() as ITeleporterLink;
+
+    expect(link.name).toEqual('link0');
+    expect(link.from.name).toEqual('tele1');
+    expect(link.from.side).toEqual(TeleporterSide.Both);
+    expect(link.to.name).toEqual('tele2');
+    expect(link.to.side).toEqual(TeleporterSide.Both);
+  });
+
   it('should handle a mesh', () => {
     const bzwBody = `\
     mesh
