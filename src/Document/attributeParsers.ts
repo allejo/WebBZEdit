@@ -1,3 +1,8 @@
+import {
+  TeleporterReference,
+  TeleporterSide,
+} from './Obstacles/TeleporterLink';
+
 export type ParserCallback<T> = (line: string) => T;
 
 export interface Repeatable<T> {
@@ -62,4 +67,26 @@ export function bzwVector4F(line: string): [number, number, number, number] {
     Number.parseFloat(tokens[2]),
     Number.parseFloat(tokens[3]),
   ];
+}
+
+export function bzwTeleRef(line: string): TeleporterReference {
+  let name = line;
+  let side = TeleporterSide.Both;
+  const i = line.lastIndexOf(':');
+
+  if (i !== -1) {
+    name = line.substring(0, i);
+
+    const sideStr = line.substring(i + 1);
+    if (sideStr === 'f') {
+      side = TeleporterSide.Forward;
+    } else if (sideStr === 'b') {
+      side = TeleporterSide.Backward;
+    }
+  }
+
+  return {
+    name: name,
+    side: side,
+  };
 }

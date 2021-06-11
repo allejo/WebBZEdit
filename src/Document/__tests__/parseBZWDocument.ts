@@ -4,6 +4,7 @@ import { IMaterial } from '../Obstacles/Material';
 import { IMesh } from '../Obstacles/Mesh';
 import { IPyramid } from '../Obstacles/Pyramid';
 import { ITeleporter } from '../Obstacles/Teleporter';
+import { ITeleporterLink, TeleporterSide } from '../Obstacles/TeleporterLink';
 import { IZone } from '../Obstacles/Zone';
 import { parseBZWDocument } from '../parseBZWDocument';
 
@@ -28,7 +29,7 @@ describe('BZW Document Parser', () => {
       resetmat
       spheremap
       noradar
-      noshado
+      noshadow
       noculling
       nosorting
       nolighting
@@ -169,6 +170,47 @@ describe('BZW Document Parser', () => {
     expect(teleporter.size).toEqual([0.125, 5, 20]);
     expect(teleporter.rotation).toEqual(45);
     expect(teleporter.border).toEqual(1.12);
+  });
+
+  it('should handle a link', () => {
+    const bzwBody = `\
+    link
+      name link0
+      from green:tele:f
+      to red:tele:b
+    end
+    `;
+    const world = parseBZWDocument(bzwBody);
+    const link: ITeleporterLink = Object.values(
+      world.children,
+    ).pop() as ITeleporterLink;
+
+    expect(link.name).toEqual('link0');
+    expect(link.from.name).toEqual('green:tele');
+    expect(link.from.side).toEqual(TeleporterSide.Forward);
+    expect(link.to.name).toEqual('red:tele');
+    expect(link.to.side).toEqual(TeleporterSide.Backward);
+  });
+
+  it('should handle a link with no sides', () => {
+    const bzwBody = `\
+    link
+      name link0
+      from tele1
+      to tele2
+    end
+    `;
+
+    const world = parseBZWDocument(bzwBody);
+    const link: ITeleporterLink = Object.values(
+      world.children,
+    ).pop() as ITeleporterLink;
+
+    expect(link.name).toEqual('link0');
+    expect(link.from.name).toEqual('tele1');
+    expect(link.from.side).toEqual(TeleporterSide.Both);
+    expect(link.to.name).toEqual('tele2');
+    expect(link.to.side).toEqual(TeleporterSide.Both);
   });
 
   it('should handle a mesh', () => {

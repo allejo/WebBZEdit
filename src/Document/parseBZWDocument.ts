@@ -13,6 +13,10 @@ import {
   newITeleporter,
   TeleporterProperties,
 } from './Obstacles/Teleporter';
+import {
+  newITeleporterLink,
+  TeleporterLinkProperties,
+} from './Obstacles/TeleporterLink';
 import { IWorld, newIWorld, WorldProperties } from './Obstacles/World';
 import { newIZone, ZoneProperties } from './Obstacles/Zone';
 import { bzwString, ParserCallback, Repeatable } from './attributeParsers';
@@ -39,6 +43,11 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   face: {
     factory: newIMeshFace,
     parsers: MeshFaceProperties,
+    finalize: noop,
+  },
+  link: {
+    factory: newITeleporterLink,
+    parsers: TeleporterLinkProperties,
     finalize: noop,
   },
   material: {
