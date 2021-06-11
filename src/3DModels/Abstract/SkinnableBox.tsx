@@ -49,8 +49,8 @@ const SkinnableBox = ({
   return (
     <mesh
       ref={mesh}
-      position={[bzwPosX, bzwPosZ + bzwSizeZ / 2, bzwPosY]}
-      rotation={[0, -deg2rad(rotation), 0]}
+      position={[bzwPosX, bzwPosZ + bzwSizeZ / 2, -bzwPosY]}
+      rotation={[0, deg2rad(rotation), 0]}
       onClick={onClick}
       onPointerOver={() => setHover(true)}
       onPointerOut={() => setHover(false)}
