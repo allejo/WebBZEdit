@@ -52,3 +52,14 @@ export function bzwVector3F(line: string): [number, number, number] {
     Number.parseFloat(tokens[2]),
   ];
 }
+
+export function bzwVector4F(line: string): [number, number, number, number] {
+  const tokens = line.split(/[ ]+/);
+
+  return [
+    Number.parseFloat(tokens[0]),
+    Number.parseFloat(tokens[1]),
+    Number.parseFloat(tokens[2]),
+    Number.parseFloat(tokens[3]),
+  ];
+}

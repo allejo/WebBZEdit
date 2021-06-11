@@ -4,6 +4,7 @@ import { Stack } from '../Utilities/Stack';
 import { BaseProperties, newIBase } from './Obstacles/Base';
 import { IBaseObject, newIBaseObject } from './Obstacles/BaseObject';
 import { BoxProperties, newIBox } from './Obstacles/Box';
+import { MaterialProperties, newIMaterial } from './Obstacles/Material';
 import { MeshProperties, newIMesh } from './Obstacles/Mesh';
 import { MeshFaceProperties, newIMeshFace } from './Obstacles/MeshFace';
 import { newIPyramid, PyramidProperties } from './Obstacles/Pyramid';
@@ -38,6 +39,11 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   face: {
     factory: newIMeshFace,
     parsers: MeshFaceProperties,
+    finalize: noop,
+  },
+  material: {
+    factory: newIMaterial,
+    parsers: MaterialProperties,
     finalize: noop,
   },
   mesh: {
