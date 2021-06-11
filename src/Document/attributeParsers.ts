@@ -59,14 +59,14 @@ export function bzwVector3F(line: string): [number, number, number] {
 }
 
 export function bzwTeleRef(line: string): TeleporterReference {
-  let name = line,
-    side = TeleporterSide.Both,
-    i = line.lastIndexOf(':');
+  let name = line;
+  let side = TeleporterSide.Both;
+  const i = line.lastIndexOf(':');
 
   if (i !== -1) {
     name = line.substring(0, i);
 
-    let sideStr = line.substring(i + 1);
+    const sideStr = line.substring(i + 1);
     if (sideStr === 'f') {
       side = TeleporterSide.Forward;
     } else if (sideStr === 'b') {

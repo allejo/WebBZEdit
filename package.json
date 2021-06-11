@@ -23,11 +23,23 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "lint": "eslint src/",
     "prettify": "prettier --write src/",
     "prepare": "husky install"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "prefer-const": "error"
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts?(x)"
+        ],
+        "rules": {}
+      }
+    ]
   },
   "browserslist": {
     "production": [
