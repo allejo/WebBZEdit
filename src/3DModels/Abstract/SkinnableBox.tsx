@@ -60,12 +60,12 @@ const SkinnableBox = ({
         args={[bzwSizeX * 2, bzwSizeZ, bzwSizeY * 2]}
       />
       {/* === Materials === */}
-      <meshBasicMaterial attachArray="material" map={xPosMaterial} /> {/* +z */}
-      <meshBasicMaterial attachArray="material" map={xNegMaterial} /> {/* -z */}
-      <meshBasicMaterial attachArray="material" map={topMaterial} /> {/* +y */}
-      <meshBasicMaterial attachArray="material" map={botMaterial} /> {/* -y */}
-      <meshBasicMaterial attachArray="material" map={yPosMaterial} /> {/* +x */}
-      <meshBasicMaterial attachArray="material" map={yNegMaterial} /> {/* -x */}
+      <meshBasicMaterial attachArray="material" map={yPosMaterial} /> {/* +y */}
+      <meshBasicMaterial attachArray="material" map={yNegMaterial} /> {/* -y */}
+      <meshBasicMaterial attachArray="material" map={topMaterial} /> {/* +z */}
+      <meshBasicMaterial attachArray="material" map={botMaterial} /> {/* -z */}
+      <meshBasicMaterial attachArray="material" map={xPosMaterial} /> {/* +x */}
+      <meshBasicMaterial attachArray="material" map={xNegMaterial} /> {/* -x */}
       {/* === Edges Highlighting === */}
       <lineSegments ref={segments}>
         <lineBasicMaterial

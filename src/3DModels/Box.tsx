@@ -14,6 +14,11 @@ interface Props {
   onClick: (obstacle: IBox) => void;
 }
 
+// These are "magic" numbers that were calculated manually based on the
+// `uv_mapping.png` texture being used in the client.
+const XY_MULTIPLIER = 0.2125;
+const Z_MULTIPLIER = 0.10625;
+
 /**
  * @constructor
  * @see https://threejs.org/docs/#api/en/geometries/BoxGeometry
@@ -23,23 +28,27 @@ const Box = ({ obstacle, isSelected, onClick }: Props) => {
   const [bzwSizeX, bzwSizeY, bzwSizeZ] = size;
   const handleOnClick = () => onClick(obstacle);
 
-  const [roofTexture, wallTexture] = useLoader<Texture[]>(TextureLoader, [
+  const [_roofTexture, _wallTexture] = useLoader<Texture[]>(TextureLoader, [
     boxRoof,
     boxWall,
   ]);
 
+  const roofTexture = _roofTexture.clone();
+  const wallTexture = _wallTexture.clone();
+
   roofTexture.wrapS = roofTexture.wrapT = RepeatWrapping;
   wallTexture.wrapS = wallTexture.wrapT = RepeatWrapping;
 
-  roofTexture.repeat.set(bzwSizeX / 2, bzwSizeY / 2);
+  roofTexture.repeat.set(Math.round(bzwSizeX), Math.round(bzwSizeY));
+  roofTexture.needsUpdate = true;
 
-  const xTexture = wallTexture;
+  const xTexture = wallTexture.clone();
   const yTexture = wallTexture.clone();
 
-  xTexture.repeat.set(bzwSizeZ / 4, bzwSizeZ / 7.5);
+  xTexture.repeat.set(bzwSizeX * XY_MULTIPLIER, bzwSizeZ * Z_MULTIPLIER);
   xTexture.needsUpdate = true;
 
-  yTexture.repeat.set(bzwSizeY / 4, bzwSizeZ / 7.5);
+  yTexture.repeat.set(bzwSizeY * XY_MULTIPLIER, bzwSizeZ * Z_MULTIPLIER);
   yTexture.needsUpdate = true;
 
   return (
@@ -51,10 +60,10 @@ const Box = ({ obstacle, isSelected, onClick }: Props) => {
       isSelected={isSelected}
       topMaterial={roofTexture}
       botMaterial={roofTexture}
-      xPosMaterial={wallTexture}
-      xNegMaterial={wallTexture}
-      yPosMaterial={wallTexture}
-      yNegMaterial={wallTexture}
+      xPosMaterial={xTexture}
+      xNegMaterial={xTexture}
+      yPosMaterial={yTexture}
+      yNegMaterial={yTexture}
     />
   );
 };
