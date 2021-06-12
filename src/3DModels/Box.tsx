@@ -14,10 +14,12 @@ interface Props {
   onClick: (obstacle: IBox) => void;
 }
 
-// These are "magic" numbers that were calculated manually based on the
-// `uv_mapping.png` texture being used in the client.
-const XY_MULTIPLIER = 0.2125;
-const Z_MULTIPLIER = 0.10625;
+// These are magic calculations used to calculating the UV repeat values for
+// objects. Applying the `uv_mapping.png` texture to BZFlag for the "boxwall"
+// texture, on the BZW X/Y-axis, I get 17 squares of the texture applied to the
+// side. On the BZW Z-axis, I get 8.5 out of 16 squares applied.
+const XY_MULTIPLIER = 17 / 16 / 5;
+const Z_MULTIPLIER = 8.5 / 16 / 5;
 
 /**
  * @constructor
