@@ -1,6 +1,13 @@
-import React from 'react';
-import { useLoader } from 'react-three-fiber';
-import { RepeatWrapping, Texture, TextureLoader } from 'three';
+import React, { useState } from 'react';
+import { useLoader, useUpdate } from 'react-three-fiber';
+import {
+  BoxBufferGeometry,
+  EdgesGeometry,
+  LineSegments,
+  RepeatWrapping,
+  Texture,
+  TextureLoader,
+} from 'three';
 
 import { ITeleporter } from '../Document/Obstacles/Teleporter';
 import { deg2rad } from '../Utilities/math';
@@ -16,12 +23,26 @@ interface Props {
 }
 
 const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
+  const [hover, setHover] = useState(false);
   const { position, size, rotation = 0, border } = obstacle;
   const [bzwPosX, bzwPosY, bzwPosZ] = position;
   const [, bzwSizeY, bzwSizeZ] = size;
   const handleOnClick = () => onClick(obstacle);
 
-  const worldUnitsSizeY = bzwSizeY + border;
+  const segments = useUpdate<LineSegments>(
+    (s) => {
+      const boxGeometry = new BoxBufferGeometry(
+        border,
+        bzwSizeZ + border,
+        (bzwSizeY + border * 2) * 2,
+      );
+      boxGeometry.translate(0, bzwSizeZ / 2 + border / 2, 0);
+      s.geometry = new EdgesGeometry(boxGeometry);
+    },
+    [obstacle],
+  );
+
+  const isHighlighted = hover || isSelected;
 
   const [_borderTexture, _linkTexture] = useLoader<Texture[]>(TextureLoader, [
     teleporterBorder,
@@ -34,9 +55,11 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
   borderTexture.wrapS = borderTexture.wrapT = RepeatWrapping;
   linkTexture.wrapS = linkTexture.wrapT = RepeatWrapping;
 
-  // @TODO: Add custom geometry of `isSelected`
-
+  //
   // Link Texture
+  //
+
+  const worldUnitsSizeY = bzwSizeY + border;
 
   linkTexture.repeat.set(1, bzwSizeZ / (worldUnitsSizeY * 2) + border / 16);
   linkTexture.needsUpdate = true;
@@ -87,6 +110,8 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
     <mesh
       position={[bzwPosX, bzwPosZ, bzwPosY]}
       rotation={[0, -deg2rad(rotation), 0]}
+      onPointerOver={() => setHover(true)}
+      onPointerOut={() => setHover(false)}
     >
       {/* === Link material === */}
       <SkinnableBox
@@ -102,9 +127,10 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
         yPosMaterial={linkTexture}
         yNegMaterial={linkTexture}
       />
+      {/* === Frame === */}
       {border > 0 && (
         <>
-          {/* === Top Frame === */}
+          {/* === Top Bar === */}
           <SkinnableBox
             position={[0, 0, bzwSizeZ]}
             size={[border / 2, bzwSizeY + border * 2, border]}
@@ -118,7 +144,7 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
             yPosMaterial={topFrameFrontTexture}
             yNegMaterial={topFrameBackTexture}
           />
-          {/* === Left Frame === */}
+          {/* === Left Bar === */}
           <SkinnableBox
             position={[0, bzwSizeY + border * 1.5, 0]}
             size={[border / 2, border / 2, bzwSizeZ]}
@@ -132,7 +158,7 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
             yPosMaterial={sideSecondHalfTexture}
             yNegMaterial={sideSecondHalfTexture}
           />
-          {/* === Right Frame === */}
+          {/* === Right Bar === */}
           <SkinnableBox
             position={[0, -(bzwSizeY + border * 1.5), 0]}
             size={[border / 2, border / 2, bzwSizeZ]}
@@ -148,6 +174,15 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
           />
         </>
       )}
+      {/* === Edges Highlighting === */}
+      <lineSegments ref={segments}>
+        <lineBasicMaterial
+          attach="material"
+          color={0x00ffff}
+          transparent={!isHighlighted}
+          opacity={isHighlighted ? 1 : 0}
+        />
+      </lineSegments>
     </mesh>
   );
 };
