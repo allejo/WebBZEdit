@@ -10,7 +10,8 @@ interface Props {
   size: Vector3F;
   rotation: number;
   onClick: (e: React.MouseEvent) => void;
-  isSelected: boolean;
+  isSelected?: boolean;
+  isSelectable?: boolean;
   topMaterial: Texture;
   botMaterial: Texture;
   xPosMaterial: Texture;
@@ -24,13 +25,14 @@ const SkinnableBox = ({
   size: [bzwSizeX, bzwSizeY, bzwSizeZ],
   rotation,
   onClick,
-  isSelected,
   topMaterial,
   botMaterial,
   xPosMaterial,
   xNegMaterial,
   yPosMaterial,
   yNegMaterial,
+  isSelected = false,
+  isSelectable = true,
 }: Props) => {
   const [hover, setHover] = useState(false);
   const mesh = useRef<Mesh>();
@@ -44,7 +46,7 @@ const SkinnableBox = ({
     },
     [mesh.current?.geometry],
   );
-  const isHighlighted = hover || isSelected;
+  const isHighlighted = isSelectable && (hover || isSelected);
 
   return (
     <mesh

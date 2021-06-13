@@ -4,9 +4,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import Base from '../../../3DModels/Base';
 import Box from '../../../3DModels/Box';
 import Pyramid from '../../../3DModels/Pyramid';
+import Teleporter from '../../../3DModels/Teleporter';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBox } from '../../../Document/Obstacles/Box';
 import { IPyramid } from '../../../Document/Obstacles/Pyramid';
+import { ITeleporter } from '../../../Document/Obstacles/Teleporter';
 import { documentState, selectionState } from '../../../atoms';
 
 function handleOnClick(uuid: string | null, setter: any) {
@@ -37,6 +39,8 @@ const BZWDocumentRenderer = () => {
           return <Pyramid {...props} obstacle={obstacle as IPyramid} />;
         } else if (obstacle._objectType === 'base') {
           return <Base {...props} obstacle={obstacle as IBase} />;
+        } else if (obstacle._objectType === 'teleporter') {
+          return <Teleporter {...props} obstacle={obstacle as ITeleporter} />;
         }
 
         return null;
