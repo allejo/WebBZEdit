@@ -1,5 +1,6 @@
 import { IBase } from '../Obstacles/Base';
 import { IBox } from '../Obstacles/Box';
+import { IMaterial } from '../Obstacles/Material';
 import { IMesh } from '../Obstacles/Mesh';
 import { IPyramid } from '../Obstacles/Pyramid';
 import { ITeleporter } from '../Obstacles/Teleporter';
@@ -8,6 +9,66 @@ import { IZone } from '../Obstacles/Zone';
 import { parseBZWDocument } from '../parseBZWDocument';
 
 describe('BZW Document Parser', () => {
+  it('should handle a material', () => {
+    const bzwBody = `\
+    material
+      name example_material
+      texture filename
+      addtexture filename
+      notextures
+      notexcolor
+      notexalpha
+      texmat texmatref
+      dyncol -1
+      ambient 0.0 0.0 0.0 1.0
+      diffuse 1.0 1.0 1.0 1.0
+      color 1.0 1.0 1.0 1.0
+      specular 0.0 0.0 0.0 1.0
+      emission 0.0 0.0 0.0 1.0
+      shininess 0.0
+      resetmat
+      spheremap
+      noradar
+      noshadow
+      noculling
+      nosorting
+      nolighting
+      alphathresh 0.0
+      groupalpha
+      occluder
+    end
+    `;
+    const world = parseBZWDocument(bzwBody);
+    const material: IMaterial = Object.values(
+      world.children,
+    ).pop() as IMaterial;
+
+    expect(material.name).toEqual('example_material');
+    expect(material.texture).toEqual('filename');
+    expect(material.addtexture).toEqual('filename');
+    expect(material.notextures).toEqual(true);
+    expect(material.notexcolor).toEqual(true);
+    expect(material.notexalpha).toEqual(true);
+    expect(material.texmat).toEqual('texmatref');
+    expect(material.dyncol).toEqual('-1');
+    expect(material.ambient).toEqual([0.0, 0.0, 0.0, 1.0]);
+    expect(material.diffuse).toEqual([1.0, 1.0, 1.0, 1.0]);
+    expect(material.color).toEqual([1.0, 1.0, 1.0, 1.0]);
+    expect(material.specular).toEqual([0.0, 0.0, 0.0, 1.0]);
+    expect(material.emission).toEqual([0.0, 0.0, 0.0, 1.0]);
+    expect(material.shininess).toEqual(0.0);
+    expect(material.resetmat).toEqual(true);
+    expect(material.spheremap).toEqual(true);
+    expect(material.noradar).toEqual(true);
+    expect(material.noshadow).toEqual(true);
+    expect(material.noculling).toEqual(true);
+    expect(material.nosorting).toEqual(true);
+    expect(material.nolighting).toEqual(true);
+    expect(material.alphathresh).toEqual(0.0);
+    expect(material.groupalpha).toEqual(true);
+    expect(material.occluder).toEqual(true);
+  });
+
   it('should handle a box', () => {
     const bzwBody = `\
     box
