@@ -2,6 +2,8 @@
 
 A map editor for BZFlag powered by your every day browser heavily inspired by [The Noah's webbzw](https://github.com/BZFlagCommunity/webbzw) and [cs8425's bzw-viewer](https://github.com/cs8425/bzw-viewer).
 
+![A screenshot of the editor](.github/screenshot.png)
+
 ## About the Project
 
 The goal of Web BZEdit is serve as a replacement for all other (dated and semi-broken) desktop based map editors. It's an incredibly ambitious project and will not be finished any time soon; there's a lot of work that needs to be done.
