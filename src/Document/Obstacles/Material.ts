@@ -31,19 +31,19 @@ export const MaterialProperties = {
 };
 
 export interface IMaterial extends IBaseObject, INameable {
-  texture: String;
-  addtexture?: String;
+  texture?: string;
+  addtexture?: string;
   notextures?: boolean;
   notexcolor?: boolean;
   notexalpha?: boolean;
-  texmat: String;
-  dyncol: String;
+  texmat: string;
+  dyncol: string;
   ambient?: Vector4F;
   diffuse?: Vector4F;
   color?: Vector4F;
   specular?: Vector4F;
   emission?: Vector4F;
-  shininess?: Number;
+  shininess?: number;
   resetmat?: boolean;
   spheremap?: boolean;
   noradar?: boolean;
@@ -51,7 +51,7 @@ export interface IMaterial extends IBaseObject, INameable {
   noculling?: boolean;
   nosorting?: boolean;
   nolighting?: boolean;
-  alphathresh?: Number;
+  alphathresh?: number;
   groupalpha?: boolean;
   occluder?: boolean;
 }
@@ -59,7 +59,6 @@ export interface IMaterial extends IBaseObject, INameable {
 export function newIMaterial(): IMaterial {
   return {
     ...newIBaseObject('material'),
-    texture: 'filename',
     texmat: '-1',
     dyncol: '-1',
   };
