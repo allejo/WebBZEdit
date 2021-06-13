@@ -9,6 +9,7 @@ import thumbBasePurple from '../../../assets/thumb_base_purple.png';
 import thumbBaseRed from '../../../assets/thumb_base_red.png';
 import thumbBox from '../../../assets/thumb_box.png';
 import thumbPyramid from '../../../assets/thumb_pyramid.png';
+import thumbTeleporter from '../../../assets/thumb_teleporter.png';
 import styles from './ObstacleSummary.module.scss';
 
 interface Props {
@@ -21,6 +22,7 @@ const obstacleThumbs: Record<string, string> = {
   base: '',
   box: thumbBox,
   pyramid: thumbPyramid,
+  teleporter: thumbTeleporter,
 };
 
 const baseThumbs: Record<IBase['color'], string> = {
@@ -51,7 +53,7 @@ function getThumbnail(object: IBaseObject): JSX.Element {
 const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
   ({ obstacle, onClick, selected }: Props, ref) => {
     const displayName =
-      obstacle.name ?? `${obstacle._objectType} ${obstacle._uuid.substr(0, 8)}`;
+      obstacle.name || `${obstacle._objectType} ${obstacle._uuid.substr(0, 8)}`;
 
     return (
       <div
