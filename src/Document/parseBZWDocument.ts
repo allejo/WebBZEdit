@@ -17,6 +17,10 @@ import {
   newITeleporterLink,
   TeleporterLinkProperties,
 } from './Obstacles/TeleporterLink';
+import {
+  newITextureMatrix,
+  TextureMatrixProperties,
+} from './Obstacles/TextureMatrix';
 import { IWorld, newIWorld, WorldProperties } from './Obstacles/World';
 import { newIZone, ZoneProperties } from './Obstacles/Zone';
 import { bzwString, ParserCallback, Repeatable } from './attributeParsers';
@@ -71,6 +75,11 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
     finalize: (teleporter: ITeleporter) => {
       teleporter.name = teleporter._infoString;
     },
+  },
+  texturematrix: {
+    factory: newITextureMatrix,
+    parsers: TextureMatrixProperties,
+    finalize: noop,
   },
   world: {
     factory: newIWorld,
@@ -137,11 +146,11 @@ export function parseBZWDocument(document: string): IWorld {
       }
     } else {
       const tokens = line.match(/([^ ]+)(?: (.+))?/);
-      const object = tokens?.[1] ?? '';
+      const object = (tokens?.[1] ?? '').toLocaleLowerCase();
       const infoString = tokens?.[2] ?? '';
 
       if (ObjectBuilders.hasOwnProperty(object)) {
-        const newObject = ObjectBuilders[object.toLowerCase()].factory();
+        const newObject = ObjectBuilders[object].factory();
         newObject._uuid = nanoid();
         newObject._infoString = infoString;
 
