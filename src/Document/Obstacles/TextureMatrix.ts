@@ -22,11 +22,11 @@ export const TextureMatrixProperties = {
 export interface ITextureMatrix extends IBaseObject, INameable {
   scale?: Vector4F;
   spin?: number;
-  shift?: number[];
-  center?: number[];
-  fixedscale?: number[];
+  shift?: [number, number];
+  center?: [number, number];
+  fixedscale?: [number, number];
   fixedspin?: number;
-  fixedshift?: number[];
+  fixedshift?: [number, number];
 }
 
 export function newITextureMatrix(): ITextureMatrix {
