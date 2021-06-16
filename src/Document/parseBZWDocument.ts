@@ -8,11 +8,7 @@ import { MaterialProperties, newIMaterial } from './Obstacles/Material';
 import { MeshProperties, newIMesh } from './Obstacles/Mesh';
 import { MeshFaceProperties, newIMeshFace } from './Obstacles/MeshFace';
 import { newIPyramid, PyramidProperties } from './Obstacles/Pyramid';
-import {
-  ITeleporter,
-  newITeleporter,
-  TeleporterProperties,
-} from './Obstacles/Teleporter';
+import { newITeleporter, TeleporterProperties } from './Obstacles/Teleporter';
 import {
   newITeleporterLink,
   TeleporterLinkProperties,
