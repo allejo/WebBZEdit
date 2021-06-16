@@ -8,7 +8,11 @@ import { MaterialProperties, newIMaterial } from './Obstacles/Material';
 import { MeshProperties, newIMesh } from './Obstacles/Mesh';
 import { MeshFaceProperties, newIMeshFace } from './Obstacles/MeshFace';
 import { newIPyramid, PyramidProperties } from './Obstacles/Pyramid';
-import { newITeleporter, TeleporterProperties } from './Obstacles/Teleporter';
+import {
+  ITeleporter,
+  newITeleporter,
+  TeleporterProperties,
+} from './Obstacles/Teleporter';
 import {
   newITeleporterLink,
   TeleporterLinkProperties,
@@ -113,6 +117,7 @@ export function parseBZWDocument(document: string): IWorld {
 
   const lines = document.split('\n');
   const objStack = new Stack<IBaseObject>([world]);
+  teleporters.length = 0;
 
   for (const _line of lines) {
     const line = _line.trim();
