@@ -1,3 +1,4 @@
+import { ITeleporter } from './Obstacles/Teleporter';
 import {
   TeleporterReference,
   TeleporterSide,
@@ -69,6 +70,7 @@ export function bzwVector4F(line: string): [number, number, number, number] {
   ];
 }
 
+export const teleporters = new Array<ITeleporter>();
 export function bzwTeleRef(line: string): TeleporterReference {
   let name = line;
   let side = TeleporterSide.Both;
@@ -83,6 +85,14 @@ export function bzwTeleRef(line: string): TeleporterReference {
     } else if (sideStr === 'b') {
       side = TeleporterSide.Backward;
     }
+  } else if (!isNaN(+name)) {
+    // teleporter reference was defined as a single number
+    // determine which teleporter and side is being referenced
+    const teleIndex = Math.floor(+name / 2),
+      sideIndex = +name % 2;
+
+    name = teleporters[teleIndex].name ?? '';
+    side = sideIndex === 0 ? TeleporterSide.Forward : TeleporterSide.Backward;
   }
 
   return {

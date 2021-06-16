@@ -55,16 +55,36 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
     const displayName =
       obstacle.name || `${obstacle._objectType} ${obstacle._uuid.substr(0, 8)}`;
 
-    return (
-      <div
-        ref={ref}
-        className={`${styles.wrapper} ${selected && styles.selected}`}
-        onClick={(event) => onClick(event, obstacle)}
-      >
-        <div>{getThumbnail(obstacle)}</div>
-        <div className={styles.body}>{displayName}</div>
-      </div>
-    );
+    if (obstacle._objectType === 'link') {
+      // temporary display for link details
+      return (
+        <div
+          ref={ref}
+          className={`${styles.wrapper} ${selected && styles.selected}`}
+          onClick={(event) => onClick(event, obstacle)}
+        >
+          <div>{getThumbnail(obstacle)}</div>
+          <div className={styles.body}>
+            {displayName}
+            <br />
+            from = {obstacle.from.name}:{obstacle.from.side}
+            <br />
+            to = {obstacle.to.name}:{obstacle.to.side}
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          ref={ref}
+          className={`${styles.wrapper} ${selected && styles.selected}`}
+          onClick={(event) => onClick(event, obstacle)}
+        >
+          <div>{getThumbnail(obstacle)}</div>
+          <div className={styles.body}>{displayName}</div>
+        </div>
+      );
+    }
   },
 );
 

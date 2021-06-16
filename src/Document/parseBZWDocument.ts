@@ -8,18 +8,19 @@ import { MaterialProperties, newIMaterial } from './Obstacles/Material';
 import { MeshProperties, newIMesh } from './Obstacles/Mesh';
 import { MeshFaceProperties, newIMeshFace } from './Obstacles/MeshFace';
 import { newIPyramid, PyramidProperties } from './Obstacles/Pyramid';
-import {
-  ITeleporter,
-  newITeleporter,
-  TeleporterProperties,
-} from './Obstacles/Teleporter';
+import { newITeleporter, TeleporterProperties } from './Obstacles/Teleporter';
 import {
   newITeleporterLink,
   TeleporterLinkProperties,
 } from './Obstacles/TeleporterLink';
 import { IWorld, newIWorld, WorldProperties } from './Obstacles/World';
 import { newIZone, ZoneProperties } from './Obstacles/Zone';
-import { bzwString, ParserCallback, Repeatable } from './attributeParsers';
+import {
+  bzwString,
+  ParserCallback,
+  Repeatable,
+  teleporters,
+} from './attributeParsers';
 
 type ObjectBuilder = {
   factory: () => any;
@@ -68,9 +69,7 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   teleporter: {
     factory: newITeleporter,
     parsers: TeleporterProperties,
-    finalize: (teleporter: ITeleporter) => {
-      teleporter.name = teleporter._infoString;
-    },
+    finalize: noop,
   },
   world: {
     factory: newIWorld,
@@ -91,7 +90,6 @@ function parseLine(line: string, object: IBaseObject): void {
 
   const parser =
     ObjectBuilders[object._objectType].parsers[attribute] ?? bzwString;
-
   if (typeof parser === 'function') {
     object[attribute] = parser(restOfLine);
   } else {
@@ -146,10 +144,19 @@ export function parseBZWDocument(document: string): IWorld {
         newObject._infoString = infoString;
 
         // We create a World object by default, but a map file can have its
-        // own defined. If this is the case, let's overwrite out default one.
+        // own defined. If this is the case, let's overwrite our default one.
         if (newObject._objectType === 'world') {
           world = newObject;
           objStack.pop();
+        } else if (newObject._objectType === 'teleporter') {
+          newObject.name = infoString;
+
+          // teleporter didn't have a name; so give it one
+          if (newObject.name === '') {
+            newObject.name = 'teleporter ' + teleporters.length;
+          }
+          // keep track of teleporter objects so we can associate their links later
+          teleporters.push(newObject);
         }
 
         objStack.push(newObject);
