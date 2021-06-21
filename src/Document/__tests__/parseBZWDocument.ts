@@ -5,10 +5,39 @@ import { IMesh } from '../Obstacles/Mesh';
 import { IPyramid } from '../Obstacles/Pyramid';
 import { ITeleporter } from '../Obstacles/Teleporter';
 import { ITeleporterLink, TeleporterSide } from '../Obstacles/TeleporterLink';
+import { ITextureMatrix } from '../Obstacles/TextureMatrix';
 import { IZone } from '../Obstacles/Zone';
 import { parseBZWDocument } from '../parseBZWDocument';
 
 describe('BZW Document Parser', () => {
+  it('should handle a texture matrix', () => {
+    const bzwBody = `\
+     textureMatrix
+      name example_texmat
+      scale 0.0 0.0 1.0 1.0 # u/v freqs, u/v scales
+      spin 0.0 # rotation freq
+      shift 0.0 0.0 # u/v freqs
+      center 0.5 0.5 # dynamic u/v center (for spin and scale)
+      fixedscale 0.0 0.0 # time invariant u/v scale
+      fixedspin 0.0 # time invariant rotation
+      fixedshift 0.0 0.0 # time invariant u/v shift
+    end
+    `;
+    const world = parseBZWDocument(bzwBody);
+    const texmat: ITextureMatrix = Object.values(
+      world.children,
+    ).pop() as ITextureMatrix;
+
+    expect(texmat.name).toEqual('example_texmat');
+    expect(texmat.scale).toEqual([0.0, 0.0, 1.0, 1.0]);
+    expect(texmat.spin).toEqual(0.0);
+    expect(texmat.shift).toEqual([0.0, 0.0]);
+    expect(texmat.center).toEqual([0.5, 0.5]);
+    expect(texmat.fixedscale).toEqual([0.0, 0.0]);
+    expect(texmat.fixedspin).toEqual(0.0);
+    expect(texmat.fixedshift).toEqual([0.0, 0.0]);
+  });
+
   it('should handle a material', () => {
     const bzwBody = `\
     material
