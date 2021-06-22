@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { Stack } from '../Utilities/Stack';
 import { BaseProperties, newIBase } from './Obstacles/Base';
-import { IBaseObject, newIBaseObject } from './Obstacles/BaseObject';
+import { IBaseObject } from './Obstacles/BaseObject';
 import { BoxProperties, newIBox } from './Obstacles/Box';
 import { MaterialProperties, newIMaterial } from './Obstacles/Material';
 import { MeshProperties, newIMesh } from './Obstacles/Mesh';
@@ -15,12 +15,7 @@ import {
 } from './Obstacles/TeleporterLink';
 import { IWorld, newIWorld, WorldProperties } from './Obstacles/World';
 import { newIZone, ZoneProperties } from './Obstacles/Zone';
-import {
-  bzwString,
-  ParserCallback,
-  Repeatable,
-  teleporters,
-} from './attributeParsers';
+import { bzwString, ParserCallback, Repeatable } from './attributeParsers';
 
 type ObjectBuilder = {
   factory: () => any;
@@ -83,7 +78,7 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   },
 };
 
-function parseLine(line: string, object: IBaseObject): void {
+function parseLine(line: string, object: IBaseObject, world: IWorld): void {
   const spacePos = line.search(/[ ]|$/);
   const attribute = line.substring(0, spacePos).toLowerCase();
   const restOfLine = line.substr(spacePos + 1).trim();
@@ -91,29 +86,25 @@ function parseLine(line: string, object: IBaseObject): void {
   const parser =
     ObjectBuilders[object._objectType].parsers[attribute] ?? bzwString;
   if (typeof parser === 'function') {
-    object[attribute] = parser(restOfLine);
+    object[attribute] = parser(restOfLine, world);
   } else {
     if (parser.type === 'repeatable') {
       if (!object[attribute]) {
         object[attribute] = [];
       }
 
-      object[attribute].push(parser.callback(restOfLine));
+      object[attribute].push(parser.callback(restOfLine, world));
     }
   }
 }
 
 export function parseBZWDocument(document: string): IWorld {
   let world: IWorld = {
-    ...newIBaseObject('world'),
-    size: 800,
-    nowalls: false,
-    freectfspawns: false,
+    ...newIWorld(),
   };
 
   const lines = document.split('\n');
   const objStack = new Stack<IBaseObject>([world]);
-  teleporters.length = 0;
 
   for (const _line of lines) {
     const line = _line.trim();
@@ -154,15 +145,16 @@ export function parseBZWDocument(document: string): IWorld {
 
           // teleporter didn't have a name; so give it one
           if (newObject.name === '') {
-            newObject.name = 'teleporter ' + teleporters.length;
+            newObject.name = 'teleporter ' + world._teleporters.length;
           }
+
           // keep track of teleporter objects so we can associate their links later
-          teleporters.push(newObject);
+          world._teleporters.push(newObject);
         }
 
         objStack.push(newObject);
       } else if (currObject) {
-        parseLine(line, currObject);
+        parseLine(line, currObject, world);
       }
     }
   }

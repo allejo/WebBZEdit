@@ -1,10 +1,10 @@
-import { ITeleporter } from './Obstacles/Teleporter';
 import {
   TeleporterReference,
   TeleporterSide,
 } from './Obstacles/TeleporterLink';
+import { IWorld } from './Obstacles/World';
 
-export type ParserCallback<T> = (line: string) => T;
+export type ParserCallback<T> = (line: string, world: IWorld) => T;
 
 export interface Repeatable<T> {
   type: 'repeatable';
@@ -70,8 +70,7 @@ export function bzwVector4F(line: string): [number, number, number, number] {
   ];
 }
 
-export const teleporters = new Array<ITeleporter>();
-export function bzwTeleRef(line: string): TeleporterReference {
+export function bzwTeleRef(line: string, world: IWorld): TeleporterReference {
   let name = line;
   let side = TeleporterSide.Both;
   const i = line.lastIndexOf(':');
@@ -91,7 +90,7 @@ export function bzwTeleRef(line: string): TeleporterReference {
     const teleIndex = Math.floor(+name / 2),
       sideIndex = +name % 2;
 
-    name = teleporters[teleIndex].name ?? '';
+    name = world._teleporters[teleIndex].name ?? '';
     side = sideIndex === 0 ? TeleporterSide.Forward : TeleporterSide.Backward;
   }
 
