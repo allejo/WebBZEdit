@@ -10,6 +10,7 @@ import { MeshFaceProperties, newIMeshFace } from './Obstacles/MeshFace';
 import { newIPyramid, PyramidProperties } from './Obstacles/Pyramid';
 import { newITeleporter, TeleporterProperties } from './Obstacles/Teleporter';
 import {
+  ITeleporterLink,
   newITeleporterLink,
   TeleporterLinkProperties,
 } from './Obstacles/TeleporterLink';
@@ -130,6 +131,18 @@ export function parseBZWDocument(document: string): IWorld {
       }
 
       ObjectBuilders[currObject._objectType].finalize(currObject);
+
+      if (currObject._objectType === 'link') {
+        // after parsing a Link object, associate it with relevant teleporters
+        for (const tele of world._teleporters) {
+          if (
+            tele.name === currObject.from.name ||
+            tele.name === currObject.to.name
+          ) {
+            tele._links.push(currObject as ITeleporterLink);
+          }
+        }
+      }
 
       if (currObject._objectType !== 'world') {
         objStack.pop();

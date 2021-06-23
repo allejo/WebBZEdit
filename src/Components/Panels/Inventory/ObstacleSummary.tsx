@@ -2,6 +2,7 @@ import React, { MouseEvent, forwardRef } from 'react';
 
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
+import LinkSummary from './LinkSummary';
 
 import thumbBaseBlue from '../../../assets/thumb_base_blue.png';
 import thumbBaseGreen from '../../../assets/thumb_base_green.png';
@@ -55,8 +56,8 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
     const displayName =
       obstacle.name || `${obstacle._objectType} ${obstacle._uuid.substr(0, 8)}`;
 
-    if (obstacle._objectType === 'link') {
-      // temporary display for link details
+    if (obstacle._objectType === 'teleporter') {
+      // display teleporters and their links
       return (
         <div
           ref={ref}
@@ -64,12 +65,9 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
           onClick={(event) => onClick(event, obstacle)}
         >
           <div>{getThumbnail(obstacle)}</div>
-          <div className={styles.body}>
-            {displayName}
-            <br />
-            from = {obstacle.from.name}:{obstacle.from.side}
-            <br />
-            to = {obstacle.to.name}:{obstacle.to.side}
+          <div className={styles.teleporter}>
+            <div>{displayName}</div>
+            <LinkSummary object={obstacle} />
           </div>
         </div>
       );
