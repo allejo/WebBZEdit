@@ -2,17 +2,13 @@ import { nanoid } from 'nanoid';
 
 import { Stack } from '../Utilities/Stack';
 import { BaseProperties, newIBase } from './Obstacles/Base';
-import { IBaseObject, newIBaseObject } from './Obstacles/BaseObject';
+import { IBaseObject } from './Obstacles/BaseObject';
 import { BoxProperties, newIBox } from './Obstacles/Box';
 import { MaterialProperties, newIMaterial } from './Obstacles/Material';
 import { MeshProperties, newIMesh } from './Obstacles/Mesh';
 import { MeshFaceProperties, newIMeshFace } from './Obstacles/MeshFace';
 import { newIPyramid, PyramidProperties } from './Obstacles/Pyramid';
-import {
-  ITeleporter,
-  newITeleporter,
-  TeleporterProperties,
-} from './Obstacles/Teleporter';
+import { newITeleporter, TeleporterProperties } from './Obstacles/Teleporter';
 import {
   newITeleporterLink,
   TeleporterLinkProperties,
@@ -72,9 +68,7 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   teleporter: {
     factory: newITeleporter,
     parsers: TeleporterProperties,
-    finalize: (teleporter: ITeleporter) => {
-      teleporter.name = teleporter._infoString;
-    },
+    finalize: noop,
   },
   texturematrix: {
     factory: newITextureMatrix,
@@ -93,33 +87,29 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   },
 };
 
-function parseLine(line: string, object: IBaseObject): void {
+function parseLine(line: string, object: IBaseObject, world: IWorld): void {
   const spacePos = line.search(/[ ]|$/);
   const attribute = line.substring(0, spacePos).toLowerCase();
   const restOfLine = line.substr(spacePos + 1).trim();
 
   const parser =
     ObjectBuilders[object._objectType].parsers[attribute] ?? bzwString;
-
   if (typeof parser === 'function') {
-    object[attribute] = parser(restOfLine);
+    object[attribute] = parser(restOfLine, world);
   } else {
     if (parser.type === 'repeatable') {
       if (!object[attribute]) {
         object[attribute] = [];
       }
 
-      object[attribute].push(parser.callback(restOfLine));
+      object[attribute].push(parser.callback(restOfLine, world));
     }
   }
 }
 
 export function parseBZWDocument(document: string): IWorld {
   let world: IWorld = {
-    ...newIBaseObject('world'),
-    size: 800,
-    nowalls: false,
-    freectfspawns: false,
+    ...newIWorld(),
   };
 
   const lines = document.split('\n');
@@ -155,15 +145,25 @@ export function parseBZWDocument(document: string): IWorld {
         newObject._infoString = infoString;
 
         // We create a World object by default, but a map file can have its
-        // own defined. If this is the case, let's overwrite out default one.
+        // own defined. If this is the case, let's overwrite our default one.
         if (newObject._objectType === 'world') {
           world = newObject;
           objStack.pop();
+        } else if (newObject._objectType === 'teleporter') {
+          newObject.name = infoString;
+
+          // teleporter didn't have a name; so give it one
+          if (newObject.name === '') {
+            newObject.name = 'teleporter ' + world._teleporters.length;
+          }
+
+          // keep track of teleporter objects so we can associate their links later
+          world._teleporters.push(newObject);
         }
 
         objStack.push(newObject);
       } else if (currObject) {
-        parseLine(line, currObject);
+        parseLine(line, currObject, world);
       }
     }
   }

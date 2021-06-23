@@ -201,6 +201,27 @@ describe('BZW Document Parser', () => {
     expect(teleporter.border).toEqual(1.12);
   });
 
+  it('should handle a teleporter with no name', () => {
+    const bzwBody = `\
+    teleporter
+      position 0 0 10
+      size 0.125 5 20
+      rotation 45
+      border 1.12
+    end
+    `;
+    const world = parseBZWDocument(bzwBody);
+    const teleporter: ITeleporter = Object.values(
+      world.children,
+    ).pop() as ITeleporter;
+
+    expect(teleporter.name).toEqual('teleporter 0');
+    expect(teleporter.position).toEqual([0, 0, 10]);
+    expect(teleporter.size).toEqual([0.125, 5, 20]);
+    expect(teleporter.rotation).toEqual(45);
+    expect(teleporter.border).toEqual(1.12);
+  });
+
   it('should handle a link', () => {
     const bzwBody = `\
     link
@@ -240,6 +261,39 @@ describe('BZW Document Parser', () => {
     expect(link.from.side).toEqual(TeleporterSide.Both);
     expect(link.to.name).toEqual('tele2');
     expect(link.to.side).toEqual(TeleporterSide.Both);
+  });
+
+  it('should handle a link with from/to defined as a single number', () => {
+    const bzwBody = `\
+    teleporter MyTele
+      position     390.0 390.0 0.0
+      rotation     45.0
+      size         0.56  4.48  27.7
+      border       1.12
+    end
+
+    teleporter
+      position     390.0 390.0 30.0
+      rotation     45.0
+      size         0.56  4.48  15.0
+      border       1.12
+    end
+
+    link
+      from 1
+      to 2
+    end
+    `;
+
+    const world = parseBZWDocument(bzwBody);
+    const link: ITeleporterLink = Object.values(
+      world.children,
+    ).pop() as ITeleporterLink;
+
+    expect(link.from.name).toEqual('MyTele');
+    expect(link.from.side).toEqual(TeleporterSide.Backward);
+    expect(link.to.name).toEqual('teleporter 1');
+    expect(link.to.side).toEqual(TeleporterSide.Forward);
   });
 
   it('should handle a mesh', () => {
