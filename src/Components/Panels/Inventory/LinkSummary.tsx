@@ -15,53 +15,47 @@ interface Props {
   object: IBaseObject;
 }
 
-const LinkSummary = forwardRef<HTMLDivElement, Props>(
-  ({ object }: Props, ref) => {
-    const tele = object as ITeleporter,
-      frontLinks = tele._links.filter(
-        (link) =>
-          link.from.side !== TeleporterSide.Backward ||
-          link.to.side !== TeleporterSide.Backward,
-      ),
-      backLinks = tele._links.filter(
-        (link) =>
-          link.from.side !== TeleporterSide.Forward ||
-          link.to.side !== TeleporterSide.Forward,
-      );
+const LinkSummary = forwardRef<HTMLDivElement, Props>(({ object }: Props) => {
+  const tele = object as ITeleporter;
+  const frontLinks = tele._links.filter(
+    (link) =>
+      link.from.side !== TeleporterSide.Backward ||
+      link.to.side !== TeleporterSide.Backward,
+  );
+  const backLinks = tele._links.filter(
+    (link) =>
+      link.from.side !== TeleporterSide.Forward ||
+      link.to.side !== TeleporterSide.Forward,
+  );
 
-    return (
-      <div>
-        {['Front', 'Back'].map((side) => {
-          const links = side === 'Front' ? frontLinks : backLinks;
-          return (
-            <div className={styles.links}>
-              <div>{side}</div>
-              <ul>
-                {links.map((link, i) => {
-                  const isFromTele = link.from.name === tele.name;
-                  if (isFromTele) {
-                    return (
-                      <li key={`${tele.name}-link${i}`}>
-                        <FontAwesomeIcon icon={faLongArrowAltRight} />{' '}
-                        {link.to.name}:{link.to.side}
-                      </li>
-                    );
-                  } else {
-                    return (
-                      <li key={`${tele.name}-link${i}`}>
-                        <FontAwesomeIcon icon={faLongArrowAltLeft} />{' '}
-                        {link.from.name}:{link.from.side}
-                      </li>
-                    );
-                  }
-                })}
-              </ul>
-            </div>
-          );
-        })}
-      </div>
-    );
-  },
-);
+  return (
+    <div>
+      {['Front', 'Back'].map((side) => {
+        const links = side === 'Front' ? frontLinks : backLinks;
+        return (
+          <div className={styles.links}>
+            <div>{side}</div>
+            <ul>
+              {links.map((link, i) => {
+                const isFromTele = link.from.name === tele.name;
+                const teleRef = isFromTele ? link.to : link.from;
+                const icon = isFromTele
+                  ? faLongArrowAltRight
+                  : faLongArrowAltLeft;
+
+                return (
+                  <li key={`${tele.name}-link${i}`}>
+                    <FontAwesomeIcon icon={icon} /> {teleRef.name}:
+                    {teleRef.side}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+  );
+});
 
 export default LinkSummary;

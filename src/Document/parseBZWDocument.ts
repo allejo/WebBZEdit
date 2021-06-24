@@ -10,7 +10,6 @@ import { MeshFaceProperties, newIMeshFace } from './Obstacles/MeshFace';
 import { newIPyramid, PyramidProperties } from './Obstacles/Pyramid';
 import { newITeleporter, TeleporterProperties } from './Obstacles/Teleporter';
 import {
-  ITeleporterLink,
   newITeleporterLink,
   TeleporterLinkProperties,
 } from './Obstacles/TeleporterLink';
@@ -25,7 +24,7 @@ import { bzwString, ParserCallback, Repeatable } from './attributeParsers';
 type ObjectBuilder = {
   factory: () => any;
   parsers: Record<string, ParserCallback<any> | Repeatable<any>>;
-  finalize: (obstacle: any) => void;
+  finalize: (obstacle: any, world: IWorld) => void;
 };
 
 const noop = () => {};
@@ -49,7 +48,14 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   link: {
     factory: newITeleporterLink,
     parsers: TeleporterLinkProperties,
-    finalize: noop,
+    finalize: (link, world) => {
+      // after parsing a Link object, associate it with relevant teleporters
+      for (const tele of world._teleporters) {
+        if (tele.name === link.from.name || tele.name === link.to.name) {
+          tele._links.push(link);
+        }
+      }
+    },
   },
   material: {
     factory: newIMaterial,
@@ -130,19 +136,7 @@ export function parseBZWDocument(document: string): IWorld {
         objStack.peek(1)!.children[currObject._uuid] = currObject;
       }
 
-      ObjectBuilders[currObject._objectType].finalize(currObject);
-
-      if (currObject._objectType === 'link') {
-        // after parsing a Link object, associate it with relevant teleporters
-        for (const tele of world._teleporters) {
-          if (
-            tele.name === currObject.from.name ||
-            tele.name === currObject.to.name
-          ) {
-            tele._links.push(currObject as ITeleporterLink);
-          }
-        }
-      }
+      ObjectBuilders[currObject._objectType].finalize(currObject, world);
 
       if (currObject._objectType !== 'world') {
         objStack.pop();
