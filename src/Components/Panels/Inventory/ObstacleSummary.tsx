@@ -6,6 +6,7 @@ import React, {
   forwardRef,
   useState,
   SyntheticEvent,
+  FormEvent,
 } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -92,7 +93,6 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
   ({ obstacle, onClick, selected }: Props, ref) => {
     const [world, setBZWDocument] = useRecoilState(documentState);
     const selectedUUID = useRecoilValue(selectionState);
-    const [editMode, setEditMode] = useState(false);
     const [nameEdit, setNameEdit] = useState(obstacle.name ?? '');
     const [nameInput, setNameInput] = useState<HTMLInputElement | null>(null);
 
@@ -103,11 +103,23 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
     ]);
 
     const handleDoubleClick = () => {
-      setEditMode(true);
       nameInput!.focus();
     };
-    const handleOnBlur = (e: FocusEvent<HTMLInputElement>) => {
-      setEditMode(false);
+    const handleOnBlur = (e: FocusEvent<HTMLInputElement> | FormEvent) => {
+      e.preventDefault();
+      saveName();
+      nameInput!.blur();
+    };
+    const handleOnNameChange = (e: SyntheticEvent<HTMLInputElement>) => {
+      setNameEdit(e.currentTarget.value);
+    };
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.keyCode === 27) {
+        nameInput!.blur();
+      }
+    };
+
+    const saveName = () => {
       const nextWorld = produce(world, (draftWorld) => {
         const obstacle: INameable = draftWorld!.children[selectedUUID!] as any;
 
@@ -115,14 +127,6 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
       });
 
       setBZWDocument(nextWorld);
-    };
-    const handleOnNameChange = (e: SyntheticEvent<HTMLInputElement>) => {
-      setNameEdit(e.currentTarget.value);
-    };
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-      // @TODO: When ESC is hit, disable `editMode`
-      // @TODO: When Enter is hit, persist the new name in `nameEdit` to the BZW
-      //    document in global state.
     };
 
     return (
@@ -133,17 +137,19 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
         onDoubleClick={handleDoubleClick}
       >
         {getSummary(obstacle)}
-        <input
-          ref={(input) => {
-            setNameInput(input);
-          }}
-          type="text"
-          className={styles.editor}
-          onBlur={handleOnBlur}
-          onChange={handleOnNameChange}
-          onKeyDown={handleKeyDown}
-          value={nameEdit}
-        />
+        <form onSubmit={handleOnBlur}>
+          <input
+            ref={(input) => {
+              setNameInput(input);
+            }}
+            type="text"
+            className={styles.editor}
+            onBlur={handleOnBlur}
+            onChange={handleOnNameChange}
+            onKeyDown={handleKeyDown}
+            value={nameEdit}
+          />
+        </form>
       </div>
     );
   },
