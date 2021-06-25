@@ -105,7 +105,7 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
     const handleDoubleClick = () => {
       nameInput!.focus();
     };
-    const handleOnBlur = (e: FocusEvent<HTMLInputElement> | FormEvent) => {
+    const handleSave = (e: FocusEvent<HTMLInputElement> | FormEvent) => {
       e.preventDefault();
       saveName();
       nameInput!.blur();
@@ -137,14 +137,14 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
         onDoubleClick={handleDoubleClick}
       >
         {getSummary(obstacle)}
-        <form onSubmit={handleOnBlur}>
+        <form onSubmit={handleSave}>
           <input
             ref={(input) => {
               setNameInput(input);
             }}
             type="text"
             className={styles.editor}
-            onBlur={handleOnBlur}
+            onBlur={handleSave}
             onChange={handleOnNameChange}
             onKeyDown={handleKeyDown}
             value={nameEdit}
