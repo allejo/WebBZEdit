@@ -1,3 +1,4 @@
+import produce from 'immer';
 import React, {
   FocusEvent,
   KeyboardEvent,
@@ -6,7 +7,10 @@ import React, {
   useState,
   SyntheticEvent,
 } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { documentState, selectionState } from '../../../atoms';
+import { INameable } from '../../../Document/Attributes/INameable';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
 import { classList } from '../../../Utilities/cssClasses';
@@ -86,6 +90,8 @@ function getSummary(obstacle: IBaseObject): JSX.Element {
 
 const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
   ({ obstacle, onClick, selected }: Props, ref) => {
+    const [world, setBZWDocument] = useRecoilState(documentState);
+    const selectedUUID = useRecoilValue(selectionState);
     const [editMode, setEditMode] = useState(false);
     const [nameEdit, setNameEdit] = useState(obstacle.name ?? '');
     const [nameInput, setNameInput] = useState<HTMLInputElement | null>(null);
@@ -97,13 +103,18 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
     ]);
 
     const handleDoubleClick = () => {
-      // @TODO: Enable `editMode` when it's double clicked
       setEditMode(true);
       nameInput!.focus();
     };
     const handleOnBlur = (e: FocusEvent<HTMLInputElement>) => {
-      // @TODO: When the input box looses focus, persist the new name in
-      //    `nameEdit` to the BZW document in global state.
+      setEditMode(false);
+      const nextWorld = produce(world, (draftWorld) => {
+        const obstacle: INameable = draftWorld!.children[selectedUUID!] as any;
+
+        obstacle.name = nameEdit;
+      });
+
+      setBZWDocument(nextWorld);
     };
     const handleOnNameChange = (e: SyntheticEvent<HTMLInputElement>) => {
       setNameEdit(e.currentTarget.value);
@@ -123,7 +134,9 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
       >
         {getSummary(obstacle)}
         <input
-          ref={(input) => { setNameInput(input); }}
+          ref={(input) => {
+            setNameInput(input);
+          }}
           type="text"
           className={styles.editor}
           onBlur={handleOnBlur}
