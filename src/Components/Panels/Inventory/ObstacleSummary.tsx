@@ -88,6 +88,8 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
   ({ obstacle, onClick, selected }: Props, ref) => {
     const [editMode, setEditMode] = useState(false);
     const [nameEdit, setNameEdit] = useState(obstacle.name ?? '');
+    const [nameInput, setNameInput] = useState<HTMLInputElement | null>(null);
+
     const classes = classList([
       styles.wrapper,
       [styles.selected, selected],
@@ -96,6 +98,8 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
 
     const handleDoubleClick = () => {
       // @TODO: Enable `editMode` when it's double clicked
+      setEditMode(true);
+      nameInput!.focus();
     };
     const handleOnBlur = (e: FocusEvent<HTMLInputElement>) => {
       // @TODO: When the input box looses focus, persist the new name in
@@ -119,6 +123,7 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
       >
         {getSummary(obstacle)}
         <input
+          ref={(input) => { setNameInput(input); }}
           type="text"
           className={styles.editor}
           onBlur={handleOnBlur}
