@@ -3,7 +3,7 @@ import {
   faLongArrowAltLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { forwardRef } from 'react';
+import React from 'react';
 
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
 import { ITeleporter } from '../../../Document/Obstacles/Teleporter';
@@ -15,7 +15,7 @@ interface Props {
   object: IBaseObject;
 }
 
-const LinkSummary = forwardRef<HTMLDivElement, Props>(({ object }: Props) => {
+const LinkSummary = ({ object }: Props) => {
   const tele = object as ITeleporter;
   const frontLinks = tele._links.filter(
     (link) =>
@@ -56,6 +56,6 @@ const LinkSummary = forwardRef<HTMLDivElement, Props>(({ object }: Props) => {
       })}
     </div>
   );
-});
+};
 
 export default LinkSummary;
