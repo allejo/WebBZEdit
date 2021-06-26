@@ -51,38 +51,42 @@ function getThumbnail(object: IBaseObject): JSX.Element {
   return <span className={styles.empty} />;
 }
 
+function getSummary(obstacle: IBaseObject): JSX.Element {
+  const displayName =
+    obstacle.name || `${obstacle._objectType} ${obstacle._uuid.substr(0, 8)}`;
+
+  if (obstacle._objectType === 'teleporter') {
+    // display teleporters and their links
+    return (
+      <>
+        <div>{getThumbnail(obstacle)}</div>
+        <div className={styles.teleporter}>
+          <div>{displayName}</div>
+          <LinkSummary object={obstacle} />
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div>{getThumbnail(obstacle)}</div>
+      <div className={styles.body}>{displayName}</div>
+    </>
+  );
+}
+
 const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
   ({ obstacle, onClick, selected }: Props, ref) => {
-    const displayName =
-      obstacle.name || `${obstacle._objectType} ${obstacle._uuid.substr(0, 8)}`;
-
-    if (obstacle._objectType === 'teleporter') {
-      // display teleporters and their links
-      return (
-        <div
-          ref={ref}
-          className={`${styles.wrapper} ${selected && styles.selected}`}
-          onClick={(event) => onClick(event, obstacle)}
-        >
-          <div>{getThumbnail(obstacle)}</div>
-          <div className={styles.teleporter}>
-            <div>{displayName}</div>
-            <LinkSummary object={obstacle} />
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div
-          ref={ref}
-          className={`${styles.wrapper} ${selected && styles.selected}`}
-          onClick={(event) => onClick(event, obstacle)}
-        >
-          <div>{getThumbnail(obstacle)}</div>
-          <div className={styles.body}>{displayName}</div>
-        </div>
-      );
-    }
+    return (
+      <div
+        ref={ref}
+        className={`${styles.wrapper} ${selected && styles.selected}`}
+        onClick={(event) => onClick(event, obstacle)}
+      >
+        {getSummary(obstacle)}
+      </div>
+    );
   },
 );
 
