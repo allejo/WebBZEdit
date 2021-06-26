@@ -48,15 +48,18 @@ const InventoryPanel = () => {
 
   return (
     <div className={styles.wrapper}>
-      {Object.values(bzwDocument.children).map((object) => (
-        <ObstacleSummary
-          key={object._uuid}
-          ref={(el) => (refs.current[object._uuid] = el)}
-          onClick={handleOnClick}
-          obstacle={object}
-          selected={object._uuid === selection}
-        />
-      ))}
+      {Object.values(bzwDocument.children)
+        .filter((object) => object._objectType !== 'link')
+        .map((object) => (
+          // Don't display links on their own because they're displayed under the teleporters
+          <ObstacleSummary
+            key={object._uuid}
+            ref={(el) => (refs.current[object._uuid] = el)}
+            onClick={handleOnClick}
+            obstacle={object}
+            selected={object._uuid === selection}
+          />
+        ))}
     </div>
   );
 };

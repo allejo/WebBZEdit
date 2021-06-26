@@ -26,3 +26,17 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.teleporter {
+  display: flex;
+  flex-direction: column;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+}
+.links ul {
+  list-style-type: none;
+  padding-left: 15px;
+}
