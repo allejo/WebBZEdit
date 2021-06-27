@@ -33,7 +33,7 @@ const LinkSummary = ({ object }: Props) => {
       {['Front', 'Back'].map((side) => {
         const links = side === 'Front' ? frontLinks : backLinks;
         return (
-          <div className={styles.links}>
+          <div className={styles.links} key={side}>
             <div>{side}</div>
             <ul>
               {links.map((link, i) => {
