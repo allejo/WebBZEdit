@@ -116,16 +116,20 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
     const handleDoubleClick = () => {
       setEditMode(true);
     };
+
     const handleSave = (e: FocusEvent<HTMLInputElement> | FormEvent) => {
       e.preventDefault();
       saveName();
       setEditMode(false);
     };
+
     const handleOnNameChange = (e: SyntheticEvent<HTMLInputElement>) => {
       setNameEdit(e.currentTarget.value);
     };
+
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.keyCode === 27) {
+        setNameEdit(obstacle.name);
         setEditMode(false);
       }
     };
