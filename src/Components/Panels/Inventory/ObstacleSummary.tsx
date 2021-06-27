@@ -7,14 +7,16 @@ import React, {
   useState,
   SyntheticEvent,
   FormEvent,
+  useEffect,
+  useRef,
 } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { documentState, selectionState } from '../../../atoms';
 import { INameable } from '../../../Document/Attributes/INameable';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
 import { classList } from '../../../Utilities/cssClasses';
+import { documentState, selectionState } from '../../../atoms';
 import LinkSummary from './LinkSummary';
 
 import thumbBaseBlue from '../../../assets/thumb_base_blue.png';
@@ -94,28 +96,37 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
     const [world, setBZWDocument] = useRecoilState(documentState);
     const selectedUUID = useRecoilValue(selectionState);
     const [nameEdit, setNameEdit] = useState(obstacle.name ?? '');
-    const [nameInput, setNameInput] = useState<HTMLInputElement | null>(null);
+    const [editMode, setEditMode] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+      if (editMode) {
+        inputRef.current!.focus();
+      } else {
+        inputRef.current!.blur();
+      }
+    }, [editMode]);
 
     const classes = classList([
       styles.wrapper,
       [styles.selected, selected],
-      [styles.editMode, selected],
+      [styles.editMode, editMode],
     ]);
 
     const handleDoubleClick = () => {
-      nameInput!.focus();
+      setEditMode(true);
     };
     const handleSave = (e: FocusEvent<HTMLInputElement> | FormEvent) => {
       e.preventDefault();
       saveName();
-      nameInput!.blur();
+      setEditMode(false);
     };
     const handleOnNameChange = (e: SyntheticEvent<HTMLInputElement>) => {
       setNameEdit(e.currentTarget.value);
     };
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.keyCode === 27) {
-        nameInput!.blur();
+        setEditMode(false);
       }
     };
 
@@ -139,9 +150,7 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
         {getSummary(obstacle)}
         <form onSubmit={handleSave}>
           <input
-            ref={(input) => {
-              setNameInput(input);
-            }}
+            ref={inputRef}
             type="text"
             className={styles.editor}
             onBlur={handleSave}
