@@ -27,7 +27,6 @@ export interface ITeleporterLink extends IBaseObject, INameable {
 export function newITeleporterLink(): ITeleporterLink {
   return {
     ...newIBaseObject('link'),
-    name: 'link',
     from: { name: '', side: TeleporterSide.Both },
     to: { name: '', side: TeleporterSide.Both },
   };

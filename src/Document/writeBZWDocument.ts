@@ -4,6 +4,7 @@ import { PriorityWriter } from './Writing/PriorityWriter';
 import { writeArray, writeNumber } from './Writing/attributeWriters';
 import {
   AttributePriority,
+  AttributeWriters,
   FooterWriters,
   HeaderWriters,
   IgnoredAttributes,
@@ -48,8 +49,14 @@ function writeObstacle(
       AttributePriority._global[attribute] ??
       AttributePriority?.[obstacleType]?.[attribute] ??
       0;
+    const customAttributeWriter = AttributeWriters?.[obstacleType]?.[attribute];
 
-    if (attribute === 'children') {
+    // If we need special handling of values, we use an Attribute Writer
+    if (customAttributeWriter) {
+      body.push(writePriority, customAttributeWriter(value));
+    }
+    // An object has children, such as a mesh that has faces
+    else if (attribute === 'children') {
       if (writeChildren) {
         Object.values(value as IBaseObject['children']).forEach(
           (child: IBaseObject) => {
@@ -57,9 +64,13 @@ function writeObstacle(
           },
         );
       }
-    } else if (value === true) {
+    }
+    // The attribute is a boolean flag
+    else if (value === true) {
       body.push(writePriority, attribute);
-    } else if (typeof value === 'number') {
+    }
+    // The attribute value is numerical
+    else if (typeof value === 'number') {
       const ignoreZeroValues = ['flagheight', 'rotation'];
 
       if (ignoreZeroValues.indexOf(attribute) >= 0 && value === 0) {
@@ -67,13 +78,18 @@ function writeObstacle(
       }
 
       body.push(writePriority, `${attribute} ${writeNumber(value)}`);
-    } else if (typeof value === 'string') {
+    }
+    // A normal string attribute
+    else if (typeof value === 'string') {
       if (value.trim().length === 0) {
         return;
       }
 
       body.push(writePriority, `${attribute} ${value}`);
-    } else if (Array.isArray(value)) {
+    }
+    // The attribute can be two types of arrays. An array of primitive values or
+    // an array of arrays.
+    else if (Array.isArray(value)) {
       const isNested = value.every(Array.isArray);
 
       if (isNested) {

@@ -4,7 +4,12 @@ import { newIBox } from '../Obstacles/Box';
 import { newIMesh } from '../Obstacles/Mesh';
 import { newIMeshFace } from '../Obstacles/MeshFace';
 import { newIPyramid } from '../Obstacles/Pyramid';
-import { newITeleporter } from '../Obstacles/Teleporter';
+import { ITeleporter, newITeleporter } from '../Obstacles/Teleporter';
+import {
+  ITeleporterLink,
+  newITeleporterLink,
+  TeleporterSide,
+} from '../Obstacles/TeleporterLink';
 import { IWorld, newIWorld } from '../Obstacles/World';
 import { writeBZWDocument } from '../writeBZWDocument';
 
@@ -114,10 +119,66 @@ describe('BZW Document Writer', () => {
       ...newIWorld(),
       size: 400,
       children: {
-        'tele-1': {
+        tele0: {
           ...newITeleporter(),
-          name: 'tele01',
-        },
+          name: 'tele0',
+          position: [390.0, 390.0, 0.0],
+          size: [0.56, 4.48, 27.7],
+          rotation: 45,
+          border: 1.12,
+        } as ITeleporter,
+        tele2: {
+          ...newITeleporter(),
+          name: 'tele2',
+          position: [390.0, 390.0, 30.0],
+          size: [0.56, 4.48, 15.0],
+          rotation: 45,
+          border: 1.12,
+        } as ITeleporter,
+        'link-0': {
+          ...newITeleporterLink(),
+          from: {
+            name: 'tele0',
+            side: TeleporterSide.Forward,
+          },
+          to: {
+            name: 'tele2',
+            side: TeleporterSide.Forward,
+          },
+        } as ITeleporterLink,
+        'link-1': {
+          ...newITeleporterLink(),
+          from: {
+            name: 'tele0',
+            side: TeleporterSide.Backward,
+          },
+          to: {
+            name: 'tele2',
+            side: TeleporterSide.Backward,
+          },
+        } as ITeleporterLink,
+        'link-2': {
+          ...newITeleporterLink(),
+          from: {
+            name: 'tele2',
+            side: TeleporterSide.Forward,
+          },
+          to: {
+            name: 'tele0',
+            side: TeleporterSide.Forward,
+          },
+        } as ITeleporterLink,
+        'link-3': {
+          ...newITeleporterLink(),
+          from: {
+            name: 'tele2',
+            side: TeleporterSide.Backward,
+          },
+          to: {
+            name: 'tele0',
+            side: TeleporterSide.Backward,
+          },
+        } as ITeleporterLink,
       },
     };
     const actual = writeBZWDocument(world, {
@@ -130,10 +191,38 @@ describe('BZW Document Writer', () => {
       size 400
     end
 
-    teleporter tele01
-      position 0 0 0
-      size 0.56 6.72 21.28
+    teleporter tele0
+      position 390 390 0
+      size 0.56 4.48 27.7
+      rotation 45
       border 1.12
+    end
+
+    teleporter tele2
+      position 390 390 30
+      size 0.56 4.48 15
+      rotation 45
+      border 1.12
+    end
+
+    link
+      from tele0:f
+      to tele2:f
+    end
+
+    link
+      from tele0:b
+      to tele2:b
+    end
+
+    link
+      from tele2:f
+      to tele0:f
+    end
+
+    link
+      from tele2:b
+      to tele0:b
     end
     `);
   });

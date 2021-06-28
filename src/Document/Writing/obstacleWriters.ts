@@ -1,5 +1,6 @@
 import { IBaseObject } from '../Obstacles/BaseObject';
 import { ITeleporter } from '../Obstacles/Teleporter';
+import { TeleporterReference } from '../Obstacles/TeleporterLink';
 
 export const AttributePriority: Record<string, Record<string, number>> = {
   _global: {
@@ -16,6 +17,16 @@ export const AttributePriority: Record<string, Record<string, number>> = {
 
 export const HeaderWriters: Record<string, (o: IBaseObject & any) => string> = {
   teleporter: (tele: ITeleporter) => `${tele._objectType} ${tele.name}`,
+};
+
+export const AttributeWriters: Record<
+  string,
+  Record<string, (v: any) => string>
+> = {
+  link: {
+    from: (r: TeleporterReference) => `from ${r.name}:${r.side}`,
+    to: (r: TeleporterReference) => `to ${r.name}:${r.side}`,
+  },
 };
 
 export const FooterWriters: typeof HeaderWriters = {};
