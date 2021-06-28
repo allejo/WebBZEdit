@@ -215,7 +215,7 @@ describe('BZW Document Parser', () => {
       world.children,
     ).pop() as ITeleporter;
 
-    expect(teleporter.name).toEqual('teleporter 0');
+    expect(teleporter.name).toEqual('tele0');
     expect(teleporter.position).toEqual([0, 0, 10]);
     expect(teleporter.size).toEqual([0.125, 5, 20]);
     expect(teleporter.rotation).toEqual(45);
@@ -292,7 +292,7 @@ describe('BZW Document Parser', () => {
 
     expect(link.from.name).toEqual('MyTele');
     expect(link.from.side).toEqual(TeleporterSide.Backward);
-    expect(link.to.name).toEqual('teleporter 1');
+    expect(link.to.name).toEqual('tele1');
     expect(link.to.side).toEqual(TeleporterSide.Forward);
   });
 
