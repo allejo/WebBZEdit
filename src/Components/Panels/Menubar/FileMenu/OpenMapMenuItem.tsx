@@ -4,14 +4,18 @@ import { MenuStateReturn } from 'reakit/Menu';
 import { useSetRecoilState } from 'recoil';
 
 import { parseBZWDocument } from '../../../../Document/parseBZWDocument';
-import { documentState } from '../../../../atoms';
+import {
+  defaultFilePickerOptions,
+  supportsFilesystemAPI,
+} from '../../../../Utilities/filesystem';
+import { documentState, fileHandleState } from '../../../../atoms';
 import MenuItem from '../MenuItem';
 
 interface Props extends MenuStateReturn {}
 
 const OpenMapMenuItem = ({ ...menu }: Props) => {
   const setDocument = useSetRecoilState(documentState);
-  const supportsFileSystem = typeof window.showOpenFilePicker !== 'undefined';
+  const setFileHandle = useSetRecoilState(fileHandleState);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleWorldFileContents = (contents: string) => {
@@ -19,18 +23,15 @@ const OpenMapMenuItem = ({ ...menu }: Props) => {
   };
 
   const handleMenuItemClick = async () => {
-    if (supportsFileSystem) {
+    if (supportsFilesystemAPI()) {
       try {
-        const [fileHandle] = await window.showOpenFilePicker({
-          types: [
-            {
-              description: 'BZFlag World File',
-              accept: { 'text/plain': ['.bzw'] },
-            },
-          ],
-        });
+        const [fileHandle] = await window.showOpenFilePicker(
+          defaultFilePickerOptions(),
+        );
         const file = await fileHandle.getFile();
+
         handleWorldFileContents(await file.text());
+        setFileHandle(fileHandle);
       } catch (e) {
         if (e instanceof DOMException) {
           // User aborted the file open operation
@@ -77,7 +78,7 @@ const OpenMapMenuItem = ({ ...menu }: Props) => {
       onTrigger={handleMenuItemClick}
     >
       Open Map
-      {!supportsFileSystem && (
+      {!supportsFilesystemAPI() && (
         <input
           ref={inputRef}
           type="file"

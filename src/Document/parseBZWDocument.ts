@@ -8,8 +8,13 @@ import { MaterialProperties, newIMaterial } from './Obstacles/Material';
 import { MeshProperties, newIMesh } from './Obstacles/Mesh';
 import { MeshFaceProperties, newIMeshFace } from './Obstacles/MeshFace';
 import { newIPyramid, PyramidProperties } from './Obstacles/Pyramid';
-import { newITeleporter, TeleporterProperties } from './Obstacles/Teleporter';
 import {
+  ITeleporter,
+  newITeleporter,
+  TeleporterProperties,
+} from './Obstacles/Teleporter';
+import {
+  ITeleporterLink,
   newITeleporterLink,
   TeleporterLinkProperties,
 } from './Obstacles/TeleporterLink';
@@ -22,9 +27,14 @@ import { newIZone, ZoneProperties } from './Obstacles/Zone';
 import { bzwString, ParserCallback, Repeatable } from './attributeParsers';
 
 type ObjectBuilder = {
-  factory: () => any;
+  factory: () => IBaseObject & any;
   parsers: Record<string, ParserCallback<any> | Repeatable<any>>;
-  finalize: (obstacle: any, world: IWorld) => void;
+  onObstacleBegin: (
+    infoString: string,
+    obstacle: IBaseObject & any,
+    world: IWorld,
+  ) => void;
+  onObstacleComplete: (obstacle: IBaseObject & any, world: IWorld) => void;
 };
 
 const noop = () => {};
@@ -33,22 +43,26 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   base: {
     factory: newIBase,
     parsers: BaseProperties,
-    finalize: noop,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
   },
   box: {
     factory: newIBox,
     parsers: BoxProperties,
-    finalize: noop,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
   },
   face: {
     factory: newIMeshFace,
     parsers: MeshFaceProperties,
-    finalize: noop,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
   },
   link: {
     factory: newITeleporterLink,
     parsers: TeleporterLinkProperties,
-    finalize: (link, world) => {
+    onObstacleBegin: noop,
+    onObstacleComplete: (link: ITeleporterLink, world) => {
       // after parsing a Link object, associate it with relevant teleporters
       for (const tele of world._teleporters) {
         if (tele.name === link.from.name || tele.name === link.to.name) {
@@ -60,37 +74,54 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   material: {
     factory: newIMaterial,
     parsers: MaterialProperties,
-    finalize: noop,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
   },
   mesh: {
     factory: newIMesh,
     parsers: MeshProperties,
-    finalize: noop,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
   },
   pyramid: {
     factory: newIPyramid,
     parsers: PyramidProperties,
-    finalize: noop,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
   },
   teleporter: {
     factory: newITeleporter,
     parsers: TeleporterProperties,
-    finalize: noop,
+    onObstacleBegin: (infoString, obstacle: ITeleporter, world) => {
+      obstacle.name = infoString;
+
+      // teleporter didn't have a name; so give it one
+      if (obstacle.name === '') {
+        obstacle.name = `tele${world._teleporters.length}`;
+      }
+
+      // keep track of teleporter objects so we can associate their links later
+      world._teleporters.push(obstacle);
+    },
+    onObstacleComplete: noop,
   },
   texturematrix: {
     factory: newITextureMatrix,
     parsers: TextureMatrixProperties,
-    finalize: noop,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
   },
   world: {
     factory: newIWorld,
     parsers: WorldProperties,
-    finalize: noop,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
   },
   zone: {
     factory: newIZone,
     parsers: ZoneProperties,
-    finalize: noop,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
   },
 };
 
@@ -136,7 +167,10 @@ export function parseBZWDocument(document: string): IWorld {
         objStack.peek(1)!.children[currObject._uuid] = currObject;
       }
 
-      ObjectBuilders[currObject._objectType].finalize(currObject, world);
+      ObjectBuilders[currObject._objectType].onObstacleComplete(
+        currObject,
+        world,
+      );
 
       if (currObject._objectType !== 'world') {
         objStack.pop();
@@ -156,17 +190,13 @@ export function parseBZWDocument(document: string): IWorld {
         if (newObject._objectType === 'world') {
           world = newObject;
           objStack.pop();
-        } else if (newObject._objectType === 'teleporter') {
-          newObject.name = infoString;
-
-          // teleporter didn't have a name; so give it one
-          if (newObject.name === '') {
-            newObject.name = 'teleporter ' + world._teleporters.length;
-          }
-
-          // keep track of teleporter objects so we can associate their links later
-          world._teleporters.push(newObject);
         }
+
+        ObjectBuilders[newObject._objectType].onObstacleBegin(
+          infoString,
+          newObject,
+          world,
+        );
 
         objStack.push(newObject);
       } else if (currObject) {
