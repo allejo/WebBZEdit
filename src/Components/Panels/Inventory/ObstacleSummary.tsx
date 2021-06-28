@@ -1,7 +1,23 @@
-import React, { MouseEvent, forwardRef } from 'react';
+import produce from 'immer';
+import React, {
+  FocusEvent,
+  KeyboardEvent,
+  MouseEvent,
+  forwardRef,
+  useState,
+  SyntheticEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+} from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { INameable } from '../../../Document/Attributes/INameable';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
+import { classList } from '../../../Utilities/cssClasses';
+import keyboard from '../../../Utilities/keyboard';
+import { documentState, selectionState } from '../../../atoms';
 import LinkSummary from './LinkSummary';
 
 import thumbBaseBlue from '../../../assets/thumb_base_blue.png';
@@ -78,13 +94,76 @@ function getSummary(obstacle: IBaseObject): JSX.Element {
 
 const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
   ({ obstacle, onClick, selected }: Props, ref) => {
+    const [world, setBZWDocument] = useRecoilState(documentState);
+    const selectedUUID = useRecoilValue(selectionState);
+    const [nameEdit, setNameEdit] = useState(obstacle.name ?? '');
+    const [editMode, setEditMode] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+      if (editMode) {
+        inputRef.current?.focus();
+      } else {
+        inputRef.current?.blur();
+      }
+    }, [editMode]);
+
+    const classes = classList([
+      styles.wrapper,
+      [styles.selected, selected],
+      [styles.editMode, editMode],
+    ]);
+
+    const handleDoubleClick = () => {
+      setEditMode(true);
+    };
+
+    const handleSave = (e: FocusEvent<HTMLInputElement> | FormEvent) => {
+      e.preventDefault();
+      saveName();
+      setEditMode(false);
+    };
+
+    const handleOnNameChange = (e: SyntheticEvent<HTMLInputElement>) => {
+      setNameEdit(e.currentTarget.value);
+    };
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.keyCode === keyboard.ESC) {
+        setNameEdit(obstacle.name ?? '');
+        setEditMode(false);
+      }
+    };
+
+    const saveName = () => {
+      const nextWorld = produce(world, (draftWorld) => {
+        const obstacle: INameable = draftWorld!.children[selectedUUID!] as any;
+
+        obstacle.name = nameEdit;
+      });
+
+      setBZWDocument(nextWorld);
+    };
+
     return (
       <div
         ref={ref}
-        className={`${styles.wrapper} ${selected && styles.selected}`}
+        className={classes}
         onClick={(event) => onClick(event, obstacle)}
+        onDoubleClick={handleDoubleClick}
       >
         {getSummary(obstacle)}
+        <form onSubmit={handleSave}>
+          <input
+            ref={inputRef}
+            type="text"
+            className={styles.editor}
+            onBlur={handleSave}
+            onChange={handleOnNameChange}
+            onKeyDown={handleKeyDown}
+            value={nameEdit}
+          />
+        </form>
       </div>
     );
   },
