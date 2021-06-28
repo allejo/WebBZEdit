@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MouseEvent, PointerEvent, useState } from 'react';
 import { useLoader, useUpdate } from 'react-three-fiber';
 import {
   BoxBufferGeometry,
@@ -27,7 +27,19 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
   const { position, size, rotation = 0, border } = obstacle;
   const [bzwPosX, bzwPosY, bzwPosZ] = position;
   const [, bzwSizeY, bzwSizeZ] = size;
-  const handleOnClick = () => onClick(obstacle);
+
+  const handleOnClick = (e: MouseEvent) => {
+    e.stopPropagation();
+    onClick(obstacle);
+  };
+  const handlePointerOver = (e: PointerEvent) => {
+    e.stopPropagation();
+    setHover(true);
+  };
+  const handlePointerOut = (e: PointerEvent) => {
+    e.stopPropagation();
+    setHover(false);
+  };
 
   const segments = useUpdate<LineSegments>(
     (s) => {
@@ -110,8 +122,8 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
     <mesh
       position={[bzwPosX, bzwPosZ, bzwPosY]}
       rotation={[0, -deg2rad(rotation), 0]}
-      onPointerOver={() => setHover(true)}
-      onPointerOut={() => setHover(false)}
+      onPointerOver={handlePointerOver}
+      onPointerOut={handlePointerOut}
     >
       {/* === Link material === */}
       <SkinnableBox

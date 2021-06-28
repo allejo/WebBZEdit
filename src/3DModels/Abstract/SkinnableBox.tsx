@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, MouseEvent, PointerEvent } from 'react';
 import { useUpdate } from 'react-three-fiber';
 import { EdgesGeometry, LineSegments, Mesh, Texture } from 'three';
 
@@ -48,14 +48,27 @@ const SkinnableBox = ({
   );
   const isHighlighted = isSelectable && (hover || isSelected);
 
+  const handleOnClick = (e: MouseEvent) => {
+    e.stopPropagation();
+    onClick(e);
+  };
+  const handlePointerOver = (e: PointerEvent) => {
+    e.stopPropagation();
+    setHover(true);
+  };
+  const handlePointerOut = (e: PointerEvent) => {
+    e.stopPropagation();
+    setHover(false);
+  };
+
   return (
     <mesh
       ref={mesh}
       position={[bzwPosX, bzwPosZ + bzwSizeZ / 2, -bzwPosY]}
       rotation={[0, deg2rad(rotation), 0]}
-      onClick={onClick}
-      onPointerOver={() => setHover(true)}
-      onPointerOut={() => setHover(false)}
+      onClick={handleOnClick}
+      onPointerOver={handlePointerOver}
+      onPointerOut={handlePointerOut}
     >
       <boxBufferGeometry
         attach="geometry"
