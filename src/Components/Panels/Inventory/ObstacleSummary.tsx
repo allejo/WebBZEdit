@@ -16,6 +16,7 @@ import { INameable } from '../../../Document/Attributes/INameable';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
 import { classList } from '../../../Utilities/cssClasses';
+import keyboard from '../../../Utilities/keyboard';
 import { documentState, selectionState } from '../../../atoms';
 import LinkSummary from './LinkSummary';
 
@@ -101,9 +102,9 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
 
     useEffect(() => {
       if (editMode) {
-        inputRef.current!.focus();
+        inputRef.current?.focus();
       } else {
-        inputRef.current!.blur();
+        inputRef.current?.blur();
       }
     }, [editMode]);
 
@@ -128,8 +129,8 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.keyCode === 27) {
-        setNameEdit(obstacle.name);
+      if (e.keyCode === keyboard.ESC) {
+        setNameEdit(obstacle.name ?? '');
         setEditMode(false);
       }
     };
