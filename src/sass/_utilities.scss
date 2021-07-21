@@ -1,0 +1,12 @@
+.horizontal-checkbox {
+  cursor: pointer;
+  width: 100%;
+
+  input[type='checkbox'] {
+    margin-right: 5px;
+  }
+}
+
+.text-muted {
+  color: rgba(#fff, 0.5);
+}
