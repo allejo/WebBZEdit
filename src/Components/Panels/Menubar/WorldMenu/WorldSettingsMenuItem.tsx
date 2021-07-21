@@ -41,6 +41,7 @@ const WorldSettingsMenuItem = ({ ...menu }: Props) => {
     });
 
     setBZWDocument(nextWorld);
+    dialog.hide();
   };
 
   return (
