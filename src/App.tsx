@@ -1,6 +1,7 @@
 import React from 'react';
 
 import HixDocumentLoader from './Components/HixDocumentLoader';
+import { WorldSettingsModal } from './Components/Modals/WorldSettingsModal';
 import InventoryPanel from './Components/Panels/InventoryPanel';
 import MenubarPanel from './Components/Panels/MenubarPanel';
 import RendererPanel from './Components/Panels/RendererPanel';
@@ -23,6 +24,10 @@ const App: React.FC = () => (
     <div className={styles.Toolbox}>
       <ToolboxPanel />
     </div>
+    {/* All of the app's modals (merely for organizational purposes) */}
+    <>
+      <WorldSettingsModal />
+    </>
   </div>
 );
 
