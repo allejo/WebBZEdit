@@ -3,6 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Base from '../../../3DModels/Base';
 import Box from '../../../3DModels/Box';
+import Ground from '../../../3DModels/Ground';
 import Pyramid from '../../../3DModels/Pyramid';
 import Teleporter from '../../../3DModels/Teleporter';
 import { IBase } from '../../../Document/Obstacles/Base';
@@ -45,6 +46,7 @@ const BZWDocumentRenderer = () => {
 
         return null;
       })}
+      <Ground worldSize={document.size} />
     </>
   );
 };
