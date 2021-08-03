@@ -6,6 +6,7 @@ import Box from '../../../3DModels/Box';
 import Ground from '../../../3DModels/Ground';
 import Pyramid from '../../../3DModels/Pyramid';
 import Teleporter from '../../../3DModels/Teleporter';
+import WorldBorder from '../../../3DModels/WorldBorder';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBox } from '../../../Document/Obstacles/Box';
 import { IPyramid } from '../../../Document/Obstacles/Pyramid';
@@ -47,6 +48,7 @@ const BZWDocumentRenderer = () => {
         return null;
       })}
       <Ground worldSize={document.size} />
+      <WorldBorder wallHeight={6.15} worldSize={document.size} />
     </>
   );
 };
