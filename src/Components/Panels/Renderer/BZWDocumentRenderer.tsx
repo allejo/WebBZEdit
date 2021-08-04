@@ -5,6 +5,7 @@ import Base from '../../../3DModels/Base';
 import Box from '../../../3DModels/Box';
 import Ground from '../../../3DModels/Ground';
 import Pyramid from '../../../3DModels/Pyramid';
+import Tank from '../../../3DModels/Tank';
 import Teleporter from '../../../3DModels/Teleporter';
 import WorldBorder from '../../../3DModels/WorldBorder';
 import { IBase } from '../../../Document/Obstacles/Base';
@@ -49,6 +50,7 @@ const BZWDocumentRenderer = () => {
       })}
       <Ground worldSize={document.size} />
       <WorldBorder wallHeight={6.15} worldSize={document.size} />
+      <Tank position={[0, 0, 0]} rotation={45} />
     </>
   );
 };
