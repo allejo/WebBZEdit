@@ -1,5 +1,5 @@
+import { useLoader } from '@react-three/fiber';
 import React, { useMemo } from 'react';
-import { useLoader } from 'react-three-fiber';
 import { RepeatWrapping, TextureLoader } from 'three';
 
 import SkinnableBox from './Abstract/SkinnableBox';
