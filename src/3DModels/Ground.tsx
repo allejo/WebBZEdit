@@ -1,6 +1,6 @@
+import { useLoader } from '@react-three/fiber';
 import React from 'react';
-import { useLoader } from 'react-three-fiber';
-import { RepeatWrapping, Texture, TextureLoader } from 'three';
+import { RepeatWrapping, TextureLoader } from 'three';
 
 import SkinnableBox from './Abstract/SkinnableBox';
 
@@ -12,7 +12,7 @@ interface Props {
 
 const Ground = ({ worldSize }: Props) => {
   const noop = () => {};
-  const [grassTexture] = useLoader<Texture[]>(TextureLoader, [grass]);
+  const [grassTexture] = useLoader(TextureLoader, [grass]);
 
   grassTexture.wrapS = grassTexture.wrapT = RepeatWrapping;
   grassTexture.repeat.set(worldSize / 10, worldSize / 10);

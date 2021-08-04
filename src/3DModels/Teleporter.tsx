@@ -1,11 +1,10 @@
-import React, { MouseEvent, PointerEvent, useState } from 'react';
-import { useLoader, useUpdate } from 'react-three-fiber';
+import { useLoader } from '@react-three/fiber';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import {
   BoxBufferGeometry,
   EdgesGeometry,
   LineSegments,
   RepeatWrapping,
-  Texture,
   TextureLoader,
 } from 'three';
 
@@ -41,22 +40,25 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
     setHover(false);
   };
 
-  const segments = useUpdate<LineSegments>(
-    (s) => {
-      const boxGeometry = new BoxBufferGeometry(
-        border,
-        bzwSizeZ + border,
-        (bzwSizeY + border * 2) * 2,
-      );
-      boxGeometry.translate(0, bzwSizeZ / 2 + border / 2, 0);
-      s.geometry = new EdgesGeometry(boxGeometry);
-    },
-    [obstacle],
-  );
+  const segments = useRef<LineSegments>();
+
+  useLayoutEffect(() => {
+    if (!segments.current) {
+      return;
+    }
+
+    const boxGeometry = new BoxBufferGeometry(
+      border,
+      bzwSizeZ + border,
+      (bzwSizeY + border * 2) * 2,
+    );
+    boxGeometry.translate(0, bzwSizeZ / 2 + border / 2, 0);
+    segments.current.geometry = new EdgesGeometry(boxGeometry);
+  }, [border, bzwSizeY, bzwSizeZ, obstacle]);
 
   const isHighlighted = hover || isSelected;
 
-  const [_borderTexture, _linkTexture] = useLoader<Texture[]>(TextureLoader, [
+  const [_borderTexture, _linkTexture] = useLoader(TextureLoader, [
     teleporterBorder,
     teleporterLink,
   ]);

@@ -1,5 +1,5 @@
+import { Canvas } from '@react-three/fiber';
 import React, { Suspense } from 'react';
-import { Canvas } from 'react-three-fiber';
 import { useRecoilBridgeAcrossReactRoots_UNSTABLE } from 'recoil';
 
 import BZWDocumentRenderer from './Renderer/BZWDocumentRenderer';

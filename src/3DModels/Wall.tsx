@@ -1,6 +1,6 @@
+import { useLoader } from '@react-three/fiber';
 import React, { useMemo } from 'react';
-import { useLoader } from 'react-three-fiber';
-import { RepeatWrapping, Texture, TextureLoader } from 'three';
+import { RepeatWrapping, TextureLoader } from 'three';
 
 import SkinnableBox from './Abstract/SkinnableBox';
 
@@ -21,7 +21,7 @@ interface Props {
 
 const Wall = ({ direction, wallHeight, worldSize }: Props) => {
   const noop = () => {};
-  const [wallTexture] = useLoader<Texture[]>(TextureLoader, [worldWall]);
+  const [wallTexture] = useLoader(TextureLoader, [worldWall]);
 
   const position: [number, number, number] = useMemo(() => {
     switch (direction) {

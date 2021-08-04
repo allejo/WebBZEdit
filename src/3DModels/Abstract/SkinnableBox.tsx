@@ -1,5 +1,5 @@
-import React, { useRef, useState, MouseEvent, PointerEvent } from 'react';
-import { useUpdate } from 'react-three-fiber';
+import { ThreeEvent } from '@react-three/fiber';
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import { EdgesGeometry, LineSegments, Mesh, Texture } from 'three';
 
 import { deg2rad } from '../../Utilities/math';
@@ -9,7 +9,7 @@ interface Props {
   position: Vector3F;
   size: Vector3F;
   rotation: number;
-  onClick: (e: React.MouseEvent) => void;
+  onClick: (e: MouseEvent) => void;
   isSelected?: boolean;
   isSelectable?: boolean;
   topMaterial: Texture;
@@ -36,27 +36,27 @@ const SkinnableBox = ({
 }: Props) => {
   const [hover, setHover] = useState(false);
   const mesh = useRef<Mesh>();
-  const segments = useUpdate<LineSegments>(
-    (s) => {
-      if (!mesh.current) {
-        return;
-      }
+  const segments = useRef<LineSegments>();
 
-      s.geometry = new EdgesGeometry(mesh.current.geometry);
-    },
-    [mesh.current?.geometry],
-  );
+  useLayoutEffect(() => {
+    if (!mesh.current || !segments.current) {
+      return;
+    }
+
+    segments.current.geometry = new EdgesGeometry(mesh.current.geometry);
+  }, [mesh.current?.geometry]);
+
   const isHighlighted = isSelectable && (hover || isSelected);
 
-  const handleOnClick = (e: MouseEvent) => {
+  const handleOnClick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
     onClick(e);
   };
-  const handlePointerOver = (e: PointerEvent) => {
+  const handlePointerOver = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     setHover(true);
   };
-  const handlePointerOut = (e: PointerEvent) => {
+  const handlePointerOut = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     setHover(false);
   };
@@ -70,10 +70,7 @@ const SkinnableBox = ({
       onPointerOver={handlePointerOver}
       onPointerOut={handlePointerOut}
     >
-      <boxBufferGeometry
-        attach="geometry"
-        args={[bzwSizeX * 2, bzwSizeZ, bzwSizeY * 2]}
-      />
+      <boxBufferGeometry args={[bzwSizeX * 2, bzwSizeZ, bzwSizeY * 2]} />
       {/* === Materials === */}
       <meshBasicMaterial attachArray="material" map={yPosMaterial} /> {/* +y */}
       <meshBasicMaterial attachArray="material" map={yNegMaterial} /> {/* -y */}
@@ -84,7 +81,6 @@ const SkinnableBox = ({
       {/* === Edges Highlighting === */}
       <lineSegments ref={segments}>
         <lineBasicMaterial
-          attach="material"
           color={0x00ffff}
           transparent={!isHighlighted}
           opacity={isHighlighted ? 1 : 0}

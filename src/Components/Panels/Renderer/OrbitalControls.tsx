@@ -1,9 +1,14 @@
-import React, { useRef } from 'react';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { extend, useThree, useFrame, ReactThreeFiber } from 'react-three-fiber';
+import {
+  extend,
+  useThree,
+  useFrame,
+  ReactThreeFiber,
+} from '@react-three/fiber';
+import React, { useRef } from 'react';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-// https://spectrum.chat/react-three-fiber/general/property-orbitcontrols-does-not-exist-on-type-jsx-intrinsicelements~44712e68-4601-4486-b4b4-5e112f3dc09e
+// https://spectrum.chat/@react-three/fiber/general/property-orbitcontrols-does-not-exist-on-type-jsx-intrinsicelements~44712e68-4601-4486-b4b4-5e112f3dc09e
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
