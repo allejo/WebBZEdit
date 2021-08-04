@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLoader } from 'react-three-fiber';
-import { RepeatWrapping, Texture, TextureLoader } from 'three';
+import { RepeatWrapping, TextureLoader } from 'three';
 
 import { IBox } from '../Document/Obstacles/Box';
 import SkinnableBox from './Abstract/SkinnableBox';
@@ -30,7 +30,7 @@ const Box = ({ obstacle, isSelected, onClick }: Props) => {
   const [bzwSizeX, bzwSizeY, bzwSizeZ] = size;
   const handleOnClick = () => onClick(obstacle);
 
-  const [_roofTexture, _wallTexture] = useLoader<Texture[]>(TextureLoader, [
+  const [_roofTexture, _wallTexture] = useLoader(TextureLoader, [
     boxRoof,
     boxWall,
   ]);

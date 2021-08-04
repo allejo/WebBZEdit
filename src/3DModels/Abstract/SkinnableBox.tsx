@@ -70,10 +70,7 @@ const SkinnableBox = ({
       onPointerOver={handlePointerOver}
       onPointerOut={handlePointerOut}
     >
-      <boxBufferGeometry
-        attach="geometry"
-        args={[bzwSizeX * 2, bzwSizeZ, bzwSizeY * 2]}
-      />
+      <boxBufferGeometry args={[bzwSizeX * 2, bzwSizeZ, bzwSizeY * 2]} />
       {/* === Materials === */}
       <meshBasicMaterial attachArray="material" map={yPosMaterial} /> {/* +y */}
       <meshBasicMaterial attachArray="material" map={yNegMaterial} /> {/* -y */}
@@ -84,7 +81,6 @@ const SkinnableBox = ({
       {/* === Edges Highlighting === */}
       <lineSegments ref={segments}>
         <lineBasicMaterial
-          attach="material"
           color={0x00ffff}
           transparent={!isHighlighted}
           opacity={isHighlighted ? 1 : 0}

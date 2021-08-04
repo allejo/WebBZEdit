@@ -53,7 +53,6 @@ const Pyramid = ({ obstacle, onClick }: Props) => {
       onClick={handleOnClick}
     >
       <coneBufferGeometry
-        attach="geometry"
         args={[
           /* radius */ PYRAMID_BASE_RADIUS,
           /* height */ sizeZ,
@@ -63,7 +62,7 @@ const Pyramid = ({ obstacle, onClick }: Props) => {
           /* thetaStart */ deg2rad(ROTATION_OFFSET),
         ]}
       />
-      <meshBasicMaterial attach="material" map={texture} />
+      <meshBasicMaterial map={texture} />
     </mesh>
   );
 };

@@ -5,7 +5,6 @@ import {
   EdgesGeometry,
   LineSegments,
   RepeatWrapping,
-  Texture,
   TextureLoader,
 } from 'three';
 
@@ -56,7 +55,7 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
 
   const isHighlighted = hover || isSelected;
 
-  const [_borderTexture, _linkTexture] = useLoader<Texture[]>(TextureLoader, [
+  const [_borderTexture, _linkTexture] = useLoader(TextureLoader, [
     teleporterBorder,
     teleporterLink,
   ]);
