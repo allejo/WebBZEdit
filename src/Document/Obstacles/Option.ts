@@ -8,6 +8,7 @@ export const OptionProperties = {
   '-autoTeam': bzwBool,
   '-c': bzwBool,
   '-fb': bzwBool,
+  '+f': bzwFlag,
   '-f': bzwRepeatable(bzwString),
   '-handicap': bzwBool,
   '-j': bzwBool,
@@ -24,6 +25,12 @@ export const OptionProperties = {
   '-s': bzwInt,
   '-sa': bzwBool,
   '-sb': bzwBool,
+  set: bzwDBvar,
+  sl: bzwSl,
+  svrmsg: bzwRepeatable(bzwString),
+  st: bzwInt,
+  sw: bzwInt,
+  tk: bzwBool,
 };
 
 export type Accelerations = {
@@ -31,10 +38,21 @@ export type Accelerations = {
   angular: number;
 };
 
-export type BZDBvar = {
+export type DBvar = {
   name: string;
   value: string;
 };
+
+export type sl = {
+  id: number;
+  num: number;
+};
+
+export type flagCount = {
+  id: string;
+  count: number;
+};
+
 export enum Rabbit {
   score = 'score',
   killer = 'killer',
@@ -48,13 +66,26 @@ export function bzwAcc(linear = 50, angular = 38): Accelerations {
   };
 }
 
-export function bzDBvar(name: string, value: string): BZDBvar {
+export function bzwDBvar(name: string, value: string): DBvar {
   return {
     name: name,
     value: value,
   };
 }
+export function bzwSl(id: number, num: number): sl {
+  return {
+    id: id,
+    num: num,
+  };
+}
 
 export function bzwRabbit(value: Rabbit) {
   return value;
+}
+
+export function bzwFlag(id: string, count = 1): flagCount {
+  return {
+    id: id,
+    count: count,
+  };
 }
