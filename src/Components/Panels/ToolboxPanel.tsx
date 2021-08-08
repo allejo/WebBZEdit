@@ -2,12 +2,10 @@ import produce from 'immer';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { implementsIAlterable } from '../../Document/Attributes/IAlterable';
 import {
   implementsIPassableObject,
   IPassableObject,
 } from '../../Document/Attributes/IPassableObject';
-import { implementsIPositionable } from '../../Document/Attributes/IPositionable';
 import { implementsISizeable } from '../../Document/Attributes/ISizeable';
 import { IBase } from '../../Document/Obstacles/Base';
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
@@ -15,6 +13,7 @@ import { IPyramid } from '../../Document/Obstacles/Pyramid';
 import { documentState, selectionState } from '../../atoms';
 import AlterableControl, {
   IAlterableControlDataType,
+  canUseAlterableControlToolbox,
 } from './Toolbox/AlterableControl';
 import BaseControl from './Toolbox/BaseControl';
 import PassabilityControl from './Toolbox/PassabilityControl';
@@ -110,14 +109,9 @@ const ToolboxPanel = () => {
 
   return (
     <div className={styles.toolContainer}>
-      {selection &&
-        (implementsIPositionable(selection) ||
-          implementsIAlterable(selection)) && (
-          <AlterableControl
-            data={selection}
-            onChange={handleAlterableOnChange}
-          />
-        )}
+      {selection && canUseAlterableControlToolbox(selection) && (
+        <AlterableControl data={selection} onChange={handleAlterableOnChange} />
+      )}
       {selection && implementsIPassableObject(selection) && (
         <PassabilityControl
           data={selection}

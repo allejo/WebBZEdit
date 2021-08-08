@@ -1,13 +1,25 @@
 import React from 'react';
 
 import { IAlterable } from '../../../Document/Attributes/IAlterable';
-import { IPositionable } from '../../../Document/Attributes/IPositionable';
+import {
+  implementsIPositionable,
+  IPositionable,
+} from '../../../Document/Attributes/IPositionable';
 import { implementsISizeable } from '../../../Document/Attributes/ISizeable';
 import { Vector3F } from '../../../Utilities/types';
 import NumericalControl from './NumericalControl';
 import Vector3FControl from './Vector3FControl';
 
 import styles from './AlterableControl.module.scss';
+
+export function canUseAlterableControlToolbox(
+  value: any,
+): value is IPositionable | IAlterable {
+  const isPositionable = implementsIPositionable(value);
+  const isISizeable = implementsISizeable(value);
+
+  return isPositionable || (isPositionable && isISizeable);
+}
 
 type DataType = IPositionable | IAlterable;
 
