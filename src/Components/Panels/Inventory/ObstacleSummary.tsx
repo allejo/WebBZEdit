@@ -15,6 +15,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { INameable } from '../../../Document/Attributes/INameable';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
+import { ITankModelObjectType } from '../../../Document/Obstacles/TankModel';
 import { classList } from '../../../Utilities/cssClasses';
 import keyboard from '../../../Utilities/keyboard';
 import { documentState, selectionState } from '../../../atoms';
@@ -26,6 +27,7 @@ import thumbBasePurple from '../../../assets/thumb_base_purple.png';
 import thumbBaseRed from '../../../assets/thumb_base_red.png';
 import thumbBox from '../../../assets/thumb_box.png';
 import thumbPyramid from '../../../assets/thumb_pyramid.png';
+import thumbTank from '../../../assets/thumb_tank.png';
 import thumbTeleporter from '../../../assets/thumb_teleporter.png';
 import styles from './ObstacleSummary.module.scss';
 
@@ -40,6 +42,7 @@ const obstacleThumbs: Record<string, string> = {
   box: thumbBox,
   pyramid: thumbPyramid,
   teleporter: thumbTeleporter,
+  [ITankModelObjectType]: thumbTank,
 };
 
 const baseThumbs: Record<IBase['color'], string> = {
