@@ -1,5 +1,6 @@
 import { INameable } from '../Attributes/INameable';
 import { IPositionable } from '../Attributes/IPositionable';
+import { ISizeable } from '../Attributes/ISizeable';
 import { bzwFloat, bzwInt, bzwString, bzwVector3F } from '../attributeParsers';
 import { IBaseObject, newIBaseObject } from './BaseObject';
 
@@ -11,7 +12,11 @@ export const BaseProperties = {
   oncap: bzwString,
 };
 
-export interface IBase extends IBaseObject, INameable, IPositionable {
+export interface IBase
+  extends IBaseObject,
+    INameable,
+    IPositionable,
+    ISizeable {
   color: 1 | 2 | 3 | 4;
   oncap?: string;
 }

@@ -11,6 +11,10 @@ import WorldBorder from '../../../3DModels/WorldBorder';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBox } from '../../../Document/Obstacles/Box';
 import { IPyramid } from '../../../Document/Obstacles/Pyramid';
+import {
+  ITankModel,
+  ITankModelObjectType,
+} from '../../../Document/Obstacles/TankModel';
 import { ITeleporter } from '../../../Document/Obstacles/Teleporter';
 import { documentState, selectionState } from '../../../atoms';
 
@@ -36,7 +40,9 @@ const BZWDocumentRenderer = () => {
           isSelected: selection === obstacle._uuid,
         };
 
-        if (obstacle._objectType === 'box') {
+        if (obstacle._objectType === ITankModelObjectType) {
+          return <Tank {...props} configuration={obstacle as ITankModel} />;
+        } else if (obstacle._objectType === 'box') {
           return <Box {...props} obstacle={obstacle as IBox} />;
         } else if (obstacle._objectType === 'pyramid') {
           return <Pyramid {...props} obstacle={obstacle as IPyramid} />;
@@ -50,7 +56,6 @@ const BZWDocumentRenderer = () => {
       })}
       <Ground worldSize={document.size} />
       <WorldBorder wallHeight={6.15} worldSize={document.size} />
-      <Tank position={[0, 0, 0]} rotation={45} />
     </>
   );
 };

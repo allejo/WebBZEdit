@@ -1,11 +1,12 @@
 import React from 'react';
 
 import HixDocumentLoader from './Components/HixDocumentLoader';
-import { WorldSettingsModal } from './Components/Modals/WorldSettingsModal';
+import WorldSettingsModal from './Components/Modals/WorldSettingsModal';
 import InventoryPanel from './Components/Panels/InventoryPanel';
 import MenubarPanel from './Components/Panels/MenubarPanel';
 import RendererPanel from './Components/Panels/RendererPanel';
 import ToolboxPanel from './Components/Panels/ToolboxPanel';
+import './EventListeners';
 
 import styles from './App.module.scss';
 

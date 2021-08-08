@@ -1,5 +1,6 @@
 import { INameable } from '../Attributes/INameable';
 import { IPositionable } from '../Attributes/IPositionable';
+import { ISizeable } from '../Attributes/ISizeable';
 import { bzwFloat, bzwVector3F } from '../attributeParsers';
 import { IBaseObject, newIBaseObject } from './BaseObject';
 import { ITeleporterLink } from './TeleporterLink';
@@ -11,7 +12,11 @@ export const TeleporterProperties = {
   border: bzwFloat,
 };
 
-export interface ITeleporter extends IBaseObject, INameable, IPositionable {
+export interface ITeleporter
+  extends IBaseObject,
+    INameable,
+    IPositionable,
+    ISizeable {
   border: number;
   _links: ITeleporterLink[];
 }

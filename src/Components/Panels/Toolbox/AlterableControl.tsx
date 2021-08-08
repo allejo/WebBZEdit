@@ -1,18 +1,22 @@
 import React from 'react';
 
+import { IAlterable } from '../../../Document/Attributes/IAlterable';
 import { IPositionable } from '../../../Document/Attributes/IPositionable';
+import { implementsISizeable } from '../../../Document/Attributes/ISizeable';
 import { Vector3F } from '../../../Utilities/types';
 import NumericalControl from './NumericalControl';
 import Vector3FControl from './Vector3FControl';
 
-import styles from './PositionableControl.module.scss';
+import styles from './AlterableControl.module.scss';
+
+type DataType = IPositionable | IAlterable;
 
 interface Props {
-  data: IPositionable;
-  onChange: (changes: IPositionable) => void;
+  data: DataType;
+  onChange: (changes: DataType) => void;
 }
 
-const PositionableControl = ({ data, onChange }: Props) => {
+const AlterableControl = ({ data, onChange }: Props) => {
   const handlePositionOnChange = (position: Vector3F) =>
     onChange({
       ...data,
@@ -38,12 +42,14 @@ const PositionableControl = ({ data, onChange }: Props) => {
         value={data.position}
       />
 
-      <Vector3FControl
-        name="Size"
-        className={styles.size}
-        onChange={handleSizeOnChange}
-        value={data.size}
-      />
+      {implementsISizeable(data) && (
+        <Vector3FControl
+          name="Size"
+          className={styles.size}
+          onChange={handleSizeOnChange}
+          value={data.size}
+        />
+      )}
 
       <NumericalControl
         className={styles.rotation}
@@ -56,4 +62,5 @@ const PositionableControl = ({ data, onChange }: Props) => {
   );
 };
 
-export default PositionableControl;
+export default AlterableControl;
+export type { DataType as IAlterableControlDataType };

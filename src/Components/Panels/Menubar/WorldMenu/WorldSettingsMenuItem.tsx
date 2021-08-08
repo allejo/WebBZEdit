@@ -6,7 +6,7 @@ import eventBus from '../../../../EventBus';
 import {
   IWorldSettingsModalOpenData,
   WorldSettingsModalOpenEvent,
-} from '../../../Modals/WorldSettingsModal';
+} from '../../../../Events/WorldSettingsModalOpenEvent';
 import MenuItem from '../MenuItem';
 
 interface Props extends MenuStateReturn {}

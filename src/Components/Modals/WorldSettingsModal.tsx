@@ -10,14 +10,11 @@ import { useDialogState } from 'reakit';
 import { useRecoilState } from 'recoil';
 
 import eventBus from '../../EventBus';
+import { WorldSettingsModalOpenEvent } from '../../Events/WorldSettingsModalOpenEvent';
 import { documentState } from '../../atoms';
 import Modal from '../Modal';
 
-export interface IWorldSettingsModalOpenData {}
-
-export const WorldSettingsModalOpenEvent = 'worldSettingsModalOpen';
-
-export const WorldSettingsModal = () => {
+const WorldSettingsModal = () => {
   const eventBusCallbackId = useRef('');
 
   const [world, setBZWDocument] = useRecoilState(documentState);
@@ -181,3 +178,5 @@ export const WorldSettingsModal = () => {
     </Modal>
   );
 };
+
+export default WorldSettingsModal;
