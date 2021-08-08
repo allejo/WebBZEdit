@@ -46,7 +46,7 @@ const AlterableControl = ({ data, onChange }: Props) => {
     });
 
   return (
-    <div className={styles.wrapper}>
+    <section>
       <Vector3FControl
         name="Position"
         className={styles.position}
@@ -70,7 +70,7 @@ const AlterableControl = ({ data, onChange }: Props) => {
         onChange={handleRotationOnChange}
         value={data.rotation ?? 0}
       />
-    </div>
+    </section>
   );
 };
 

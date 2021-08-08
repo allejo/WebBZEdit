@@ -15,11 +15,20 @@
   display: flex;
   height: 100%;
 
-  & > div {
-    margin: auto 1rem auto 0;
+  & > section {
+    border: 1px solid rgba(#fff, 0.3);
+    display: flex;
+    margin-right: 0.5rem;
+    padding: 1rem 1.25rem;
 
     &:last-child {
       margin-right: 0;
+    }
+
+    label,
+    legend {
+      font-size: 0.8rem;
+      font-weight: bold;
     }
   }
 }

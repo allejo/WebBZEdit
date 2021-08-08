@@ -18,21 +18,22 @@ const PyramidControl = ({ data, onChange }: Props) => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <fieldset className={styles.pyramid}>
+    <section>
+      <fieldset>
         <legend className={styles.legend}>Pyramid</legend>
         <div>
-          <input
-            className={styles.checkbox}
-            type="checkbox"
-            id="flipz"
-            checked={data.flipz}
-            onChange={handleFlipZOnChange}
-          />
-          <label htmlFor="flipz">Flip Z Axis</label>
+          <label className="fw-normal">
+            <input
+              className={styles.checkbox}
+              type="checkbox"
+              checked={data.flipz}
+              onChange={handleFlipZOnChange}
+            />
+            Flip Z Axis
+          </label>
         </div>
       </fieldset>
-    </div>
+    </section>
   );
 };
 

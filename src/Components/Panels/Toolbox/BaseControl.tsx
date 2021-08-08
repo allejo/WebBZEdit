@@ -18,10 +18,11 @@ const BaseControl = ({ data, onChange }: Props) => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <fieldset className={styles.base}>
-        <legend className={styles.legend}>Base</legend>
-        <div>
+    <section>
+      <fieldset>
+        <legend>Base Settings</legend>
+        <div className="d-flex">
+          <label htmlFor="base-color">Team Color</label>
           <select
             className={styles.dropdown}
             id="base-color"
@@ -33,10 +34,9 @@ const BaseControl = ({ data, onChange }: Props) => {
             <option value={3}>Blue</option>
             <option value={4}>Purple</option>
           </select>
-          <label htmlFor="base-color">Team Color</label>
         </div>
       </fieldset>
-    </div>
+    </section>
   );
 };
 
