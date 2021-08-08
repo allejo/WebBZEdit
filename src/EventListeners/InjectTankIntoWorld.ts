@@ -6,21 +6,26 @@ import {
 } from '../Document/Obstacles/TankModel';
 import eventBus from '../EventBus';
 import {
-  IWorldDocumentLoadedEventData,
-  WorldDocumentLoadedEventName,
-} from '../Events/WorldDocumentLoadedEvent';
+  IDocumentParsedEvent,
+  DocumentParsedEventName,
+} from '../Events/IDocumentParsedEvent';
 
-eventBus.on<IWorldDocumentLoadedEventData>(
-  WorldDocumentLoadedEventName,
-  ({ data }) => {
-    const world = data.getWorld();
+/*
+ * The scale tank that appears in our editor is not part of the map file. Our
+ * map parsing information will only handle actual BZW markup. Therefore, we
+ * inject our tank model after the world document has been parsed.
+ */
+eventBus.on<IDocumentParsedEvent>(
+  DocumentParsedEventName,
+  ({ worldEditor }) => {
+    const world = worldEditor.getWorld();
 
     if (world) {
       const newWorld = produce(world, (draftWorld) => {
         draftWorld.children[ITankModelObjectType] = newITankModel();
       });
 
-      data.setWorld(newWorld);
+      worldEditor.setWorld(newWorld);
     }
   },
 );

@@ -4,17 +4,17 @@ import { MenuStateReturn } from 'reakit';
 
 import eventBus from '../../../../EventBus';
 import {
-  IWorldSettingsModalOpenData,
-  WorldSettingsModalOpenEvent,
-} from '../../../../Events/WorldSettingsModalOpenEvent';
+  IWorldSettingsModalOpenEvent,
+  WorldSettingsModalOpenEventName,
+} from '../../../../Events/IWorldSettingsModalOpenEvent';
 import MenuItem from '../MenuItem';
 
 interface Props extends MenuStateReturn {}
 
 const WorldSettingsMenuItem = ({ ...menu }: Props) => {
   const handleOnTriggerMenuItem = () => {
-    eventBus.dispatch<IWorldSettingsModalOpenData>(
-      WorldSettingsModalOpenEvent,
+    eventBus.dispatch<IWorldSettingsModalOpenEvent>(
+      WorldSettingsModalOpenEventName,
       {},
     );
   };
