@@ -13,7 +13,10 @@ interface Props {
 }
 
 const Tank = ({ configuration, isSelected, onClick }: Props) => {
-  const { position, rotation = 0 } = configuration;
+  const {
+    position: [bzwPosX, bzwPosZ, bzwPosY],
+    rotation = 0,
+  } = configuration;
   const [hover, setHover] = useState(false);
   const segments = useRef<LineSegments>();
   // Approximate bounding box for the tank model (with magic numbers)
@@ -49,7 +52,7 @@ const Tank = ({ configuration, isSelected, onClick }: Props) => {
     <mesh
       scale={[2, 2, 2]}
       rotation={[deg2rad(270), 0, deg2rad(rotation)]}
-      position={position}
+      position={[bzwPosX, bzwPosY, bzwPosZ]}
       onClick={handleOnClick}
       onPointerOver={handlePointerOver}
       onPointerOut={handlePointerOut}
