@@ -6,17 +6,17 @@ import {
   implementsIPassableObject,
   IPassableObject,
 } from '../../Document/Attributes/IPassableObject';
-import {
-  implementsIPositionable,
-  IPositionable,
-} from '../../Document/Attributes/IPositionable';
+import { implementsISizeable } from '../../Document/Attributes/ISizeable';
 import { IBase } from '../../Document/Obstacles/Base';
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { IPyramid } from '../../Document/Obstacles/Pyramid';
 import { documentState, selectionState } from '../../atoms';
+import AlterableControl, {
+  IAlterableControlDataType,
+  canUseAlterableControlToolbox,
+} from './Toolbox/AlterableControl';
 import BaseControl from './Toolbox/BaseControl';
 import PassabilityControl from './Toolbox/PassabilityControl';
-import PositionableControl from './Toolbox/PositionableControl';
 import PyramidControl from './Toolbox/PyramidControl';
 
 import styles from './ToolboxPanel.module.scss';
@@ -33,17 +33,22 @@ const ToolboxPanel = () => {
     }
   }, [world, selectedUUID]);
 
-  const handlePositionableOnChange = (data: IPositionable) => {
+  const handleAlterableOnChange = (data: IAlterableControlDataType) => {
     if (!world || !selectedUUID) {
       return;
     }
 
     const nextWorld = produce(world, (draftWorld) => {
-      const obstacle: IPositionable = draftWorld.children[selectedUUID] as any;
+      const obstacle: IAlterableControlDataType = draftWorld.children[
+        selectedUUID
+      ] as any;
 
       obstacle.position = data.position;
-      obstacle.size = data.size;
       obstacle.rotation = data.rotation;
+
+      if (implementsISizeable(obstacle) && implementsISizeable(data)) {
+        obstacle.size = data.size;
+      }
     });
 
     setBZWDocument(nextWorld);
@@ -104,11 +109,8 @@ const ToolboxPanel = () => {
 
   return (
     <div className={styles.toolContainer}>
-      {selection && implementsIPositionable(selection) && (
-        <PositionableControl
-          data={selection}
-          onChange={handlePositionableOnChange}
-        />
+      {selection && canUseAlterableControlToolbox(selection) && (
+        <AlterableControl data={selection} onChange={handleAlterableOnChange} />
       )}
       {selection && implementsIPassableObject(selection) && (
         <PassabilityControl

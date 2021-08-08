@@ -16,9 +16,10 @@ const RendererPanel = () => {
         </Suspense>
       </RecoilBridge>
 
-      <OrbitalControls />
+      <hemisphereLight args={[0xffffbb, 0x080820, 0.8]} />
       <gridHelper args={[800, 40]} />
       <axesHelper args={[200]} />
+      <OrbitalControls />
     </Canvas>
   );
 };

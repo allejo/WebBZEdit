@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { MenuStateReturn } from 'reakit/Menu';
 import { useSetRecoilState } from 'recoil';
 
-import { parseBZWDocument } from '../../../../Document/parseBZWDocument';
+import { loadBZWDocument } from '../../../../Document/loadBZWDocument';
 import {
   defaultFilePickerOptions,
   supportsFilesystemAPI,
@@ -19,7 +19,7 @@ const OpenMapMenuItem = ({ ...menu }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleWorldFileContents = (contents: string) => {
-    setDocument(parseBZWDocument(contents));
+    setDocument(loadBZWDocument(contents));
   };
 
   const handleMenuItemClick = async () => {

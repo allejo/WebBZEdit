@@ -3,6 +3,7 @@ import { INameable } from '../Attributes/INameable';
 import { IPassableObject } from '../Attributes/IPassableObject';
 import { IPhysicsDriverFriendly } from '../Attributes/IPhysicsDriverFriendly';
 import { IPositionable } from '../Attributes/IPositionable';
+import { ISizeable } from '../Attributes/ISizeable';
 import { bzwBool, bzwFloat, bzwString, bzwVector3F } from '../attributeParsers';
 import { IBaseObject, newIBaseObject, newIPassableObject } from './BaseObject';
 
@@ -23,7 +24,8 @@ export interface IBox
     INameable,
     IPassableObject,
     IPositionable,
-    IPhysicsDriverFriendly {}
+    IPhysicsDriverFriendly,
+    ISizeable {}
 
 export function newIBox(): IBox {
   return {

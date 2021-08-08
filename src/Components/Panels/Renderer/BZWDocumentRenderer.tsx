@@ -5,11 +5,16 @@ import Base from '../../../3DModels/Base';
 import Box from '../../../3DModels/Box';
 import Ground from '../../../3DModels/Ground';
 import Pyramid from '../../../3DModels/Pyramid';
+import Tank from '../../../3DModels/Tank';
 import Teleporter from '../../../3DModels/Teleporter';
 import WorldBorder from '../../../3DModels/WorldBorder';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBox } from '../../../Document/Obstacles/Box';
 import { IPyramid } from '../../../Document/Obstacles/Pyramid';
+import {
+  ITankModel,
+  ITankModelObjectType,
+} from '../../../Document/Obstacles/TankModel';
 import { ITeleporter } from '../../../Document/Obstacles/Teleporter';
 import { documentState, selectionState } from '../../../atoms';
 
@@ -35,7 +40,9 @@ const BZWDocumentRenderer = () => {
           isSelected: selection === obstacle._uuid,
         };
 
-        if (obstacle._objectType === 'box') {
+        if (obstacle._objectType === ITankModelObjectType) {
+          return <Tank {...props} configuration={obstacle as ITankModel} />;
+        } else if (obstacle._objectType === 'box') {
           return <Box {...props} obstacle={obstacle as IBox} />;
         } else if (obstacle._objectType === 'pyramid') {
           return <Pyramid {...props} obstacle={obstacle as IPyramid} />;
