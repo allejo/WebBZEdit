@@ -1,0 +1,9 @@
+# Global settings applied to the whole site.
+# “base” is directory to change to before starting build, and
+# “publish” is the directory to publish (relative to root of your repo).
+# “command” is your build command.
+
+[build]
+base    = ""
+publish = "build"
+command = "REACT_APP_COMMIT=$COMMIT_REF REACT_APP_VERSION=$(cat package.json | jq -r '.version') yarn build"
