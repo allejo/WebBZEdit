@@ -1,0 +1,9 @@
+.wrapper {
+  a {
+    color: yellow;
+
+    & > svg {
+      margin-right: 0.5rem;
+    }
+  }
+}

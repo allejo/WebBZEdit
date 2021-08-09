@@ -12,12 +12,20 @@ import styles from './Modal.module.scss';
 
 interface Props extends Partial<DialogOptions> {
   dialog: DialogStateReturn;
+  className?: string;
   onDismiss?: () => boolean;
   title: string;
   children: ReactNode;
 }
 
-const Modal = ({ title, dialog, onDismiss, children, ...props }: Props) => {
+const Modal = ({
+  title,
+  className,
+  dialog,
+  onDismiss,
+  children,
+  ...props
+}: Props) => {
   const handleOnClickDismiss = () => {
     const allowDismiss = onDismiss?.() ?? true;
 
@@ -45,7 +53,7 @@ const Modal = ({ title, dialog, onDismiss, children, ...props }: Props) => {
           </button>
         </header>
 
-        {children}
+        <div className={className}>{children}</div>
       </Dialog>
     </DialogBackdrop>
   );

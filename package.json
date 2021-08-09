@@ -1,9 +1,10 @@
 {
   "name": "web-bzedit",
-  "version": "0.1.0",
+  "version": "0.1.0-dev",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@react-three/drei": "^7.3.1",
