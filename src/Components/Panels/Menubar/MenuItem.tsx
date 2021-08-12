@@ -5,6 +5,8 @@ import {
 import React, { ReactNode, useEffect } from 'react';
 import { MenuItem as ReakitMenuItem, MenuStateReturn } from 'reakit/Menu';
 
+import { areEqualShallow } from '../../../Utilities/areShallowEqual';
+
 import styles from './MenuItem.module.scss';
 
 interface Props extends MenuStateReturn {
@@ -96,13 +98,18 @@ const MenuItem = ({ children, icon, shortcut, onTrigger, ...menu }: Props) => {
         return;
       }
 
-      const { meta, shift, alt, key } = shortcut;
-      const keyPressed = key.charCodeAt(0) === event.keyCode;
-      const metaKey = meta == null || (meta && event.metaKey);
-      const shiftKey = shift == null || (shift && event.shiftKey);
-      const altKey = alt == null || (alt && event.altKey);
+      if (document.activeElement?.nodeName.toLowerCase() !== 'body') {
+        return;
+      }
 
-      if (keyPressed && metaKey && shiftKey && altKey) {
+      const keyPress: Props['shortcut'] = {
+        key: event.key.toUpperCase(),
+        ...(event.metaKey ? { meta: true } : {}),
+        ...(event.shiftKey ? { shift: true } : {}),
+        ...(event.altKey ? { alt: true } : {}),
+      };
+
+      if (areEqualShallow(keyPress, shortcut)) {
         event.preventDefault();
         onTrigger?.();
       }
