@@ -4,6 +4,7 @@ import { MenuBar, MenuItem, useMenuBarState } from 'reakit';
 import CameraMenu from './Menubar/CameraMenu';
 import FileMenu from './Menubar/FileMenu';
 import HelpMenu from './Menubar/HelpMenu';
+import ObjectMenu from './Menubar/ObjectMenu';
 import WorldMenu from './Menubar/WorldMenu';
 
 import styles from './MenubarPanel.module.scss';
@@ -14,6 +15,7 @@ const MenubarPanel = () => {
   return (
     <MenuBar {...menu} className={styles.wrapper}>
       <MenuItem {...menu} as={FileMenu} />
+      <MenuItem {...menu} as={ObjectMenu} />
       <MenuItem {...menu} as={CameraMenu} />
       <MenuItem {...menu} as={WorldMenu} />
       <MenuItem {...menu} as={HelpMenu} />

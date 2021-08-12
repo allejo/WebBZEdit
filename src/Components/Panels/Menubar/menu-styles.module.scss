@@ -34,6 +34,10 @@
     &:last-child {
       padding-bottom: 0.5rem;
     }
+
+    &[disabled] {
+      color: rgba(#fff, 0.3);
+    }
   }
 
   [role='separator'] {

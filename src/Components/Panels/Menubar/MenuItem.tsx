@@ -10,6 +10,8 @@ import { areEqualShallow } from '../../../Utilities/areShallowEqual';
 import styles from './MenuItem.module.scss';
 
 interface Props extends MenuStateReturn {
+  disabled?: boolean;
+
   /**
    * The FontAwesome icon to attach to this menu item.
    */
@@ -81,17 +83,28 @@ function getShortcut(shortcut?: Props['shortcut']): string {
   const metaChar = getOS() === 'macos' ? '⌘' : 'CTRL';
   const glue = shift || alt ? '+' : '';
 
+  const symbols: Record<string, string> = {
+    BACKSPACE: '⌫',
+  };
+
   const keys = [
     meta && metaChar,
-    shift && 'Shift',
-    alt && 'Option',
-    key.toLocaleUpperCase(),
+    shift && '⇧',
+    alt && '⌥',
+    symbols[key] ?? key.toLocaleUpperCase(),
   ];
 
   return keys.filter(Boolean).join(glue);
 }
 
-const MenuItem = ({ children, icon, shortcut, onTrigger, ...menu }: Props) => {
+const MenuItem = ({
+  children,
+  disabled = false,
+  icon,
+  shortcut,
+  onTrigger,
+  ...menu
+}: Props) => {
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
       if (!shortcut) {
@@ -123,7 +136,7 @@ const MenuItem = ({ children, icon, shortcut, onTrigger, ...menu }: Props) => {
   }, [onTrigger, shortcut]);
 
   return (
-    <ReakitMenuItem {...menu} onClick={onTrigger}>
+    <ReakitMenuItem {...menu} onClick={onTrigger} disabled={disabled}>
       <span className={styles.icon}>
         {icon && <FontAwesomeIcon fixedWidth={true} icon={icon} />}
       </span>
@@ -140,3 +153,4 @@ const MenuItem = ({ children, icon, shortcut, onTrigger, ...menu }: Props) => {
 };
 
 export default MenuItem;
+export type { Props as IMenuItemProps };
