@@ -13,7 +13,7 @@ const CameraMenu = forwardRef<HTMLButtonElement>((props, ref) => {
       <MenuButton ref={ref} {...menu} {...props} className={styles.menuButton}>
         Camera
       </MenuButton>
-      <Menu {...menu} aria-label="Help" className={styles.menuDropdown}>
+      <Menu {...menu} aria-label="Camera" className={styles.menuDropdown}>
         <ResetMenuItem {...menu} />
       </Menu>
     </>
