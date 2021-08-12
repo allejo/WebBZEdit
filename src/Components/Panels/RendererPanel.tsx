@@ -3,13 +3,13 @@ import React, { Suspense } from 'react';
 import { useRecoilBridgeAcrossReactRoots_UNSTABLE } from 'recoil';
 
 import BZWDocumentRenderer from './Renderer/BZWDocumentRenderer';
-import OrbitalControls from './Renderer/OrbitalControls';
+import CameraControls, { CAMERA_DEFAULT_POS } from './Renderer/CameraControls';
 
 const RendererPanel = () => {
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
   return (
-    <Canvas>
+    <Canvas camera={{ position: CAMERA_DEFAULT_POS }}>
       <RecoilBridge>
         <Suspense fallback={null}>
           <BZWDocumentRenderer />
@@ -19,7 +19,7 @@ const RendererPanel = () => {
       <hemisphereLight args={[0xffffbb, 0x080820, 0.8]} />
       <gridHelper args={[800, 40]} />
       <axesHelper args={[200]} />
-      <OrbitalControls />
+      <CameraControls />
     </Canvas>
   );
 };
