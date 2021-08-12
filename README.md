@@ -1,12 +1,12 @@
 # Web BZEdit
 
-A map editor for BZFlag powered by your every day browser heavily inspired by [The Noah's webbzw](https://github.com/BZFlagCommunity/webbzw) and [cs8425's bzw-viewer](https://github.com/cs8425/bzw-viewer).
+A map editor for BZFlag powered by your every day browser heavily inspired by [The Noah's webbzw](https://github.com/BZFlagCommunity/webbzw), [cs8425's bzw-viewer](https://github.com/cs8425/bzw-viewer), and [iBZEdit](https://sourceforge.net/projects/ibzedit/).
 
-![A screenshot of the editor](.github/screenshot.png)
+![A screenshot of the editor](.github/screenshot.jpg)
 
 ## About the Project
 
-The goal of Web BZEdit is serve as a replacement for all other (dated and semi-broken) desktop based map editors. It's an incredibly ambitious project and will not be finished any time soon; there's a lot of work that needs to be done.
+The goal of Web BZEdit is serve as a beginner-friendly replacement for all other (dated and semi-broken) desktop based map editors. It's an incredibly ambitious project and will not be finished any time soon; there's a lot of work that needs to be done.
 
 ### Why not continue an existing project?
 
@@ -18,11 +18,7 @@ No. I've discussed this with the rest of the BZFlag team, and it didn't quite li
 
 ### Is this project ready for daily use?
 
-No.
-
-### When will it be ready for daily use?
-
-:man_shrugging:
+No. However, an alpha testing period is planned soon.
 
 ### If this project isn't ready for daily use, why make it public?
 
