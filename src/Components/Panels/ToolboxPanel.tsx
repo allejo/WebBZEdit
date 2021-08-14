@@ -28,9 +28,11 @@ const ToolboxPanel = () => {
   const [selection, setSelection] = useState<IBaseObject | null>(null);
 
   useEffect(() => {
-    if (world && selectedUUID) {
-      setSelection(world.children[selectedUUID]);
+    if (!world) {
+      return;
     }
+
+    setSelection(selectedUUID ? world.children[selectedUUID] : null);
   }, [world, selectedUUID]);
 
   const handleAlterableOnChange = (data: IAlterableControlDataType) => {
