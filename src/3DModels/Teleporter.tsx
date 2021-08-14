@@ -12,7 +12,9 @@ import { ITeleporter } from '../Document/Obstacles/Teleporter';
 import { deg2rad } from '../Utilities/math';
 import SkinnableBox from './Abstract/SkinnableBox';
 
+import teleporterBack from '../assets/teleporter_back.png';
 import teleporterBorder from '../assets/teleporter_border.png';
+import teleporterFront from '../assets/teleporter_front.png';
 import teleporterLink from '../assets/teleporter_link.png';
 
 interface Props {
@@ -58,10 +60,19 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
 
   const isHighlighted = hover || isSelected;
 
-  const [_borderTexture, _linkTexture] = useLoader(TextureLoader, [
+  const [
+    backLabelTexture,
+    _borderTexture,
+    frontLabelTexture,
+    _linkTexture,
+  ] = useLoader(TextureLoader, [
+    teleporterBack,
     teleporterBorder,
+    teleporterFront,
     teleporterLink,
   ]);
+
+  // backLabelTexture.
 
   const borderTexture = _borderTexture.clone();
   const linkTexture = _linkTexture.clone();
@@ -120,6 +131,8 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
   sideBottomTexture.repeat.set(1, 1);
   sideBottomTexture.needsUpdate = true;
 
+  const labelSize = Math.min(bzwSizeY, bzwSizeZ / 2);
+
   return (
     <mesh
       position={[bzwPosX, bzwPosZ, bzwPosY]}
@@ -134,12 +147,19 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
         rotation={0}
         onClick={handleOnClick}
         isSelectable={false}
-        topMaterial={linkTexture}
-        botMaterial={linkTexture}
-        xPosMaterial={linkTexture}
-        xNegMaterial={linkTexture}
         yPosMaterial={linkTexture}
         yNegMaterial={linkTexture}
+      />
+      {/* === Front/Back Labels === */}
+      <SkinnableBox
+        position={[0, 0, bzwSizeZ / 3]}
+        size={[0.06, labelSize / 2, labelSize]}
+        rotation={0}
+        onClick={handleOnClick}
+        isSelectable={false}
+        renderOrder={1}
+        yPosMaterial={frontLabelTexture}
+        yNegMaterial={backLabelTexture}
       />
       {/* === Frame === */}
       {border > 0 && (

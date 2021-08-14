@@ -12,12 +12,14 @@ interface Props {
   onClick: (e: MouseEvent) => void;
   isSelected?: boolean;
   isSelectable?: boolean;
-  topMaterial: Texture;
-  botMaterial: Texture;
-  xPosMaterial: Texture;
-  xNegMaterial: Texture;
-  yPosMaterial: Texture;
-  yNegMaterial: Texture;
+  renderOrder?: number;
+  renderTransparency?: boolean;
+  topMaterial?: Texture | null;
+  botMaterial?: Texture | null;
+  xPosMaterial?: Texture | null;
+  xNegMaterial?: Texture | null;
+  yPosMaterial?: Texture | null;
+  yNegMaterial?: Texture | null;
 }
 
 const SkinnableBox = ({
@@ -33,6 +35,8 @@ const SkinnableBox = ({
   yNegMaterial,
   isSelected = false,
   isSelectable = true,
+  renderOrder = 0,
+  renderTransparency = false,
 }: Props) => {
   const [hover, setHover] = useState(false);
   const mesh = useRef<Mesh>();
@@ -61,6 +65,31 @@ const SkinnableBox = ({
     setHover(false);
   };
 
+  const forceTransparency =
+    yPosMaterial == null ||
+    yNegMaterial == null ||
+    topMaterial == null ||
+    botMaterial == null ||
+    xPosMaterial == null ||
+    xNegMaterial == null ||
+    false;
+  const invisible = {
+    color: 0xffffff,
+    opacity: 0,
+    transparent: true,
+  };
+  const standardProps = {
+    attachArray: 'material',
+    transparent: forceTransparency || renderTransparency,
+  };
+
+  const yPosMatProps = yPosMaterial != null ? { map: yPosMaterial } : invisible;
+  const yNegMatProps = yNegMaterial != null ? { map: yNegMaterial } : invisible;
+  const topMatProps = topMaterial != null ? { map: topMaterial } : invisible;
+  const botMatProps = botMaterial != null ? { map: botMaterial } : invisible;
+  const xPosMatProps = xPosMaterial != null ? { map: xPosMaterial } : invisible;
+  const xNegMatProps = xNegMaterial != null ? { map: xNegMaterial } : invisible;
+
   return (
     <mesh
       ref={mesh}
@@ -69,15 +98,16 @@ const SkinnableBox = ({
       onClick={handleOnClick}
       onPointerOver={handlePointerOver}
       onPointerOut={handlePointerOut}
+      renderOrder={renderOrder}
     >
       <boxBufferGeometry args={[bzwSizeX * 2, bzwSizeZ, bzwSizeY * 2]} />
       {/* === Materials === */}
-      <meshBasicMaterial attachArray="material" map={yPosMaterial} /> {/* +y */}
-      <meshBasicMaterial attachArray="material" map={yNegMaterial} /> {/* -y */}
-      <meshBasicMaterial attachArray="material" map={topMaterial} /> {/* +z */}
-      <meshBasicMaterial attachArray="material" map={botMaterial} /> {/* -z */}
-      <meshBasicMaterial attachArray="material" map={xPosMaterial} /> {/* +x */}
-      <meshBasicMaterial attachArray="material" map={xNegMaterial} /> {/* -x */}
+      <meshBasicMaterial {...standardProps} {...yPosMatProps} /> {/* +y */}
+      <meshBasicMaterial {...standardProps} {...yNegMatProps} /> {/* -y */}
+      <meshBasicMaterial {...standardProps} {...topMatProps} /> {/* +z */}
+      <meshBasicMaterial {...standardProps} {...botMatProps} /> {/* -z */}
+      <meshBasicMaterial {...standardProps} {...xPosMatProps} /> {/* +x */}
+      <meshBasicMaterial {...standardProps} {...xNegMatProps} /> {/* -x */}
       {/* === Edges Highlighting === */}
       <lineSegments ref={segments}>
         <lineBasicMaterial
