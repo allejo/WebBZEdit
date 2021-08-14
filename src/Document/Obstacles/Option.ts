@@ -29,6 +29,7 @@ export const OptionProperties = {
   '-st': bzwInt,
   '-sw': bzwInt,
   '-tk': bzwBool,
+  '-mp': bzwMp,
 };
 
 export type Accelerations = {
@@ -56,6 +57,16 @@ export enum Rabbit {
   killer = 'killer',
   random = 'random',
 }
+
+export type maxPoints = {
+  total?: number;
+  rogue?: number;
+  red?: number;
+  green?: number;
+  blue?: number;
+  purple?: number;
+  observer?: number;
+};
 
 export function bzwAcc(input: string): Accelerations {
   const accArray = input.split(' ');
@@ -93,11 +104,47 @@ export function bzwRabbit(value: Rabbit) {
   return value;
 }
 
+export function bzwMp(input: string): maxPoints {
+  const maxMPArray = input.split(',');
+  if (maxMPArray.length === 1) {
+    const total = parseInt(maxMPArray[0]);
+    return {
+      total: total,
+    };
+  }
+  return {
+    rogue:
+      maxMPArray[0] && maxMPArray[0] === ''
+        ? undefined
+        : parseInt(maxMPArray[0]),
+    red:
+      maxMPArray[1] && maxMPArray[1] === ''
+        ? undefined
+        : parseInt(maxMPArray[1]),
+    green:
+      maxMPArray[2] && maxMPArray[2] === ''
+        ? undefined
+        : parseInt(maxMPArray[2]),
+    blue:
+      maxMPArray[3] && maxMPArray[3] === ''
+        ? undefined
+        : parseInt(maxMPArray[3]),
+    purple:
+      maxMPArray[4] && maxMPArray[4] === ''
+        ? undefined
+        : parseInt(maxMPArray[4]),
+    observer:
+      maxMPArray[5] && maxMPArray[5] === ''
+        ? undefined
+        : parseInt(maxMPArray[5]),
+  };
+}
+
 export function bzwFlag(input: string): flagCount {
-  const flagArray = input.split(' ');
+  const flagArray = input.split('{');
 
   const id = flagArray[0];
-  const count = flagArray[1] ? parseInt(flagArray[1]) : 1;
+  const count = flagArray[1] ? parseInt(flagArray[1].replace('}', '')) : 1;
 
   return {
     id: id,
