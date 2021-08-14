@@ -1,5 +1,3 @@
-import { unstable_ComboboxGridStateReturn } from 'reakit';
-
 import { bzwBool, bzwInt, bzwRepeatable, bzwString } from '../attributeParsers';
 
 export const OptionProperties = {
@@ -8,7 +6,7 @@ export const OptionProperties = {
   '-autoTeam': bzwBool,
   '-c': bzwBool,
   '-fb': bzwBool,
-  '+f': bzwFlag,
+  '+f': bzwRepeatable(bzwFlag),
   '-f': bzwRepeatable(bzwString),
   '-handicap': bzwBool,
   '-j': bzwBool,
@@ -25,12 +23,12 @@ export const OptionProperties = {
   '-s': bzwInt,
   '-sa': bzwBool,
   '-sb': bzwBool,
-  set: bzwDBvar,
-  sl: bzwSl,
-  svrmsg: bzwRepeatable(bzwString),
-  st: bzwInt,
-  sw: bzwInt,
-  tk: bzwBool,
+  '-set': bzwRepeatable(bzwDBvar),
+  '-sl': bzwSl,
+  '-svrmsg': bzwRepeatable(bzwString),
+  '-st': bzwInt,
+  '-sw': bzwInt,
+  '-tk': bzwBool,
 };
 
 export type Accelerations = {
@@ -59,20 +57,32 @@ export enum Rabbit {
   random = 'random',
 }
 
-export function bzwAcc(linear = 50, angular = 38): Accelerations {
+export function bzwAcc(input: string): Accelerations {
+  const accArray = input.split(' ');
+  const linear = accArray[0] ? parseInt(accArray[0]) : 50;
+  const angular = accArray[1] ? parseInt(accArray[1]) : 38;
+
   return {
     linear: linear,
     angular: angular,
   };
 }
 
-export function bzwDBvar(name: string, value: string): DBvar {
+export function bzwDBvar(input: string): DBvar {
+  const DBArray = input.split(' ');
+  const name = DBArray[0];
+  const value = DBArray[1];
+
   return {
     name: name,
     value: value,
   };
 }
-export function bzwSl(id: number, num: number): sl {
+export function bzwSl(input: string): sl {
+  const slArray = input.split(' ');
+  const id = parseInt(slArray[0]);
+  const num = parseInt(slArray[1]);
+
   return {
     id: id,
     num: num,
@@ -83,7 +93,12 @@ export function bzwRabbit(value: Rabbit) {
   return value;
 }
 
-export function bzwFlag(id: string, count = 1): flagCount {
+export function bzwFlag(input: string): flagCount {
+  const flagArray = input.split(' ');
+
+  const id = flagArray[0];
+  const count = flagArray[1] ? parseInt(flagArray[1]) : 1;
+
   return {
     id: id,
     count: count,
