@@ -7,6 +7,7 @@ import { newIBox } from '../../../Document/Obstacles/Box';
 import { newIPyramid } from '../../../Document/Obstacles/Pyramid';
 import { newITeleporter } from '../../../Document/Obstacles/Teleporter';
 import AddObstacleMenuItem from './ObjectMenu/AddObstacleMenuItem';
+import ClearSelectionMenuItem from './ObjectMenu/ClearSelectionMenuItem';
 import DeleteSelectedMenuItem from './ObjectMenu/DeleteSelectedMenuItem';
 
 import styles from './menu-styles.module.scss';
@@ -46,6 +47,7 @@ const ObjectMenu = forwardRef<HTMLButtonElement>((props, ref) => {
           {...menu}
         />
         <MenuSeparator />
+        <ClearSelectionMenuItem {...menu} />
         <DeleteSelectedMenuItem {...menu} />
       </Menu>
     </>
