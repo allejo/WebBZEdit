@@ -6,6 +6,7 @@ import React, { ReactNode, useEffect } from 'react';
 import { MenuItem as ReakitMenuItem, MenuStateReturn } from 'reakit/Menu';
 
 import { areEqualShallow } from '../../../Utilities/areShallowEqual';
+import { isInputInFocus, isMenuInFocus } from '../../../Utilities/domUtils';
 
 import styles from './MenuItem.module.scss';
 
@@ -112,7 +113,9 @@ const MenuItem = ({
         return;
       }
 
-      if (document.activeElement?.nodeName.toLowerCase() !== 'body') {
+      // Don't listen to keyboard shortcuts if the user is typing something or
+      // is interacting with the menu
+      if (isInputInFocus() || isMenuInFocus()) {
         return;
       }
 
