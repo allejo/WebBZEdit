@@ -84,6 +84,7 @@ function getShortcut(shortcut?: Props['shortcut']): string {
   const glue = shift || alt ? '+' : '';
 
   const symbols: Record<string, string> = {
+    ' ': 'SPACE',
     BACKSPACE: '⌫',
   };
 
