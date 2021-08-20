@@ -3,6 +3,7 @@ const keyboard = {
   ENTER: 'Enter',
   ESC: 'Escape',
   SPACE: ' ',
+  SHIFT: 'Shift',
 
   LEFT: 'ArrowLeft',
   RIGHT: 'ArrowRight',
