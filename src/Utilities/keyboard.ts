@@ -1,16 +1,16 @@
 const keyboard = {
-  TAB: 9,
-  ENTER: 13,
-  ESC: 27,
-  SPACE: 32,
+  TAB: 'Tab',
+  ENTER: 'Enter',
+  ESC: 'Escape',
+  SPACE: ' ',
 
-  LEFT: 37,
-  RIGHT: 39,
-  UP: 38,
-  DOWN: 40,
+  LEFT: 'ArrowLeft',
+  RIGHT: 'ArrowRight',
+  UP: 'ArrowUp',
+  DOWN: 'ArrowDown',
 
-  HOME: 36,
-  END: 35,
+  HOME: 'Home',
+  END: 'End',
 };
 
 Object.freeze(keyboard);

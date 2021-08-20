@@ -28,15 +28,15 @@ const NumericalControl = ({
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
     const allowList = [keyboard.UP, keyboard.DOWN];
 
-    if (allowList.indexOf(event.keyCode) >= 0) {
+    if (allowList.indexOf(event.key) >= 0) {
       event.preventDefault();
 
       const value = +event.currentTarget.value;
       const modifier = event.shiftKey ? 10 : 1;
 
-      if (event.keyCode === keyboard.UP) {
+      if (event.key === keyboard.UP) {
         onChange(value + modifier);
-      } else if (event.keyCode === keyboard.DOWN) {
+      } else if (event.key === keyboard.DOWN) {
         onChange(value - modifier);
       }
     }

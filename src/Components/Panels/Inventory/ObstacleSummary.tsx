@@ -132,7 +132,7 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.keyCode === keyboard.ESC) {
+      if (e.key === keyboard.ESC) {
         setNameEdit(obstacle.name ?? '');
         setEditMode(false);
       }
