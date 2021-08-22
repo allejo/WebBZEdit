@@ -9,7 +9,8 @@
   grid-template-areas:
     'Menubar Menubar'
     'Renderer Sidebar'
-    'Toolbox Toolbox';
+    'Toolbox Toolbox'
+    'StatusBar StatusBar';
   width: 100vw;
 }
 
@@ -37,4 +38,13 @@
   grid-area: Sidebar;
   max-height: 100%;
   overflow-y: auto;
+}
+
+.StatusBar {
+  background-color: $color-grey-light;
+  color: $color-white;
+  grid-area: StatusBar;
+  font-size: 0.9rem;
+  padding: 0 1rem;
+  text-align: right;
 }

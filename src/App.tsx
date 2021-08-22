@@ -6,6 +6,7 @@ import WorldSettingsModal from './Components/Modals/WorldSettingsModal';
 import InventoryPanel from './Components/Panels/InventoryPanel';
 import MenubarPanel from './Components/Panels/MenubarPanel';
 import RendererPanel from './Components/Panels/RendererPanel';
+import StatusBarPanel from './Components/Panels/StatusBarPanel';
 import ToolboxPanel from './Components/Panels/ToolboxPanel';
 import './EventListeners';
 
@@ -25,6 +26,9 @@ const App: React.FC = () => (
     </div>
     <div className={styles.Toolbox}>
       <ToolboxPanel />
+    </div>
+    <div className={styles.StatusBar}>
+      <StatusBarPanel />
     </div>
     {/* All of the app's modals (merely for organizational purposes) */}
     <>
