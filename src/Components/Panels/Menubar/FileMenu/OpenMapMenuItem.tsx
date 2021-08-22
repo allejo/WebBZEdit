@@ -18,7 +18,7 @@ const OpenMapMenuItem = ({ ...menu }: Props) => {
   const setFileHandle = useSetRecoilState(fileHandleState);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleWorldFileContents = (contents: string) => {
+  const loadWorldFileContents = (contents: string) => {
     setDocument(loadBZWDocument(contents));
   };
 
@@ -30,7 +30,7 @@ const OpenMapMenuItem = ({ ...menu }: Props) => {
         );
         const file = await fileHandle.getFile();
 
-        handleWorldFileContents(await file.text());
+        loadWorldFileContents(await file.text());
         setFileHandle(fileHandle);
       } catch (e) {
         if (e instanceof DOMException) {
@@ -59,7 +59,7 @@ const OpenMapMenuItem = ({ ...menu }: Props) => {
 
     const reader = new FileReader();
     reader.addEventListener('load', () => {
-      handleWorldFileContents(reader.result as string);
+      loadWorldFileContents(reader.result as string);
     });
     reader.addEventListener('error', () => {
       // @TODO Throw an error on here
