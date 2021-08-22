@@ -7,6 +7,7 @@ import { BoxProperties, newIBox } from './Obstacles/Box';
 import { MaterialProperties, newIMaterial } from './Obstacles/Material';
 import { MeshProperties, newIMesh } from './Obstacles/Mesh';
 import { MeshFaceProperties, newIMeshFace } from './Obstacles/MeshFace';
+import { newIOption, OptionProperties } from './Obstacles/Option';
 import { newIPyramid, PyramidProperties } from './Obstacles/Pyramid';
 import {
   ITeleporter,
@@ -80,6 +81,12 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   mesh: {
     factory: newIMesh,
     parsers: MeshProperties,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
+  },
+  options: {
+    factory: newIOption,
+    parsers: OptionProperties,
     onObstacleBegin: noop,
     onObstacleComplete: noop,
   },

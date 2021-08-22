@@ -1,36 +1,6 @@
+import { INameable } from '../Attributes/INameable';
 import { bzwBool, bzwInt, bzwRepeatable, bzwString } from '../attributeParsers';
-
-export const OptionProperties = {
-  '-a': bzwAcc,
-  '-addmsg': bzwRepeatable(bzwString),
-  '-autoTeam': bzwBool,
-  '-c': bzwBool,
-  '-fb': bzwBool,
-  '+f': bzwRepeatable(bzwFlag),
-  '-f': bzwRepeatable(bzwString),
-  '-handicap': bzwBool,
-  '-j': bzwBool,
-  '-loadplugin': bzwRepeatable(bzwString),
-  '-maxidle': bzwInt,
-  '-mps': bzwInt,
-  '-ms': bzwInt,
-  '-mts': bzwInt,
-  '-noTeamKills': bzwBool,
-  '-offa': bzwBool,
-  '+r': bzwBool,
-  '-rabbit': bzwRabbit,
-  '+s': bzwInt,
-  '-s': bzwInt,
-  '-sa': bzwBool,
-  '-sb': bzwBool,
-  '-set': bzwRepeatable(bzwDBvar),
-  '-sl': bzwSl,
-  '-svrmsg': bzwRepeatable(bzwString),
-  '-st': bzwInt,
-  '-sw': bzwInt,
-  '-tk': bzwBool,
-  '-mp': bzwMp,
-};
+import { IBaseObject, newIBaseObject } from './BaseObject';
 
 export type Accelerations = {
   linear: number;
@@ -42,7 +12,7 @@ export type DBvar = {
   value: string;
 };
 
-export type sl = {
+export type Sl = {
   id: number;
   num: number;
 };
@@ -89,7 +59,7 @@ export function bzwDBvar(input: string): DBvar {
     value: value,
   };
 }
-export function bzwSl(input: string): sl {
+export function bzwSl(input: string): Sl {
   const slArray = input.split(' ');
   const id = parseInt(slArray[0]);
   const num = parseInt(slArray[1]);
@@ -100,8 +70,8 @@ export function bzwSl(input: string): sl {
   };
 }
 
-export function bzwRabbit(value: Rabbit) {
-  return value;
+export function bzwRabbit(value: string): Rabbit {
+  return value as Rabbit;
 }
 
 export function bzwMp(input: string): maxPoints {
@@ -149,5 +119,77 @@ export function bzwFlag(input: string): flagCount {
   return {
     id: id,
     count: count,
+  };
+}
+
+export const OptionProperties = {
+  name: bzwString,
+  '-a': bzwAcc,
+  '-addmsg': bzwRepeatable(bzwString),
+  '-autoTeam': bzwBool,
+  '-c': bzwBool,
+  '-fb': bzwBool,
+  '+f': bzwRepeatable(bzwFlag),
+  '-f': bzwRepeatable(bzwString),
+  '-handicap': bzwBool,
+  '-j': bzwBool,
+  '-loadplugin': bzwRepeatable(bzwString),
+  '-maxidle': bzwInt,
+  '-mp': bzwMp,
+  '-mps': bzwInt,
+  '-ms': bzwInt,
+  '-mts': bzwInt,
+  '-noTeamKills': bzwBool,
+  '-offa': bzwBool,
+  '+r': bzwBool,
+  '-rabbit': bzwRabbit,
+  '+s': bzwInt,
+  '-s': bzwInt,
+  '-sa': bzwBool,
+  '-sb': bzwBool,
+  '-set': bzwRepeatable(bzwDBvar),
+  '-sl': bzwSl,
+  '-svrmsg': bzwRepeatable(bzwString),
+  '-st': bzwInt,
+  '-sw': bzwInt,
+  '-tk': bzwBool,
+};
+
+export interface IOption extends IBaseObject, INameable {
+  '-a'?: Accelerations;
+  '-addmsg'?: string;
+  '-autoTeam'?: boolean;
+  '-c'?: boolean;
+  '-fb'?: boolean;
+  '+f'?: flagCount;
+  '-f'?: string;
+  '-handicap'?: boolean;
+  '-j'?: boolean;
+  '-loadplugin'?: string;
+  '-maxidle'?: number;
+  '-mp'?: maxPoints;
+  '-mps'?: number;
+  '-ms'?: number;
+  '-mts'?: number;
+  '-noTeamKills'?: boolean;
+  '-offa'?: boolean;
+  '+r'?: boolean;
+  '-rabbit'?: Rabbit;
+  '+s'?: number;
+  '-s'?: number;
+  '-sa'?: boolean;
+  '-sb'?: boolean;
+  '-set'?: DBvar;
+  '-sl'?: Sl;
+  '-svrmsg'?: string;
+  '-st'?: number;
+  '-sw'?: number;
+  '-tk'?: boolean;
+}
+
+export function newIOption(): IOption {
+  return {
+    ...newIBaseObject('option'),
+    name: 'option',
   };
 }
