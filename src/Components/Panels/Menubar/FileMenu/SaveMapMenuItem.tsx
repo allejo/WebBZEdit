@@ -2,20 +2,25 @@ import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { saveAs } from 'file-saver';
 import React from 'react';
 import { MenuStateReturn } from 'reakit/Menu';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { exportBZWDocument } from '../../../../Document/exportBZWDocument';
 import {
   defaultFilePickerOptions,
   supportsFilesystemAPI,
 } from '../../../../Utilities/filesystem';
-import { documentState, fileHandleState } from '../../../../atoms';
+import {
+  documentState,
+  fileHandleState,
+  lastSaveState,
+} from '../../../../atoms';
 import MenuItem from '../MenuItem';
 
 interface Props extends MenuStateReturn {}
 
 const SaveMapMenuItem = ({ ...menu }: Props) => {
   const document = useRecoilValue(documentState);
+  const setLastSave = useSetRecoilState(lastSaveState);
   const [activeFileHandle, setActiveFileHandle] = useRecoilState(
     fileHandleState,
   );
@@ -62,6 +67,8 @@ const SaveMapMenuItem = ({ ...menu }: Props) => {
       // TODO: Get a filename from the user somehow
       saveAs(blob, 'Untitled.bzw');
     }
+
+    setLastSave(new Date());
   };
 
   return (

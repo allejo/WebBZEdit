@@ -12,6 +12,11 @@ export const fileHandleState = atom<FileSystemFileHandle | null>({
   default: null,
 });
 
+export const lastSaveState = atom<Date | null>({
+  key: 'lastSave',
+  default: null,
+});
+
 export const selectionState = atom<string | null>({
   key: 'selectedObject',
   default: null,
