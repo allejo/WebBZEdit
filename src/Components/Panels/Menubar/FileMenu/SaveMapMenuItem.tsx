@@ -41,11 +41,19 @@ const SaveMapMenuItem = ({ ...menu }: Props) => {
     const bzwRaw = exportBZWDocument(document);
 
     if (supportsFilesystemAPI()) {
-      const fileHandle = await getFileHandle();
-      const stream = await fileHandle.createWritable();
+      try {
+        const fileHandle = await getFileHandle();
+        const stream = await fileHandle.createWritable();
 
-      await stream.write(bzwRaw);
-      await stream.close();
+        await stream.write(bzwRaw);
+        await stream.close();
+      } catch (e) {
+        // If the user aborted the selection, disregard
+        if (e.code === DOMException.ABORT_ERR) {
+        }
+
+        // @TODO: Handle other potential exception codes?
+      }
     } else {
       const blob = new Blob([bzwRaw], {
         type: 'text/plain;charset=utf-8',
