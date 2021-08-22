@@ -33,7 +33,6 @@ const AddObstacleMenuItem = ({ factory, icon, object, ...menu }: Props) => {
 
     setSelection(uuid);
     setDocument(world);
-    menu.hide();
   };
 
   return (

@@ -24,7 +24,6 @@ const DeleteSelectedMenuItem = ({ ...menu }: Props) => {
     });
 
     setDocument(world);
-    menu.hide();
   };
   const isDisabled = selected === null;
 

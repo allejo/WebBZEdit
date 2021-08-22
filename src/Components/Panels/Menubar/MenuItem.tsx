@@ -2,7 +2,7 @@ import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
 } from '@fortawesome/react-fontawesome';
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useCallback, useEffect } from 'react';
 import { MenuItem as ReakitMenuItem, MenuStateReturn } from 'reakit/Menu';
 
 import { areEqualShallow } from '../../../Utilities/areShallowEqual';
@@ -107,6 +107,11 @@ const MenuItem = ({
   onTrigger,
   ...menu
 }: Props) => {
+  const menuAction = useCallback(() => {
+    menu.hide();
+    onTrigger?.();
+  }, [menu, onTrigger]);
+
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
       if (!shortcut) {
@@ -128,7 +133,7 @@ const MenuItem = ({
 
       if (areEqualShallow(keyPress, shortcut)) {
         event.preventDefault();
-        onTrigger?.();
+        menuAction();
       }
     };
 
@@ -137,10 +142,10 @@ const MenuItem = ({
     return () => {
       window.removeEventListener('keydown', listener);
     };
-  }, [onTrigger, shortcut]);
+  }, [menuAction, onTrigger, shortcut]);
 
   return (
-    <ReakitMenuItem {...menu} onClick={onTrigger} disabled={disabled}>
+    <ReakitMenuItem {...menu} onClick={menuAction} disabled={disabled}>
       <span className={styles.icon}>
         {icon && <FontAwesomeIcon fixedWidth={true} icon={icon} />}
       </span>

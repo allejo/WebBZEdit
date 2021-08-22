@@ -12,7 +12,6 @@ const ClearSelectionMenuItem = ({ ...menu }: Props) => {
   const [selection, setSelection] = useRecoilState(selectionState);
   const handleOnTriggerMenuItem = () => {
     setSelection(null);
-    menu.hide();
   };
   const isDisabled = selection === null;
 

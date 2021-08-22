@@ -14,7 +14,6 @@ interface Props extends MenuStateReturn {}
 const ResetMenuItem = ({ ...menu }: Props) => {
   const handleOnTriggerMenuItem = () => {
     eventBus.dispatch<ICameraPositionResetEvent>(CameraPositionResetEvent, {});
-    menu.hide();
   };
 
   return (
