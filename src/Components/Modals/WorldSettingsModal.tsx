@@ -9,8 +9,8 @@ import React, {
 import { useDialogState } from 'reakit';
 import { useRecoilState } from 'recoil';
 
-import eventBus from '../../EventBus';
 import { WorldSettingsModalOpenEventName } from '../../Events/IWorldSettingsModalOpenEvent';
+import eventBus from '../../Utilities/EventBus';
 import { documentState } from '../../atoms';
 import Modal from '../Modal';
 

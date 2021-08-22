@@ -2,11 +2,11 @@ import { extend, useThree, useFrame, Object3DNode } from '@react-three/fiber';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-import eventBus from '../../../EventBus';
 import {
   CameraPositionResetEvent,
   ICameraPositionResetEvent,
 } from '../../../Events/ICameraPositionResetEvent';
+import eventBus from '../../../Utilities/EventBus';
 import keyboard from '../../../Utilities/keyboard';
 
 // https://spectrum.chat/@react-three/fiber/general/property-orbitcontrols-does-not-exist-on-type-jsx-intrinsicelements~44712e68-4601-4486-b4b4-5e112f3dc09e

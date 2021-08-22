@@ -2,11 +2,11 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { MenuStateReturn } from 'reakit';
 
-import eventBus from '../../../../EventBus';
 import {
   IWorldSettingsModalOpenEvent,
   WorldSettingsModalOpenEventName,
 } from '../../../../Events/IWorldSettingsModalOpenEvent';
+import eventBus from '../../../../Utilities/EventBus';
 import MenuItem from '../MenuItem';
 
 interface Props extends MenuStateReturn {}

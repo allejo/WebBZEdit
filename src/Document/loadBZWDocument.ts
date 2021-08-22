@@ -1,9 +1,9 @@
-import eventBus from '../EventBus';
 import {
   IDocumentParsedEvent,
   DocumentParsedEvent,
   DocumentParsedEventName,
 } from '../Events/IDocumentParsedEvent';
+import eventBus from '../Utilities/EventBus';
 import { IWorld } from './Obstacles/World';
 import { parseBZWDocument } from './parseBZWDocument';
 

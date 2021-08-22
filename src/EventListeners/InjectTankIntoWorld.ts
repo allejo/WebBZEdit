@@ -4,7 +4,6 @@ import {
   ITankModelObjectType,
   newITankModel,
 } from '../Document/Obstacles/TankModel';
-import eventBus from '../EventBus';
 import {
   IDocumentParsedEvent,
   DocumentParsedEventName,
@@ -13,6 +12,7 @@ import {
   DocumentPreSavedEventName,
   IDocumentPreSavedEvent,
 } from '../Events/IDocumentPreSavedEvent';
+import eventBus from '../Utilities/EventBus';
 
 /*
  * The scale tank that appears in our editor is not part of the map file. Our

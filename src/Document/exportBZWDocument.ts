@@ -1,4 +1,3 @@
-import eventBus from '../EventBus';
 import {
   DocumentPostSavedEvent,
   DocumentPostSavedEventName,
@@ -9,6 +8,7 @@ import {
   DocumentPreSavedEventName,
   IDocumentPreSavedEvent,
 } from '../Events/IDocumentPreSavedEvent';
+import eventBus from '../Utilities/EventBus';
 import { IWorld } from './Obstacles/World';
 import { writeBZWDocument } from './writeBZWDocument';
 

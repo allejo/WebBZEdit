@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef } from 'react';
 import { useDialogState } from 'reakit';
 
-import eventBus from '../../EventBus';
 import { AboutModalOpenEventName } from '../../Events/IAboutModalOpenEvent';
+import eventBus from '../../Utilities/EventBus';
 import Modal from '../Modal';
 
 import styles from './AboutModal.module.scss';

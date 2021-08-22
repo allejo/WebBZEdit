@@ -2,11 +2,11 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { MenuStateReturn } from 'reakit';
 
-import eventBus from '../../../../EventBus';
 import {
   CameraPositionResetEvent,
   ICameraPositionResetEvent,
 } from '../../../../Events/ICameraPositionResetEvent';
+import eventBus from '../../../../Utilities/EventBus';
 import MenuItem from '../MenuItem';
 
 interface Props extends MenuStateReturn {}
