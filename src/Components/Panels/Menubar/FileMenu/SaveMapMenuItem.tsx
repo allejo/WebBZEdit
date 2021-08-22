@@ -4,7 +4,7 @@ import React from 'react';
 import { MenuStateReturn } from 'reakit/Menu';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { writeBZWDocument } from '../../../../Document/writeBZWDocument';
+import { exportBZWDocument } from '../../../../Document/exportBZWDocument';
 import {
   defaultFilePickerOptions,
   supportsFilesystemAPI,
@@ -38,7 +38,7 @@ const SaveMapMenuItem = ({ ...menu }: Props) => {
   const handleMenuItemClick = async () => {
     // @TODO: Can our document state be null in this situation? Should we
     //    disable the Save button at that point?
-    const bzwRaw = document ? writeBZWDocument(document) : '';
+    const bzwRaw = exportBZWDocument(document);
 
     if (supportsFilesystemAPI()) {
       const fileHandle = await getFileHandle();

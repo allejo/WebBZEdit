@@ -1,7 +1,8 @@
 import { IWorld } from '../Document/Obstacles/World';
 
 export interface IDocumentParsedEvent {
-  worldEditor: WorldEditor;
+  getWorld(): IWorld | null;
+  setWorld(world: IWorld | null): void;
 }
 
 export const DocumentParsedEventName = 'worldDocumentLoaded';
@@ -11,7 +12,7 @@ export const DocumentParsedEventName = 'worldDocumentLoaded';
  * of its data. This is a workaround to allow event listeners to update the
  * world by having getters and setters to make changes.
  */
-export class WorldEditor {
+export class DocumentParsedEvent implements IDocumentParsedEvent {
   constructor(private world: IWorld | null = null) {}
 
   getWorld(): IWorld | null {

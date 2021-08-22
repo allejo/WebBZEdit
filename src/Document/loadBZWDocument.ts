@@ -1,7 +1,7 @@
 import eventBus from '../EventBus';
 import {
   IDocumentParsedEvent,
-  WorldEditor,
+  DocumentParsedEvent,
   DocumentParsedEventName,
 } from '../Events/IDocumentParsedEvent';
 import { IWorld } from './Obstacles/World';
@@ -15,11 +15,9 @@ import { parseBZWDocument } from './parseBZWDocument';
  */
 export function loadBZWDocument(content: string): IWorld | null {
   const world = parseBZWDocument(content);
-  const event = new WorldEditor(world);
+  const event = new DocumentParsedEvent(world);
 
-  eventBus.dispatch<IDocumentParsedEvent>(DocumentParsedEventName, {
-    worldEditor: event,
-  });
+  eventBus.dispatch<IDocumentParsedEvent>(DocumentParsedEventName, event);
 
   return event.getWorld();
 }
