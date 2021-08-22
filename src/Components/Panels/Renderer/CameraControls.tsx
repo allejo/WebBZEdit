@@ -29,13 +29,17 @@ const CameraControls: React.FC<any> = (props) => {
 
   const shiftDown = useCallback(
     (e: KeyboardEvent) => {
-      setIsHoldingShift(e.key === keyboard.SHIFT || e.shiftKey);
+      if (!isHoldingShift) {
+        setIsHoldingShift(e.key === keyboard.SHIFT);
+      }
     },
-    [setIsHoldingShift],
+    [isHoldingShift, setIsHoldingShift],
   );
   const shiftUp = useCallback(
     (e: KeyboardEvent) => {
-      setIsHoldingShift(!(e.key === keyboard.SHIFT || e.shiftKey));
+      if (e.key === keyboard.SHIFT) {
+        setIsHoldingShift(false);
+      }
     },
     [setIsHoldingShift],
   );
