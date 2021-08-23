@@ -84,7 +84,7 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
     onObstacleBegin: noop,
     onObstacleComplete: noop,
   },
-  options: {
+  option: {
     factory: newIOption,
     parsers: OptionProperties,
     onObstacleBegin: noop,
