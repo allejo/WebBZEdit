@@ -509,6 +509,7 @@ describe('BZW Document Parser', () => {
       -set vladimir jimenez
       -set pronouns per/pers
       -sl good 45
+      -sl morgan 33
       -srvmsg seize the means of production
       -srvmsg blitzkriegggg
       -st 2021
@@ -559,7 +560,10 @@ describe('BZW Document Parser', () => {
       { name: 'vladimir', value: 'jimenez' } as DBvar,
       { name: 'pronouns', value: 'per/pers' } as DBvar,
     ]);
-    expect(option['-sl']).toEqual({ id: 'good', num: 45 } as Sl);
+    expect(option['-sl']).toEqual([
+      { id: 'good', num: 45 } as Sl,
+      { id: 'morgan', num: 33 } as Sl,
+    ]);
     expect(option['-srvmsg']).toEqual([
       'seize the means of production',
       'blitzkriegggg',

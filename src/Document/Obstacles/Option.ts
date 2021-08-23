@@ -148,7 +148,7 @@ export const OptionProperties = {
   '-sa': bzwBool,
   '-sb': bzwBool,
   '-set': bzwRepeatable(bzwDBvar),
-  '-sl': bzwSl,
+  '-sl': bzwRepeatable(bzwSl),
   '-srvmsg': bzwRepeatable(bzwString),
   '-st': bzwInt,
   '-sw': bzwInt,
