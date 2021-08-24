@@ -4,12 +4,12 @@ import { IMaterial } from '../Obstacles/Material';
 import { IMesh } from '../Obstacles/Mesh';
 import {
   Accelerations,
-  DBvar,
-  flagCount,
+  BZDBSetting,
+  FlagCount,
   IOption,
-  maxPoints,
-  Rabbit,
-  Sl,
+  MaxPlayers,
+  RabbitMode,
+  ShotLimit,
 } from '../Obstacles/Option';
 import { IPyramid } from '../Obstacles/Pyramid';
 import { ITeleporter } from '../Obstacles/Teleporter';
@@ -527,9 +527,9 @@ describe('BZW Document Parser', () => {
     expect(option['-autoteam']).toEqual(true);
     expect(option['-c']).toEqual(true);
     expect(option['+f']).toEqual([
-      { id: '23', count: 34 } as flagCount,
-      { id: 'bad', count: 69 } as flagCount,
-      { id: '45', count: 65 } as flagCount,
+      { id: '23', count: 34 } as FlagCount,
+      { id: 'bad', count: 69 } as FlagCount,
+      { id: '45', count: 65 } as FlagCount,
     ]);
     expect(option['-f']).toEqual(['good', 'mario', '777']);
     expect(option['-fb']).toEqual(true);
@@ -544,25 +544,25 @@ describe('BZW Document Parser', () => {
       blue: 2,
       purple: 5,
       observer: NaN,
-    } as maxPoints);
+    } as MaxPlayers);
     expect(option['-mps']).toEqual(420);
     expect(option['-ms']).toEqual(1011);
     expect(option['-mts']).toEqual(777);
     expect(option['-noteamkills']).toEqual(true);
     expect(option['-offa']).toEqual(true);
     expect(option['+r']).toEqual(true);
-    expect(option['-rabbit']).toEqual('killer' as Rabbit);
+    expect(option['-rabbit']).toEqual('killer' as RabbitMode);
     expect(option['+s']).toEqual(999);
     expect(option['-s']).toEqual(4498);
     expect(option['-sa']).toEqual(true);
     expect(option['-sb']).toEqual(true);
     expect(option['-set']).toEqual([
-      { name: 'vladimir', value: 'jimenez' } as DBvar,
-      { name: 'pronouns', value: 'per/pers' } as DBvar,
+      { name: 'vladimir', value: 'jimenez' } as BZDBSetting,
+      { name: 'pronouns', value: 'per/pers' } as BZDBSetting,
     ]);
     expect(option['-sl']).toEqual([
-      { id: 'good', num: 45 } as Sl,
-      { id: 'morgan', num: 33 } as Sl,
+      { id: 'good', num: 45 } as ShotLimit,
+      { id: 'morgan', num: 33 } as ShotLimit,
     ]);
     expect(option['-srvmsg']).toEqual([
       'seize the means of production',

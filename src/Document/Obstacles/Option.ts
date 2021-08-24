@@ -1,4 +1,3 @@
-import { INameable } from '../Attributes/INameable';
 import { bzwBool, bzwInt, bzwRepeatable, bzwString } from '../attributeParsers';
 import { IBaseObject, newIBaseObject } from './BaseObject';
 
@@ -7,28 +6,28 @@ export type Accelerations = {
   angular: number;
 };
 
-export type DBvar = {
+export type BZDBSetting = {
   name: string;
   value: string;
 };
 
-export type Sl = {
+export type ShotLimit = {
   id: string;
   num: number;
 };
 
-export type flagCount = {
+export type FlagCount = {
   id: string;
   count: number;
 };
 
-export enum Rabbit {
+export enum RabbitMode {
   score = 'score',
   killer = 'killer',
   random = 'random',
 }
 
-export type maxPoints = {
+export type MaxPlayers = {
   total?: number;
   rogue?: number;
   red?: number;
@@ -38,7 +37,7 @@ export type maxPoints = {
   observer?: number;
 };
 
-export function bzwAcc(input: string): Accelerations {
+export function bzwAccelerations(input: string): Accelerations {
   const accArray = input.split(' ');
   const linear = accArray[0] ? parseInt(accArray[0]) : 50;
   const angular = accArray[1] ? parseInt(accArray[1]) : 38;
@@ -49,7 +48,7 @@ export function bzwAcc(input: string): Accelerations {
   };
 }
 
-export function bzwDBvar(input: string): DBvar {
+export function bzwBZDBSetting(input: string): BZDBSetting {
   const DBArray = input.split(' ');
   const name = DBArray[0];
   const value = DBArray[1];
@@ -59,7 +58,7 @@ export function bzwDBvar(input: string): DBvar {
     value: value,
   };
 }
-export function bzwSl(input: string): Sl {
+export function bzwShotLimit(input: string): ShotLimit {
   const slArray = input.split(' ');
   const id = slArray[0];
   const num = parseInt(slArray[1]);
@@ -70,11 +69,11 @@ export function bzwSl(input: string): Sl {
   };
 }
 
-export function bzwRabbit(value: string): Rabbit {
-  return value as Rabbit;
+export function bzwRabbitMode(value: string): RabbitMode {
+  return value as RabbitMode;
 }
 
-export function bzwMp(input: string): maxPoints {
+export function bzwMaxPlayers(input: string): MaxPlayers {
   const maxMPArray = input.split(',');
   if (maxMPArray.length === 1) {
     const total = parseInt(maxMPArray[0]);
@@ -110,7 +109,7 @@ export function bzwMp(input: string): maxPoints {
   };
 }
 
-export function bzwFlag(input: string): flagCount {
+export function bzwFlag(input: string): FlagCount {
   const flagArray = input.split('{');
 
   const id = flagArray[0];
@@ -123,8 +122,7 @@ export function bzwFlag(input: string): flagCount {
 }
 
 export const OptionProperties = {
-  name: bzwString,
-  '-a': bzwAcc,
+  '-a': bzwAccelerations,
   '-addmsg': bzwRepeatable(bzwString),
   '-autoteam': bzwBool,
   '-c': bzwBool,
@@ -135,52 +133,52 @@ export const OptionProperties = {
   '-j': bzwBool,
   '-loadplugin': bzwRepeatable(bzwString),
   '-maxidle': bzwInt,
-  '-mp': bzwMp,
+  '-mp': bzwMaxPlayers,
   '-mps': bzwInt,
   '-ms': bzwInt,
   '-mts': bzwInt,
   '-noteamkills': bzwBool,
   '-offa': bzwBool,
   '+r': bzwBool,
-  '-rabbit': bzwRabbit,
+  '-rabbit': bzwRabbitMode,
   '+s': bzwInt,
   '-s': bzwInt,
   '-sa': bzwBool,
   '-sb': bzwBool,
-  '-set': bzwRepeatable(bzwDBvar),
-  '-sl': bzwRepeatable(bzwSl),
+  '-set': bzwRepeatable(bzwBZDBSetting),
+  '-sl': bzwRepeatable(bzwShotLimit),
   '-srvmsg': bzwRepeatable(bzwString),
   '-st': bzwInt,
   '-sw': bzwInt,
   '-tk': bzwBool,
 };
 
-export interface IOption extends IBaseObject, INameable {
+export interface IOption extends IBaseObject {
   '-a'?: Accelerations;
   '-addmsg'?: string;
   '-autoteam'?: boolean;
   '-c'?: boolean;
   '-fb'?: boolean;
-  '+f'?: flagCount;
+  '+f'?: FlagCount;
   '-f'?: string;
   '-handicap'?: boolean;
   '-j'?: boolean;
   '-loadplugin'?: string;
   '-maxidle'?: number;
-  '-mp'?: maxPoints;
+  '-mp'?: MaxPlayers;
   '-mps'?: number;
   '-ms'?: number;
   '-mts'?: number;
   '-noteamkills'?: boolean;
   '-offa'?: boolean;
   '+r'?: boolean;
-  '-rabbit'?: Rabbit;
+  '-rabbit'?: RabbitMode;
   '+s'?: number;
   '-s'?: number;
   '-sa'?: boolean;
   '-sb'?: boolean;
-  '-set'?: DBvar;
-  '-sl'?: Sl;
+  '-set'?: BZDBSetting;
+  '-sl'?: ShotLimit;
   '-srvmsg'?: string;
   '-st'?: number;
   '-sw'?: number;
@@ -190,6 +188,5 @@ export interface IOption extends IBaseObject, INameable {
 export function newIOption(): IOption {
   return {
     ...newIBaseObject('option'),
-    name: 'option',
   };
 }
