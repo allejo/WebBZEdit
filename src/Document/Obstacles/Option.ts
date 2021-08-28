@@ -49,9 +49,7 @@ export function bzwAccelerations(input: string): Accelerations {
 }
 
 export function bzwBZDBSetting(input: string): BZDBSetting {
-  const DBArray = input.split(' ');
-  const name = DBArray[0];
-  const value = DBArray[1];
+  const [name, value] = input.split(' ');
 
   return {
     name: name,
@@ -83,27 +81,27 @@ export function bzwMaxPlayers(input: string): MaxPlayers {
   }
   return {
     rogue:
-      maxMPArray[0] && maxMPArray[0] === ''
+       maxMPArray[0] === ''
         ? undefined
         : parseInt(maxMPArray[0]),
     red:
-      maxMPArray[1] && maxMPArray[1] === ''
+       maxMPArray[1] === ''
         ? undefined
         : parseInt(maxMPArray[1]),
     green:
-      maxMPArray[2] && maxMPArray[2] === ''
+       maxMPArray[2] === ''
         ? undefined
         : parseInt(maxMPArray[2]),
     blue:
-      maxMPArray[3] && maxMPArray[3] === ''
+       maxMPArray[3] === ''
         ? undefined
         : parseInt(maxMPArray[3]),
     purple:
-      maxMPArray[4] && maxMPArray[4] === ''
+       maxMPArray[4] === ''
         ? undefined
         : parseInt(maxMPArray[4]),
     observer:
-      maxMPArray[5] && maxMPArray[5] === ''
+       maxMPArray[5] === ''
         ? undefined
         : parseInt(maxMPArray[5]),
   };
@@ -123,7 +121,7 @@ export function bzwFlag(input: string): FlagCount {
 
 export const OptionProperties = {
   '-a': bzwAccelerations,
-  '-addmsg': bzwRepeatable(bzwString),
+  '-admsg': bzwRepeatable(bzwString),
   '-autoteam': bzwBool,
   '-c': bzwBool,
   '+f': bzwRepeatable(bzwFlag),
@@ -155,15 +153,15 @@ export const OptionProperties = {
 
 export interface IOption extends IBaseObject {
   '-a'?: Accelerations;
-  '-addmsg'?: string;
+  '-admsg'?: string[];
   '-autoteam'?: boolean;
   '-c'?: boolean;
   '-fb'?: boolean;
-  '+f'?: FlagCount;
-  '-f'?: string;
+  '+f'?: FlagCount[];
+  '-f'?: string[];
   '-handicap'?: boolean;
   '-j'?: boolean;
-  '-loadplugin'?: string;
+  '-loadplugin'?: string[];
   '-maxidle'?: number;
   '-mp'?: MaxPlayers;
   '-mps'?: number;
@@ -177,9 +175,9 @@ export interface IOption extends IBaseObject {
   '-s'?: number;
   '-sa'?: boolean;
   '-sb'?: boolean;
-  '-set'?: BZDBSetting;
-  '-sl'?: ShotLimit;
-  '-srvmsg'?: string;
+  '-set'?: BZDBSetting[];
+  '-sl'?: ShotLimit[];
+  '-srvmsg'?: string[];
   '-st'?: number;
   '-sw'?: number;
   '-tk'?: boolean;

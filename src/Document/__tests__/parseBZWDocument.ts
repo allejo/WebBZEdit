@@ -478,8 +478,8 @@ describe('BZW Document Parser', () => {
     const bzwBody = `\
     option
       -a 12 45
-      -addmsg there is a snake in my boot!
-      -addmsg execute order 66
+      -admsg there is a snake in my boot!
+      -admsg execute order 66
       -autoteam
       -c
       +f 23{34}
@@ -520,7 +520,7 @@ describe('BZW Document Parser', () => {
     const world = parseBZWDocument(bzwBody);
     const option = Object.values(world.children).pop() as IOption;
     expect(option['-a']).toEqual({ linear: 12, angular: 45 } as Accelerations);
-    expect(option['-addmsg']).toEqual([
+    expect(option['-admsg']).toEqual([
       'there is a snake in my boot!',
       'execute order 66',
     ]);
@@ -539,11 +539,11 @@ describe('BZW Document Parser', () => {
     expect(option['-maxidle']).toEqual(34);
     expect(option['-mp']).toEqual({
       rogue: 34,
-      red: NaN,
+      red: undefined,
       green: 45,
       blue: 2,
       purple: 5,
-      observer: NaN,
+      observer: undefined,
     } as MaxPlayers);
     expect(option['-mps']).toEqual(420);
     expect(option['-ms']).toEqual(1011);
