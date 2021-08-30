@@ -1,6 +1,7 @@
 import { INameable } from '../Attributes/INameable';
 import { bzwBool, bzwFloat, bzwString } from '../attributeParsers';
 import { IBaseObject, newIBaseObject } from './BaseObject';
+import { IOptions, newIOptions } from './Option';
 import { ITeleporter } from './Teleporter';
 
 export const WorldProperties = {
@@ -12,6 +13,7 @@ export const WorldProperties = {
 };
 
 export interface IWorld extends IBaseObject, INameable {
+  _options: IOptions;
   _teleporters: ITeleporter[];
   size: number;
   flagheight?: number;
@@ -22,6 +24,7 @@ export interface IWorld extends IBaseObject, INameable {
 export function newIWorld(): IWorld {
   return {
     ...newIBaseObject('world'),
+    _options: newIOptions(),
     _teleporters: [],
     size: 800,
     nowalls: false,

@@ -6,7 +6,6 @@ import {
   Accelerations,
   BZDBSetting,
   FlagCount,
-  IOption,
   MaxPlayers,
   RabbitMode,
   ShotLimit,
@@ -474,9 +473,10 @@ describe('BZW Document Parser', () => {
     expect(tele2.rotation).toEqual(45);
     expect(tele2.border).toEqual(1.12);
   });
-  it('should handle an option', () => {
+
+  it('should handle an options block', () => {
     const bzwBody = `\
-    option
+    options
       -a 12 45
       -admsg there is a snake in my boot!
       -admsg execute order 66
@@ -518,7 +518,15 @@ describe('BZW Document Parser', () => {
     end
     `;
     const world = parseBZWDocument(bzwBody);
-    const option = Object.values(world.children).pop() as IOption;
+
+    expect(
+      Object.values(world.children).find(
+        (object) => object._objectType === 'options',
+      ),
+    ).toBeDefined();
+
+    const option = world._options;
+
     expect(option['-a']).toEqual({ linear: 12, angular: 45 } as Accelerations);
     expect(option['-admsg']).toEqual([
       'there is a snake in my boot!',
