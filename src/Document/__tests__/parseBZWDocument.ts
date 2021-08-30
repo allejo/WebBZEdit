@@ -2,6 +2,15 @@ import { IBase } from '../Obstacles/Base';
 import { IBox } from '../Obstacles/Box';
 import { IMaterial } from '../Obstacles/Material';
 import { IMesh } from '../Obstacles/Mesh';
+import {
+  Accelerations,
+  BZDBSetting,
+  FlagCount,
+  IOption,
+  MaxPlayers,
+  RabbitMode,
+  ShotLimit,
+} from '../Obstacles/Option';
 import { IPyramid } from '../Obstacles/Pyramid';
 import { ITeleporter } from '../Obstacles/Teleporter';
 import { ITeleporterLink, TeleporterSide } from '../Obstacles/TeleporterLink';
@@ -464,5 +473,103 @@ describe('BZW Document Parser', () => {
     expect(tele2.size).toEqual([0.56, 4.48, 15]);
     expect(tele2.rotation).toEqual(45);
     expect(tele2.border).toEqual(1.12);
+  });
+  it('should handle an option', () => {
+    const bzwBody = `\
+    option
+      -a 12 45
+      -admsg there is a snake in my boot!
+      -admsg execute order 66
+      -autoteam
+      -c
+      +f 23{34}
+      +f bad{69}
+      +f 45{65}
+      -f good
+      -f mario
+      -f 777
+      -fb
+      -handicap
+      -j
+      -loadplugin /rainbow_tanks
+      -loadplugin /file_path
+      -maxidle 34
+      -mp 34,,45,2,5,
+      -mps 420
+      -ms 1011
+      -mts 777
+      -noteamkills
+      -offa
+      +r
+      -rabbit killer
+      +s 999
+      -s 4498
+      -sa
+      -sb
+      -set vladimir jimenez
+      -set pronouns per/pers
+      -sl good 45
+      -sl morgan 33
+      -srvmsg seize the means of production
+      -srvmsg blitzkriegggg
+      -st 2021
+      -sw 13
+      -tk
+    end
+    `;
+    const world = parseBZWDocument(bzwBody);
+    const option = Object.values(world.children).pop() as IOption;
+    expect(option['-a']).toEqual({ linear: 12, angular: 45 } as Accelerations);
+    expect(option['-admsg']).toEqual([
+      'there is a snake in my boot!',
+      'execute order 66',
+    ]);
+    expect(option['-autoteam']).toEqual(true);
+    expect(option['-c']).toEqual(true);
+    expect(option['+f']).toEqual([
+      { flag: '23', count: 34 } as FlagCount,
+      { flag: 'bad', count: 69 } as FlagCount,
+      { flag: '45', count: 65 } as FlagCount,
+    ]);
+    expect(option['-f']).toEqual(['good', 'mario', '777']);
+    expect(option['-fb']).toEqual(true);
+    expect(option['-handicap']).toEqual(true);
+    expect(option['-j']).toEqual(true);
+    expect(option['-loadplugin']).toEqual(['/rainbow_tanks', '/file_path']);
+    expect(option['-maxidle']).toEqual(34);
+    expect(option['-mp']).toEqual({
+      rogue: 34,
+      red: 0,
+      green: 45,
+      blue: 2,
+      purple: 5,
+      observer: 0,
+    } as MaxPlayers);
+    expect(option['-mps']).toEqual(420);
+    expect(option['-ms']).toEqual(1011);
+    expect(option['-mts']).toEqual(777);
+    expect(option['-noteamkills']).toEqual(true);
+    expect(option['-offa']).toEqual(true);
+    expect(option['+r']).toEqual(true);
+    expect(option['-rabbit']).toEqual('killer' as RabbitMode);
+    expect(option['+s']).toEqual(999);
+    expect(option['-s']).toEqual(4498);
+    expect(option['-sa']).toEqual(true);
+    expect(option['-sb']).toEqual(true);
+    expect(option['-set']).toEqual([
+      { name: 'vladimir', value: 'jimenez' } as BZDBSetting,
+      { name: 'pronouns', value: 'per/pers' } as BZDBSetting,
+    ]);
+    expect(option['-sl']).toEqual([
+      { flag: 'good', num: 45 } as ShotLimit,
+      { flag: 'morgan', num: 33 } as ShotLimit,
+    ]);
+    expect(option['-srvmsg']).toEqual([
+      'seize the means of production',
+      'blitzkriegggg',
+    ]);
+    expect(option['-st']).toEqual(2021);
+    expect(option['-sw']).toEqual(13);
+    expect(option['-tk']).toEqual(true);
   });
 });
