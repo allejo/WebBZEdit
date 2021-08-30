@@ -12,12 +12,12 @@ export type BZDBSetting = {
 };
 
 export type ShotLimit = {
-  id: string;
+  flag: string;
   num: number;
 };
 
 export type FlagCount = {
-  id: string;
+  flag: string;
   count: number;
 };
 
@@ -27,15 +27,18 @@ export enum RabbitMode {
   random = 'random',
 }
 
-export type MaxPlayers = {
-  total?: number;
-  rogue?: number;
-  red?: number;
-  green?: number;
-  blue?: number;
-  purple?: number;
-  observer?: number;
-};
+export type MaxPlayers =
+  | {
+      total: number;
+    }
+  | {
+      rogue: number;
+      red: number;
+      green: number;
+      blue: number;
+      purple: number;
+      observer: number;
+    };
 
 export function bzwAccelerations(input: string): Accelerations {
   const accArray = input.split(' ');
@@ -56,13 +59,14 @@ export function bzwBZDBSetting(input: string): BZDBSetting {
     value: value,
   };
 }
+
 export function bzwShotLimit(input: string): ShotLimit {
   const slArray = input.split(' ');
   const id = slArray[0];
   const num = parseInt(slArray[1]);
 
   return {
-    id: id,
+    flag: id,
     num: num,
   };
 }
@@ -73,37 +77,20 @@ export function bzwRabbitMode(value: string): RabbitMode {
 
 export function bzwMaxPlayers(input: string): MaxPlayers {
   const maxMPArray = input.split(',');
+
   if (maxMPArray.length === 1) {
-    const total = parseInt(maxMPArray[0]);
     return {
-      total: total,
+      total: parseInt(maxMPArray[0]),
     };
   }
+
   return {
-    rogue:
-       maxMPArray[0] === ''
-        ? undefined
-        : parseInt(maxMPArray[0]),
-    red:
-       maxMPArray[1] === ''
-        ? undefined
-        : parseInt(maxMPArray[1]),
-    green:
-       maxMPArray[2] === ''
-        ? undefined
-        : parseInt(maxMPArray[2]),
-    blue:
-       maxMPArray[3] === ''
-        ? undefined
-        : parseInt(maxMPArray[3]),
-    purple:
-       maxMPArray[4] === ''
-        ? undefined
-        : parseInt(maxMPArray[4]),
-    observer:
-       maxMPArray[5] === ''
-        ? undefined
-        : parseInt(maxMPArray[5]),
+    rogue: parseInt(maxMPArray[0]) || 0,
+    red: parseInt(maxMPArray[1]) || 0,
+    green: parseInt(maxMPArray[2]) || 0,
+    blue: parseInt(maxMPArray[3]) || 0,
+    purple: parseInt(maxMPArray[4]) || 0,
+    observer: parseInt(maxMPArray[5]) || 0,
   };
 }
 
@@ -114,7 +101,7 @@ export function bzwFlag(input: string): FlagCount {
   const count = flagArray[1] ? parseInt(flagArray[1].replace('}', '')) : 1;
 
   return {
-    id: id,
+    flag: id,
     count: count,
   };
 }

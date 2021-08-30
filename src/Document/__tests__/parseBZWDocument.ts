@@ -527,9 +527,9 @@ describe('BZW Document Parser', () => {
     expect(option['-autoteam']).toEqual(true);
     expect(option['-c']).toEqual(true);
     expect(option['+f']).toEqual([
-      { id: '23', count: 34 } as FlagCount,
-      { id: 'bad', count: 69 } as FlagCount,
-      { id: '45', count: 65 } as FlagCount,
+      { flag: '23', count: 34 } as FlagCount,
+      { flag: 'bad', count: 69 } as FlagCount,
+      { flag: '45', count: 65 } as FlagCount,
     ]);
     expect(option['-f']).toEqual(['good', 'mario', '777']);
     expect(option['-fb']).toEqual(true);
@@ -539,11 +539,11 @@ describe('BZW Document Parser', () => {
     expect(option['-maxidle']).toEqual(34);
     expect(option['-mp']).toEqual({
       rogue: 34,
-      red: undefined,
+      red: 0,
       green: 45,
       blue: 2,
       purple: 5,
-      observer: undefined,
+      observer: 0,
     } as MaxPlayers);
     expect(option['-mps']).toEqual(420);
     expect(option['-ms']).toEqual(1011);
@@ -561,8 +561,8 @@ describe('BZW Document Parser', () => {
       { name: 'pronouns', value: 'per/pers' } as BZDBSetting,
     ]);
     expect(option['-sl']).toEqual([
-      { id: 'good', num: 45 } as ShotLimit,
-      { id: 'morgan', num: 33 } as ShotLimit,
+      { flag: 'good', num: 45 } as ShotLimit,
+      { flag: 'morgan', num: 33 } as ShotLimit,
     ]);
     expect(option['-srvmsg']).toEqual([
       'seize the means of production',
