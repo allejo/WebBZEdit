@@ -53,7 +53,13 @@ function writeObstacle(
 
     // If we need special handling of values, we use an Attribute Writer
     if (customAttributeWriter) {
-      body.push(writePriority, customAttributeWriter(value));
+      const customWriteResponse = customAttributeWriter(value);
+
+      if (Array.isArray(customWriteResponse)) {
+        body.push(writePriority, ...customWriteResponse);
+      } else {
+        body.push(writePriority, customWriteResponse);
+      }
     }
     // An object has children, such as a mesh that has faces
     else if (attribute === 'children') {

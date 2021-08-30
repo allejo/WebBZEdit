@@ -27,18 +27,20 @@ export enum RabbitMode {
   random = 'random',
 }
 
-export type MaxPlayers =
-  | {
-      total: number;
-    }
-  | {
-      rogue: number;
-      red: number;
-      green: number;
-      blue: number;
-      purple: number;
-      observer: number;
-    };
+export type MaxPlayersSimple = {
+  total: number;
+};
+
+export type MaxPlayersVerbose = {
+  rogue: number;
+  red: number;
+  green: number;
+  blue: number;
+  purple: number;
+  observer: number;
+};
+
+export type MaxPlayers = MaxPlayersSimple | MaxPlayersVerbose;
 
 export function bzwAccelerations(input: string): Accelerations {
   const accArray = input.split(' ');

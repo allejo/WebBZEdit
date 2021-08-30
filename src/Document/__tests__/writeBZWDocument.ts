@@ -3,6 +3,7 @@ import dedent from 'dedent';
 import { newIBox } from '../Obstacles/Box';
 import { newIMesh } from '../Obstacles/Mesh';
 import { newIMeshFace } from '../Obstacles/MeshFace';
+import { IOptions, newIOptions } from '../Obstacles/Option';
 import { newIPyramid } from '../Obstacles/Pyramid';
 import { ITeleporter, newITeleporter } from '../Obstacles/Teleporter';
 import {
@@ -324,6 +325,139 @@ describe('BZW Document Writer', () => {
         matref blue_base_top
       endface
     end
+    `);
+  });
+
+  it('should print out the `options` object', () => {
+    const world: IWorld = {
+      ...newIWorld(),
+      children: {
+        options01: {
+          ...newIOptions(),
+          '-a': {
+            linear: 50,
+            angular: 38,
+          },
+          '-admsg': ['Welcome to my wonder map!', '  by blast'],
+          '-autoteam': true,
+          '-c': true,
+          '+f': [
+            {
+              flag: 'G',
+              count: 10,
+            },
+            {
+              flag: 'US',
+              count: 50,
+            },
+            {
+              flag: 'good',
+              count: 1,
+            },
+          ],
+          '-f': ['bad'],
+          '-fb': true,
+          '-handicap': true,
+          '-j': true,
+          '-loadplugin': [
+            '/usr/local/lib/bzflag/AllHandsOnDeck.so',
+            '/usr/local/lib/bzflag/VPNBlocker.so',
+          ],
+          '-maxidle': 180,
+          '-mp': {
+            rogue: 0,
+            red: 10,
+            green: 0,
+            blue: 10,
+            purple: 0,
+            observer: 50,
+          },
+          '-mps': 100,
+          '-ms': 5,
+          '-mts': 512,
+          '-noteamkills': true,
+          '-offa': true,
+          '+r': true,
+          '-rabbit': 'killer',
+          '+s': 5,
+          '-s': 10,
+          '-sa': true,
+          '-sb': true,
+          '-set': [
+            {
+              name: '_gravity',
+              value: 10,
+            },
+            {
+              name: '_skyColor',
+              value: 'red',
+            },
+          ],
+          '-sl': [
+            {
+              flag: 'G',
+              num: 1,
+            },
+            {
+              flag: 'US',
+              num: 30,
+            },
+          ],
+          '-srvmsg': ["Here's an on-join message sent to you", '  by blast'],
+          '-st': 30,
+          '-sw': 5,
+          '-tk': true,
+        } as IOptions,
+      },
+    };
+    const actual = writeBZWDocument(world, {
+      indentation: 'space',
+      indentationWidth: 2,
+    });
+
+    expect(actual).toEqual(dedent`
+      world
+        size 800
+      end
+
+      options
+        -a 50 38
+        -admsg "Welcome to my wonder map!"
+        -admsg "  by blast"
+        -autoteam
+        -c
+        +f G{10}
+        +f US{50}
+        +f good
+        -f bad
+        -fb
+        -handicap
+        -j
+        -loadplugin /usr/local/lib/bzflag/AllHandsOnDeck.so
+        -loadplugin /usr/local/lib/bzflag/VPNBlocker.so
+        -maxidle 180
+        -mp 0,10,0,10,0,50
+        -mps 100
+        -ms 5
+        -mts 512
+        -noteamkills
+        -offa
+        +r
+        -rabbit killer
+        +s 5
+        -s 10
+        -sa
+        -sb
+        -set _gravity 10
+        -set _skyColor red
+        -sl G 1
+        -sl US 30
+        -srvmsg "Here's an on-join message sent to you"
+        -srvmsg "  by blast"
+        -st 30
+        -sw 5
+        -tk
+      end
     `);
   });
 });
