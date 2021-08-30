@@ -47,9 +47,8 @@ export const AttributeWriters: Record<
       if ('total' in m) {
         response = m.total + '';
       } else {
-        response = [m.rogue, m.red, m.green, m.blue, m.purple, m.observer].join(
-          ',',
-        );
+        const { rogue, red, green, blue, purple, observer } = m;
+        response = [rogue, red, green, blue, purple, observer].join(',');
       }
 
       return `-mp ${response}`;
