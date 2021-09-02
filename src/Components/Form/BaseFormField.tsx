@@ -1,4 +1,4 @@
-import React, { FormEvent, HTMLProps, useState } from 'react';
+import React, { FormEvent, HTMLProps } from 'react';
 
 import { slugify } from '../../Utilities/slugify';
 
