@@ -25,11 +25,23 @@ import {
 } from './Obstacles/TextureMatrix';
 import { IWorld, newIWorld, WorldProperties } from './Obstacles/World';
 import { newIZone, ZoneProperties } from './Obstacles/Zone';
-import { bzwString, ParserCallback, Repeatable } from './attributeParsers';
+import {
+  bzwString,
+  RepeatableParserCallback,
+  Repeatable,
+  HashableParserCallback,
+  Hashable,
+} from './attributeParsers';
 
 type ObjectBuilder = {
   factory: () => IBaseObject & any;
-  parsers: Record<string, ParserCallback<any> | Repeatable<any>>;
+  parsers: Record<
+    string,
+    | HashableParserCallback<any, any>
+    | Hashable<any, any>
+    | RepeatableParserCallback<any>
+    | Repeatable<any>
+  >;
   onObstacleBegin: (
     infoString: string,
     obstacle: IBaseObject & any,
@@ -90,6 +102,10 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
     onObstacleBegin: noop,
     onObstacleComplete: (options: IOptions, world) => {
       world._options = options;
+
+      // Don't save the `options` block as a child, treat it special as the
+      // `_options` property
+      delete world.children[options._uuid];
     },
   },
   pyramid: {
@@ -141,6 +157,7 @@ function parseLine(line: string, object: IBaseObject, world: IWorld): void {
 
   const parser =
     ObjectBuilders[object._objectType].parsers[attribute] ?? bzwString;
+
   if (typeof parser === 'function') {
     object[attribute] = parser(restOfLine, world);
   } else {
@@ -150,6 +167,13 @@ function parseLine(line: string, object: IBaseObject, world: IWorld): void {
       }
 
       object[attribute].push(parser.callback(restOfLine, world));
+    } else if (parser.type === 'hashable') {
+      if (!object[attribute]) {
+        object[attribute] = {};
+      }
+
+      const [key, value] = parser.callback(restOfLine, world);
+      object[attribute][key] = value;
     }
   }
 }

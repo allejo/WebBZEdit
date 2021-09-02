@@ -33,7 +33,7 @@ function writeObstacle(
 ): string[] {
   const obstacleType = obstacle._objectType;
   const terminator = obstacle._terminator;
-  const body = new PriorityWriter();
+  const rawBody = new PriorityWriter();
 
   Object.entries(obstacle).forEach(([attribute, value]) => {
     const isInternal = attribute[0] === '_';
@@ -56,9 +56,9 @@ function writeObstacle(
       const customWriteResponse = customAttributeWriter(value);
 
       if (Array.isArray(customWriteResponse)) {
-        body.push(writePriority, ...customWriteResponse);
+        rawBody.push(writePriority, ...customWriteResponse);
       } else {
-        body.push(writePriority, customWriteResponse);
+        rawBody.push(writePriority, customWriteResponse);
       }
     }
     // An object has children, such as a mesh that has faces
@@ -66,14 +66,14 @@ function writeObstacle(
       if (writeChildren) {
         Object.values(value as IBaseObject['children']).forEach(
           (child: IBaseObject) => {
-            body.push(writePriority, '', ...writeObstacle(child, true));
+            rawBody.push(writePriority, '', ...writeObstacle(child, true));
           },
         );
       }
     }
     // The attribute is a boolean flag
     else if (value === true) {
-      body.push(writePriority, attribute);
+      rawBody.push(writePriority, attribute);
     }
     // The attribute value is numerical
     else if (typeof value === 'number') {
@@ -83,7 +83,7 @@ function writeObstacle(
         return;
       }
 
-      body.push(writePriority, `${attribute} ${writeNumber(value)}`);
+      rawBody.push(writePriority, `${attribute} ${writeNumber(value)}`);
     }
     // A normal string attribute
     else if (typeof value === 'string') {
@@ -91,7 +91,7 @@ function writeObstacle(
         return;
       }
 
-      body.push(writePriority, `${attribute} ${value}`);
+      rawBody.push(writePriority, `${attribute} ${value}`);
     }
     // The attribute can be two types of arrays. An array of primitive values or
     // an array of arrays.
@@ -100,7 +100,7 @@ function writeObstacle(
 
       if (isNested) {
         for (const nestedElement of value) {
-          body.push(
+          rawBody.push(
             writePriority,
             `${attribute} ${writeArray(nestedElement).join(' ')}`,
           );
@@ -108,14 +108,22 @@ function writeObstacle(
       } else {
         const values = writeArray(value);
 
-        body.push(writePriority, `${attribute} ${values.join(' ')}`);
+        rawBody.push(writePriority, `${attribute} ${values.join(' ')}`);
       }
     }
   });
 
+  const obstacleBody = rawBody
+    .export()
+    .map((line) => (getIndentation() + line).trimRight());
+
+  if (obstacleBody.length === 0) {
+    return [];
+  }
+
   return [
     HeaderWriters[obstacleType]?.(obstacle) ?? obstacleType,
-    ...body.export().map((line) => (getIndentation() + line).trimRight()),
+    ...obstacleBody,
     FooterWriters[obstacleType]?.(obstacle) ?? terminator,
   ];
 }
@@ -132,11 +140,18 @@ export function writeBZWDocument(
     // Print out the "world" object
     [writeObstacle(document, false), ''],
 
+    // Print out the "options" object
+    [writeObstacle(document._options, false), ''],
+
     // Print out all of the objects in this world
     Object.values(document.children).map((object: IBaseObject) => {
       return [writeObstacle(object, true), ''];
     }),
   ];
 
-  return output.flat(4).join('\n').trim();
+  return output
+    .flat(4) // Flatten out any nested lines into a single level
+    .join('\n')
+    .replace(/\n{3,}/, '\n\n') // Replace multiple empty lines with just one empty new line
+    .trim();
 }

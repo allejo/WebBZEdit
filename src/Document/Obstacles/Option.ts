@@ -1,14 +1,15 @@
-import { bzwBool, bzwInt, bzwRepeatable, bzwString } from '../attributeParsers';
+import {
+  bzwBool,
+  bzwHashable,
+  bzwInt,
+  bzwRepeatable,
+  bzwString,
+} from '../attributeParsers';
 import { IBaseObject, newIBaseObject } from './BaseObject';
 
 export type Accelerations = {
   linear: number;
   angular: number;
-};
-
-export type BZDBSetting = {
-  name: string;
-  value: string;
 };
 
 export type ShotLimit = {
@@ -53,13 +54,8 @@ export function bzwAccelerations(input: string): Accelerations {
   };
 }
 
-export function bzwBZDBSetting(input: string): BZDBSetting {
-  const [name, value] = input.split(' ');
-
-  return {
-    name: name,
-    value: value,
-  };
+export function bzwBZDBSetting(input: string): [string, string] {
+  return input.split(' ') as [string, string];
 }
 
 export function bzwShotLimit(input: string): ShotLimit {
@@ -132,7 +128,7 @@ export const OptionsProperties = {
   '-s': bzwInt,
   '-sa': bzwBool,
   '-sb': bzwBool,
-  '-set': bzwRepeatable(bzwBZDBSetting),
+  '-set': bzwHashable<string, string>(bzwBZDBSetting),
   '-sl': bzwRepeatable(bzwShotLimit),
   '-srvmsg': bzwRepeatable(bzwString),
   '-st': bzwInt,
@@ -164,7 +160,7 @@ export interface IOptions extends IBaseObject {
   '-s'?: number;
   '-sa'?: boolean;
   '-sb'?: boolean;
-  '-set'?: BZDBSetting[];
+  '-set'?: Record<string, string>;
   '-sl'?: ShotLimit[];
   '-srvmsg'?: string[];
   '-st'?: number;

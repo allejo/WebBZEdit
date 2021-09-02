@@ -4,7 +4,6 @@ import { IMaterial } from '../Obstacles/Material';
 import { IMesh } from '../Obstacles/Mesh';
 import {
   Accelerations,
-  BZDBSetting,
   FlagCount,
   MaxPlayers,
   RabbitMode,
@@ -506,8 +505,8 @@ describe('BZW Document Parser', () => {
       -s 4498
       -sa
       -sb
-      -set vladimir jimenez
-      -set pronouns per/pers
+      -set _gravity -9.8
+      -set _skyColor red
       -sl good 45
       -sl morgan 33
       -srvmsg seize the means of production
@@ -518,13 +517,6 @@ describe('BZW Document Parser', () => {
     end
     `;
     const world = parseBZWDocument(bzwBody);
-
-    expect(
-      Object.values(world.children).find(
-        (object) => object._objectType === 'options',
-      ),
-    ).toBeDefined();
-
     const option = world._options;
 
     expect(option['-a']).toEqual({ linear: 12, angular: 45 } as Accelerations);
@@ -564,10 +556,10 @@ describe('BZW Document Parser', () => {
     expect(option['-s']).toEqual(4498);
     expect(option['-sa']).toEqual(true);
     expect(option['-sb']).toEqual(true);
-    expect(option['-set']).toEqual([
-      { name: 'vladimir', value: 'jimenez' } as BZDBSetting,
-      { name: 'pronouns', value: 'per/pers' } as BZDBSetting,
-    ]);
+    expect(option['-set']).toEqual({
+      _gravity: '-9.8',
+      _skyColor: 'red',
+    });
     expect(option['-sl']).toEqual([
       { flag: 'good', num: 45 } as ShotLimit,
       { flag: 'morgan', num: 33 } as ShotLimit,

@@ -4,19 +4,38 @@ import {
 } from './Obstacles/TeleporterLink';
 import { IWorld } from './Obstacles/World';
 
-export type ParserCallback<T> = (line: string, world: IWorld) => T;
+type KeyType = keyof any;
+
+export type HashableParserCallback<K extends KeyType, V> = (
+  line: string,
+  world: IWorld,
+) => [K, V];
+
+export interface Hashable<K extends KeyType, V> {
+  type: 'hashable';
+  callback: HashableParserCallback<K, V>;
+}
+
+export function bzwHashable<K extends KeyType, V>(
+  cb: Hashable<K, V>['callback'],
+): Hashable<K, V> {
+  return {
+    type: 'hashable',
+    callback: cb,
+  };
+}
+
+export type RepeatableParserCallback<T> = (line: string, world: IWorld) => T;
 
 export interface Repeatable<T> {
   type: 'repeatable';
-  callback: ParserCallback<T>;
+  callback: RepeatableParserCallback<T>;
 }
 
-export function bzwRepeatable<T>(
-  callback: Repeatable<T>['callback'],
-): Repeatable<T> {
+export function bzwRepeatable<T>(cb: Repeatable<T>['callback']): Repeatable<T> {
   return {
     type: 'repeatable',
-    callback: callback,
+    callback: cb,
   };
 }
 

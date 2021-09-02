@@ -1,8 +1,8 @@
 import { IBaseObject } from '../Obstacles/BaseObject';
 import {
   Accelerations,
-  BZDBSetting,
   FlagCount,
+  IOptions,
   MaxPlayers,
   ShotLimit,
 } from '../Obstacles/Option';
@@ -53,7 +53,8 @@ export const AttributeWriters: Record<
 
       return `-mp ${response}`;
     },
-    '-set': (set: BZDBSetting[]) => set.map((s) => `-set ${s.name} ${s.value}`),
+    '-set': (set: IOptions['-set']) =>
+      Object.entries(set ?? {}).map(([key, value]) => `-set ${key} ${value}`),
     '-sl': (sl: ShotLimit[]) => sl.map((s) => `-sl ${s.flag} ${s.num}`),
     '-srvmsg': (msgs: string[]) => msgs.map((m) => `-srvmsg "${m}"`),
   },

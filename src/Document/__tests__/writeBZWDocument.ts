@@ -383,16 +383,10 @@ describe('BZW Document Writer', () => {
           '-s': 10,
           '-sa': true,
           '-sb': true,
-          '-set': [
-            {
-              name: '_gravity',
-              value: 10,
-            },
-            {
-              name: '_skyColor',
-              value: 'red',
-            },
-          ],
+          '-set': {
+            _gravity: '10',
+            _skyColor: 'red',
+          },
           '-sl': [
             {
               flag: 'G',

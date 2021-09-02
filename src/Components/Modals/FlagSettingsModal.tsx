@@ -23,21 +23,11 @@ const FlagSettingsModal = () => {
 
     const nextWorld = produce(world, (draftWorld) => {
       if (draftWorld._options['-set'] === undefined) {
-        draftWorld._options['-set'] = [];
+        draftWorld._options['-set'] = {};
       }
 
-      draftWorld._options['-set'].push(
-        ...[
-          {
-            name: '_flagAltitude',
-            value: flagAltitude + '',
-          },
-          {
-            name: '_flagHeight',
-            value: flagHeight + '',
-          },
-        ],
-      );
+      draftWorld._options['-set']._flagAltitude = flagAltitude + '';
+      draftWorld._options['-set']._flagHeight = flagHeight + '';
     });
 
     setBZWDocument(nextWorld);
