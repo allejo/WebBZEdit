@@ -60,3 +60,4 @@ const Modal = ({
 };
 
 export default Modal;
+export type { Props as IModalProps };
