@@ -6,7 +6,6 @@ const TextField = (props: FieldProps<string>) => (
   <BaseFormField
     tag="input"
     type="text"
-    startingValue=""
     castStrToType={(s) => s ?? ''}
     castTypeToStr={(s) => s}
     {...props}
