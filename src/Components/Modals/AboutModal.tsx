@@ -1,31 +1,24 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faBug, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { useDialogState } from 'reakit';
 
 import { AboutModalOpenEventName } from '../../Events/IAboutModalOpenEvent';
-import eventBus from '../../Utilities/EventBus';
-import Modal from '../Modal';
+import ListenerModal from '../ListenerModal';
 
 import styles from './AboutModal.module.scss';
 
 const AboutModal = () => {
-  const eventBusCallbackId = useRef('');
   const dialog = useDialogState();
 
-  useEffect(() => {
-    eventBusCallbackId.current = eventBus.on(AboutModalOpenEventName, () => {
-      dialog.show();
-    });
-
-    return () => {
-      eventBus.remove(AboutModalOpenEventName, eventBusCallbackId.current);
-    };
-  }, [dialog]);
-
   return (
-    <Modal dialog={dialog} title="About WebBZEdit" className={styles.wrapper}>
+    <ListenerModal
+      event={AboutModalOpenEventName}
+      dialog={dialog}
+      title="About WebBZEdit"
+      className={styles.wrapper}
+    >
       <p>
         WebBZEdit is a React-based single-page application that uses WebGL to
         create a map editor for the BZFlag community. It's built by your
@@ -74,7 +67,7 @@ const AboutModal = () => {
           </a>
         </li>
       </ul>
-    </Modal>
+    </ListenerModal>
   );
 };
 
