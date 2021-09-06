@@ -4,9 +4,10 @@ import { DialogStateReturn } from 'reakit';
 import eventBus from '../Utilities/EventBus';
 import Modal, { IModalProps } from './Modal';
 
-interface Props {
-  event: string;
+interface Props extends IModalProps {
   dialog: DialogStateReturn;
+  event: string;
+  onOpen?: () => void;
 }
 
 /**
@@ -15,19 +16,20 @@ interface Props {
  *
  * @see Modal
  */
-const ListenerModal = ({ event, dialog, ...props }: Props & IModalProps) => {
+const ListenerModal = ({ event, dialog, onOpen, ...props }: Props) => {
   const eventBusCallbackId = useRef('');
 
   // Register this component as a modal that listens to an event
   useEffect(() => {
     eventBusCallbackId.current = eventBus.on(event, () => {
       dialog.show();
+      onOpen?.();
     });
 
     return () => {
       eventBus.remove(event, eventBusCallbackId.current);
     };
-  }, [dialog, event]);
+  }, [dialog, event, onOpen]);
 
   return (
     <Modal dialog={dialog} {...props}>
@@ -37,3 +39,4 @@ const ListenerModal = ({ event, dialog, ...props }: Props & IModalProps) => {
 };
 
 export default ListenerModal;
+export type { Props as IListenerModalProps };
