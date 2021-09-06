@@ -1,3 +1,4 @@
+import dedent from 'dedent';
 import { writeFileSync } from 'fs';
 import { load } from 'js-yaml';
 import fetch from 'node-fetch';
@@ -11,9 +12,18 @@ const BZDB_DOCS_URL =
 (async function () {
   const rawBody = await (await fetch(BZDB_DOCS_URL)).text();
   const json = load(rawBody);
+  const bzdbTypes: string[] = (json as any)['variables'].map(
+    (def: any) => def.name,
+  );
 
   writeFileSync(
-    resolve(__dirname, '..', 'data', 'bzdb-documention.json'),
-    JSON.stringify(json),
+    resolve(__dirname, '..', 'src', 'data', 'bzdb-documention.json'),
+    JSON.stringify(json, null, '  '),
+  );
+  writeFileSync(
+    resolve(__dirname, '..', 'src', 'data', 'bzdb-types.ts'),
+    dedent`
+      export type BZDBType = "${bzdbTypes.join('"|"')}";
+    `,
   );
 })();

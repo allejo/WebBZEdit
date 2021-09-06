@@ -4,6 +4,7 @@ import { useDialogState } from 'reakit';
 import { useRecoilState } from 'recoil';
 
 import { FlagSettingsModalOpenEventName } from '../../Events/IFlagSettingsModalOpenEvent';
+import bzdbDocumentation from '../../Utilities/BZDBDocumentor';
 import { documentState } from '../../atoms';
 import NumberField from '../Form/NumberField';
 import { positiveOnly } from '../Form/Validators';
@@ -57,7 +58,7 @@ const FlagSettingsModal = () => {
         <div className="col-md-6">
           <NumberField
             label="Flag Altitude"
-            description="The visual Z-axis height in World Units (wu), relative to a tank's position, that flags will fly up relative to its first clearance when dropped and the height at which flags will spawn (and subsequently fall)."
+            description={bzdbDocumentation.getDescription('_flagAltitude')}
             allowChange={positiveOnly}
             onChange={setFlagAltitude}
             value={flagAltitude}
@@ -66,7 +67,7 @@ const FlagSettingsModal = () => {
         <div className="col-md-6">
           <NumberField
             label="Flag Height"
-            description="The Z-axis height in World Units (wu), relative to a tank's position, that a flag will be able to fly upwards before looking for a new clearance."
+            description={bzdbDocumentation.getDescription('_flagHeight')}
             allowChange={positiveOnly}
             onChange={setFlagHeight}
             value={flagHeight}

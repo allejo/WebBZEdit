@@ -1,3 +1,4 @@
+import { BZDBType } from '../../data/bzdb-types';
 import {
   bzwBool,
   bzwHashable,
@@ -160,7 +161,7 @@ export interface IOptions extends IBaseObject {
   '-s'?: number;
   '-sa'?: boolean;
   '-sb'?: boolean;
-  '-set'?: Record<string, string>;
+  '-set'?: Record<BZDBType | string, string>;
   '-sl'?: ShotLimit[];
   '-srvmsg'?: string[];
   '-st'?: number;
