@@ -104,11 +104,11 @@ const BaseFormField = <T,>({
   }
 
   return (
-    <div>
+    <div className={styles.wrapper} data-form-type={type || tag}>
       <label htmlFor={elementId} className={styles.label}>
         {label}
       </label>
-      <div>
+      <div className={styles.fieldContainer}>
         {tag === 'input' && (
           <input {...standardProps} className={styles.input} type={type} />
         )}
