@@ -1,5 +1,5 @@
 import produce from 'immer';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDialogState } from 'reakit';
 import { useRecoilState } from 'recoil';
 
@@ -9,12 +9,22 @@ import NumberField from '../Form/NumberField';
 import { positiveOnly } from '../Form/Validators';
 import ListenerModal from '../ListenerModal';
 
+const DEFAULT_FLAG_ALTITUDE = 11;
+const DEFAULT_FLAG_HEIGHT = 10;
+
 const FlagSettingsModal = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
   const dialog = useDialogState();
 
-  const [flagAltitude, setFlagAltitude] = useState(11);
-  const [flagHeight, setFlagHeight] = useState(10);
+  const [flagAltitude, setFlagAltitude] = useState(DEFAULT_FLAG_ALTITUDE);
+  const [flagHeight, setFlagHeight] = useState(DEFAULT_FLAG_HEIGHT);
+
+  const syncStateToWorld = useCallback(() => {
+    const sets = world?._options?.['-set'] ?? {};
+
+    setFlagAltitude(+(sets._flagAltitude ?? DEFAULT_FLAG_ALTITUDE));
+    setFlagHeight(+(sets._flagHeight ?? DEFAULT_FLAG_HEIGHT));
+  }, [world]);
 
   const handleOnSave = () => {
     if (!world) {
@@ -39,6 +49,7 @@ const FlagSettingsModal = () => {
       event={FlagSettingsModalOpenEventName}
       dialog={dialog}
       title="Flag Settings"
+      onOpen={syncStateToWorld}
       hideOnEsc={false}
       hideOnClickOutside={false}
     >

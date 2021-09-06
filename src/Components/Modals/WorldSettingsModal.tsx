@@ -10,25 +10,27 @@ import NumberField from '../Form/NumberField';
 import { positiveOnly } from '../Form/Validators';
 import ListenerModal from '../ListenerModal';
 
+const DEFAULT_WORLD_SIZE = 400;
+const DEFAULT_NO_WALLS = false;
+const DEFAULT_FREE_CTF_SPAWNS = false;
+
 const WorldSettingsModal = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
   const dialog = useDialogState();
 
-  const [size, setSize] = useState<number>(800);
-  const [flagHeight, setFlagHeight] = useState<number>(10);
-  const [noWalls, setNoWalls] = useState(false);
-  const [freeCtfSpawns, setFreeCtfSpawns] = useState(false);
+  const [size, setSize] = useState(DEFAULT_WORLD_SIZE);
+  const [noWalls, setNoWalls] = useState(DEFAULT_NO_WALLS);
+  const [freeCtfSpawns, setFreeCtfSpawns] = useState(DEFAULT_FREE_CTF_SPAWNS);
 
   // Our state is used to keep track of changes that will be made to the BZW
   // document, changes are queued up and only applied when the "Save" button is
   // hit. Sync our state to the current BZW Document so that we can display the
   // most up to date values to the user.
   const syncStateToWorld = useCallback(() => {
-    setSize(world?.size ?? 400);
-    setFlagHeight(world?.flagheight ?? 10);
-    setNoWalls(world?.nowalls ?? false);
-    setFreeCtfSpawns(world?.freectfspawns ?? false);
-  }, [world?.size, world?.flagheight, world?.nowalls, world?.freectfspawns]);
+    setSize(world?.size ?? DEFAULT_WORLD_SIZE);
+    setNoWalls(world?.nowalls ?? DEFAULT_NO_WALLS);
+    setFreeCtfSpawns(world?.freectfspawns ?? DEFAULT_FREE_CTF_SPAWNS);
+  }, [world?.size, world?.nowalls, world?.freectfspawns]);
 
   const handleOnClickSave = () => {
     if (!world) {
@@ -37,7 +39,6 @@ const WorldSettingsModal = () => {
 
     const nextWorld = produce(world, (draftWorld) => {
       draftWorld.size = size;
-      draftWorld.flagheight = flagHeight;
       draftWorld.nowalls = noWalls;
       draftWorld.freectfspawns = freeCtfSpawns;
     });
