@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil';
 import { FlagSettingsModalOpenEventName } from '../../Events/IFlagSettingsModalOpenEvent';
 import bzdbDocumentation from '../../Utilities/BZDBDocumentor';
 import { documentState } from '../../atoms';
+import Button from '../Button';
 import NumberField from '../Form/NumberField';
 import { positiveOnly } from '../Form/Validators';
 import ListenerModal from '../ListenerModal';
@@ -25,7 +26,7 @@ const FlagSettingsModal = () => {
 
     setFlagAltitude(+(sets._flagAltitude ?? DEFAULT_FLAG_ALTITUDE));
     setFlagHeight(+(sets._flagHeight ?? DEFAULT_FLAG_HEIGHT));
-  }, [world]);
+  }, [world?._options]);
 
   const handleOnSave = () => {
     if (!world) {
@@ -54,7 +55,7 @@ const FlagSettingsModal = () => {
       hideOnEsc={false}
       hideOnClickOutside={false}
     >
-      <div className="row">
+      <div className="row mb-3">
         <div className="col-md-6">
           <NumberField
             label="Flag Altitude"
@@ -75,7 +76,9 @@ const FlagSettingsModal = () => {
         </div>
       </div>
       <div>
-        <button onClick={handleOnSave}>Save</button>
+        <Button type="success" onClick={handleOnSave}>
+          Save
+        </Button>
       </div>
     </ListenerModal>
   );

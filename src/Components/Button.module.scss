@@ -1,0 +1,32 @@
+.button {
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: white;
+  padding: 0.15rem 0.75rem;
+  font-size: 0.9em;
+}
+
+.styleSuccess {
+  background-color: #3e5345;
+  border-color: #5cb85b;
+}
+
+.styleDanger {
+  background-color: #5b393f;
+  border-color: #d9403d;
+}
+
+.styleWarning {
+  background-color: #5b5439;
+  border-color: #d9b73d;
+}
+
+.styleInfo {
+  background-color: #39515b;
+  border-color: #3da8d9;
+}
+
+.styleDefault {
+  background-color: #5c5c5c;
+  border-color: #d5d5d5;
+}

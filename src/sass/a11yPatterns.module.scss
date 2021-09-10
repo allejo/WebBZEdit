@@ -1,0 +1,86 @@
+//
+// Color Blind patterns
+//
+// See: https://twitter.com/trello/status/543420024166174721
+//
+
+.usePatterns {
+  $transparencies: (
+    'diamonds': hsla(0, 0%, 100%, 0.15),
+    'upward-stripes': hsla(0, 0%, 100%, 0.13),
+    'downward-stripes': hsla(0, 0%, 100%, 0.13),
+    'vertical-stripes': hsla(0, 0%, 100%, 0.13),
+  );
+
+  .patternDiamonds,
+  .patternUpwardStripes,
+  .patternDownwardStripes,
+  .patternVerticalStripes {
+    text-shadow: 1px 1px 3px #000;
+    position: relative;
+    z-index: 5;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  .patternDownwardStripes::after {
+    $transparency: map-get($transparencies, 'downward-stripes');
+
+    background-image: linear-gradient(
+      to bottom left,
+      $transparency 25%,
+      transparent 0,
+      transparent 50%,
+      $transparency 0,
+      $transparency 75%,
+      transparent 0,
+      transparent
+    );
+    background-size: 16px 16px;
+  }
+
+  .patternDiamonds::after {
+    $transparency: map-get($transparencies, 'diamonds');
+
+    background-image: linear-gradient(135deg, $transparency 25%, transparent 0),
+      linear-gradient(225deg, $transparency 25%, transparent 0),
+      linear-gradient(315deg, $transparency 25%, transparent 0),
+      linear-gradient(45deg, $transparency 25%, transparent 0);
+    background-size: 12px 12px;
+  }
+
+  .patternVerticalStripes::after {
+    $transparency: map-get($transparencies, 'vertical-stripes');
+
+    background-image: linear-gradient(
+      90deg,
+      $transparency 50%,
+      transparent 0,
+      transparent
+    );
+    background-size: 8px 8px;
+  }
+
+  .patternUpwardStripes::after {
+    $transparency: map-get($transparencies, 'upward-stripes');
+
+    background-image: linear-gradient(
+      to bottom right,
+      $transparency 25%,
+      transparent 0,
+      transparent 50%,
+      $transparency 0,
+      $transparency 75%,
+      transparent 0,
+      transparent
+    );
+    background-size: 16px 16px;
+  }
+}
