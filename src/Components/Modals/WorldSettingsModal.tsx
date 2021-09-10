@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 
 import { WorldSettingsModalOpenEventName } from '../../Events/IWorldSettingsModalOpenEvent';
 import { documentState } from '../../atoms';
+import Button from '../Button';
 import CheckboxField from '../Form/CheckboxField';
 import NumberField from '../Form/NumberField';
 import { positiveOnly } from '../Form/Validators';
@@ -85,7 +86,9 @@ const WorldSettingsModal = () => {
           />
         </div>
       </div>
-      <button onClick={handleOnClickSave}>Save</button>
+      <Button type="success" onClick={handleOnClickSave}>
+        Save
+      </Button>
     </ListenerModal>
   );
 };
