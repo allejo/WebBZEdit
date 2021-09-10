@@ -1,11 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuSeparator,
-  useMenuState,
-} from 'reakit/Menu';
+import { Menu, MenuButton, MenuSeparator, useMenuState } from 'reakit/Menu';
 
 import NewMapMenuItem from './FileMenu/NewMapMenuItem';
 import OpenMapMenuItem from './FileMenu/OpenMapMenuItem';
@@ -26,7 +20,7 @@ const FileMenu = forwardRef<HTMLButtonElement>((props, ref) => {
         <OpenMapMenuItem {...menu} />
         <MenuSeparator />
         <SaveMapMenuItem {...menu} />
-        <MenuItem {...menu}>Save As</MenuItem>
+        {/*<MenuItem {...menu}>Save As</MenuItem>*/}
       </Menu>
     </>
   );
