@@ -1,4 +1,21 @@
-# Web BZEdit
+<p align="center"><a href="https://web-bzedit.allejo.org/" target="_blank">
+    <img src="./.github/banner.png" width="700" />
+</a></p>
+
+<p align="center">
+    <a href="https://github.com/allejo/WebBZEdit/releases/latest">
+        <img
+            src="https://img.shields.io/github/v/release/allejo/WebBZEdit?include_prereleases"
+            alt="GitHub release"
+        />
+    </a>
+    <a href="https://github.com/allejo/WebBZEdit/blob/master/LICENSE">
+        <img
+            src="https://img.shields.io/github/license/allejo/WebBZEdit"
+            alt="GitHub license"
+        />
+    </a>
+</p>
 
 A map editor for BZFlag powered by your every day browser heavily inspired by [The Noah's webbzw](https://github.com/BZFlagCommunity/webbzw), [cs8425's bzw-viewer](https://github.com/cs8425/bzw-viewer), and [iBZEdit](https://sourceforge.net/projects/ibzedit/).
 

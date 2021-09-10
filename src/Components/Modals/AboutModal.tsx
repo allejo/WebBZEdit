@@ -7,6 +7,7 @@ import { useDialogState } from 'reakit';
 import { AboutModalOpenEventName } from '../../Events/IAboutModalOpenEvent';
 import ListenerModal from '../ListenerModal';
 
+import icon from '../../assets/icon.png';
 import styles from './AboutModal.module.scss';
 
 const AboutModal = () => {
@@ -19,6 +20,9 @@ const AboutModal = () => {
       title="About WebBZEdit"
       className={styles.wrapper}
     >
+      <div>
+        <img src={icon} alt="WebBZEdit logo" className="d-block mx-auto mb-3" />
+      </div>
       <p>
         WebBZEdit is a React-based single-page application that uses WebGL to
         create a map editor for the BZFlag community. It's built by your
