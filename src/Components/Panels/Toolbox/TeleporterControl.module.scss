@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.heading {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.editButton {
+  font-size: 0.8rem;
+  margin-left: auto;
+}
+
+.linkListHeader {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.teleLinks {
+  padding-left: 1.5rem;
+}
+
+.teleLink {
+  white-space: nowrap;
+}
