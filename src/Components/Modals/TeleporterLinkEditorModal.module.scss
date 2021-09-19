@@ -1,0 +1,16 @@
+.linkList {
+  padding: 0;
+}
+
+.linkListItem {
+  display: flex;
+}
+
+.deletedItem {
+  font-style: italic;
+  text-decoration: line-through;
+}
+
+.deleteButton {
+  margin-left: auto;
+}

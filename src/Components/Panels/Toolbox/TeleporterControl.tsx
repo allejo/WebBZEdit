@@ -47,8 +47,8 @@ interface Props {
 
 const TeleporterControl = ({ data }: Props) => {
   const [frontLinks, backLinks] = useMemo(() => {
-    const front = [];
-    const back = [];
+    const front: ITeleporterLink[] = [],
+      back: ITeleporterLink[] = [];
 
     for (const link of data._links) {
       if (link.from.name !== data.name) {
@@ -68,7 +68,7 @@ const TeleporterControl = ({ data }: Props) => {
     return [front, back];
   }, [data]);
   const handleOpenEditor = () => {
-    const eventData = new TeleLinkEditorOpenEvent(data);
+    const eventData = new TeleLinkEditorOpenEvent(data, frontLinks, backLinks);
     eventBus.dispatch(TeleLinkEditorOpenEventName, eventData);
   };
 
