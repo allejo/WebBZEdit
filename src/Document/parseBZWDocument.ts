@@ -77,9 +77,11 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
     onObstacleBegin: noop,
     onObstacleComplete: (link: ITeleporterLink, world) => {
       // after parsing a Link object, associate it with relevant teleporters
-      for (const tele of world._teleporters) {
+      for (const teleUUID of world._teleporters) {
+        const tele = world.children[teleUUID] as ITeleporter;
+
         if (tele.name === link.from.name || tele.name === link.to.name) {
-          tele._links.push(link);
+          tele._links.push(link._uuid);
         }
       }
     },
@@ -126,7 +128,7 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
       }
 
       // keep track of teleporter objects so we can associate their links later
-      world._teleporters.push(obstacle);
+      world._teleporters.push(obstacle._uuid);
     },
     onObstacleComplete: noop,
   },

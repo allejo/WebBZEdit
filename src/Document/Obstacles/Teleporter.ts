@@ -3,7 +3,6 @@ import { IPositionable } from '../Attributes/IPositionable';
 import { ISizeable } from '../Attributes/ISizeable';
 import { bzwFloat, bzwVector3F } from '../attributeParsers';
 import { IBaseObject, newIBaseObject } from './BaseObject';
-import { ITeleporterLink } from './TeleporterLink';
 
 export const TeleporterProperties = {
   position: bzwVector3F,
@@ -18,7 +17,7 @@ export interface ITeleporter
     IPositionable,
     ISizeable {
   border: number;
-  _links: ITeleporterLink[];
+  _links: string[];
 }
 
 export function newITeleporter(): ITeleporter {

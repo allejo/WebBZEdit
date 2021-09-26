@@ -3,7 +3,7 @@ import { ITeleporterLink } from '../Document/Obstacles/TeleporterLink';
 
 export interface ITeleLinkEditorOpenEvent {
   getTeleporter(): ITeleporter;
-  getTeleporterLinks(): ITeleporterLink[];
+  getTeleporterLinks(): string[];
   getFrontTeleporterLinks(): ITeleporterLink[];
   getBackTeleporterLinks(): ITeleporterLink[];
 }
@@ -21,7 +21,7 @@ export class TeleLinkEditorOpenEvent implements ITeleLinkEditorOpenEvent {
     return this.teleporter;
   }
 
-  getTeleporterLinks(): ITeleporterLink[] {
+  getTeleporterLinks(): string[] {
     return this.teleporter._links;
   }
 

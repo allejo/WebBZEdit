@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useRecoilValue } from 'recoil';
 
 import { ITeleporter } from '../../../Document/Obstacles/Teleporter';
 import {
@@ -11,6 +12,7 @@ import {
   TeleLinkEditorOpenEventName,
 } from '../../../Events/ITeleLinkEditorOpenEvent';
 import eventBus from '../../../Utilities/EventBus';
+import { documentState } from '../../../atoms';
 import Button from '../../Button';
 
 import styles from './TeleporterControl.module.scss';
@@ -46,11 +48,14 @@ interface Props {
 }
 
 const TeleporterControl = ({ data }: Props) => {
+  const world = useRecoilValue(documentState);
   const [frontLinks, backLinks] = useMemo(() => {
     const front: ITeleporterLink[] = [],
       back: ITeleporterLink[] = [];
 
-    for (const link of data._links) {
+    for (const linkUUID of data._links) {
+      const link = world?.children[linkUUID] as ITeleporterLink;
+
       if (link.from.name !== data.name) {
         continue;
       }
@@ -66,7 +71,7 @@ const TeleporterControl = ({ data }: Props) => {
     }
 
     return [front, back];
-  }, [data]);
+  }, [data._links, data.name, world?.children]);
   const handleOpenEditor = () => {
     const eventData = new TeleLinkEditorOpenEvent(data, frontLinks, backLinks);
     eventBus.dispatch(TeleLinkEditorOpenEventName, eventData);
