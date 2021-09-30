@@ -189,7 +189,7 @@ const LinkEditor = ({
 
   return (
     <ul className={classList([styles.linkList, alternatingStyles.container])}>
-      {links.map((link) => (
+      {[...links, ...linksToAdd].map((link) => (
         <LinkListItem
           isDeleted={linksToDelete.indexOf(link._uuid) >= 0}
           link={link}
