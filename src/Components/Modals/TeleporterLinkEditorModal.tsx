@@ -7,9 +7,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import produce from 'immer';
 import { nanoid } from 'nanoid';
-import React, { SyntheticEvent, useEffect, useMemo, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { useDialogState } from 'reakit';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { ITeleporter } from '../../Document/Obstacles/Teleporter';
 import {
@@ -32,9 +32,6 @@ import { Tab, TabList } from '../TabList';
 
 import alternatingStyles from '../../sass/alternatingGrid.module.scss';
 import styles from './TeleporterLinkEditorModal.module.scss';
-
-type StringDict = Record<string, string>;
-type TeleMetadata = [ITeleporter[], StringDict, StringDict];
 
 interface LinkListItemProps {
   link: ITeleporterLink;
@@ -79,24 +76,29 @@ interface LinkListItemAdderProps {
   onAdd: (link: ITeleporterLink) => void;
   side: TeleporterSide;
   teleporter: ITeleporter;
-  teleMetadata: TeleMetadata;
 }
 
 const LinkListItemAdder = ({
   onAdd,
   side,
   teleporter,
-  teleMetadata: [teleporters, teleUuidToName],
 }: LinkListItemAdderProps) => {
-  const [teleName, setTeleName] = useState<string>(teleporters[0].name!);
-  const [teleUUID, setTeleUUID] = useState<string>(teleporters[0]._uuid!);
+  const world = useRecoilValue(documentState);
+  const teleUUIDs = world?._teleporters ?? [];
+
+  const [teleName, setTeleName] = useState<string>(
+    world?.children[teleUUIDs[0]].name,
+  );
+  const [teleUUID, setTeleUUID] = useState<string>(teleUUIDs[0]);
   const [teleSide, setTeleSide] = useState<TeleporterSide>(
     TeleporterSide.Forward,
   );
 
   const handleTeleNameChange = (event: SyntheticEvent<HTMLSelectElement>) => {
-    setTeleName(teleUuidToName[event.currentTarget.value]);
-    setTeleUUID(event.currentTarget.value);
+    const uuid = event.currentTarget.value;
+
+    setTeleName((world?.children[uuid] as ITeleporter).name!);
+    setTeleUUID(uuid);
   };
   const handleTeleSideChange = (event: SyntheticEvent<HTMLSelectElement>) => {
     setTeleSide(event.currentTarget.value as TeleporterSide);
@@ -122,9 +124,9 @@ const LinkListItemAdder = ({
     >
       <div>
         <select onChange={handleTeleNameChange} value={teleUUID}>
-          {teleporters.map((tele) => (
-            <option key={tele._uuid} value={tele._uuid}>
-              {tele.name}
+          {teleUUIDs.map((uuid) => (
+            <option key={uuid} value={uuid}>
+              {(world?.children[uuid] as ITeleporter).name}
             </option>
           ))}
         </select>
@@ -161,16 +163,9 @@ interface LinkEditorProps {
   onChange: (edits: LinkEdits) => void;
   side: TeleporterSide;
   teleporter: ITeleporter;
-  teleMetadata: TeleMetadata;
 }
 
-const LinkEditor = ({
-  links,
-  onChange,
-  side,
-  teleporter,
-  teleMetadata,
-}: LinkEditorProps) => {
+const LinkEditor = ({ links, onChange, side, teleporter }: LinkEditorProps) => {
   const [linksToAdd, setLinksToAdd] = useState<ITeleporterLink[]>([]);
   const [linksToDelete, setLinksToDelete] = useState<string[]>([]);
 
@@ -195,6 +190,7 @@ const LinkEditor = ({
     });
   }, [linksToAdd, linksToDelete, onChange]);
 
+  // @TODO: This causes a momentary flash. Is there a better way of doing this?
   useEffect(() => {
     setLinksToAdd([]);
     setLinksToDelete([]);
@@ -220,7 +216,6 @@ const LinkEditor = ({
         onAdd={handleAddition}
         side={side}
         teleporter={teleporter}
-        teleMetadata={teleMetadata}
       />
     </ul>
   );
@@ -238,22 +233,6 @@ const TeleporterLinkEditorModal = () => {
     add: [],
     del: [],
   });
-
-  const teleMetadata: TeleMetadata = useMemo(() => {
-    const teles: ITeleporter[] = [];
-    const teleUuidToName: StringDict = {};
-    const teleNameToUuid: StringDict = {};
-
-    for (const teleUUID of world?._teleporters ?? []) {
-      const tele = world?.children[teleUUID] as ITeleporter;
-
-      teles.push(tele);
-      teleUuidToName[teleUUID] = tele.name!;
-      teleNameToUuid[tele.name!] = tele._uuid;
-    }
-
-    return [teles, teleUuidToName, teleNameToUuid];
-  }, [world?._teleporters, world?.children]);
 
   return (
     <ListenerModal<TeleLinkEditorOpenEvent>
@@ -283,9 +262,6 @@ const TeleporterLinkEditorModal = () => {
               return;
             }
 
-            console.log(frontLinkEdits);
-            console.log(backLinkEdits);
-
             const editor = new WorldEditorHelper(draftWorld);
             editor
               .addLinks(frontLinkEdits.add)
@@ -311,7 +287,6 @@ const TeleporterLinkEditorModal = () => {
                   onChange={setFrontLinkEdits}
                   side={TeleporterSide.Forward}
                   teleporter={teleporter}
-                  teleMetadata={teleMetadata ?? [[], {}, {}]}
                 />
               </Tab>
               <Tab title="Back side">
@@ -320,7 +295,6 @@ const TeleporterLinkEditorModal = () => {
                   onChange={setBackLinkEdits}
                   side={TeleporterSide.Backward}
                   teleporter={teleporter}
-                  teleMetadata={teleMetadata ?? [[], {}, {}]}
                 />
               </Tab>
             </TabList>

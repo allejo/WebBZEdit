@@ -49,32 +49,32 @@ interface Props {
 
 const TeleporterControl = ({ data }: Props) => {
   const world = useRecoilValue(documentState);
-  const [frontLinks, backLinks] = useMemo(() => {
-    const front: ITeleporterLink[] = [],
-      back: ITeleporterLink[] = [];
 
-    for (const linkUUID of data._links) {
-      const link = world?.children[linkUUID] as ITeleporterLink;
+  const frontLinks: ITeleporterLink[] = [];
+  const backLinks: ITeleporterLink[] = [];
 
-      if (link === undefined || link.from.name !== data.name) {
-        continue;
-      }
+  for (const linkUUID of data._links) {
+    const link = world?.children[linkUUID] as ITeleporterLink;
 
-      if (link.from.side === TeleporterSide.Forward) {
-        front.push(link);
-      } else if (link.from.side === TeleporterSide.Backward) {
-        back.push(link);
-      } else {
-        front.push(link);
-        back.push(link);
-      }
+    if (link === undefined || link.from.name !== data.name) {
+      continue;
     }
 
-    return [front, back];
-  }, [data._links, data.name, world?.children]);
+    if (link.from.side === TeleporterSide.Forward) {
+      frontLinks.push(link);
+    } else if (link.from.side === TeleporterSide.Backward) {
+      backLinks.push(link);
+    } else {
+      frontLinks.push(link);
+      backLinks.push(link);
+    }
+  }
+
   const handleOpenEditor = () => {
-    const eventData = new TeleLinkEditorOpenEvent(data, frontLinks, backLinks);
-    eventBus.dispatch(TeleLinkEditorOpenEventName, eventData);
+    eventBus.dispatch(
+      TeleLinkEditorOpenEventName,
+      new TeleLinkEditorOpenEvent(data, frontLinks, backLinks),
+    );
   };
 
   return (
