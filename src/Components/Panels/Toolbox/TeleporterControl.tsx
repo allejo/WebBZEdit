@@ -56,7 +56,7 @@ const TeleporterControl = ({ data }: Props) => {
     for (const linkUUID of data._links) {
       const link = world?.children[linkUUID] as ITeleporterLink;
 
-      if (link.from.name !== data.name) {
+      if (link === undefined || link.from.name !== data.name) {
         continue;
       }
 

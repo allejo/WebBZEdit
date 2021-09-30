@@ -14,7 +14,7 @@ export class WorldEditorHelper {
 
   constructor(private world: IWorld) {}
 
-  addLink(link: ITeleporterLink): this {
+  addLink = (link: ITeleporterLink): this => {
     this.cacheLinks();
 
     const teleName = link.from.name;
@@ -34,35 +34,37 @@ export class WorldEditorHelper {
     teleporter._links.push(link._uuid);
 
     return this;
-  }
+  };
 
-  addLinks(links: ITeleporterLink[]): this {
+  addLinks = (links: ITeleporterLink[]): this => {
     links.forEach(this.addLink);
 
     return this;
-  }
+  };
 
-  delLink(linkUUID: string): this {
-    this.cacheLinks();
+  delLink = (linkUUID: string): this => {
     this.delLinks([linkUUID]);
 
     return this;
-  }
+  };
 
-  delLinks(linkUUIDs: string[]): this {
+  delLinks = (linkUUIDs: string[]): this => {
     this.cacheLinks();
 
     linkUUIDs.forEach((uuid) => {
       delete this.world.children[uuid];
+      const linkRef = this.linkCache[uuid];
 
-      const mapCache = this.linkCache[uuid];
-      this.world.children[mapCache.owner]._links[mapCache.index] = null;
+      // Only delete link references if a Link with said UUID exists
+      if (linkRef) {
+        this.world.children[linkRef.owner]._links[linkRef.index] = null;
+      }
     });
 
     return this;
-  }
+  };
 
-  cleanUp(): void {
+  cleanUp = (): void => {
     this.world._teleporters.forEach((teleUUID) => {
       const teleporter = this.world.children[teleUUID] as ITeleporter;
       teleporter._links = teleporter._links.filter(Boolean);
@@ -70,10 +72,16 @@ export class WorldEditorHelper {
       this.world.children[teleUUID] = teleporter;
     });
 
-    this.areLinksCached = false;
-  }
+    this.clearTeleCache();
+  };
 
-  private cacheLinks(): void {
+  clearTeleCache = (): void => {
+    this.areLinksCached = false;
+    this.linkCache = {};
+    this.teleCache = {};
+  };
+
+  private cacheLinks = (): void => {
     if (this.areLinksCached) {
       return;
     }
@@ -101,5 +109,5 @@ export class WorldEditorHelper {
     });
 
     this.areLinksCached = true;
-  }
+  };
 }

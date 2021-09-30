@@ -6,6 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import produce from 'immer';
+import { nanoid } from 'nanoid';
 import React, { SyntheticEvent, useEffect, useMemo, useState } from 'react';
 import { useDialogState } from 'reakit';
 import { useRecoilState } from 'recoil';
@@ -31,6 +32,9 @@ import { Tab, TabList } from '../TabList';
 
 import alternatingStyles from '../../sass/alternatingGrid.module.scss';
 import styles from './TeleporterLinkEditorModal.module.scss';
+
+type StringDict = Record<string, string>;
+type TeleMetadata = [ITeleporter[], StringDict, StringDict];
 
 interface LinkListItemProps {
   link: ITeleporterLink;
@@ -75,35 +79,38 @@ interface LinkListItemAdderProps {
   onAdd: (link: ITeleporterLink) => void;
   side: TeleporterSide;
   teleporter: ITeleporter;
-  teleporters: ITeleporter[];
+  teleMetadata: TeleMetadata;
 }
 
 const LinkListItemAdder = ({
   onAdd,
   side,
   teleporter,
-  teleporters,
+  teleMetadata: [teleporters, teleUuidToName],
 }: LinkListItemAdderProps) => {
-  const [teleporterName, setTeleporterName] = useState('');
+  const [teleName, setTeleName] = useState<string>(teleporters[0].name!);
+  const [teleUUID, setTeleUUID] = useState<string>(teleporters[0]._uuid!);
   const [teleSide, setTeleSide] = useState<TeleporterSide>(
     TeleporterSide.Forward,
   );
 
   const handleTeleNameChange = (event: SyntheticEvent<HTMLSelectElement>) => {
-    setTeleporterName(event.currentTarget.name);
+    setTeleName(teleUuidToName[event.currentTarget.value]);
+    setTeleUUID(event.currentTarget.value);
   };
   const handleTeleSideChange = (event: SyntheticEvent<HTMLSelectElement>) => {
-    setTeleSide(event.currentTarget.name as TeleporterSide);
+    setTeleSide(event.currentTarget.value as TeleporterSide);
   };
   const handleOnClick = () => {
     onAdd({
       ...newITeleporterLink(),
+      _uuid: nanoid(),
       from: {
         name: teleporter.name!,
         side: side,
       },
       to: {
-        name: teleporterName,
+        name: teleName,
         side: teleSide,
       },
     });
@@ -114,7 +121,7 @@ const LinkListItemAdder = ({
       className={classList([styles.linkListItem, alternatingStyles.listItem])}
     >
       <div>
-        <select onChange={handleTeleNameChange} value={teleporterName}>
+        <select onChange={handleTeleNameChange} value={teleUUID}>
           {teleporters.map((tele) => (
             <option key={tele._uuid} value={tele._uuid}>
               {tele.name}
@@ -154,7 +161,7 @@ interface LinkEditorProps {
   onChange: (edits: LinkEdits) => void;
   side: TeleporterSide;
   teleporter: ITeleporter;
-  teleporters: ITeleporter[];
+  teleMetadata: TeleMetadata;
 }
 
 const LinkEditor = ({
@@ -162,7 +169,7 @@ const LinkEditor = ({
   onChange,
   side,
   teleporter,
-  teleporters,
+  teleMetadata,
 }: LinkEditorProps) => {
   const [linksToAdd, setLinksToAdd] = useState<ITeleporterLink[]>([]);
   const [linksToDelete, setLinksToDelete] = useState<string[]>([]);
@@ -182,26 +189,38 @@ const LinkEditor = ({
 
   useEffect(() => {
     onChange({
-      add: linksToAdd,
+      // Only pass up new links that weren't deleted
+      add: linksToAdd.filter((tele) => !linksToDelete.includes(tele._uuid)),
       del: linksToDelete,
     });
   }, [linksToAdd, linksToDelete, onChange]);
 
+  useEffect(() => {
+    setLinksToAdd([]);
+    setLinksToDelete([]);
+  }, [links]);
+
+  const renderLinks = (links: ITeleporterLink[], keySuffix: string) =>
+    links.map((link) => (
+      <LinkListItem
+        key={link._uuid + keySuffix}
+        isDeleted={linksToDelete.indexOf(link._uuid) >= 0}
+        link={link}
+        onDelete={handleDeletion}
+        onRestore={handleRestore}
+      />
+    ));
+
   return (
     <ul className={classList([styles.linkList, alternatingStyles.container])}>
-      {[...links, ...linksToAdd].map((link) => (
-        <LinkListItem
-          isDeleted={linksToDelete.indexOf(link._uuid) >= 0}
-          link={link}
-          onDelete={handleDeletion}
-          onRestore={handleRestore}
-        />
-      ))}
+      {renderLinks(links, '')}
+      {renderLinks(linksToAdd, '-new')}
+
       <LinkListItemAdder
         onAdd={handleAddition}
         side={side}
         teleporter={teleporter}
-        teleporters={teleporters}
+        teleMetadata={teleMetadata}
       />
     </ul>
   );
@@ -220,10 +239,20 @@ const TeleporterLinkEditorModal = () => {
     del: [],
   });
 
-  const teleporters = useMemo(() => {
-    return world?._teleporters.map(
-      (uuid) => world?.children[uuid] as ITeleporter,
-    );
+  const teleMetadata: TeleMetadata = useMemo(() => {
+    const teles: ITeleporter[] = [];
+    const teleUuidToName: StringDict = {};
+    const teleNameToUuid: StringDict = {};
+
+    for (const teleUUID of world?._teleporters ?? []) {
+      const tele = world?.children[teleUUID] as ITeleporter;
+
+      teles.push(tele);
+      teleUuidToName[teleUUID] = tele.name!;
+      teleNameToUuid[tele.name!] = tele._uuid;
+    }
+
+    return [teles, teleUuidToName, teleNameToUuid];
   }, [world?._teleporters, world?.children]);
 
   return (
@@ -254,6 +283,9 @@ const TeleporterLinkEditorModal = () => {
               return;
             }
 
+            console.log(frontLinkEdits);
+            console.log(backLinkEdits);
+
             const editor = new WorldEditorHelper(draftWorld);
             editor
               .addLinks(frontLinkEdits.add)
@@ -279,7 +311,7 @@ const TeleporterLinkEditorModal = () => {
                   onChange={setFrontLinkEdits}
                   side={TeleporterSide.Forward}
                   teleporter={teleporter}
-                  teleporters={teleporters ?? []}
+                  teleMetadata={teleMetadata ?? [[], {}, {}]}
                 />
               </Tab>
               <Tab title="Back side">
@@ -288,15 +320,15 @@ const TeleporterLinkEditorModal = () => {
                   onChange={setBackLinkEdits}
                   side={TeleporterSide.Backward}
                   teleporter={teleporter}
-                  teleporters={teleporters ?? []}
+                  teleMetadata={teleMetadata ?? [[], {}, {}]}
                 />
               </Tab>
             </TabList>
-            <p>
+            <div>
               <Button type="success" onClick={handleSave} icon={faSave}>
                 Save
               </Button>
-            </p>
+            </div>
           </>
         );
       }}
