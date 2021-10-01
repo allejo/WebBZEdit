@@ -132,10 +132,7 @@ const ToolboxPanel = () => {
         <BaseControl data={selection as IBase} onChange={handleBaseOnChange} />
       )}
       {selection && selection._objectType === 'teleporter' && (
-        <TeleporterControl
-          data={selection as ITeleporter}
-          onChange={() => {}}
-        />
+        <TeleporterControl data={selection as ITeleporter} />
       )}
     </div>
   );

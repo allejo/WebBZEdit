@@ -44,7 +44,6 @@ const LinkRenderer = ({ title, links: teleLinks }: LinkRendererProps) => {
 
 interface Props {
   data: ITeleporter;
-  onChange: (changes: ITeleporter) => void;
 }
 
 const TeleporterControl = ({ data }: Props) => {

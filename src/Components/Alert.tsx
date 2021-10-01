@@ -49,14 +49,13 @@ const Alert = ({
   children,
 }: Props) => {
   const [dismissed, setDismissed] = useState(false);
-  const onDismissClick = () => {
-    setDismissed(true);
-  };
-  const classes = classList([styles.wrapper, CSSStyles[type], className]);
 
   if (dismissed) {
     return null;
   }
+
+  const onDismissClick = () => setDismissed(true);
+  const classes = classList([styles.wrapper, CSSStyles[type], className]);
 
   return (
     <div className={classes} role="alert">
