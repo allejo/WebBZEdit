@@ -12,6 +12,7 @@ import {
   TeleLinkEditorOpenEventName,
 } from '../../../Events/ITeleLinkEditorOpenEvent';
 import eventBus from '../../../Utilities/EventBus';
+import { classList } from '../../../Utilities/cssClasses';
 import { documentState } from '../../../atoms';
 import Button from '../../Button';
 
@@ -31,13 +32,18 @@ const LinkRenderer = ({ title, links: teleLinks }: LinkRendererProps) => {
   return (
     <div className="col-6">
       <h3 className={styles.linkListHeader}>{title}</h3>
-      <ul className={styles.teleLinks}>
-        {links.map((link) => (
-          <li key={link._uuid} className={styles.teleLink}>
-            {link.to.name} ({teleporterSideLiteral(link.to.side)})
-          </li>
-        ))}
-      </ul>
+
+      {links.length === 0 ? (
+        <span className={styles.noLinks}>No Links</span>
+      ) : (
+        <ul className={styles.teleLinks}>
+          {links.map((link) => (
+            <li key={link._uuid} className={styles.teleLink}>
+              {link.to.name} ({teleporterSideLiteral(link.to.side)})
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
@@ -89,7 +95,7 @@ const TeleporterControl = ({ data }: Props) => {
             Edit
           </Button>
         </div>
-        <div className="row">
+        <div className={classList([styles.linkList, 'row'])}>
           <LinkRenderer title="Front" links={frontLinks} />
           <LinkRenderer title="Back" links={backLinks} />
         </div>

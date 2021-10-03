@@ -119,7 +119,7 @@ const LinkListItemAdder = ({
   };
 
   return (
-    <li
+    <div
       className={classList([styles.linkListItem, alternatingStyles.listItem])}
     >
       <div>
@@ -149,7 +149,7 @@ const LinkListItemAdder = ({
       >
         <FontAwesomeIcon fixedWidth={true} icon={faPlus} />
       </Button>
-    </li>
+    </div>
   );
 };
 
@@ -208,16 +208,26 @@ const LinkEditor = ({ links, onChange, side, teleporter }: LinkEditorProps) => {
     ));
 
   return (
-    <ul className={classList([styles.linkList, alternatingStyles.container])}>
-      {renderLinks(links, '')}
-      {renderLinks(linksToAdd, '-new')}
+    <div>
+      {links.length === 0 && linksToAdd.length === 0 && (
+        <Alert type={AlertType.Warning} header="No Links Associated">
+          This teleporter does not have any links associated with it on the{' '}
+          {teleporterSideLiteral(side)} side. This means a tank will simply
+          drive through this teleporter and not be teleported anywhere.
+        </Alert>
+      )}
+
+      <ul className={classList([styles.linkList, alternatingStyles.container])}>
+        {renderLinks(links, '')}
+        {renderLinks(linksToAdd, '-new')}
+      </ul>
 
       <LinkListItemAdder
         onAdd={handleAddition}
         side={side}
         teleporter={teleporter}
       />
-    </ul>
+    </div>
   );
 };
 
