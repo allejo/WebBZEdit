@@ -1,37 +1,82 @@
+import { removeItem } from '../../Utilities/arrays';
+import { assumeType } from '../../Utilities/types';
+import { IBaseObject } from '../Obstacles/BaseObject';
 import { ITeleporter } from '../Obstacles/Teleporter';
 import { ITeleporterLink } from '../Obstacles/TeleporterLink';
 import { IWorld } from '../Obstacles/World';
 
-interface LinkCache {
-  owner: string;
-  index: number;
-}
-
 export class WorldEditorHelper {
   private areLinksCached: boolean = false;
-  private linkCache: Record<string, LinkCache> = {};
   private teleCache: Record<string, string> = {};
 
   constructor(private world: IWorld) {}
 
+  addObstacle = <T extends IBaseObject>(obstacle: T) => {
+    if (obstacle._objectType === 'link') {
+      assumeType<ITeleporterLink>(obstacle);
+      this.addLink(obstacle);
+
+      return;
+    }
+
+    if (obstacle._objectType === 'teleporter') {
+      assumeType<ITeleporter>(obstacle);
+
+      obstacle.name = 'tele' + this.world._teleporters.length;
+      this.world._teleporters.push(obstacle._uuid);
+    }
+
+    this.world.children[obstacle._uuid] = obstacle;
+  };
+
+  delObstacle = <T extends IBaseObject>(obstacleOrUUID: T | string) => {
+    const obstacle =
+      typeof obstacleOrUUID === 'string'
+        ? this.world.children[obstacleOrUUID]
+        : obstacleOrUUID;
+
+    if (obstacle._objectType === 'link') {
+      assumeType<ITeleporterLink>(obstacle);
+      this.delLink(obstacle._uuid);
+
+      return;
+    }
+
+    if (obstacle._objectType === 'teleporter') {
+      assumeType<ITeleporter>(obstacle);
+
+      this.delLinks(obstacle._links);
+      this.world._teleporters = removeItem(
+        this.world._teleporters,
+        obstacle._uuid,
+      );
+    }
+
+    delete this.world.children[obstacle._uuid];
+  };
+
   addLink = (link: ITeleporterLink): this => {
     this.cacheLinks();
 
-    const teleName = link.from.name;
-    const teleUUID = this.teleCache[teleName];
+    const teleFromName = link.from.name;
+    const teleFromUUID = this.teleCache[teleFromName];
+    const teleToName = link.to.name;
+    const teleToUUID = this.teleCache[teleToName];
 
-    if (!teleUUID) {
-      throw Error(`Invalid teleporter name: ${teleName}`);
+    if (!teleFromUUID || !teleToUUID) {
+      throw Error(`Invalid teleporter name: ${teleFromName}`);
     }
 
-    const teleporter = this.world.children[teleUUID] as ITeleporter;
+    const teleFrom = this.world.children[teleFromUUID] as ITeleporter;
+    const teleTo = this.world.children[teleToUUID] as ITeleporter;
 
-    if (!teleporter) {
-      throw Error(`Invalid teleporter UUID: ${teleUUID}`);
+    if (!teleFrom || !teleTo) {
+      throw Error(`Invalid teleporter UUID: ${teleFromUUID}`);
     }
 
     this.world.children[link._uuid] = link;
-    teleporter._links.push(link._uuid);
+    teleFrom._links.push(link._uuid);
+    teleTo._links.push(link._uuid);
 
     return this;
   };
@@ -52,32 +97,28 @@ export class WorldEditorHelper {
     this.cacheLinks();
 
     linkUUIDs.forEach((uuid) => {
-      delete this.world.children[uuid];
-      const linkRef = this.linkCache[uuid];
+      const link = this.world.children[uuid] as ITeleporterLink;
 
-      // Only delete link references if a Link with said UUID exists
-      if (linkRef) {
-        this.world.children[linkRef.owner]._links[linkRef.index] = null;
-      }
+      const teleFromUUID = this.teleCache[link.from.name];
+      const teleFrom = this.world.children[teleFromUUID] as ITeleporter;
+      const teleToUUID = this.teleCache[link.to.name];
+      const teleTo = this.world.children[teleToUUID] as ITeleporter;
+
+      teleFrom._links = removeItem(teleFrom._links, uuid);
+      teleTo._links = removeItem(teleFrom._links, uuid);
+
+      delete this.world.children[uuid];
     });
 
     return this;
   };
 
   cleanUp = (): void => {
-    this.world._teleporters.forEach((teleUUID) => {
-      const teleporter = this.world.children[teleUUID] as ITeleporter;
-      teleporter._links = teleporter._links.filter(Boolean);
-
-      this.world.children[teleUUID] = teleporter;
-    });
-
     this.clearTeleCache();
   };
 
   clearTeleCache = (): void => {
     this.areLinksCached = false;
-    this.linkCache = {};
     this.teleCache = {};
   };
 
@@ -94,18 +135,6 @@ export class WorldEditorHelper {
       }
 
       this.teleCache[teleporter.name!] = teleUUID;
-      teleporter._links.forEach((uuid, index) => {
-        const link = this.world.children[uuid] as ITeleporterLink;
-
-        if (teleUUID !== this.teleCache[link.from.name]) {
-          return;
-        }
-
-        this.linkCache[uuid] = {
-          owner: teleUUID,
-          index: index,
-        };
-      });
     });
 
     this.areLinksCached = true;

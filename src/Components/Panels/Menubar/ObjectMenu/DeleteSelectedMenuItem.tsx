@@ -5,6 +5,7 @@ import { MenuStateReturn } from 'reakit';
 import { useRecoilState } from 'recoil';
 
 import { IWorld } from '../../../../Document/Obstacles/World';
+import { WorldEditorHelper } from '../../../../Document/Utilities/WorldEditorHelper';
 import { documentState, selectionState } from '../../../../atoms';
 import MenuItem from '../MenuItem';
 
@@ -19,8 +20,10 @@ const DeleteSelectedMenuItem = ({ ...menu }: Props) => {
         return;
       }
 
+      const editor = new WorldEditorHelper(draftWorld);
+      editor.delObstacle(selected);
+
       setSelected(null);
-      delete draftWorld.children[selected];
     });
 
     setDocument(world);
