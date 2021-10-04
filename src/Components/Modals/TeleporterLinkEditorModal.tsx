@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import produce from 'immer';
 import { nanoid } from 'nanoid';
-import React, { SyntheticEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDialogState } from 'reakit';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -27,6 +27,7 @@ import { classList } from '../../Utilities/cssClasses';
 import { documentState } from '../../atoms';
 import Alert, { AlertType } from '../Alert';
 import Button from '../Button';
+import SelectField from '../Form/SelectField';
 import ListenerModal from '../ListenerModal';
 import { Tab, TabList } from '../TabList';
 
@@ -94,14 +95,12 @@ const LinkListItemAdder = ({
     TeleporterSide.Forward,
   );
 
-  const handleTeleNameChange = (event: SyntheticEvent<HTMLSelectElement>) => {
-    const uuid = event.currentTarget.value;
-
-    setTeleName((world?.children[uuid] as ITeleporter).name!);
-    setTeleUUID(uuid);
+  const handleTeleNameChange = (teleUUID: string) => {
+    setTeleName((world?.children[teleUUID] as ITeleporter).name!);
+    setTeleUUID(teleUUID);
   };
-  const handleTeleSideChange = (event: SyntheticEvent<HTMLSelectElement>) => {
-    setTeleSide(event.currentTarget.value as TeleporterSide);
+  const handleTeleSideChange = (value: string) => {
+    setTeleSide(value as TeleporterSide);
   };
   const handleOnClick = () => {
     onAdd({
@@ -122,25 +121,32 @@ const LinkListItemAdder = ({
     <div
       className={classList([styles.linkListItem, alternatingStyles.listItem])}
     >
-      <div>
-        <select onChange={handleTeleNameChange} value={teleUUID}>
-          {teleUUIDs.map((uuid) => (
-            <option key={uuid} value={uuid}>
-              {(world?.children[uuid] as ITeleporter).name}
-            </option>
-          ))}
-        </select>
-        <select onChange={handleTeleSideChange} value={teleSide}>
-          {[
+      <div className={styles.addLinkContainer}>
+        <SelectField
+          className={styles.teleporterSelection}
+          options={Object.fromEntries(
+            teleUUIDs.map((uuid) => [
+              uuid,
+              (world?.children[uuid] as ITeleporter).name!,
+            ]),
+          )}
+          hideLabel={true}
+          label="Teleporter"
+          onChange={handleTeleNameChange}
+          value={teleUUID}
+        />
+        <SelectField
+          options={[
             TeleporterSide.Forward,
             TeleporterSide.Backward,
             TeleporterSide.Both,
-          ].map((value) => (
-            <option key={value} value={value}>
-              {teleporterSideLiteral(value)}
-            </option>
-          ))}
-        </select>
+          ]}
+          formatValue={teleporterSideLiteral}
+          hideLabel={true}
+          label="Teleporter Side"
+          onChange={handleTeleSideChange}
+          value={teleSide}
+        />
       </div>
       <Button
         type="success"
