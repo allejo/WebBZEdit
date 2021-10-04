@@ -12,10 +12,10 @@ import React, {
 } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { INameable } from '../../../Document/Attributes/INameable';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
 import { ITankModelObjectType } from '../../../Document/Obstacles/TankModel';
+import { WorldEditorHelper } from '../../../Document/Utilities/WorldEditorHelper';
 import { classList } from '../../../Utilities/cssClasses';
 import keyboard from '../../../Utilities/keyboard';
 import { documentState, selectionState } from '../../../atoms';
@@ -140,9 +140,12 @@ const ObstacleSummary = forwardRef<HTMLDivElement, Props>(
 
     const saveName = () => {
       const nextWorld = produce(world, (draftWorld) => {
-        const obstacle: INameable = draftWorld!.children[selectedUUID!] as any;
+        if (!draftWorld || !selectedUUID) {
+          return;
+        }
 
-        obstacle.name = nameEdit;
+        const editor = new WorldEditorHelper(draftWorld);
+        editor.renameObstacle(selectedUUID, nameEdit);
       });
 
       setBZWDocument(nextWorld);
