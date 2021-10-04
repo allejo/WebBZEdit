@@ -1,12 +1,24 @@
-import React, { FormEvent, HTMLProps } from 'react';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { HTMLProps, ReactNode, SyntheticEvent } from 'react';
 
+import { classList } from '../../Utilities/cssClasses';
 import { slugify } from '../../Utilities/slugify';
+import { assumeType } from '../../Utilities/types';
 
+import a11yStyles from '../../sass/a11yUtilities.module.scss';
 import styles from './BaseFormField.module.scss';
+
+type SupportedHTMLElements =
+  | HTMLInputElement
+  | HTMLSelectElement
+  | HTMLTextAreaElement;
 
 export type ValueValidator<T> = (value: T) => boolean;
 
 export interface FieldProps<T> {
+  className?: string;
+  hideLabel?: boolean;
   label: string;
   labelProps?: HTMLProps<HTMLLabelElement>;
   description?: string;
@@ -15,10 +27,21 @@ export interface FieldProps<T> {
   value: T;
 }
 
-interface Props<T> {
-  tag: string;
+type InputProps = {
+  tag: 'input';
   type: string;
+};
 
+type SelectProps = {
+  tag: 'select';
+  children: ReactNode;
+};
+
+type TextareaProps = {
+  tag: 'textarea';
+};
+
+type Props<T> = {
   /**
    * This callback is used to cast a string value into `T` that is used for
    * the specific input type.
@@ -49,27 +72,32 @@ interface Props<T> {
    * @since 0.0.0
    */
   castTypeToStr: (value: T) => string;
-}
+} & (InputProps | SelectProps | TextareaProps);
 
 const BaseFormField = <T,>({
   castStrToType,
   castTypeToStr,
   description = '',
+  className,
+  hideLabel = false,
   label,
   labelProps = {},
   allowChange = () => true,
   onChange,
   tag,
-  type,
   value,
+  ...props
 }: FieldProps<T> & Props<T>) => {
+  const type = tag === 'input' ? (props as InputProps).type : tag;
+
   const elementId = labelProps.id ?? slugify(label);
   const isCheckbox = tag === 'input' && type === 'checkbox';
 
-  const handleOnChange = (e: FormEvent<HTMLInputElement>) => {
+  const handleOnChange = (e: SyntheticEvent<SupportedHTMLElements>) => {
     let castedValue;
 
     if (isCheckbox) {
+      assumeType<HTMLInputElement>(e.currentTarget);
       castedValue = e.currentTarget.checked;
     } else {
       castedValue = castStrToType(e.currentTarget.value);
@@ -90,7 +118,7 @@ const BaseFormField = <T,>({
   }
 
   const helpDesc = helpDescRaw.join(' ');
-  const standardProps: HTMLProps<HTMLInputElement> = {
+  const standardProps: HTMLProps<SupportedHTMLElements> = {
     id: elementId,
     onChange: handleOnChange,
     'aria-invalid': false,
@@ -104,13 +132,36 @@ const BaseFormField = <T,>({
   }
 
   return (
-    <div className={styles.wrapper} data-form-type={type || tag}>
-      <label htmlFor={elementId} className={styles.label}>
+    <div
+      className={classList([styles.wrapper, className])}
+      data-form-type={type || tag}
+    >
+      <label
+        htmlFor={elementId}
+        className={classList([styles.label, [a11yStyles.srOnly, hideLabel]])}
+      >
         {label}
       </label>
       <div className={styles.fieldContainer}>
         {tag === 'input' && (
-          <input {...standardProps} className={styles.input} type={type} />
+          <input
+            {...(standardProps as HTMLProps<HTMLInputElement>)}
+            className={styles.input}
+            type={type}
+          />
+        )}
+        {tag === 'select' && (
+          <>
+            <select
+              {...(standardProps as HTMLProps<HTMLSelectElement>)}
+              className={styles.selectField}
+            >
+              {(props as SelectProps).children}
+            </select>
+            <span className={styles.selectFieldArrow}>
+              <FontAwesomeIcon icon={faCaretDown} fixedWidth={true} />
+            </span>
+          </>
         )}
       </div>
       {description && (
