@@ -30,7 +30,7 @@ const LinkRenderer = ({ title, links: teleLinks }: LinkRendererProps) => {
   );
 
   return (
-    <div className="col-6">
+    <div className={classList([styles.linkListContainer, 'col-6'])}>
       <h3 className={styles.linkListHeader}>{title}</h3>
 
       {links.length === 0 ? (

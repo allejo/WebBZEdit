@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .header {
@@ -20,6 +21,11 @@
   margin-left: auto;
 }
 
+.linkListContainer {
+  height: 100%;
+  overflow: hidden;
+}
+
 .linkListHeader {
   font-size: 0.8rem;
   font-weight: bold;
@@ -27,6 +33,7 @@
 
 .linkList {
   min-width: 300px;
+  overflow: hidden;
 }
 
 .noLinks {
@@ -36,6 +43,9 @@
 }
 
 .teleLinks {
+  height: 100%;
+  margin-bottom: 0;
+  overflow: auto;
   padding-left: 1.5rem;
 }
 
