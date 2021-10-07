@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 
-import { slugify } from '../../Utilities/slugify';
 import BaseFormField, { FieldProps } from './BaseFormField';
 
 type KVPair = {
@@ -11,7 +10,7 @@ type KVPair = {
 function createKeyValuePairs(options: Props['options']): KVPair[] {
   if (Array.isArray(options)) {
     return options.map((option) => ({
-      key: slugify(option),
+      key: option,
       val: option,
     }));
   }
