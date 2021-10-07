@@ -10,6 +10,7 @@ import { implementsISizeable } from '../../Document/Attributes/ISizeable';
 import { IBase } from '../../Document/Obstacles/Base';
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { IPyramid } from '../../Document/Obstacles/Pyramid';
+import { ITeleporter } from '../../Document/Obstacles/Teleporter';
 import { documentState, selectionState } from '../../atoms';
 import AlterableControl, {
   IAlterableControlDataType,
@@ -18,6 +19,7 @@ import AlterableControl, {
 import BaseControl from './Toolbox/BaseControl';
 import PassabilityControl from './Toolbox/PassabilityControl';
 import PyramidControl from './Toolbox/PyramidControl';
+import TeleporterControl from './Toolbox/TeleporterControl';
 
 import styles from './ToolboxPanel.module.scss';
 
@@ -128,6 +130,9 @@ const ToolboxPanel = () => {
       )}
       {selection && selection._objectType === 'base' && (
         <BaseControl data={selection as IBase} onChange={handleBaseOnChange} />
+      )}
+      {selection && selection._objectType === 'teleporter' && (
+        <TeleporterControl data={selection as ITeleporter} />
       )}
     </div>
   );

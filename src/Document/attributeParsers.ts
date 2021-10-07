@@ -109,7 +109,7 @@ export function bzwTeleRef(line: string, world: IWorld): TeleporterReference {
     const teleIndex = Math.floor(+name / 2),
       sideIndex = +name % 2;
 
-    name = world._teleporters[teleIndex].name ?? '';
+    name = world.children[world._teleporters[teleIndex]].name ?? '';
     side = sideIndex === 0 ? TeleporterSide.Forward : TeleporterSide.Backward;
   }
 

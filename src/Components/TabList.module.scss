@@ -1,0 +1,35 @@
+@import '../sass/variables';
+
+.tabList {
+  border-bottom: 1px solid white;
+}
+
+.tab {
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  position: relative;
+
+  &[aria-selected='true'] {
+    border-color: white;
+    border-bottom-color: transparent;
+
+    &::after {
+      background-color: $color-grey-light;
+      bottom: -1px;
+      content: '';
+      height: 1px;
+      left: 0;
+      position: absolute;
+      width: 100%;
+    }
+  }
+}
+
+.panel {
+  padding: 1rem;
+}

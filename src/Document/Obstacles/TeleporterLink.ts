@@ -31,3 +31,16 @@ export function newITeleporterLink(): ITeleporterLink {
     to: { name: '', side: TeleporterSide.Both },
   };
 }
+
+export function teleporterSideLiteral(side: TeleporterSide): string {
+  switch (side) {
+    case TeleporterSide.Backward:
+      return 'Back';
+
+    case TeleporterSide.Forward:
+      return 'Front';
+
+    case TeleporterSide.Both:
+      return 'Both';
+  }
+}

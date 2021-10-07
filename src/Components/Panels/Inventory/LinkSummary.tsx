@@ -4,10 +4,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
 import { ITeleporter } from '../../../Document/Obstacles/Teleporter';
-import { TeleporterSide } from '../../../Document/Obstacles/TeleporterLink';
+import {
+  ITeleporterLink,
+  TeleporterSide,
+} from '../../../Document/Obstacles/TeleporterLink';
+import { documentState } from '../../../atoms';
 
 import styles from './ObstacleSummary.module.scss';
 
@@ -16,17 +21,25 @@ interface Props {
 }
 
 const LinkSummary = ({ object }: Props) => {
+  const world = useRecoilValue(documentState);
+
   const tele = object as ITeleporter;
-  const frontLinks = tele._links.filter(
-    (link) =>
+  const frontLinks = tele._links.filter((uuid) => {
+    const link = world?.children[uuid] as ITeleporterLink;
+
+    return (
       link.from.side !== TeleporterSide.Backward ||
-      link.to.side !== TeleporterSide.Backward,
-  );
-  const backLinks = tele._links.filter(
-    (link) =>
+      link.to.side !== TeleporterSide.Backward
+    );
+  });
+  const backLinks = tele._links.filter((uuid) => {
+    const link = world?.children[uuid] as ITeleporterLink;
+
+    return (
       link.from.side !== TeleporterSide.Forward ||
-      link.to.side !== TeleporterSide.Forward,
-  );
+      link.to.side !== TeleporterSide.Forward
+    );
+  });
 
   return (
     <div>
@@ -36,7 +49,8 @@ const LinkSummary = ({ object }: Props) => {
           <div className={styles.links} key={side}>
             <div>{side}</div>
             <ul>
-              {links.map((link, i) => {
+              {links.map((uuid, i) => {
+                const link = world?.children[uuid] as ITeleporterLink;
                 const isFromTele = link.from.name === tele.name;
                 const teleRef = isFromTele ? link.to : link.from;
                 const icon = isFromTele
