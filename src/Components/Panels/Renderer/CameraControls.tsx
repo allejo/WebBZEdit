@@ -1,5 +1,5 @@
 import { extend, useThree, useFrame, Object3DNode } from '@react-three/fiber';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import {
@@ -7,7 +7,7 @@ import {
   ICameraPositionResetEvent,
 } from '../../../Events/ICameraPositionResetEvent';
 import eventBus from '../../../Utilities/EventBus';
-import keyboard from '../../../Utilities/keyboard';
+import { usePageStatus } from '../../../Utilities/usePageStatus';
 
 // https://spectrum.chat/@react-three/fiber/general/property-orbitcontrols-does-not-exist-on-type-jsx-intrinsicelements~44712e68-4601-4486-b4b4-5e112f3dc09e
 declare global {
@@ -21,39 +21,11 @@ declare global {
 extend({ OrbitControls });
 
 const CameraControls: React.FC<any> = (props) => {
+  const pageStatus = usePageStatus();
   const cameraResetListener = useRef<string>('');
-  const [isHoldingShift, setIsHoldingShift] = useState(false);
 
   const orbitRef = useRef<OrbitControls>(null);
   const { camera, gl } = useThree();
-
-  const shiftDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (!isHoldingShift) {
-        setIsHoldingShift(e.key === keyboard.SHIFT);
-      }
-    },
-    [isHoldingShift, setIsHoldingShift],
-  );
-  const shiftUp = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === keyboard.SHIFT) {
-        setIsHoldingShift(false);
-      }
-    },
-    [setIsHoldingShift],
-  );
-
-  // Listen for when shift is held down
-  useEffect(() => {
-    document.addEventListener('keydown', shiftDown);
-    document.addEventListener('keyup', shiftUp);
-
-    return () => {
-      document.removeEventListener('keydown', shiftDown);
-      document.removeEventListener('keyup', shiftUp);
-    };
-  }, [shiftDown, shiftUp]);
 
   useEffect(() => {
     // @ts-ignore
@@ -80,12 +52,13 @@ const CameraControls: React.FC<any> = (props) => {
   return (
     <orbitControls
       ref={orbitRef}
+      enabled={!(pageStatus.isSomethingFocused || pageStatus.isModalOpen)}
       args={[camera, gl.domElement]}
       // Keyboard movement settings
       enableDamping={true}
       dampingFactor={0.05}
       keyPanSpeed={40}
-      screenSpacePanning={isHoldingShift}
+      screenSpacePanning={pageStatus.isHoldingShift}
       // Camera/Zoom settings
       minDistance={20}
       maxDistance={250}

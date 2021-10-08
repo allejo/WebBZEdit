@@ -1,6 +1,6 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import {
   Dialog,
   DialogBackdrop,
@@ -8,11 +8,18 @@ import {
   DialogStateReturn,
 } from 'reakit';
 
+import {
+  IModalToggleEventName,
+  ModalToggleEvent,
+} from '../Events/IModalToggleEvent';
+import eventBus from '../Utilities/EventBus';
+
 import styles from './Modal.module.scss';
 
 interface Props extends Partial<DialogOptions> {
   dialog: DialogStateReturn;
   className?: string;
+  onShow?: () => void;
   onDismiss?: () => boolean;
   title: string;
   children: ReactNode;
@@ -22,6 +29,7 @@ const Modal = ({
   title,
   className,
   dialog,
+  onShow,
   onDismiss,
   children,
   ...props
@@ -33,6 +41,17 @@ const Modal = ({
       dialog.hide();
     }
   };
+
+  useEffect(() => {
+    if (dialog.visible) {
+      onShow?.();
+    }
+
+    eventBus.dispatch(
+      IModalToggleEventName,
+      new ModalToggleEvent(title, dialog.visible),
+    );
+  }, [dialog.visible, onShow, title]);
 
   return (
     <DialogBackdrop {...dialog} className={styles.backdrop}>
