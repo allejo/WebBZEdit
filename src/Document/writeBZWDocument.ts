@@ -153,5 +153,6 @@ export function writeBZWDocument(
     .flat(4) // Flatten out any nested lines into a single level
     .join('\n')
     .replace(/\n{3,}/, '\n\n') // Replace multiple empty lines with just one empty new line
+    .replace(/(\r\n|\r|\n)/g, '\r\n')
     .trim();
 }
