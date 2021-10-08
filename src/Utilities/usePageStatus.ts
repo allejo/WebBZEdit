@@ -7,6 +7,8 @@ import {
 import eventBus from './EventBus';
 import keyboard from './keyboard';
 
+const interactiveElements: string[] = ['button', 'textarea', 'input', 'select'];
+
 export interface IPageStatus {
   isHoldingShift: boolean;
   isModalOpen: boolean;
@@ -47,7 +49,22 @@ export function usePageStatus(): IPageStatus {
     };
   }, [shiftDown, shiftUp]);
 
-  const onFocus = useCallback(() => setIsSomethingFocused(true), []);
+  const onFocus = useCallback((e: FocusEvent) => {
+    if (e.currentTarget === null) {
+      setIsSomethingFocused(false);
+
+      return;
+    }
+
+    const elementName = document.activeElement?.tagName.toLowerCase();
+
+    // Only announce that something is in focus if it's an "interactive" type
+    if (elementName && interactiveElements.indexOf(elementName) > -1) {
+      setIsSomethingFocused(true);
+    } else {
+      setIsSomethingFocused(false);
+    }
+  }, []);
   const onBlur = useCallback(() => setIsSomethingFocused(false), []);
 
   // Listen to when an input field gains focus
