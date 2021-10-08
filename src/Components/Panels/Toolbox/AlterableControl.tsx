@@ -6,6 +6,8 @@ import {
   IPositionable,
 } from '../../../Document/Attributes/IPositionable';
 import { implementsISizeable } from '../../../Document/Attributes/ISizeable';
+import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
+import { ITankModelObjectType } from '../../../Document/Obstacles/TankModel';
 import { Vector3F } from '../../../Utilities/types';
 import NumericalControl from './NumericalControl';
 import Vector3FControl from './Vector3FControl';
@@ -21,29 +23,58 @@ export function canUseAlterableControlToolbox(
   return isPositionable || (isPositionable && isISizeable);
 }
 
-type DataType = IPositionable | IAlterable;
+type DataType = IBaseObject & (IPositionable | IAlterable);
 
 interface Props {
   data: DataType;
   onChange: (changes: DataType) => void;
 }
 
+const NoNegativeZAxisList = [ITankModelObjectType];
+
 const AlterableControl = ({ data, onChange }: Props) => {
-  const handlePositionOnChange = (position: Vector3F) =>
+  const handlePositionOnChange = (proposedPosition: Vector3F) => {
+    const position: Vector3F = [...proposedPosition];
+
+    if (position[2] < 0 && NoNegativeZAxisList.indexOf(data._objectType) > -1) {
+      position[2] = 0;
+    }
+
     onChange({
       ...data,
       position,
     });
-  const handleSizeOnChange = (size: Vector3F) =>
+  };
+  const handleSizeOnChange = (proposedSize: Vector3F) => {
+    const size: Vector3F = [...proposedSize];
+
+    // Make sure we don't get any weird sizes with 0s
+    for (const i in size) {
+      if (size[i] <= 0) {
+        size[i] = 0.01;
+      }
+    }
+
     onChange({
       ...data,
       size,
     });
-  const handleRotationOnChange = (rotation: number) =>
+  };
+  const handleRotationOnChange = (proposedRotation: number) => {
+    let rotation = proposedRotation;
+
+    // Only allow 0 - 359 degrees of rotation
+    if (rotation < 0) {
+      rotation = 360 + proposedRotation;
+    } else if (rotation >= 360) {
+      rotation = 360 - proposedRotation;
+    }
+
     onChange({
       ...data,
       rotation,
     });
+  };
 
   return (
     <section>
