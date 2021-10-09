@@ -1,9 +1,10 @@
-import { useLoader } from '@react-three/fiber';
+import { ThreeEvent, useLoader } from '@react-three/fiber';
 import React from 'react';
 import { RepeatWrapping, TextureLoader } from 'three';
 
 import { IPyramid } from '../Document/Obstacles/Pyramid';
 import { deg2rad } from '../Utilities/math';
+import { useHighlightableEdges } from '../hooks/useHighlightableEdges';
 
 import pyrWall from '../assets/pyrwall.png';
 
@@ -32,14 +33,21 @@ const ROTATION_OFFSET = 45;
  * @constructor
  * @see https://threejs.org/docs/#api/en/geometries/ConeGeometry
  */
-const Pyramid = ({ obstacle, onClick }: Props) => {
+const Pyramid = ({ isSelected, obstacle, onClick }: Props) => {
+  const highlightableEdges = useHighlightableEdges();
+
   const {
     position: [posX, posY, posZ],
     size: [sizeX, sizeY, sizeZ],
     rotation = 0,
     flipz = false,
   } = obstacle;
-  const handleOnClick = () => onClick(obstacle);
+  const isHighlighted = highlightableEdges.isHovered || isSelected;
+
+  const handleOnClick = (e: ThreeEvent<MouseEvent>) => {
+    e.stopPropagation();
+    onClick(obstacle);
+  };
 
   const texture = useLoader(TextureLoader, pyrWall);
   texture.wrapS = texture.wrapT = RepeatWrapping;
@@ -47,6 +55,8 @@ const Pyramid = ({ obstacle, onClick }: Props) => {
 
   return (
     <mesh
+      ref={highlightableEdges.meshRef}
+      {...highlightableEdges.meshProps}
       position={[posX, Math.abs(sizeZ) / 2 + posZ, -posY]}
       scale={[sizeX * 2, 1, sizeY * 2]}
       rotation={[0, deg2rad(rotation), flipz ? Math.PI : 0]}
@@ -63,6 +73,8 @@ const Pyramid = ({ obstacle, onClick }: Props) => {
         ]}
       />
       <meshBasicMaterial map={texture} />
+      {/* === Edges Highlighting === */}
+      {highlightableEdges.jsxHighlight({ isHighlighted })}
     </mesh>
   );
 };

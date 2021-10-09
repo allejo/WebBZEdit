@@ -1,9 +1,10 @@
 import { ThreeEvent } from '@react-three/fiber';
-import React, { useRef, useState, useLayoutEffect } from 'react';
-import { EdgesGeometry, LineSegments, Mesh, Texture } from 'three';
+import React from 'react';
+import { Texture } from 'three';
 
 import { deg2rad } from '../../Utilities/math';
 import { Vector3F } from '../../Utilities/types';
+import { useHighlightableEdges } from '../../hooks/useHighlightableEdges';
 
 interface Props {
   position: Vector3F;
@@ -38,31 +39,13 @@ const SkinnableBox = ({
   renderOrder = 0,
   renderTransparency = false,
 }: Props) => {
-  const [hover, setHover] = useState(false);
-  const mesh = useRef<Mesh>();
-  const segments = useRef<LineSegments>();
-
-  useLayoutEffect(() => {
-    if (!mesh.current || !segments.current) {
-      return;
-    }
-
-    segments.current.geometry = new EdgesGeometry(mesh.current.geometry);
-  }, [mesh.current?.geometry]);
-
-  const isHighlighted = isSelectable && (hover || isSelected);
+  const highlightableEdges = useHighlightableEdges();
+  const isHighlighted =
+    isSelectable && (highlightableEdges.isHovered || isSelected);
 
   const handleOnClick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
     onClick(e);
-  };
-  const handlePointerOver = (e: ThreeEvent<PointerEvent>) => {
-    e.stopPropagation();
-    setHover(true);
-  };
-  const handlePointerOut = (e: ThreeEvent<PointerEvent>) => {
-    e.stopPropagation();
-    setHover(false);
   };
 
   const forceTransparency =
@@ -92,12 +75,11 @@ const SkinnableBox = ({
 
   return (
     <mesh
-      ref={mesh}
+      ref={highlightableEdges.meshRef}
+      {...highlightableEdges.meshProps}
       position={[bzwPosX, bzwPosZ + bzwSizeZ / 2, -bzwPosY]}
       rotation={[0, deg2rad(rotation), 0]}
       onClick={handleOnClick}
-      onPointerOver={handlePointerOver}
-      onPointerOut={handlePointerOut}
       renderOrder={renderOrder}
     >
       <boxBufferGeometry args={[bzwSizeX * 2, bzwSizeZ, bzwSizeY * 2]} />
@@ -109,13 +91,7 @@ const SkinnableBox = ({
       <meshBasicMaterial {...standardProps} {...xPosMatProps} /> {/* +x */}
       <meshBasicMaterial {...standardProps} {...xNegMatProps} /> {/* -x */}
       {/* === Edges Highlighting === */}
-      <lineSegments ref={segments}>
-        <lineBasicMaterial
-          color={0x00ffff}
-          transparent={!isHighlighted}
-          opacity={isHighlighted ? 1 : 0}
-        />
-      </lineSegments>
+      {highlightableEdges.jsxHighlight({ isHighlighted })}
     </mesh>
   );
 };
