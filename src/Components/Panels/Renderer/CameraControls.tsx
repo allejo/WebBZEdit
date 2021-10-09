@@ -7,7 +7,7 @@ import {
   ICameraPositionResetEvent,
 } from '../../../Events/ICameraPositionResetEvent';
 import eventBus from '../../../Utilities/EventBus';
-import { usePageStatus } from '../../../Utilities/usePageStatus';
+import { usePageStatus } from '../../../hooks/usePageStatus';
 
 // https://spectrum.chat/@react-three/fiber/general/property-orbitcontrols-does-not-exist-on-type-jsx-intrinsicelements~44712e68-4601-4486-b4b4-5e112f3dc09e
 declare global {

@@ -4,8 +4,8 @@ import {
   IModalToggleEvent,
   IModalToggleEventName,
 } from '../Events/IModalToggleEvent';
-import eventBus from './EventBus';
-import keyboard from './keyboard';
+import eventBus from '../Utilities/EventBus';
+import keyboard from '../Utilities/keyboard';
 
 const interactiveElements: string[] = ['button', 'textarea', 'input', 'select'];
 
