@@ -3,10 +3,24 @@ import { slugify } from '../../Utilities/slugify';
 import { assumeType } from '../../Utilities/types';
 import { INameable } from '../Attributes/INameable';
 import { IBaseObject } from '../Obstacles/BaseObject';
+import { RabbitMode } from '../Obstacles/Option';
 import { ITeleporter } from '../Obstacles/Teleporter';
 import { ITeleporterLink } from '../Obstacles/TeleporterLink';
 import { IWorld } from '../Obstacles/World';
+import { GameMode } from './GameMode';
 
+/**
+ * A helper class that takes in an IWorld object and allows for easily editing
+ * it by managing references between objects.
+ *
+ * Generally, it is inexpensive to create new instances of this class for quick
+ * edits and does not need to be shared between scopes. However, if you are
+ * editing objects that have references such as teleporters with links or
+ * obstacles with materials, then it is crucial to share that instance as much
+ * as possible; this class will create internal caches of references when
+ * working with them and recreating these caches can become expensive with
+ * larger maps.
+ */
 export class WorldEditorHelper {
   private areLinksCached: boolean = false;
   private teleCache: Record<string, string> = {};
@@ -155,6 +169,66 @@ export class WorldEditorHelper {
   clearTeleCache = (): void => {
     this.areLinksCached = false;
     this.teleCache = {};
+  };
+
+  getGameMode = (): GameMode => {
+    if (this.world._options['-c'] === true) {
+      return GameMode.CaptureTheFlag;
+    }
+
+    if (this.world._options['-offa'] === true) {
+      return GameMode.OpenFreeForAll;
+    }
+
+    let rabbitMode;
+    if ((rabbitMode = this.world._options['-rabbit'])) {
+      if (rabbitMode === RabbitMode.killer) {
+        return GameMode.RabbitByKiller;
+      }
+
+      if (rabbitMode === RabbitMode.random) {
+        return GameMode.RabbitByRandom;
+      }
+
+      if (rabbitMode === RabbitMode.score) {
+        return GameMode.RabbitByScore;
+      }
+    }
+
+    return GameMode.FreeForAll;
+  };
+
+  setGameMode = (mode: GameMode): void => {
+    const gameModeOpts = ['-c', '-offa', '-rabbit'];
+
+    for (const gameModeOpt of gameModeOpts) {
+      delete this.world._options[gameModeOpt];
+    }
+
+    switch (mode) {
+      case GameMode.CaptureTheFlag:
+        this.world._options['-c'] = true;
+        break;
+
+      case GameMode.OpenFreeForAll:
+        this.world._options['-offa'] = true;
+        break;
+
+      case GameMode.RabbitByKiller:
+        this.world._options['-rabbit'] = RabbitMode.killer;
+        break;
+
+      case GameMode.RabbitByRandom:
+        this.world._options['-rabbit'] = RabbitMode.random;
+        break;
+
+      case GameMode.RabbitByScore:
+        this.world._options['-rabbit'] = RabbitMode.score;
+        break;
+
+      default:
+        break;
+    }
   };
 
   private cacheLinks = (): void => {

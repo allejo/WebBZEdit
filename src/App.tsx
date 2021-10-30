@@ -3,6 +3,7 @@ import React from 'react';
 import HixDocumentLoader from './Components/HixDocumentLoader';
 import AboutModal from './Components/Modals/AboutModal';
 import FlagSettingsModal from './Components/Modals/FlagSettingsModal';
+import GameplaySettingsModal from './Components/Modals/GameplaySettingsModal';
 import TeleporterLinkEditorModal from './Components/Modals/TeleporterLinkEditorModal';
 import WorldSettingsModal from './Components/Modals/WorldSettingsModal';
 import InventoryPanel from './Components/Panels/InventoryPanel';
@@ -36,8 +37,9 @@ const App: React.FC = () => (
     <>
       <AboutModal />
       <FlagSettingsModal />
-      <WorldSettingsModal />
+      <GameplaySettingsModal />
       <TeleporterLinkEditorModal />
+      <WorldSettingsModal />
     </>
   </div>
 );

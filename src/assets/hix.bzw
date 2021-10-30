@@ -71,6 +71,10 @@ size 400.0
 flagHeight 0.0
 end
 
+options
+  -c
+end
+
 # top of the world
 box
 position 0.0 0.0 29.0

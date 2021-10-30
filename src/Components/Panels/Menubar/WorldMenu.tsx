@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import { Menu, MenuButton, MenuSeparator, useMenuState } from 'reakit/Menu';
 
 import FlagSettingsMenuItem from './WorldMenu/FlagSettingsMenuItem';
+import GameplaySettingsMenuItem from './WorldMenu/GameplaySettingsMenuItem';
 import WorldSettingsMenuItem from './WorldMenu/WorldSettingsMenuItem';
 
 import styles from './menu-styles.module.scss';
@@ -18,6 +19,7 @@ const WorldMenu = forwardRef<HTMLButtonElement>((props, ref) => {
         <WorldSettingsMenuItem {...menu} />
         <MenuSeparator />
         <FlagSettingsMenuItem {...menu} />
+        <GameplaySettingsMenuItem {...menu} />
       </Menu>
     </>
   );
