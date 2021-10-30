@@ -6,24 +6,18 @@ import {
   FlagSettingsModalOpenEventName,
   IFlagSettingsModalOpenEvent,
 } from '../../../../Events/IFlagSettingsModalOpenEvent';
-import eventBus from '../../../../Utilities/EventBus';
-import MenuItem from '../MenuItem';
+import TriggerModalMenuItem from '../shared/TriggerModalMenuItem';
 
 interface Props extends MenuStateReturn {}
 
-const FlagSettingsMenuItem = ({ ...menu }: Props) => {
-  const handleOnTriggerMenuItem = () => {
-    eventBus.dispatch<IFlagSettingsModalOpenEvent>(
-      FlagSettingsModalOpenEventName,
-      {},
-    );
-  };
-
-  return (
-    <MenuItem {...menu} icon={faFlag} onTrigger={handleOnTriggerMenuItem}>
-      Flag Settings
-    </MenuItem>
-  );
-};
+const FlagSettingsMenuItem = ({ ...menu }: Props) => (
+  <TriggerModalMenuItem<IFlagSettingsModalOpenEvent>
+    eventData={{}}
+    eventName={FlagSettingsModalOpenEventName}
+    icon={faFlag}
+    menuName="Flag Settings"
+    {...menu}
+  />
+);
 
 export default FlagSettingsMenuItem;

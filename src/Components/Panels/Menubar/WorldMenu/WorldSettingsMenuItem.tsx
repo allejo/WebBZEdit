@@ -6,24 +6,18 @@ import {
   IWorldSettingsModalOpenEvent,
   WorldSettingsModalOpenEventName,
 } from '../../../../Events/IWorldSettingsModalOpenEvent';
-import eventBus from '../../../../Utilities/EventBus';
-import MenuItem from '../MenuItem';
+import TriggerModalMenuItem from '../shared/TriggerModalMenuItem';
 
 interface Props extends MenuStateReturn {}
 
-const WorldSettingsMenuItem = ({ ...menu }: Props) => {
-  const handleOnTriggerMenuItem = () => {
-    eventBus.dispatch<IWorldSettingsModalOpenEvent>(
-      WorldSettingsModalOpenEventName,
-      {},
-    );
-  };
-
-  return (
-    <MenuItem {...menu} icon={faGlobe} onTrigger={handleOnTriggerMenuItem}>
-      World Settings
-    </MenuItem>
-  );
-};
+const WorldSettingsMenuItem = ({ ...menu }: Props) => (
+  <TriggerModalMenuItem<IWorldSettingsModalOpenEvent>
+    eventData={{}}
+    eventName={WorldSettingsModalOpenEventName}
+    icon={faGlobe}
+    menuName="World Settings"
+    {...menu}
+  />
+);
 
 export default WorldSettingsMenuItem;
