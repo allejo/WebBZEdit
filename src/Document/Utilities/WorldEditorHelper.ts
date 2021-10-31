@@ -231,6 +231,22 @@ export class WorldEditorHelper {
     }
   };
 
+  enableJumping = (enabled: boolean): void => {
+    this.world._options['-j'] = enabled;
+  };
+
+  isJumpingEnabled = (): boolean => {
+    return !!this.world._options['-j'];
+  };
+
+  enableRicochets = (enabled: boolean): void => {
+    this.world._options['+r'] = enabled;
+  };
+
+  areRicochetsEnabled = (): boolean => {
+    return !!this.world._options['+r'];
+  };
+
   private cacheLinks = (): void => {
     if (this.areLinksCached) {
       return;

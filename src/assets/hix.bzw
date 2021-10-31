@@ -73,6 +73,8 @@ end
 
 options
   -c
+  -j
+  +r
 end
 
 # top of the world
