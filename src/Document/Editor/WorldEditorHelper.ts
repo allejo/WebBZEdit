@@ -1,4 +1,5 @@
 import { IWorld } from '../Obstacles/World';
+import { getFriendlyFire, setFriendlyFire } from './FriendlyFireEditor';
 import { getGameMode, setGameMode } from './GameModeEditor';
 import {
   areRicochetsEnabled,
@@ -49,6 +50,8 @@ export class WorldEditorHelper {
   public isJumpingEnabled = isJumpingEnabled;
   public enableRicochets = enableRicochets;
   public areRicochetsEnabled = areRicochetsEnabled;
+  public getFriendlyFire = getFriendlyFire;
+  public setFriendlyFire = setFriendlyFire;
 
   cleanUp = (): void => {
     this.clearTeleporterCache();
