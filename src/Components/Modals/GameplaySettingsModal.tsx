@@ -3,8 +3,11 @@ import React, { useCallback, useState } from 'react';
 import { useDialogState } from 'reakit';
 import { useRecoilState } from 'recoil';
 
-import { GameMode, GameModeLiterals } from '../../Document/Utilities/GameMode';
-import { WorldEditorHelper } from '../../Document/Utilities/WorldEditorHelper';
+import {
+  GameMode,
+  GameModeLiterals,
+} from '../../Document/Editor/GameModeEditor';
+import { WorldEditorHelper } from '../../Document/Editor/WorldEditorHelper';
 import { GameplaySettingsModalOpenEventName } from '../../Events/IGameplaySettingsModalOpenEvent';
 import { documentState } from '../../atoms';
 import Button from '../Button';

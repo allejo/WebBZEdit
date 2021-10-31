@@ -5,9 +5,9 @@ import React from 'react';
 import { MenuStateReturn } from 'reakit';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
+import { WorldEditorHelper } from '../../../../Document/Editor/WorldEditorHelper';
 import { IBaseObject } from '../../../../Document/Obstacles/BaseObject';
 import { IWorld } from '../../../../Document/Obstacles/World';
-import { WorldEditorHelper } from '../../../../Document/Utilities/WorldEditorHelper';
 import { documentState, selectionState } from '../../../../atoms';
 import MenuItem, { IMenuItemProps } from '../MenuItem';
 

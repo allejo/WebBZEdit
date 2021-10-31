@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react';
 import { useDialogState } from 'reakit';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { WorldEditorHelper } from '../../Document/Editor/WorldEditorHelper';
 import { ITeleporter } from '../../Document/Obstacles/Teleporter';
 import {
   ITeleporterLink,
@@ -18,7 +19,6 @@ import {
   TeleporterSide,
   teleporterSideLiteral,
 } from '../../Document/Obstacles/TeleporterLink';
-import { WorldEditorHelper } from '../../Document/Utilities/WorldEditorHelper';
 import {
   TeleLinkEditorOpenEvent,
   TeleLinkEditorOpenEventName,

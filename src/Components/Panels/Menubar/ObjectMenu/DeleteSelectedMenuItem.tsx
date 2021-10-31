@@ -4,8 +4,8 @@ import React from 'react';
 import { MenuStateReturn } from 'reakit';
 import { useRecoilState } from 'recoil';
 
+import { WorldEditorHelper } from '../../../../Document/Editor/WorldEditorHelper';
 import { IWorld } from '../../../../Document/Obstacles/World';
-import { WorldEditorHelper } from '../../../../Document/Utilities/WorldEditorHelper';
 import { documentState, selectionState } from '../../../../atoms';
 import MenuItem from '../MenuItem';
 
