@@ -4,6 +4,7 @@
     flex-wrap: wrap;
 
     .label {
+      margin-bottom: 0;
       margin-left: 0.5rem;
       order: 2;
     }
@@ -65,4 +66,5 @@
   color: rgba(#fff, 0.5);
   font-size: 0.8rem;
   line-height: 1.2em;
+  margin-top: 0.25rem;
 }

@@ -18,6 +18,7 @@ export type ValueValidator<T> = (value: T) => boolean;
 
 export interface FieldProps<T> {
   className?: string;
+  disabled?: boolean;
   hideLabel?: boolean;
   label: string;
   labelProps?: HTMLProps<HTMLLabelElement>;
@@ -79,6 +80,7 @@ const BaseFormField = <T,>({
   castTypeToStr,
   description = '',
   className,
+  disabled,
   hideLabel = false,
   label,
   labelProps = {},
@@ -120,6 +122,7 @@ const BaseFormField = <T,>({
   const helpDesc = helpDescRaw.join(' ');
   const standardProps: HTMLProps<SupportedHTMLElements> = {
     id: elementId,
+    disabled: disabled,
     onChange: handleOnChange,
     'aria-invalid': false,
     'aria-describedby': helpDesc ? helpDescId : undefined,
@@ -134,6 +137,7 @@ const BaseFormField = <T,>({
   return (
     <div
       className={classList([styles.wrapper, className])}
+      data-form-disabled={disabled}
       data-form-type={type || tag}
     >
       <label
