@@ -1,4 +1,4 @@
-import { RabbitMode } from '../Obstacles/Option';
+import { OptionsFlag, RabbitMode } from '../Obstacles/Option';
 import { WorldEditorHelper } from './WorldEditorHelper';
 
 export enum GameMode {
@@ -51,7 +51,7 @@ export function getGameMode(this: WorldEditorHelper): GameMode {
 }
 
 export function setGameMode(this: WorldEditorHelper, mode: GameMode): void {
-  const gameModeOpts = ['-c', '-offa', '-rabbit'];
+  const gameModeOpts: OptionsFlag[] = ['-c', '-offa', '-rabbit'];
 
   for (const gameModeOpt of gameModeOpts) {
     delete this.world._options[gameModeOpt];
