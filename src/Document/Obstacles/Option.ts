@@ -174,3 +174,5 @@ export function newIOptions(): IOptions {
     ...newIBaseObject('options'),
   };
 }
+
+export type OptionsFlag = keyof IOptions;

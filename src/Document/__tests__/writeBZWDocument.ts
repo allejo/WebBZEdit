@@ -1,5 +1,3 @@
-import dedent from 'dedent';
-
 import { newIBox } from '../Obstacles/Box';
 import { newIMesh } from '../Obstacles/Mesh';
 import { newIMeshFace } from '../Obstacles/MeshFace';
@@ -12,13 +10,8 @@ import {
   TeleporterSide,
 } from '../Obstacles/TeleporterLink';
 import { IWorld, newIWorld } from '../Obstacles/World';
+import { bzw } from '../testingUtilities';
 import { writeBZWDocument } from '../writeBZWDocument';
-
-function bzw(strings: TemplateStringsArray, ...placeholders: any[]): string {
-  return dedent(strings)
-    .replace(/(\r\n|\r|\n)/g, '\r\n')
-    .trim();
-}
 
 describe('BZW Document Writer', () => {
   it('should output the world object', () => {

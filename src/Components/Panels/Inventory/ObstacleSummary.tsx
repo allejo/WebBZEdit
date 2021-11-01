@@ -12,10 +12,10 @@ import React, {
 } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { WorldEditorHelper } from '../../../Document/Editor/WorldEditorHelper';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
 import { ITankModelObjectType } from '../../../Document/Obstacles/TankModel';
-import { WorldEditorHelper } from '../../../Document/Utilities/WorldEditorHelper';
 import { classList } from '../../../Utilities/cssClasses';
 import keyboard from '../../../Utilities/keyboard';
 import { documentState, selectionState } from '../../../atoms';
