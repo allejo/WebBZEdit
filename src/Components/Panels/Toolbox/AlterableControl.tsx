@@ -9,7 +9,7 @@ import { implementsISizeable } from '../../../Document/Attributes/ISizeable';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
 import { ITankModelObjectType } from '../../../Document/Obstacles/TankModel';
 import { Vector3F } from '../../../Utilities/types';
-import NumericalControl from './NumericalControl';
+import NumberField from '../../Form/NumberField';
 import Vector3FControl from './Vector3FControl';
 
 import styles from './AlterableControl.module.scss';
@@ -46,33 +46,15 @@ const AlterableControl = ({ data, onChange }: Props) => {
     });
   };
   const handleSizeOnChange = (proposedSize: Vector3F) => {
-    const size: Vector3F = [...proposedSize];
-
-    // Make sure we don't get any weird sizes with 0s
-    for (const i in size) {
-      if (size[i] <= 0) {
-        size[i] = 0.01;
-      }
-    }
-
     onChange({
       ...data,
-      size,
+      size: proposedSize,
     });
   };
   const handleRotationOnChange = (proposedRotation: number) => {
-    let rotation = proposedRotation;
-
-    // Only allow 0 - 359 degrees of rotation
-    if (rotation < 0) {
-      rotation = 360 + proposedRotation;
-    } else if (rotation >= 360) {
-      rotation = 360 - proposedRotation;
-    }
-
     onChange({
       ...data,
-      rotation,
+      rotation: proposedRotation,
     });
   };
 
@@ -90,15 +72,22 @@ const AlterableControl = ({ data, onChange }: Props) => {
           name="Size"
           className={styles.size}
           onChange={handleSizeOnChange}
+          ranges={{
+            x: [0.01],
+            y: [0.01],
+            z: [0.01],
+          }}
           value={data.size}
         />
       )}
 
-      <NumericalControl
+      <NumberField
         className={styles.rotation}
         label="Rotation"
-        layout="vertical"
         onChange={handleRotationOnChange}
+        minValue={0}
+        maxValue={360}
+        cycleValues={true}
         value={data.rotation ?? 0}
       />
     </section>

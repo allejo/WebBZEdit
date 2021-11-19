@@ -23,6 +23,16 @@
       position: relative;
     }
   }
+
+  &[data-layout='horizontal'] {
+    align-items: center;
+    display: flex;
+
+    .label {
+      margin-bottom: 0;
+      margin-right: 1rem;
+    }
+  }
 }
 
 .label {
