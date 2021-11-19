@@ -5,10 +5,12 @@
   display: flex;
   font-size: 1.25rem;
   font-style: italic;
-  height: 100%;
   justify-content: center;
   margin: 0 auto;
   width: 75%;
+
+  // @TODO: come up with something better
+  height: 160.56px; // a magic number
 }
 
 .toolContainer {
