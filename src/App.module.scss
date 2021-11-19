@@ -4,7 +4,7 @@
   display: grid;
   height: 100vh;
   grid-template-columns: 1.6fr 0.4fr;
-  grid-template-rows: 0.1fr 2.3fr 0.6fr;
+  grid-template-rows: auto 2.3fr;
   gap: 0 0;
   grid-template-areas:
     'Menubar Menubar'
@@ -24,7 +24,6 @@
   background-color: $color-grey-dark;
   color: $color-white;
   grid-area: Toolbox;
-  max-height: 25vh;
   padding: 1rem;
 }
 
