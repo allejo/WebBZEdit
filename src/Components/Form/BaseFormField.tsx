@@ -1,6 +1,11 @@
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { HTMLProps, ReactNode, SyntheticEvent } from 'react';
+import React, {
+  HTMLAttributes,
+  HTMLProps,
+  ReactNode,
+  SyntheticEvent,
+} from 'react';
 
 import { classList } from '../../Utilities/cssClasses';
 import { slugify } from '../../Utilities/slugify';
@@ -16,10 +21,19 @@ type SupportedHTMLElements =
 
 export type ValueValidator<T> = (value: T) => boolean;
 
-export interface FieldProps<T> {
+type BaseFieldProps = HTMLAttributes<HTMLInputElement>;
+type Blacklist = 'onChange';
+
+export enum FieldLayout {
+  Stacked = 'default',
+  Horizontal = 'horizontal',
+}
+
+export interface FieldProps<T> extends Omit<BaseFieldProps, Blacklist> {
   className?: string;
   disabled?: boolean;
   hideLabel?: boolean;
+  layout?: FieldLayout;
   label: string;
   labelProps?: HTMLProps<HTMLLabelElement>;
   description?: string;
@@ -82,6 +96,7 @@ const BaseFormField = <T,>({
   className,
   disabled,
   hideLabel = false,
+  layout = FieldLayout.Stacked,
   label,
   labelProps = {},
   allowChange = () => true,
@@ -126,6 +141,7 @@ const BaseFormField = <T,>({
     onChange: handleOnChange,
     'aria-invalid': false,
     'aria-describedby': helpDesc ? helpDescId : undefined,
+    ...props,
   };
 
   if (isCheckbox) {
@@ -139,6 +155,7 @@ const BaseFormField = <T,>({
       className={classList([styles.wrapper, className])}
       data-form-disabled={disabled}
       data-form-type={type || tag}
+      data-layout={layout}
     >
       <label
         htmlFor={elementId}
