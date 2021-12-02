@@ -29,6 +29,7 @@ import thumbBox from '../../../assets/thumb_box.png';
 import thumbPyramid from '../../../assets/thumb_pyramid.png';
 import thumbTank from '../../../assets/thumb_tank.png';
 import thumbTeleporter from '../../../assets/thumb_teleporter.png';
+import thumbZone from '../../../assets/thumb_zone.png';
 import styles from './ObstacleSummary.module.scss';
 
 interface Props {
@@ -42,6 +43,7 @@ const obstacleThumbs: Record<string, string> = {
   box: thumbBox,
   pyramid: thumbPyramid,
   teleporter: thumbTeleporter,
+  zone: thumbZone,
   [ITankModelObjectType]: thumbTank,
 };
 
