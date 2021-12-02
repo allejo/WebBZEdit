@@ -23,8 +23,8 @@ export const ZoneProperties = {
 export interface IZone extends IBaseObject, INameable, IPositionable {
   zoneflag: string[];
   flag: string[];
-  team?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  safety?: 1 | 2 | 3 | 4;
+  team?: (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
+  safety?: (1 | 2 | 3 | 4)[];
 }
 
 export function newIZone(): IZone {
