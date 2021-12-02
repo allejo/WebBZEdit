@@ -5,6 +5,7 @@ import {
   IZoneSafety,
   IZoneTeam,
 } from '../../../Document/Obstacles/Zone';
+import ToggleTip from '../../ToggleTip';
 
 import styles from './ZoneControl.module.scss';
 
@@ -30,7 +31,15 @@ const ZoneControl = ({ data, onChange }: Props) => {
   return (
     <section>
       <div className={styles.stacked}>
-        <label htmlFor="team-spawning">Team Spawning</label>
+        <label htmlFor="team-spawning">
+          Team Spawning
+          <ToggleTip
+            content={`
+              These teams will be assigned
+              to spawn in this zone
+            `}
+          />
+        </label>
         <select
           id="team-spawning"
           multiple={true}
@@ -54,7 +63,17 @@ const ZoneControl = ({ data, onChange }: Props) => {
         </select>
       </div>
       <div className={styles.stacked}>
-        <label htmlFor="safety-zone">Team Flag Safety</label>
+        <label htmlFor="safety-zone">
+          Team Flag Safety
+          <ToggleTip
+            content={`
+              When a team flag is dropped over
+              an "unsafe" ground (e.g. slope, death
+              physics), it will fly to the closest
+              "safety" zone.
+            `}
+          />
+        </label>
         <select
           id="safety-zone"
           multiple={true}

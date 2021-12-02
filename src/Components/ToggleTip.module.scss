@@ -1,0 +1,70 @@
+.container {
+  padding: 0 0.25rem;
+}
+
+.toggletip {
+  appearance: none;
+  background: none;
+  border: 0;
+  color: white;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.bubble {
+  $arrow-distance: -4px;
+
+  position: relative;
+  z-index: 100;
+
+  &[data-popper-placement^='top'] .arrow {
+    bottom: $arrow-distance;
+  }
+
+  &[data-popper-placement^='bottom'] .arrow {
+    top: $arrow-distance;
+  }
+
+  &[data-popper-placement^='left'] .arrow {
+    right: $arrow-distance;
+  }
+
+  &[data-popper-placement^='right'] .arrow {
+    left: $arrow-distance;
+  }
+}
+
+.arrow {
+  &,
+  &::before {
+    $size: 10px;
+
+    height: $size;
+    position: absolute;
+    width: $size;
+    z-index: -1;
+  }
+
+  &::before {
+    background-color: black;
+    content: '';
+    left: 0;
+    top: 0;
+    transform: rotate(45deg);
+  }
+}
+
+.message {
+  background-color: black;
+  border-radius: 3px;
+  color: white;
+  display: inline-block;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  padding: 0.5rem 1rem;
+
+  span {
+    display: block;
+  }
+}
