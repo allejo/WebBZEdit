@@ -26,6 +26,8 @@ export interface IZone extends IBaseObject, INameable, IPositionable {
   team?: (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
   safety?: (1 | 2 | 3 | 4)[];
 }
+export type IZoneTeam = Exclude<IZone['team'], undefined>[0];
+export type IZoneSafety = Exclude<IZone['safety'], undefined>[0];
 
 export function newIZone(): IZone {
   return {
