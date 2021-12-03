@@ -6,48 +6,47 @@
   appearance: none;
   background: none;
   border: 0;
-  color: white;
+  color: var(--toggle-tip-color);
   cursor: pointer;
   line-height: 1;
   padding: 0;
 }
 
 .bubble {
-  $arrow-distance: -4px;
+  --arrow-distance: -4px;
 
   position: relative;
   z-index: 100;
 
   &[data-popper-placement^='top'] .arrow {
-    bottom: $arrow-distance;
+    bottom: var(--arrow-distance);
   }
 
   &[data-popper-placement^='bottom'] .arrow {
-    top: $arrow-distance;
+    top: var(--arrow-distance);
   }
 
   &[data-popper-placement^='left'] .arrow {
-    right: $arrow-distance;
+    right: var(--arrow-distance);
   }
 
   &[data-popper-placement^='right'] .arrow {
-    left: $arrow-distance;
+    left: var(--arrow-distance);
   }
 }
 
 .arrow {
   &,
   &::before {
-    $size: 10px;
+    --arrow-size: 10px;
 
-    height: $size;
+    height: var(--arrow-size);
     position: absolute;
-    width: $size;
-    z-index: -1;
+    width: var(--arrow-size);
   }
 
   &::before {
-    background-color: black;
+    background-color: var(--toggle-tip-background);
     content: '';
     left: 0;
     top: 0;
@@ -56,13 +55,14 @@
 }
 
 .message {
-  background-color: black;
-  border-radius: 3px;
-  color: white;
+  background-color: var(--toggle-tip-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  color: var(--toggle-tip-color);
   display: inline-block;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   line-height: 1.3;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
 
   span {
     display: block;

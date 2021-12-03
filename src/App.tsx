@@ -14,6 +14,7 @@ import ToolboxPanel from './Components/Panels/ToolboxPanel';
 import './EventListeners';
 
 import styles from './App.module.scss';
+import './global.css';
 
 const App: React.FC = () => (
   <div className={styles.wrapper}>

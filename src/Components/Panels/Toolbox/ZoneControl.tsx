@@ -1,10 +1,6 @@
 import React, { ChangeEvent } from 'react';
 
-import {
-  IZone,
-  IZoneSafety,
-  IZoneTeam,
-} from '../../../Document/Obstacles/Zone';
+import { IZone, IZoneSafety } from '../../../Document/Obstacles/Zone';
 import ToggleTip from '../../ToggleTip';
 
 import styles from './ZoneControl.module.scss';
@@ -44,21 +40,14 @@ const ZoneControl = ({ data, onChange }: Props) => {
           id="team-spawning"
           multiple={true}
           onChange={handleMultiSelect('team')}
+          value={data.team?.map(String)}
         >
           {['Rogue', 'Red', 'Green', 'Blue', 'Purple', 'Rabbit', 'Hunter'].map(
-            (value: string, index: number) => {
-              const teamVal = index as IZoneTeam;
-
-              return (
-                <option
-                  key={index}
-                  value={index}
-                  selected={data.team?.indexOf(teamVal) !== -1}
-                >
-                  {value}
-                </option>
-              );
-            },
+            (value: string, index: number) => (
+              <option key={index} value={index}>
+                {value}
+              </option>
+            ),
           )}
         </select>
       </div>
@@ -78,21 +67,14 @@ const ZoneControl = ({ data, onChange }: Props) => {
           id="safety-zone"
           multiple={true}
           onChange={handleMultiSelect('safety')}
+          value={data.safety?.map(String)}
         >
           {['Red', 'Green', 'Blue', 'Purple'].map(
-            (value: string, index: number) => {
-              const teamVal = (index + 1) as IZoneSafety;
-
-              return (
-                <option
-                  key={index}
-                  value={teamVal}
-                  selected={data.safety?.indexOf(teamVal) !== -1}
-                >
-                  {value}
-                </option>
-              );
-            },
+            (value: string, index: number) => (
+              <option key={index} value={(index + 1) as IZoneSafety}>
+                {value}
+              </option>
+            ),
           )}
         </select>
       </div>
