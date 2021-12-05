@@ -1,8 +1,9 @@
-import React, { MouseEvent, useEffect, useRef } from 'react';
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { documentState, selectionState } from '../../atoms';
+import TextField from '../Form/TextField';
 import ObstacleSummary from './Inventory/ObstacleSummary';
 
 import styles from './InventoryPanel.module.scss';
@@ -23,10 +24,19 @@ function isElementInViewport(el: Element): boolean {
 const InventoryPanel = () => {
   const bzwDocument = useRecoilValue(documentState);
   const [selection, setSelection] = useRecoilState(selectionState);
+  const [searchTerm, setSearchTerm] = useState('');
   const refs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const handleOnClick = (event: MouseEvent, obstacle: IBaseObject) => {
     setSelection(obstacle._uuid);
+  };
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+  };
+  const filterObjects = (object: IBaseObject) => {
+    const displayName =
+      object.name || `${object._objectType} ${object._uuid.substr(0, 8)}`;
+    return displayName.includes(searchTerm);
   };
 
   // If the selection changes, scroll to the element in our inventory if it's
@@ -48,8 +58,16 @@ const InventoryPanel = () => {
 
   return (
     <div className={styles.wrapper}>
+      <TextField
+        label={'Obstacle Filter'}
+        onChange={handleSearch}
+        value={searchTerm}
+        style={{ marginBottom: '10px' }}
+        labelProps={{ style: { fontWeight: 'bold' } }}
+      />
       {Object.values(bzwDocument.children)
         .filter((object) => object._objectType !== 'link')
+        .filter(filterObjects)
         .map((object) => (
           // Don't display links on their own because they're displayed under the teleporters
           <ObstacleSummary

@@ -160,6 +160,7 @@ const BaseFormField = <T,>({
       <label
         htmlFor={elementId}
         className={classList([styles.label, [a11yStyles.srOnly, hideLabel]])}
+        {...labelProps}
       >
         {label}
       </label>
