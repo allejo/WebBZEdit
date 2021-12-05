@@ -34,7 +34,6 @@ const InventoryPanel = () => {
   };
   const handleSearch = (value: string) => {
     setSearchTerm(value);
-
     const tokens = value.split(' ');
     const types: string[] = [];
     const terms: string[] = [];
@@ -64,9 +63,11 @@ const InventoryPanel = () => {
 
   const filterObjectTypes = (object: IBaseObject) => {
     if (filterTypes.length !== 0) {
-      return filterTypes.some((type) => object._objectType === type);
+      return filterTypes.some(
+        (type) => object._objectType === type && object._objectType !== 'link',
+      );
     }
-    return true;
+    return object._objectType !== 'link';
   };
 
   // If the selection changes, scroll to the element in our inventory if it's
@@ -75,7 +76,6 @@ const InventoryPanel = () => {
     if (!selection) {
       return;
     }
-
     const ref = refs.current[selection];
     if (ref && !isElementInViewport(ref)) {
       ref.scrollIntoView();
@@ -96,7 +96,6 @@ const InventoryPanel = () => {
         labelProps={{ style: { fontWeight: 'bold' } }}
       />
       {Object.values(bzwDocument.children)
-        .filter((object) => object._objectType !== 'link')
         .filter(searchObjects)
         .filter(filterObjectTypes)
         .map((object) => (
