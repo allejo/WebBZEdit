@@ -34,9 +34,11 @@ const InventoryPanel = () => {
   };
   const handleSearch = (value: string) => {
     setSearchTerm(value);
-    const tokens = value.split(' ');
+
+    const tokens: string[] = value.split(' ');
     const types: string[] = [];
     const terms: string[] = [];
+
     tokens.forEach((term) => {
       if (term.substring(0, 4) === 'type') {
         if (term.substring(5) !== '') {
@@ -48,6 +50,7 @@ const InventoryPanel = () => {
         }
       }
     });
+
     setSearchTerms(terms);
     setFilterTypes(types);
   };
