@@ -24,7 +24,9 @@ function isElementInViewport(el: Element): boolean {
 const InventoryPanel = () => {
   const bzwDocument = useRecoilValue(documentState);
   const [selection, setSelection] = useRecoilState(selectionState);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerms, setSearchTerms] = useState<string[]>([]);
+  const [filterTypes, setFilterTypes] = useState<string[]>([]);
   const refs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const handleOnClick = (event: MouseEvent, obstacle: IBaseObject) => {
@@ -32,11 +34,39 @@ const InventoryPanel = () => {
   };
   const handleSearch = (value: string) => {
     setSearchTerm(value);
+
+    const tokens = value.split(' ');
+    const types: string[] = [];
+    const terms: string[] = [];
+    tokens.forEach((term) => {
+      if (term.substring(0, 4) === 'type') {
+        if (term.substring(5) !== '') {
+          types.push(term.substring(5));
+        }
+      } else {
+        if (term !== '') {
+          terms.push(term);
+        }
+      }
+    });
+    setSearchTerms(terms);
+    setFilterTypes(types);
   };
-  const filterObjects = (object: IBaseObject) => {
-    const displayName =
-      object.name || `${object._objectType} ${object._uuid.substr(0, 8)}`;
-    return displayName.includes(searchTerm);
+
+  const searchObjects = (object: IBaseObject) => {
+    if (searchTerms.length !== 0) {
+      const displayName =
+        object.name || `${object._objectType} ${object._uuid.substr(0, 8)}`;
+      return searchTerms.some((term) => displayName?.includes(term));
+    }
+    return true;
+  };
+
+  const filterObjectTypes = (object: IBaseObject) => {
+    if (filterTypes.length !== 0) {
+      return filterTypes.some((type) => object._objectType === type);
+    }
+    return true;
   };
 
   // If the selection changes, scroll to the element in our inventory if it's
@@ -67,7 +97,8 @@ const InventoryPanel = () => {
       />
       {Object.values(bzwDocument.children)
         .filter((object) => object._objectType !== 'link')
-        .filter(filterObjects)
+        .filter(searchObjects)
+        .filter(filterObjectTypes)
         .map((object) => (
           // Don't display links on their own because they're displayed under the teleporters
           <ObstacleSummary
