@@ -33,9 +33,10 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/",
     "fetch:bzdb-docs": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" scripts/fetch-bzdb-definitions.ts",
+    "fetch:flag-docs": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" scripts/fetch-flags.ts",
     "husky-setup": "husky install",
     "prettify": "prettier --write public/ scripts/ src/",
-    "prepare": "npm-run-all husky-setup fetch:bzdb-docs"
+    "prepare": "npm-run-all husky-setup fetch:*"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -64,6 +65,7 @@
     ]
   },
   "devDependencies": {
+    "@octokit/rest": "^18.12.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
