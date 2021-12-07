@@ -1,4 +1,5 @@
 import { Octokit } from '@octokit/rest';
+import dedent from 'dedent';
 import { writeFileSync } from 'fs';
 import yaml from 'js-yaml';
 import fetch from 'node-fetch';
@@ -50,9 +51,16 @@ async function getFlagDocs(): Promise<FlagDocumentation[]> {
 
 (async function () {
   const flags = await getFlagDocs();
+  const flagAbbvs: string[] = flags.map((flag) => flag.abbreviation);
 
   writeFileSync(
     resolve(dataDir, 'flags.json'),
     JSON.stringify(flags, null, '  '),
+  );
+  writeFileSync(
+    resolve(dataDir, 'flag-abbvs.ts'),
+    dedent`
+      export type FlagAbbv = "${flagAbbvs.join('"|"')}";
+    `,
   );
 })();
