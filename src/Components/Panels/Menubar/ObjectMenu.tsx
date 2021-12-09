@@ -6,6 +6,7 @@ import { newIBase } from '../../../Document/Obstacles/Base';
 import { newIBox } from '../../../Document/Obstacles/Box';
 import { newIPyramid } from '../../../Document/Obstacles/Pyramid';
 import { newITeleporter } from '../../../Document/Obstacles/Teleporter';
+import { newIZone } from '../../../Document/Obstacles/Zone';
 import AddObstacleMenuItem from './ObjectMenu/AddObstacleMenuItem';
 import ClearSelectionMenuItem from './ObjectMenu/ClearSelectionMenuItem';
 import DeleteSelectedMenuItem from './ObjectMenu/DeleteSelectedMenuItem';
@@ -44,6 +45,12 @@ const ObjectMenu = forwardRef<HTMLButtonElement>((props, ref) => {
           object="Teleporter"
           factory={newITeleporter}
           shortcut={{ key: 'T' }}
+          {...menu}
+        />
+        <AddObstacleMenuItem
+          object="Zone"
+          factory={newIZone}
+          shortcut={{ key: 'Z' }}
           {...menu}
         />
         <MenuSeparator />
