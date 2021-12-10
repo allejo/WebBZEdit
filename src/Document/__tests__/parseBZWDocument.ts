@@ -170,6 +170,7 @@ describe('BZW Document Parser', () => {
       flag SW
       flag good
       flag bad
+      flag GM OO US
       team 0 1 2 3 4
       safety 1 2 3 4
     end
@@ -181,8 +182,11 @@ describe('BZW Document Parser', () => {
     expect(zone.position).toEqual([0.0, 0.0, 0.0]);
     expect(zone.size).toEqual([1.0, 1.0, 1.0]);
     expect(zone.rotation).toEqual(0.0);
-    expect(zone.zoneflag).toEqual(['GM 2', 'OO']);
-    expect(zone.flag).toEqual(['L', 'SW', 'good', 'bad']);
+    expect(zone.zoneflag).toEqual([
+      ['GM', 2],
+      ['OO', 1],
+    ]);
+    expect(zone.flag).toEqual(['L', 'SW', 'good', 'bad', 'GM', 'OO', 'US']);
     expect(zone.team).toEqual([0, 1, 2, 3, 4]);
     expect(zone.safety).toEqual([1, 2, 3, 4]);
   });

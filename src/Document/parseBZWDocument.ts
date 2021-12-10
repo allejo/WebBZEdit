@@ -24,7 +24,7 @@ import {
   TextureMatrixProperties,
 } from './Obstacles/TextureMatrix';
 import { IWorld, newIWorld, WorldProperties } from './Obstacles/World';
-import { newIZone, ZoneProperties } from './Obstacles/Zone';
+import { IZone, newIZone, ZoneProperties } from './Obstacles/Zone';
 import {
   bzwString,
   RepeatableParserCallback,
@@ -148,7 +148,9 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
     factory: newIZone,
     parsers: ZoneProperties,
     onObstacleBegin: noop,
-    onObstacleComplete: noop,
+    onObstacleComplete: (zone: IZone) => {
+      zone.flag = zone.flag.flat(2);
+    },
   },
 };
 
