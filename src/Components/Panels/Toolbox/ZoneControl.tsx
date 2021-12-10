@@ -1,6 +1,14 @@
 import React, { ChangeEvent } from 'react';
 
 import { IZone, IZoneSafety } from '../../../Document/Obstacles/Zone';
+import {
+  IZoneEditorOpenEvent,
+  ZoneEditorMode,
+  ZoneEditorOpenEvent,
+  ZoneEditorOpenEventName,
+} from '../../../Events/IZoneEditorOpenEvent';
+import eventBus from '../../../Utilities/EventBus';
+import Button from '../../Button';
 import ToggleTip from '../../ToggleTip';
 
 import styles from './ZoneControl.module.scss';
@@ -22,6 +30,13 @@ const ZoneControl = ({ data, onChange }: Props) => {
       ...data,
       [key]: selected,
     });
+  };
+
+  const handleOpenEditor = (mode: ZoneEditorMode) => () => {
+    eventBus.dispatch<IZoneEditorOpenEvent>(
+      ZoneEditorOpenEventName,
+      new ZoneEditorOpenEvent(data, mode),
+    );
   };
 
   return (
@@ -77,6 +92,45 @@ const ZoneControl = ({ data, onChange }: Props) => {
             ),
           )}
         </select>
+      </div>
+      <div>
+        <p className="fs-small fw-bold mb2">Flags</p>
+
+        <div>
+          <div className="d-flex mb2">
+            <div className="flex-grow-1 mr2">
+              <Button type="success" onClick={handleOpenEditor('zoneFlag')}>
+                Zone Flags
+              </Button>
+            </div>
+            <ToggleTip
+              content={`
+                Zone Flags are flags that will always
+                exist in this zone regardless of global
+                flag settings; i.e. flags defined with
+                "+f" or "-f".
+              `}
+            />
+          </div>
+          <div className="d-flex">
+            <div className="flex-grow-1 mr2">
+              <Button
+                type="success"
+                className="w100"
+                onClick={handleOpenEditor('flag')}
+              >
+                Flags
+              </Button>
+            </div>
+            <ToggleTip
+              content={`
+                Regular flags are flags that _may_ spawn
+                in this zone depending on global flag
+                settings defined with "+f" or "-f".
+              `}
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

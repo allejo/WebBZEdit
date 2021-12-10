@@ -81,7 +81,8 @@ zone
   position 0 0 0
   size 10 10 5
   zoneflag G
-  flag GM
+  zoneflag GM 5
+  flag GM SW
   team 0
   safety 1 2
 end

@@ -1,0 +1,39 @@
+.container {
+  display: table;
+}
+
+.header {
+  font-weight: bold;
+}
+
+.header,
+.row {
+  display: table-row;
+}
+
+.flagCol,
+.countCol,
+.actionCol {
+  display: table-cell;
+  padding-bottom: var(--spacing-small);
+
+  input {
+    width: 4rem;
+  }
+}
+
+.flagCol {
+  width: 100%;
+}
+
+.countCol,
+.actionCol {
+  padding-left: var(--spacing-normal);
+  text-align: center;
+}
+
+.adder {
+  border-top: var(--border);
+  margin-top: var(--spacing-small);
+  padding-top: var(--spacing-small);
+}

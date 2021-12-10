@@ -60,7 +60,7 @@ async function getFlagDocs(): Promise<FlagDocumentation[]> {
   writeFileSync(
     resolve(dataDir, 'flag-abbvs.ts'),
     dedent`
-      export type FlagAbbv = "${flagAbbvs.join('"|"')}";
+      export type FlagAbbv = "good"|"bad"|"${flagAbbvs.join('"|"')}";
     `,
   );
 })();
