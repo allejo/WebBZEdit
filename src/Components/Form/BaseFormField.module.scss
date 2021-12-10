@@ -18,6 +18,12 @@
     }
   }
 
+  &[data-form-type='number'] {
+    .input {
+      text-align: right;
+    }
+  }
+
   &[data-form-type='select'] {
     .fieldContainer {
       position: relative;
