@@ -1,0 +1,20 @@
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+
+  --border: 1px solid var(--color-white);
+  --border-radius: 4px;
+
+  --box-shadow: var(--color-black) 5px 5px 10px 0;
+
+  --toggle-tip-background: #4e4e4e;
+  --toggle-tip-color: #fff;
+
+  --spacing-extra-small: 0.25rem;
+  --spacing-small: 0.5rem;
+  --spacing-normal: 1rem;
+  --spacing-large: 1.5rem;
+  --spacing-extra-large: 3rem;
+
+  --z-index-toggletip: 10;
+}

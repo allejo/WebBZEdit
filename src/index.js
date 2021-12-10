@@ -6,8 +6,11 @@ import { RecoilRoot } from 'recoil';
 
 import App from './App';
 
-import './sass/_utilities.scss';
+import './css/global.css';
+import './css/sizes.css';
+import './css/typography.css';
 import a11yPatterns from './sass/a11yPatterns.module.scss';
+import './sass/spacing.scss';
 
 // Enable color blind patterns for the page
 const body = document.getElementsByTagName('body');
