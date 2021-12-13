@@ -37,13 +37,13 @@ const ZoneFlagEditorModal = () => {
           );
         }
 
-        const isRegularFlags = eventData.getEditorMode() === 'flag';
+        const isRegularFlagEditor = eventData.getEditorMode() === 'flag';
         const zone = eventData.getZone();
         let flags = flagsDraft ?? zone.zoneflag;
 
         // Only do this map if we haven't made edits yet, otherwise we use our
         // array of draft edits.
-        if (isRegularFlags && !flagsDraft) {
+        if (isRegularFlagEditor && !flagsDraft) {
           flags = zone.flag.map((f) => [f, -1]);
         }
 
@@ -53,12 +53,17 @@ const ZoneFlagEditorModal = () => {
               return;
             }
 
+            // If we don't have any modifications to our flags, then bail out
+            if (flagsDraft === null) {
+              return;
+            }
+
             const updatedZone = draftWorld.children[zone._uuid] as IZone;
 
-            if (isRegularFlags) {
-              updatedZone.flag = flagsDraft?.map((def) => def[0]) ?? [];
+            if (isRegularFlagEditor) {
+              updatedZone.flag = flagsDraft.map((def) => def[0]);
             } else {
-              updatedZone.zoneflag = flagsDraft ?? [];
+              updatedZone.zoneflag = flagsDraft;
             }
 
             draftWorld.children[zone._uuid] = updatedZone;
@@ -68,10 +73,28 @@ const ZoneFlagEditorModal = () => {
           dialog.hide();
         };
 
+        const description = isRegularFlagEditor ? (
+          <>
+            Map-wide flag settings (i.e. <code>+f</code> or <code>-f</code>)
+            specify the number of each flag that <strong>may</strong> exist on
+            the map at any given time; these settings allow these map-wide flags
+            to spawn in this zone. There is no guarantee that these flags will
+            be found in this zone; if you're looking for a guarantee, use "Zone
+            Flags" instead.
+          </>
+        ) : (
+          <>
+            The specified amount of each of these flags will{' '}
+            <strong>always</strong> spawn inside of this zone, regardless of
+            map-wide flag settings (i.e. <code>+f</code> or <code>-f</code>).
+          </>
+        );
+
         return (
           <>
+            <p className="fc-muted fs-small">{description}</p>
             <FlagListEditor
-              allowCount={eventData.getEditorMode() === 'zoneFlag'}
+              allowCount={!isRegularFlagEditor}
               flags={flags}
               onChange={setFlagsDraft}
             />
