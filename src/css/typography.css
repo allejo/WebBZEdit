@@ -1,3 +1,12 @@
+.fc-muted {
+  color: rgba(
+    var(--color-white-r),
+    var(--color-white-g),
+    var(--color-white-b),
+    0.5
+  );
+}
+
 .fs-small {
   font-size: 0.8rem;
 }

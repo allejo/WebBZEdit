@@ -1,9 +1,22 @@
 :root {
+  --color-white-r: 255;
+  --color-white-g: 255;
+  --color-white-b: 255;
+
   --color-black: #000;
-  --color-white: #fff;
+  --color-white: rgb(
+    var(--color-white-r),
+    var(--color-white-g),
+    var(--color-white-b)
+  );
 
   --border: 1px solid var(--border-color);
-  --border-color: rgba(255, 255, 255, 0.25);
+  --border-color: rgba(
+    var(--color-white-r),
+    var(--color-white-g),
+    var(--color-white-b),
+    0.25
+  );
   --border-radius: 4px;
 
   --box-shadow: var(--color-black) 5px 5px 10px 0;
