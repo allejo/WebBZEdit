@@ -65,38 +65,47 @@ const FlagListEditor = ({ allowCount, flags, onChange }: Props) => {
 
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.header}>
+      <div className={styles.container} data-has-count={allowCount}>
+        <div className={classList([styles.row, 'fw-bold'])}>
           <div className={styles.flagCol}>Flag</div>
           {allowCount && <div className={styles.countCol}>Count</div>}
-          <div className={styles.actionCol}>Actions</div>
-        </div>
-        {flags.map((flag, index) => (
-          <div className={styles.row} key={flag[0]}>
-            <div className={styles.flagCol}>
-              <FlagName flag={flag[0]} disableTooltip={false} />
-            </div>
-            {allowCount && (
-              <div className={styles.countCol}>
-                <NumberField
-                  label={`Number of ${flag[0]} flags`}
-                  labelProps={{ className: 'sr-only' }}
-                  onChange={handleFlagEdit(index)}
-                  minValue={1}
-                  value={flag[1]}
-                />
-              </div>
-            )}
-            <div className={styles.actionCol}>
-              <Button type="danger" onClick={handleFlagDelete(index)}>
-                <FontAwesomeIcon icon={faTrashAlt} />
-              </Button>
-            </div>
+          <div className={styles.actionCol}>
+            <span className="sr-only">Actions</span>
           </div>
-        ))}
+        </div>
+        {flags.length === 0 ? (
+          <p className="ta-center">
+            <i>No flags defined</i>
+          </p>
+        ) : (
+          flags.map((flag, index) => (
+            <div className={styles.row} key={flag[0]}>
+              <div className={styles.flagCol}>
+                <FlagName flag={flag[0]} disableTooltip={false} />
+              </div>
+              {allowCount && (
+                <div className={styles.countCol}>
+                  <NumberField
+                    label={`Number of ${flag[0]} flags`}
+                    labelProps={{ className: 'sr-only' }}
+                    onChange={handleFlagEdit(index)}
+                    minValue={1}
+                    value={flag[1]}
+                  />
+                </div>
+              )}
+              <div className={styles.actionCol}>
+                <Button type="danger" onClick={handleFlagDelete(index)}>
+                  <FontAwesomeIcon icon={faTrashAlt} />
+                </Button>
+              </div>
+            </div>
+          ))
+        )}
         <div className={classList([styles.row, styles.adder])}>
           <div className={styles.flagCol}>
             <SelectField
+              className="w100"
               options={flagOptions}
               disabledItems={selectedFlags}
               label="New Flag"

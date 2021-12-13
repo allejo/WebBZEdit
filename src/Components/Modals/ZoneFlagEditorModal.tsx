@@ -75,11 +75,11 @@ const ZoneFlagEditorModal = () => {
               flags={flags}
               onChange={setFlagsDraft}
             />
-            <div className="ta-right">
+            <footer>
               <Button type="success" onClick={handleSaveClick}>
                 Save
               </Button>
-            </div>
+            </footer>
           </>
         );
       }}

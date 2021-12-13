@@ -2,7 +2,8 @@
   --color-black: #000;
   --color-white: #fff;
 
-  --border: 1px solid var(--color-white);
+  --border: 1px solid var(--border-color);
+  --border-color: rgba(255, 255, 255, 0.25);
   --border-radius: 4px;
 
   --box-shadow: var(--color-black) 5px 5px 10px 0;
