@@ -74,13 +74,13 @@ const FlagListEditor = ({ allowCount, flags, onChange }: Props) => {
           </div>
         </div>
         {flags.length === 0 ? (
-          <p className="ta-center">
+          <p className="ta-center" data-testid="empty-canvas">
             <i>No flags defined</i>
           </p>
         ) : (
           flags.map((flag, index) => (
             <div className={styles.row} key={flag[0]}>
-              <div className={styles.flagCol}>
+              <div className={styles.flagCol} data-testid="curr-flag-name">
                 <FlagName flag={flag[0]} disableTooltip={false} />
               </div>
               {allowCount && (
@@ -91,11 +91,16 @@ const FlagListEditor = ({ allowCount, flags, onChange }: Props) => {
                     onChange={handleFlagEdit(index)}
                     minValue={1}
                     value={flag[1]}
+                    data-testid="curr-flag-cnt"
                   />
                 </div>
               )}
               <div className={styles.actionCol}>
-                <Button type="danger" onClick={handleFlagDelete(index)}>
+                <Button
+                  type="danger"
+                  onClick={handleFlagDelete(index)}
+                  data-testid="curr-flag-btn"
+                >
                   <FontAwesomeIcon icon={faTrashAlt} />
                 </Button>
               </div>
@@ -112,6 +117,7 @@ const FlagListEditor = ({ allowCount, flags, onChange }: Props) => {
               labelProps={{ className: 'sr-only' }}
               onChange={setCurrFlagSelect}
               value={currFlagSelect}
+              data-testid="add-flag-sel"
             />
           </div>
           {allowCount && (
@@ -122,6 +128,7 @@ const FlagListEditor = ({ allowCount, flags, onChange }: Props) => {
                 onChange={setCurrFlagCount}
                 minValue={1}
                 value={currFlagCount}
+                data-testid="add-flag-cnt"
               />
             </div>
           )}
@@ -130,6 +137,7 @@ const FlagListEditor = ({ allowCount, flags, onChange }: Props) => {
               type="success"
               disabled={currFlagSelect === ''}
               onClick={handleFlagAdd}
+              data-testid="add-flag-btn"
             >
               <FontAwesomeIcon icon={faPlus} />
             </Button>
