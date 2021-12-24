@@ -16,16 +16,15 @@ describe('FlagListEditor Component', () => {
     expect(emptyCanvas).toHaveTextContent('No flags defined');
   });
 
-  it('should support adding a flag and rendering it', () => {
-    let flags: IFlagListEditorProps['flags'] = [];
+  it('should support adding a flag with a count and rendering it', () => {
     const props: IFlagListEditorProps = {
       allowCount: true,
       flags: [],
-      onChange: (f) => (flags = f),
+      onChange: (f) => (props.flags = f),
     };
 
     const { getByTestId, getAllByTestId, rerender } = render(
-      <FlagListEditor {...props} flags={flags} />,
+      <FlagListEditor {...props} />,
     );
 
     const flagPickerField = getByTestId('add-flag-sel');
@@ -33,17 +32,52 @@ describe('FlagListEditor Component', () => {
     const flagAddButton = getByTestId('add-flag-btn');
 
     userEvent.selectOptions(flagPickerField, 'GM'); // Guided Missile
+    userEvent.clear(flagCountField);
     userEvent.type(flagCountField, '5');
     userEvent.click(flagAddButton);
 
-    rerender(<FlagListEditor {...props} flags={flags} />);
+    rerender(<FlagListEditor {...props} />);
 
     const flagNames = getAllByTestId('curr-flag-name');
     const flagCounts = getAllByTestId('curr-flag-cnt');
 
-    expect(flagNames.length).toEqual(1);
-    expect(flagCounts.length).toEqual(1);
+    expect(flagNames).toHaveLength(1);
+    expect(flagCounts).toHaveLength(1);
     expect(flagNames[0]).toHaveTextContent('Guided Missile');
     expect(flagCounts[0]).toHaveValue(5);
+  });
+
+  it('should support removing flags with counts', async () => {
+    const props: IFlagListEditorProps = {
+      allowCount: true,
+      flags: [
+        ['GM', 5],
+        ['G', 1],
+      ],
+      onChange: (f) => (props.flags = f),
+    };
+
+    const { getAllByTestId, rerender } = render(<FlagListEditor {...props} />);
+
+    const flagNames = getAllByTestId('curr-flag-name');
+    const flagCounts = getAllByTestId('curr-flag-cnt');
+    const flagButtons = getAllByTestId('curr-flag-btn');
+
+    expect(flagNames).toHaveLength(2);
+    expect(flagCounts).toHaveLength(2);
+
+    const expected = ['Guided Missile', 'Genocide'];
+    flagNames.forEach((el, i) => {
+      expect(el.textContent).toStartWith(expected[i]);
+    });
+
+    userEvent.click(flagButtons[1]);
+    expect(props.flags).toEqual([['GM', 5]]);
+
+    rerender(<FlagListEditor {...props} />);
+
+    userEvent.clear(flagCounts[0]);
+    userEvent.type(flagCounts[0], '3');
+    expect(props.flags).toEqual([['GM', 3]]);
   });
 });
