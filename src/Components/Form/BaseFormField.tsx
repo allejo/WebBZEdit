@@ -158,8 +158,13 @@ const BaseFormField = <T,>({
       data-layout={layout}
     >
       <label
+        {...labelProps}
         htmlFor={elementId}
-        className={classList([styles.label, [a11yStyles.srOnly, hideLabel]])}
+        className={classList([
+          styles.label,
+          labelProps?.className,
+          [a11yStyles.srOnly, hideLabel],
+        ])}
       >
         {label}
       </label>

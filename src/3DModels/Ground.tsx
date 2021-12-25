@@ -24,12 +24,12 @@ const Ground = ({ worldSize }: Props) => {
       size={[worldSize, worldSize, 0.01]}
       rotation={0}
       onClick={noop}
-      topMaterial={grassTexture}
-      botMaterial={grassTexture}
-      xPosMaterial={grassTexture}
-      xNegMaterial={grassTexture}
-      yPosMaterial={grassTexture}
-      yNegMaterial={grassTexture}
+      topTexture={grassTexture}
+      botTexture={grassTexture}
+      xPosTexture={grassTexture}
+      xNegTexture={grassTexture}
+      yPosTexture={grassTexture}
+      yNegTexture={grassTexture}
     />
   );
 };

@@ -147,8 +147,8 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
         rotation={0}
         onClick={handleOnClick}
         isSelectable={false}
-        yPosMaterial={linkTexture}
-        yNegMaterial={linkTexture}
+        yPosTexture={linkTexture}
+        yNegTexture={linkTexture}
       />
       {/* === Front/Back Labels === */}
       <SkinnableBox
@@ -158,8 +158,8 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
         onClick={handleOnClick}
         isSelectable={false}
         renderOrder={1}
-        yPosMaterial={frontLabelTexture}
-        yNegMaterial={backLabelTexture}
+        yPosTexture={frontLabelTexture}
+        yNegTexture={backLabelTexture}
       />
       {/* === Frame === */}
       {border > 0 && (
@@ -171,12 +171,12 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
             rotation={0}
             onClick={handleOnClick}
             isSelectable={false}
-            topMaterial={topFrameTopTexture}
-            botMaterial={topFrameTopTexture}
-            xPosMaterial={topFrameRightTexture}
-            xNegMaterial={topFrameLeftTexture}
-            yPosMaterial={topFrameFrontTexture}
-            yNegMaterial={topFrameBackTexture}
+            topTexture={topFrameTopTexture}
+            botTexture={topFrameTopTexture}
+            xPosTexture={topFrameRightTexture}
+            xNegTexture={topFrameLeftTexture}
+            yPosTexture={topFrameFrontTexture}
+            yNegTexture={topFrameBackTexture}
           />
           {/* === Left Bar === */}
           <SkinnableBox
@@ -185,12 +185,12 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
             rotation={0}
             onClick={handleOnClick}
             isSelectable={false}
-            topMaterial={sideBottomTexture}
-            botMaterial={sideBottomTexture}
-            xPosMaterial={sideFirstHalfTexture}
-            xNegMaterial={sideFirstHalfTexture}
-            yPosMaterial={sideSecondHalfTexture}
-            yNegMaterial={sideSecondHalfTexture}
+            topTexture={sideBottomTexture}
+            botTexture={sideBottomTexture}
+            xPosTexture={sideFirstHalfTexture}
+            xNegTexture={sideFirstHalfTexture}
+            yPosTexture={sideSecondHalfTexture}
+            yNegTexture={sideSecondHalfTexture}
           />
           {/* === Right Bar === */}
           <SkinnableBox
@@ -199,12 +199,12 @@ const Teleporter = ({ obstacle, isSelected, onClick }: Props) => {
             rotation={0}
             onClick={handleOnClick}
             isSelectable={false}
-            topMaterial={sideBottomTexture}
-            botMaterial={sideBottomTexture}
-            xPosMaterial={sideSecondHalfTexture}
-            xNegMaterial={sideSecondHalfTexture}
-            yPosMaterial={sideFirstHalfTexture}
-            yNegMaterial={sideFirstHalfTexture}
+            topTexture={sideBottomTexture}
+            botTexture={sideBottomTexture}
+            xPosTexture={sideSecondHalfTexture}
+            xNegTexture={sideSecondHalfTexture}
+            yPosTexture={sideFirstHalfTexture}
+            yNegTexture={sideFirstHalfTexture}
           />
         </>
       )}

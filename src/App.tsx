@@ -6,6 +6,7 @@ import FlagSettingsModal from './Components/Modals/FlagSettingsModal';
 import GameplaySettingsModal from './Components/Modals/GameplaySettingsModal';
 import TeleporterLinkEditorModal from './Components/Modals/TeleporterLinkEditorModal';
 import WorldSettingsModal from './Components/Modals/WorldSettingsModal';
+import ZoneFlagEditorModal from './Components/Modals/ZoneFlagEditorModal';
 import InventoryPanel from './Components/Panels/InventoryPanel';
 import MenubarPanel from './Components/Panels/MenubarPanel';
 import RendererPanel from './Components/Panels/RendererPanel';
@@ -40,6 +41,7 @@ const App: React.FC = () => (
       <GameplaySettingsModal />
       <TeleporterLinkEditorModal />
       <WorldSettingsModal />
+      <ZoneFlagEditorModal />
     </>
   </div>
 );

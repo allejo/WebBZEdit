@@ -25,6 +25,13 @@
   transform: translateX(-50%);
   width: 600px;
   z-index: 999;
+
+  footer {
+    border-top: var(--border);
+    margin-top: var(--spacing-normal);
+    padding-top: var(--spacing-normal);
+    text-align: center;
+  }
 }
 
 .closeDialog {
@@ -35,7 +42,7 @@
 }
 
 .header {
-  border-bottom: 1px solid rgba($color-white, 0.25);
+  border-bottom: var(--border);
   display: flex;
   margin-bottom: 1rem;
   padding-bottom: 1rem;

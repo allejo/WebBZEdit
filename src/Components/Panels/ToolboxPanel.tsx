@@ -11,6 +11,7 @@ import { IBase } from '../../Document/Obstacles/Base';
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { IPyramid } from '../../Document/Obstacles/Pyramid';
 import { ITeleporter } from '../../Document/Obstacles/Teleporter';
+import { IZone } from '../../Document/Obstacles/Zone';
 import { documentState, selectionState } from '../../atoms';
 import AlterableControl, {
   IAlterableControlDataType,
@@ -20,6 +21,7 @@ import BaseControl from './Toolbox/BaseControl';
 import PassabilityControl from './Toolbox/PassabilityControl';
 import PyramidControl from './Toolbox/PyramidControl';
 import TeleporterControl from './Toolbox/TeleporterControl';
+import ZoneControl from './Toolbox/ZoneControl';
 
 import styles from './ToolboxPanel.module.scss';
 
@@ -103,6 +105,21 @@ const ToolboxPanel = () => {
     setBZWDocument(nextWorld);
   };
 
+  const handleZoneOnChange = (data: IZone) => {
+    if (!world || !selectedUUID) {
+      return;
+    }
+
+    const nextWorld = produce(world, (draftWorld) => {
+      const obstacle: IZone = draftWorld.children[selectedUUID] as any;
+
+      obstacle.team = data.team;
+      obstacle.safety = data.safety;
+    });
+
+    setBZWDocument(nextWorld);
+  };
+
   if (!selection) {
     return (
       <div className={styles.noSelectionContainer}>
@@ -133,6 +150,9 @@ const ToolboxPanel = () => {
       )}
       {selection && selection._objectType === 'teleporter' && (
         <TeleporterControl data={selection as ITeleporter} />
+      )}
+      {selection && selection._objectType === 'zone' && (
+        <ZoneControl data={selection as IZone} onChange={handleZoneOnChange} />
       )}
     </div>
   );

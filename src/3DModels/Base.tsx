@@ -59,12 +59,12 @@ const Base = ({ obstacle, isSelected, onClick }: Props) => {
       rotation={rotation}
       onClick={handleOnClick}
       isSelected={isSelected}
-      topMaterial={roofTexture}
-      botMaterial={roofTexture}
-      xPosMaterial={xTexture}
-      xNegMaterial={xTexture}
-      yPosMaterial={yTexture}
-      yNegMaterial={yTexture}
+      topTexture={roofTexture}
+      botTexture={roofTexture}
+      xPosTexture={xTexture}
+      xNegTexture={xTexture}
+      yPosTexture={yTexture}
+      yNegTexture={yTexture}
     />
   );
 };

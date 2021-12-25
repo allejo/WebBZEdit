@@ -62,12 +62,12 @@ const Wall = ({ direction, wallHeight, worldSize }: Props) => {
       size={[worldSize, 0.01, wallHeight]}
       rotation={rotation}
       onClick={noop}
-      topMaterial={wallTexture}
-      botMaterial={wallTexture}
-      xPosMaterial={wallTexture}
-      xNegMaterial={wallTexture}
-      yPosMaterial={wallTexture}
-      yNegMaterial={wallTexture}
+      topTexture={wallTexture}
+      botTexture={wallTexture}
+      xPosTexture={wallTexture}
+      xNegTexture={wallTexture}
+      yPosTexture={wallTexture}
+      yNegTexture={wallTexture}
     />
   );
 };

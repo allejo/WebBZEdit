@@ -8,6 +8,7 @@ import Pyramid from '../../../3DModels/Pyramid';
 import Tank from '../../../3DModels/Tank';
 import Teleporter from '../../../3DModels/Teleporter';
 import WorldBorder from '../../../3DModels/WorldBorder';
+import Zone from '../../../3DModels/Zone';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBox } from '../../../Document/Obstacles/Box';
 import { IPyramid } from '../../../Document/Obstacles/Pyramid';
@@ -16,6 +17,7 @@ import {
   ITankModelObjectType,
 } from '../../../Document/Obstacles/TankModel';
 import { ITeleporter } from '../../../Document/Obstacles/Teleporter';
+import { IZone } from '../../../Document/Obstacles/Zone';
 import { documentState, selectionState } from '../../../atoms';
 
 function handleOnClick(uuid: string | null, setter: any) {
@@ -50,6 +52,8 @@ const BZWDocumentRenderer = () => {
           return <Base {...props} obstacle={obstacle as IBase} />;
         } else if (obstacle._objectType === 'teleporter') {
           return <Teleporter {...props} obstacle={obstacle as ITeleporter} />;
+        } else if (obstacle._objectType === 'zone') {
+          return <Zone {...props} obstacle={obstacle as IZone} />;
         }
 
         return null;

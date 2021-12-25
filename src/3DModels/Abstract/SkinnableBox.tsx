@@ -1,10 +1,16 @@
 import { ThreeEvent } from '@react-three/fiber';
 import React from 'react';
-import { Texture } from 'three';
+import { MeshBasicMaterial, Texture } from 'three';
 
+import {
+  isDevEnv,
+  assertEveryIsNotNull,
+} from '../../Utilities/developmentUtilities';
 import { deg2rad } from '../../Utilities/math';
 import { Vector3F } from '../../Utilities/types';
 import { useHighlightableEdges } from '../../hooks/useHighlightableEdges';
+
+export type MaterialParams = ConstructorParameters<typeof MeshBasicMaterial>[0];
 
 interface Props {
   position: Vector3F;
@@ -15,12 +21,34 @@ interface Props {
   isSelectable?: boolean;
   renderOrder?: number;
   renderTransparency?: boolean;
-  topMaterial?: Texture | null;
-  botMaterial?: Texture | null;
-  xPosMaterial?: Texture | null;
-  xNegMaterial?: Texture | null;
-  yPosMaterial?: Texture | null;
-  yNegMaterial?: Texture | null;
+  topMaterial?: MaterialParams | null;
+  botMaterial?: MaterialParams | null;
+  xPosMaterial?: MaterialParams | null;
+  xNegMaterial?: MaterialParams | null;
+  yPosMaterial?: MaterialParams | null;
+  yNegMaterial?: MaterialParams | null;
+  topTexture?: Texture | null;
+  botTexture?: Texture | null;
+  xPosTexture?: Texture | null;
+  xNegTexture?: Texture | null;
+  yPosTexture?: Texture | null;
+  yNegTexture?: Texture | null;
+}
+
+function faceProps(
+  materialParams: MaterialParams | null | undefined,
+  texture: Texture | null | undefined,
+  fallback: Partial<MaterialParams>,
+): Partial<MaterialParams> {
+  if (materialParams != null) {
+    return materialParams;
+  }
+
+  if (texture != null) {
+    return { map: texture };
+  }
+
+  return fallback;
 }
 
 const SkinnableBox = ({
@@ -34,11 +62,46 @@ const SkinnableBox = ({
   xNegMaterial,
   yPosMaterial,
   yNegMaterial,
+  topTexture,
+  botTexture,
+  xPosTexture,
+  xNegTexture,
+  yPosTexture,
+  yNegTexture,
   isSelected = false,
   isSelectable = true,
   renderOrder = 0,
   renderTransparency = false,
 }: Props) => {
+  // We only need this expensive check in development while we're building out
+  // objects.
+  if (isDevEnv()) {
+    assertEveryIsNotNull(
+      [topMaterial, topTexture],
+      'You should not define both a topMaterial and a topTexture',
+    );
+    assertEveryIsNotNull(
+      [botMaterial, botTexture],
+      'You should not define both a botMaterial and a botTexture',
+    );
+    assertEveryIsNotNull(
+      [xPosMaterial, xPosTexture],
+      'You should not define both a xPosMaterial and a xPosTexture',
+    );
+    assertEveryIsNotNull(
+      [xNegMaterial, xNegTexture],
+      'You should not define both a xNegMaterial and a xNegTexture',
+    );
+    assertEveryIsNotNull(
+      [yPosMaterial, yPosTexture],
+      'You should not define both a yPosMaterial and a yPosTexture',
+    );
+    assertEveryIsNotNull(
+      [yNegMaterial, yNegTexture],
+      'You should not define both a yNegMaterial and a yNegTexture',
+    );
+  }
+
   const highlightableEdges = useHighlightableEdges();
   const isHighlighted =
     isSelectable && (highlightableEdges.isHovered || isSelected);
@@ -48,15 +111,17 @@ const SkinnableBox = ({
     onClick(e);
   };
 
+  // If any of our faces are not configured, then we must force our box to
+  // support transparency.
   const forceTransparency =
-    yPosMaterial == null ||
-    yNegMaterial == null ||
-    topMaterial == null ||
-    botMaterial == null ||
-    xPosMaterial == null ||
-    xNegMaterial == null ||
+    (yPosMaterial == null && yPosTexture == null) ||
+    (yNegMaterial == null && yNegTexture == null) ||
+    (topMaterial == null && topTexture == null) ||
+    (botMaterial == null && botTexture == null) ||
+    (xPosMaterial == null && xPosTexture == null) ||
+    (xNegMaterial == null && xNegTexture == null) ||
     false;
-  const invisible = {
+  const invisibleMaterial = {
     color: 0xffffff,
     opacity: 0,
     transparent: true,
@@ -66,12 +131,12 @@ const SkinnableBox = ({
     transparent: forceTransparency || renderTransparency,
   };
 
-  const yPosMatProps = yPosMaterial != null ? { map: yPosMaterial } : invisible;
-  const yNegMatProps = yNegMaterial != null ? { map: yNegMaterial } : invisible;
-  const topMatProps = topMaterial != null ? { map: topMaterial } : invisible;
-  const botMatProps = botMaterial != null ? { map: botMaterial } : invisible;
-  const xPosMatProps = xPosMaterial != null ? { map: xPosMaterial } : invisible;
-  const xNegMatProps = xNegMaterial != null ? { map: xNegMaterial } : invisible;
+  const yPosMatProps = faceProps(yPosMaterial, yPosTexture, invisibleMaterial);
+  const yNegMatProps = faceProps(yNegMaterial, yNegTexture, invisibleMaterial);
+  const topMatProps = faceProps(topMaterial, topTexture, invisibleMaterial);
+  const botMatProps = faceProps(botMaterial, botTexture, invisibleMaterial);
+  const xPosMatProps = faceProps(xPosMaterial, xPosTexture, invisibleMaterial);
+  const xNegMatProps = faceProps(xNegMaterial, xNegTexture, invisibleMaterial);
 
   return (
     <mesh

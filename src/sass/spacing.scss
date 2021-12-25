@@ -1,0 +1,53 @@
+// Create our own classes that will make use of our CSS variables
+// License MIT :: https://github.com/BZFlag-Dev/bzflag.org/blob/master/_sass/utilities/_spacing.scss
+
+$spacing_types: (
+  m: margin,
+  p: padding,
+);
+$spacing_directions: (
+  t: top,
+  r: right,
+  b: bottom,
+  l: left,
+  x: (
+    left,
+    right,
+  ),
+  y: (
+    top,
+    bottom,
+  ),
+);
+$spacing_sizes: (
+  0: 0,
+  1: '--spacing-extra-small',
+  2: '--spacing-small',
+  3: '--spacing-normal',
+  4: '--spacing-large',
+  5: '--spacing-extra-large',
+);
+
+@function get-spacing-value($value) {
+  @if type-of($value) == 'string' {
+    @return var(unquote($value));
+  }
+
+  @return $value;
+}
+
+@each $t_abbv, $type in $spacing_types {
+  @each $s_abbv, $value in $spacing_sizes {
+    .#{$t_abbv}#{$s_abbv} {
+      #{$type}: get-spacing-value($value) !important;
+    }
+
+    @each $d_abbv, $rules in $spacing_directions {
+      .#{$t_abbv}#{$d_abbv}#{$s_abbv} {
+        @each $rule in $rules {
+          #{$type}-#{$rule}: get-spacing-value($value) !important;
+        }
+      }
+    }
+  }
+}
