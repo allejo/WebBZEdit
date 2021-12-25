@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -22,7 +22,8 @@ describe('TextField Component', () => {
 
     const content = 'I am not log4j';
     userEvent.type(field, content);
-    expect(currentValue).toEqual(content);
+
+    waitFor(() => expect(currentValue).toEqual(content));
   });
 
   it('should not let further changes when `allowChange` returns false', () => {
@@ -43,6 +44,7 @@ describe('TextField Component', () => {
 
     const content = 'I heart BZFlag';
     userEvent.type(field, content);
-    expect(currentValue).toEqual(content.substr(0, 5));
+
+    waitFor(() => expect(currentValue).toEqual(content.substr(0, 5)));
   });
 });
