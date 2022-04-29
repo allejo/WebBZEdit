@@ -16,14 +16,15 @@ interface TabProps {
 const Tab = ({ children }: TabProps) => <>{children}</>;
 
 interface TabListProps {
+  vertical?: boolean;
   children: ReactElement<TabProps> | ReactElement<TabProps>[];
 }
 
-const TabList = ({ children, ...props }: TabListProps) => {
+const TabList = ({ vertical = false, children, ...props }: TabListProps) => {
   const tab = useTabState();
 
   return (
-    <>
+    <div className={styles.container} data-vertical={vertical}>
       <BaseTabList {...tab} {...props} className={styles.tabList}>
         {React.Children.map(children, (child) => (
           <BaseTab {...tab} className={styles.tab}>
@@ -31,12 +32,14 @@ const TabList = ({ children, ...props }: TabListProps) => {
           </BaseTab>
         ))}
       </BaseTabList>
-      {React.Children.map(children, (child) => (
-        <BaseTabPanel {...tab} className={styles.panel}>
-          {child.props.children}
-        </BaseTabPanel>
-      ))}
-    </>
+      <div className={styles.panelContainer}>
+        {React.Children.map(children, (child) => (
+          <BaseTabPanel {...tab} className={styles.panel}>
+            {child.props.children}
+          </BaseTabPanel>
+        ))}
+      </div>
+    </div>
   );
 };
 

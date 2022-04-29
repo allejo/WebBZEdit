@@ -1,35 +1,80 @@
 @import '../sass/variables';
 
+@mixin is-vertical($vertical) {
+  @at-root .container[data-vertical='#{$vertical}'] & {
+    @content;
+  }
+}
+
+.container {
+  &[data-vertical='true'] {
+    display: flex;
+  }
+
+  &[data-vertical='false'] {
+  }
+}
+
 .tabList {
-  border-bottom: 1px solid white;
+  @include is-vertical(true) {
+    border-right: 1px solid white;
+  }
+
+  @include is-vertical(false) {
+    border-bottom: 1px solid white;
+  }
 }
 
 .tab {
   background-color: transparent;
   border: 1px solid transparent;
   border-bottom: 0;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  color: white;
+  color: var(--color-white);
   padding: 0.25rem 0.75rem;
   position: relative;
 
-  &[aria-selected='true'] {
-    border-color: white;
-    border-bottom-color: transparent;
+  @include is-vertical(true) {
+    display: block;
+    text-align: left;
+    width: 100%;
+  }
 
-    &::after {
-      background-color: $color-grey-light;
-      bottom: -1px;
-      content: '';
-      height: 1px;
-      left: 0;
-      position: absolute;
-      width: 100%;
+  @include is-vertical(false) {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  &[aria-selected='true'] {
+    @include is-vertical(true) {
+      background-color: var(--tab-selected-background-color);
+      border-bottom-color: var(--border-color);
+    }
+
+    @include is-vertical(false) {
+      border-color: white;
+      border-bottom-color: transparent;
+
+      // Make a faux element cover the bottom border from the parent so that the
+      // selected tab and its panel blend together
+      &::after {
+        background-color: $color-grey-light;
+        bottom: -1px;
+        content: '';
+        height: 1px;
+        left: 0;
+        position: absolute;
+        width: 100%;
+      }
     }
   }
 }
 
 .panel {
-  padding: 1rem;
+  @include is-vertical(true) {
+    padding: 0 var(--spacing-normal);
+  }
+
+  @include is-vertical(false) {
+    padding: var(--spacing-normal);
+  }
 }
