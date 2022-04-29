@@ -1,6 +1,22 @@
 @import 'sass/variables';
 
-.wrapper {
+.Viewport {
+  display: flex;
+}
+
+.DebugPanel {
+  width: 400px;
+
+  textarea {
+    border: 0;
+    font-family: monospace;
+    height: 100%;
+    tab-size: 2ch;
+    width: 100%;
+  }
+}
+
+.Application {
   display: grid;
   height: 100vh;
   grid-template-columns: 1.6fr 0.4fr;

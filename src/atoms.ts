@@ -4,6 +4,8 @@ import { ITeleporter } from './Document/Obstacles/Teleporter';
 import { ITeleporterLink } from './Document/Obstacles/TeleporterLink';
 import { IWorld } from './Document/Obstacles/World';
 
+export const bzwViewState = atom<boolean>({ key: 'bzwView', default: false });
+
 export const documentState = atom<IWorld | null>({
   key: 'document',
   default: null,
