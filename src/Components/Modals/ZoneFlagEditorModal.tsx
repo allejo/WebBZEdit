@@ -13,6 +13,7 @@ import Alert, { AlertType } from '../Alert';
 import Button from '../Button';
 import FlagListEditor from '../FlagListEditor';
 import ListenerModal from '../ListenerModal';
+import Markdown from '../Markdown';
 
 const ZoneFlagEditorModal = () => {
   const dialog = useDialogState();
@@ -74,25 +75,24 @@ const ZoneFlagEditorModal = () => {
         };
 
         const description = isRegularFlagEditor ? (
-          <>
-            Map-wide flag settings (i.e. <code>+f</code> or <code>-f</code>)
-            specify the number of each flag that <strong>may</strong> exist on
-            the map at any given time; these settings allow these map-wide flags
-            to spawn in this zone. There is no guarantee that these flags will
-            be found in this zone; if you're looking for a guarantee, use "Zone
-            Flags" instead.
-          </>
+          <Markdown className="fc-muted fs-small">
+            Map-wide flag settings (i.e. `+f` or `-f`) specify the number of
+            each flag that **may** exist on the map at any given time; these
+            settings allow these map-wide flags to spawn in this zone. There is
+            no guarantee that these flags will be found in this zone; if you're
+            looking for a guarantee, use "Zone Flags" instead.
+          </Markdown>
         ) : (
-          <>
-            The specified amount of each of these flags will{' '}
-            <strong>always</strong> spawn inside of this zone, regardless of
-            map-wide flag settings (i.e. <code>+f</code> or <code>-f</code>).
-          </>
+          <Markdown className="fc-muted fs-small">
+            The specified amount of each of these flags will **always** spawn
+            inside this zone, regardless of map-wide flag settings (i.e. `+f` or
+            `-f`).
+          </Markdown>
         );
 
         return (
           <>
-            <p className="fc-muted fs-small">{description}</p>
+            {description}
             <FlagListEditor
               allowCount={!isRegularFlagEditor}
               flags={flags}
