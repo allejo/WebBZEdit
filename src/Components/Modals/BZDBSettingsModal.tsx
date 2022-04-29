@@ -8,6 +8,7 @@ import { BZDBSettingsModalOpenEventName } from '../../Events/IBZDBSettingsModalO
 import { documentState } from '../../atoms';
 import { BZDBType } from '../../data/bzdb-types';
 import Button from '../Button';
+import CheckboxField from '../Form/CheckboxField';
 import NumberField from '../Form/NumberField';
 import ListenerModal from '../ListenerModal';
 import Markdown from '../Markdown';
@@ -30,6 +31,15 @@ const SettingEditor = ({ variable }: SettingEditorProps) => {
     if (type === 'integer' || type === 'float') {
       return (
         <NumberField
+          label={variable.name}
+          onChange={setValue}
+          value={value}
+          labelProps={{ className: 'sr-only' }}
+        />
+      );
+    } else if (type === 'boolean') {
+      return (
+        <CheckboxField
           label={variable.name}
           onChange={setValue}
           value={value}
