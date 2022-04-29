@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { Menu, MenuButton, MenuSeparator, useMenuState } from 'reakit/Menu';
 
+import BZDBSettingsMenuItem from './WorldMenu/BZDBSettingsMenuItem';
 import FlagSettingsMenuItem from './WorldMenu/FlagSettingsMenuItem';
 import GameplaySettingsMenuItem from './WorldMenu/GameplaySettingsMenuItem';
 import WorldSettingsMenuItem from './WorldMenu/WorldSettingsMenuItem';
@@ -18,6 +19,7 @@ const WorldMenu = forwardRef<HTMLButtonElement>((props, ref) => {
       <Menu {...menu} aria-label="World" className={styles.menuDropdown}>
         <WorldSettingsMenuItem {...menu} />
         <MenuSeparator />
+        <BZDBSettingsMenuItem {...menu} />
         <FlagSettingsMenuItem {...menu} />
         <GameplaySettingsMenuItem {...menu} />
       </Menu>
