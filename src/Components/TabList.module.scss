@@ -16,6 +16,8 @@
 }
 
 .tabList {
+  white-space: nowrap;
+
   @include is-vertical(true) {
     border-right: 1px solid white;
   }
@@ -67,6 +69,10 @@
       }
     }
   }
+}
+
+.panelContainer {
+  width: 100%;
 }
 
 .panel {
