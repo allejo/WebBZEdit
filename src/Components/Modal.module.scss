@@ -10,10 +10,10 @@
 
 .dialog {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  background-color: $color-grey-light;
-  border-radius: 0.25rem;
+  background-color: var(--modal-background-color);
+  border-radius: var(--spacing-extra-small);
   box-shadow: 0 3px 10px #000;
-  color: $color-white;
+  color: var(--color-white);
   left: 50%;
   max-height: calc(100vh - 56px);
   outline: 0;
