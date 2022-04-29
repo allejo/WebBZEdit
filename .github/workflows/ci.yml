@@ -18,11 +18,11 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          yarn install
+          npm install
 
       - name: Compile Production Build
         run: |
-          yarn build
+          npm run build
 
   formatting:
     name: Code Formatting
@@ -38,11 +38,11 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          yarn install
+          npm install
 
       - name: Format Code
         run: |
-          yarn prettify
+          npm run prettify
           git diff --exit-code
 
   lint:
@@ -59,11 +59,11 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          yarn install
+          npm install
 
       - name: Check ESLint rules
         run: |
-          yarn lint
+          npm run lint
 
   unit-tests:
     name: Unit testing
@@ -79,8 +79,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          yarn install
+          npm install
 
       - name: Run tests
         run: |
-          yarn test
+          npm test
