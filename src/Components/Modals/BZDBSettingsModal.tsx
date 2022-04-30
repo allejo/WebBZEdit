@@ -1,5 +1,11 @@
 import produce from 'immer';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import { useDialogState } from 'reakit';
 import { useRecoilState } from 'recoil';
 
@@ -24,7 +30,7 @@ interface SettingEditorProps {
   variable: BZDBVariableType;
 }
 
-const SettingEditor = ({ variable }: SettingEditorProps) => {
+const SettingEditor = ({ onChange, variable }: SettingEditorProps) => {
   const [value, setValue] = useState<any>(variable.default);
 
   const renderEditor = (type: string) => {
@@ -51,6 +57,10 @@ const SettingEditor = ({ variable }: SettingEditorProps) => {
     return 'Unsupported';
   };
 
+  useEffect(() => {
+    onChange(variable.name, value);
+  }, [onChange, value, variable.name]);
+
   return (
     <div className="mb-3">
       <div className="d-flex align-items-center mb-1">
@@ -64,12 +74,46 @@ const SettingEditor = ({ variable }: SettingEditorProps) => {
   );
 };
 
+type BZDBStore = NonNullable<IOptions['-set']>;
+type ReducerAction =
+  | {
+      type: 'replace';
+      store: BZDBStore;
+    }
+  | {
+      type: 'delete';
+      variable: BZDBType | string;
+    }
+  | {
+      type: 'edit';
+      variable: BZDBType | string;
+      value: string;
+    };
+
+function bzdbReducer(state: BZDBStore, action: ReducerAction) {
+  if (action.type === 'replace') {
+    return action.store;
+  }
+
+  return produce(state, (draftState) => {
+    if (action.type === 'edit') {
+      draftState[action.variable] = action.value;
+    } else if (action.type === 'delete') {
+      delete draftState[action.variable];
+    }
+  });
+}
+
 const BZDBSettingsModal = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
-  const [bzdbStore, setBZDBStore] = useState<IOptions['-set']>({});
+  const [bzdbStore, bzdbStoreDispatch] = useReducer(bzdbReducer, {});
   const dialog = useDialogState();
 
-  const { bzdbCategories, bzdbDefinitionsByCategory } = useMemo(() => {
+  const {
+    bzdbCategories,
+    bzdbDefinitionsByCategory,
+    bzdbDefinitionsByVariable,
+  } = useMemo(() => {
     const groupedByCat: Record<string, BZDBVariableType[]> = {};
     const mappedByVariable: Partial<Record<BZDBType, BZDBVariableType>> = {};
 
@@ -93,19 +137,21 @@ const BZDBSettingsModal = () => {
   }, []);
 
   const syncStateToWorld = useCallback(() => {
-    const sets = world?._options?.['-set'] ?? {};
-
-    setBZDBStore(sets);
+    bzdbStoreDispatch({
+      type: 'replace',
+      store: world?._options?.['-set'] ?? {},
+    });
   }, [world?._options]);
 
   const handleOnChange = (variable: string, value: string) => {
-    const newStore: IOptions['-set'] = { ...bzdbStore };
+    const definition = bzdbDefinitionsByVariable[variable as BZDBType];
 
-    newStore[variable] = value;
-
-    setBZDBStore(newStore);
+    if (value === definition?.default) {
+      bzdbStoreDispatch({ type: 'delete', variable });
+    } else {
+      bzdbStoreDispatch({ type: 'edit', variable, value });
+    }
   };
-
   const handleOnSave = () => {
     if (!world) {
       return;
