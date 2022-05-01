@@ -90,21 +90,20 @@ const ZoneFlagEditorModal = () => {
           </Markdown>
         );
 
-        return (
+        return [
           <>
             {description}
+
             <FlagListEditor
               allowCount={!isRegularFlagEditor}
               flags={flags}
               onChange={setFlagsDraft}
             />
-            <footer>
-              <Button type="success" onClick={handleSaveClick}>
-                Save
-              </Button>
-            </footer>
-          </>
-        );
+          </>,
+          <Button type="success" onClick={handleSaveClick}>
+            Save
+          </Button>,
+        ];
       }}
     </ListenerModal>
   );

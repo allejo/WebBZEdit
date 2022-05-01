@@ -13,12 +13,14 @@ import {
   ModalToggleEvent,
 } from '../Events/IModalToggleEvent';
 import eventBus from '../Utilities/EventBus';
+import { classList } from '../Utilities/cssClasses';
 
 import styles from './Modal.module.scss';
 
 interface Props extends Partial<DialogOptions> {
   dialog: DialogStateReturn;
   className?: string;
+  footer?: ReactNode;
   onShow?: () => void;
   onDismiss?: () => boolean;
   title: string;
@@ -29,6 +31,7 @@ const Modal = ({
   title,
   className,
   dialog,
+  footer,
   onShow,
   onDismiss,
   children,
@@ -72,7 +75,9 @@ const Modal = ({
           </button>
         </header>
 
-        <div className={className}>{children}</div>
+        <div className={classList([styles.body, className])}>{children}</div>
+
+        {footer && <footer className={styles.footer}>{footer}</footer>}
       </Dialog>
     </DialogBackdrop>
   );

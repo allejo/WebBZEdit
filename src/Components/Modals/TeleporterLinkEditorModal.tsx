@@ -291,7 +291,7 @@ const TeleporterLinkEditorModal = () => {
           dialog.hide();
         };
 
-        return (
+        return [
           <>
             <p>
               <strong>Teleporter:</strong> {teleporter.name}
@@ -314,13 +314,11 @@ const TeleporterLinkEditorModal = () => {
                 />
               </Tab>
             </TabList>
-            <div>
-              <Button type="success" onClick={handleSave} icon={faSave}>
-                Save
-              </Button>
-            </div>
-          </>
-        );
+          </>,
+          <Button type="success" onClick={handleSave} icon={faSave}>
+            Save
+          </Button>,
+        ];
       }}
     </ListenerModal>
   );

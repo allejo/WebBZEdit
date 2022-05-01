@@ -52,6 +52,11 @@ const WorldSettingsModal = () => {
     <ListenerModal
       event={WorldSettingsModalOpenEventName}
       dialog={dialog}
+      footer={
+        <Button type="success" onClick={handleOnClickSave}>
+          Save
+        </Button>
+      }
       title="World Settings"
       hideOnEsc={false}
       hideOnClickOutside={false}
@@ -68,7 +73,7 @@ const WorldSettingsModal = () => {
           />
         </div>
       </div>
-      <div className="row mb-3">
+      <div className="row">
         <div className="col-md-6">
           <CheckboxField
             label="No Walls"
@@ -86,9 +91,6 @@ const WorldSettingsModal = () => {
           />
         </div>
       </div>
-      <Button type="success" onClick={handleOnClickSave}>
-        Save
-      </Button>
     </ListenerModal>
   );
 };

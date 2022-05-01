@@ -51,11 +51,16 @@ const FlagSettingsModal = () => {
       event={FlagSettingsModalOpenEventName}
       dialog={dialog}
       title="Flag Settings"
+      footer={
+        <Button type="success" onClick={handleOnSave}>
+          Save
+        </Button>
+      }
       onOpen={syncStateToWorld}
       hideOnEsc={false}
       hideOnClickOutside={false}
     >
-      <div className="row mb-3">
+      <div className="row">
         <div className="col-md-6">
           <NumberField
             label="Flag Altitude"
@@ -74,11 +79,6 @@ const FlagSettingsModal = () => {
             value={flagHeight}
           />
         </div>
-      </div>
-      <div>
-        <Button type="success" onClick={handleOnSave}>
-          Save
-        </Button>
       </div>
     </ListenerModal>
   );

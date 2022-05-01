@@ -83,6 +83,11 @@ const GameplaySettingsModal = () => {
       dialog={dialog}
       event={GameplaySettingsModalOpenEventName}
       title="Gameplay Settings"
+      footer={
+        <Button type="success" onClick={handleOnClickSave}>
+          Save
+        </Button>
+      }
       hideOnEsc={false}
       hideOnClickOutside={false}
       onOpen={syncWorldToState}
@@ -149,9 +154,6 @@ const GameplaySettingsModal = () => {
           </div>
         </div>
       </Fieldset>
-      <Button type="success" className="mt-3" onClick={handleOnClickSave}>
-        Save
-      </Button>
     </ListenerModal>
   );
 };
