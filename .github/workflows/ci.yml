@@ -14,11 +14,12 @@ jobs:
       - uses: actions/setup-node@v2
         name: Setup Node
         with:
-          node-version: '14'
+          node-version: 16
+          cache: 'npm'
 
       - name: Install Dependencies
         run: |
-          npm install
+          npm ci
 
       - name: Compile Production Build
         run: |
@@ -34,11 +35,12 @@ jobs:
       - uses: actions/setup-node@v2
         name: Setup Node
         with:
-          node-version: '14'
+          node-version: 16
+          cache: 'npm'
 
       - name: Install Dependencies
         run: |
-          npm install
+          npm ci
 
       - name: Format Code
         run: |
@@ -55,11 +57,12 @@ jobs:
       - uses: actions/setup-node@v2
         name: Setup Node
         with:
-          node-version: '14'
+          node-version: 16
+          cache: 'npm'
 
       - name: Install Dependencies
         run: |
-          npm install
+          npm ci
 
       - name: Check ESLint rules
         run: |
@@ -75,11 +78,12 @@ jobs:
       - uses: actions/setup-node@v2
         name: Setup Node
         with:
-          node-version: '14'
+          node-version: 16
+          cache: 'npm'
 
       - name: Install Dependencies
         run: |
-          npm install
+          npm ci
 
       - name: Run tests
         run: |
