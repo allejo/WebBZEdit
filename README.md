@@ -67,8 +67,8 @@ This is going to be an incredibly large project that has a lot of moving parts. 
 This is a standard React project that has no special dependencies. This project uses Yarn, but you can use npm as well. These commands will download all dependencies and then start a local web server with the map editor that automatically loads the HiX map.
 
 ```bash
-yarn install
-yarn start
+npm install
+npm start
 ```
 
 ## License
