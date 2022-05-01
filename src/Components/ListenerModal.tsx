@@ -8,7 +8,7 @@ interface Props<T> extends Omit<IModalProps, 'children'> {
   dialog: DialogStateReturn;
   event: string;
   onOpen?: () => void;
-  children: ReactNode | ((eventData?: T) => ReactNode);
+  children: ReactNode | ((eventData?: T) => ReactNode | [ReactNode, ReactNode]);
 }
 
 /**
@@ -36,11 +36,24 @@ const ListenerModal = <T,>({ event, dialog, onOpen, ...props }: Props<T>) => {
     };
   }, [dialog, event, onOpen]);
 
+  let body: ReactNode | [ReactNode, ReactNode];
+  let footer: ReactNode | undefined;
+
+  if (typeof props.children === 'function') {
+    const result = props.children(eventData);
+
+    if (Array.isArray(result)) {
+      [body, footer] = result;
+    } else {
+      body = result;
+    }
+  } else {
+    body = props.children;
+  }
+
   return (
-    <Modal dialog={dialog} {...props}>
-      {typeof props.children === 'function'
-        ? props.children(eventData)
-        : props.children}
+    <Modal dialog={dialog} footer={footer} {...props}>
+      {body}
     </Modal>
   );
 };
