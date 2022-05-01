@@ -22,6 +22,7 @@ import { Tab, TabList } from '../TabList';
 
 import BZDBDocs from '../../data/bzdb-documention.json';
 import generalStyles from '../../sass/general.module.scss';
+import styles from './BZDBSettingsModal.module.scss';
 
 type BZDBVariableType = typeof BZDBDocs.variables[number];
 
@@ -168,13 +169,19 @@ const BZDBSettingsModal = () => {
   return (
     <ListenerModal
       event={BZDBSettingsModalOpenEventName}
+      className={styles.modalBody}
       dialog={dialog}
+      footer={
+        <Button type="success" onClick={handleOnSave}>
+          Save
+        </Button>
+      }
       title="BZDB Settings"
       onOpen={syncStateToWorld}
       hideOnEsc={false}
       hideOnClickOutside={false}
     >
-      <TabList aria-label="BZDB Settings" vertical>
+      <TabList aria-label="BZDB Settings" className={styles.tabList} vertical>
         {bzdbCategories.map((category) => (
           <Tab title={category} key={category}>
             {bzdbDefinitionsByCategory[category].map((variable) => (
@@ -187,11 +194,6 @@ const BZDBSettingsModal = () => {
           </Tab>
         ))}
       </TabList>
-      <div>
-        <Button type="success" onClick={handleOnSave}>
-          Save
-        </Button>
-      </div>
     </ListenerModal>
   );
 };
