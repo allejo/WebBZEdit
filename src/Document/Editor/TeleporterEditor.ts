@@ -34,7 +34,7 @@ export function addLink(this: WorldEditorHelper, link: ITeleporterLink) {
 }
 
 export function addLinks(this: WorldEditorHelper, links: ITeleporterLink[]) {
-  links.forEach(this.addLink);
+  links.forEach((link) => this.addLink(link));
 
   return this;
 }
