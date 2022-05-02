@@ -28,16 +28,16 @@
     "three": "^0.129.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "npm-run-all husky-setup fetch:* build",
-    "lint": "eslint src/",
+    "build": "npm-run-all fetch:* compile",
+    "compile": "react-scripts build",
     "fetch:bzdb-docs": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" scripts/fetch-bzdb-definitions.ts",
     "fetch:flag-docs": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" scripts/fetch-flags.ts",
     "husky-setup": "husky install",
-    "prettify": "prettier --write public/ scripts/ src/"
+    "lint": "eslint src/",
+    "prepare": "npm-run-all husky-setup fetch:*",
+    "prettify": "prettier --write public/ scripts/ src/",
+    "start": "react-scripts start",
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app",
