@@ -31,6 +31,24 @@ interface SettingEditorProps {
   variable: BZDBVariableType;
 }
 
+// https://github.com/BZFlag-Dev/bzflag/blob/a249151/src/common/StateDatabase.cxx#L252-L256
+const FalsyValues = ['0', 'off', 'false', 'no', 'disable'];
+
+function isTruthy(value: boolean | number | string | null): boolean {
+  if (value == null) {
+    return false;
+  }
+
+  if (typeof value === 'boolean') {
+    return value;
+  }
+
+  const lower = typeof value === 'number' ? value + '' : value.toLowerCase();
+
+  // Per BZFS behavior, if something isn't falsy as defined above, it's truthy
+  return FalsyValues.indexOf(lower) === -1;
+}
+
 const SettingEditor = ({ onChange, variable }: SettingEditorProps) => {
   const [value, setValue] = useState<any>(variable.default);
 
@@ -48,8 +66,8 @@ const SettingEditor = ({ onChange, variable }: SettingEditorProps) => {
       return (
         <CheckboxField
           label={variable.name}
-          onChange={setValue}
-          value={value}
+          onChange={(value: boolean) => setValue(value ? '1' : '0')}
+          value={isTruthy(value)}
           labelProps={{ className: 'sr-only' }}
         />
       );
