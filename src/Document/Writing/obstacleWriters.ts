@@ -37,8 +37,9 @@ export const AttributeWriters: Record<
   options: {
     '-a': (a: Accelerations) => `-a ${a.linear} ${a.angular}`,
     '-admsg': (am: string[]) => am.map((m) => `-admsg "${m}"`),
-    '+f': (fc: FlagCount[]) =>
-      fc.map((f) => `+f ${f.flag}` + (f.count > 1 ? `{${f.count}}` : '')),
+    '+f': (fc: FlagCount[]) => {
+      return fc.map((f) => `+f ${f.flag}${f.count > 1 ? `{${f.count}}` : ''}`);
+    },
     '-f': (fs: string[]) => fs.map((f) => `-f ${f}`),
     '-loadplugin': (ps: string[]) => ps.map((p) => `-loadplugin ${p}`),
     '-mp': (m: MaxPlayers) => {
@@ -53,8 +54,11 @@ export const AttributeWriters: Record<
 
       return `-mp ${response}`;
     },
-    '-set': (set: IOptions['-set']) =>
-      Object.entries(set ?? {}).map(([key, value]) => `-set ${key} ${value}`),
+    '-set': (set: IOptions['-set']) => {
+      return Object.entries(set ?? {}).map(([key, value]) => {
+        return `-set ${key} ${value}`;
+      });
+    },
     '-sl': (sl: ShotLimit[]) => sl.map((s) => `-sl ${s.flag} ${s.num}`),
     '-srvmsg': (msgs: string[]) => msgs.map((m) => `-srvmsg "${m}"`),
   },
