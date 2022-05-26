@@ -1,0 +1,9 @@
+.modalBody {
+  display: flex;
+}
+
+.tabList {
+  [data-role='tab-list'] {
+    width: 300px;
+  }
+}

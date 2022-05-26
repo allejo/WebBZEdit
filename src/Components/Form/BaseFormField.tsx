@@ -5,6 +5,7 @@ import React, {
   HTMLProps,
   ReactNode,
   SyntheticEvent,
+  Ref,
 } from 'react';
 
 import { classList } from '../../Utilities/cssClasses';
@@ -36,6 +37,7 @@ export interface FieldProps<T> extends Omit<BaseFieldProps, Blacklist> {
   layout?: FieldLayout;
   label: string;
   labelProps?: HTMLProps<HTMLLabelElement>;
+  inputRef?: Ref<HTMLInputElement> | Ref<HTMLSelectElement>;
   description?: string;
   allowChange?: ValueValidator<T>;
   onChange: (value: T) => void;
@@ -99,6 +101,7 @@ const BaseFormField = <T,>({
   layout = FieldLayout.Stacked,
   label,
   labelProps = {},
+  inputRef = undefined,
   allowChange = () => true,
   onChange,
   tag,
@@ -148,6 +151,10 @@ const BaseFormField = <T,>({
     standardProps['checked'] = (value as unknown) as boolean;
   } else {
     standardProps['value'] = castTypeToStr(value);
+  }
+
+  if (inputRef) {
+    standardProps.ref = inputRef;
   }
 
   return (
