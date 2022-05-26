@@ -14,8 +14,8 @@ import { BZDBSettingsModalOpenEventName } from '../../Events/IBZDBSettingsModalO
 import { documentState } from '../../atoms';
 import { BZDBType } from '../../data/bzdb-types';
 import Button from '../Button';
+import BZDBEquationField from '../Form/BZDBEquationField';
 import CheckboxField from '../Form/CheckboxField';
-import NumberField from '../Form/NumberField';
 import ListenerModal from '../ListenerModal';
 import Markdown from '../Markdown';
 import { Tab, TabList } from '../TabList';
@@ -53,13 +53,13 @@ const SettingEditor = ({ onChange, variable }: SettingEditorProps) => {
   const [value, setValue] = useState<any>(variable.default);
 
   const renderEditor = (type: string) => {
-    if (type === 'integer' || type === 'float') {
+    if (type === 'integer' || type === 'float' || type === 'string') {
       return (
-        <NumberField
+        <BZDBEquationField
           label={variable.name}
+          labelProps={{ className: 'sr-only' }}
           onChange={setValue}
           value={value}
-          labelProps={{ className: 'sr-only' }}
         />
       );
     } else if (type === 'boolean') {
