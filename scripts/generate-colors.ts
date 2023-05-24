@@ -39,7 +39,7 @@ function toSentenceCase(str: string): string {
     .join(' ');
 }
 
-const ColorNames = Object.fromEntries(
+const ColorNamesToLiterals = Object.fromEntries(
   Object.keys(Colors).map((key) => [toSentenceCase(key), key]),
 );
 
@@ -54,7 +54,8 @@ const output = dedent`
   const sortedColors: ColorMap = ${JSON.stringify(getColorsSorted())};
   export const ColorsSorted = new Map<ColorLiteral, ColorTuple>(sortedColors);
 
-  export const ColorNames = ${JSON.stringify(ColorNames)};
+  export const ColorNamesToLiterals = ${JSON.stringify(ColorNamesToLiterals)};
+  export const ColorLiteralsToNames = Object.fromEntries(Object.entries(ColorNamesToLiterals).map(e => e.reverse()));
 `;
 
 writeFileSync(resolve(__dirname, '..', 'src', 'data', 'colors.ts'), output);

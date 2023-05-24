@@ -1,0 +1,45 @@
+.componentContainer {
+  position: relative;
+}
+
+.fieldWrapper {
+  border: var(--border);
+  border-radius: var(--border-radius);
+  display: flex;
+
+  input {
+    border: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  button {
+    background-color: transparent;
+    border: 0;
+  }
+}
+
+.colorDropdown {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 150px;
+  overflow: auto;
+  position: absolute;
+}
+
+.colorSelectorButton {
+  appearance: none;
+  border: 1px solid white;
+}
+
+.colorSelectorButton,
+.colorPreview25 {
+  height: 25px;
+  width: 25px;
+}
+
+.textFieldStylized {
+  input {
+    font-style: italic;
+  }
+}

@@ -1,7 +1,12 @@
-import { ColorNames, ColorsRGB } from '../../data/colors';
+import {
+  ColorNamesToLiterals,
+  ColorLiteralsToNames,
+  ColorsRGB,
+} from '../../data/colors';
 
 export type ColorTuple = [number, number, number];
 export type ColorLiteral = keyof typeof ColorsRGB;
+export type ColorName = keyof typeof ColorNamesToLiterals;
 export const ColorLiterals = Object.freeze(new Set(Object.keys(ColorsRGB)));
 
 const colorAliases: Record<string, ColorLiteral> = {};
@@ -39,8 +44,16 @@ export function getColorLiteral(value: string): ColorLiteral | null {
     return alias;
   }
 
-  if (value in ColorNames) {
-    return ColorNames[value as keyof typeof ColorNames];
+  if (value in ColorNamesToLiterals) {
+    return ColorNamesToLiterals[value as keyof typeof ColorNamesToLiterals];
+  }
+
+  return null;
+}
+
+export function getColorName(literal: ColorLiteral): ColorName | null {
+  if (literal in ColorLiteralsToNames) {
+    return ColorLiteralsToNames[literal];
   }
 
   return null;
