@@ -1,54 +1,54 @@
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
 }
 
 .header {
-  display: flex;
-  margin-bottom: 0.5rem;
+	display: flex;
+	margin-bottom: 0.5rem;
 }
 
 .heading {
-  font-size: 1rem;
-  font-weight: bold;
-  margin-bottom: 0;
-  margin-right: 1rem;
+	font-size: 1rem;
+	font-weight: bold;
+	margin-bottom: 0;
+	margin-right: 1rem;
 }
 
 .editButton {
-  font-size: 0.8rem;
-  margin-left: auto;
+	font-size: 0.8rem;
+	margin-left: auto;
 }
 
 .linkListContainer {
-  height: 100%;
-  overflow: hidden;
+	height: 100%;
+	overflow: hidden;
 }
 
 .linkListHeader {
-  font-size: 0.8rem;
-  font-weight: bold;
+	font-size: 0.8rem;
+	font-weight: bold;
 }
 
 .linkList {
-  min-width: 300px;
-  overflow: hidden;
+	min-width: 300px;
+	overflow: hidden;
 }
 
 .noLinks {
-  color: rgba(#fff, 0.6);
-  font-size: 0.9rem;
-  font-style: italic;
+	color: rgba(#fff, 0.6);
+	font-size: 0.9rem;
+	font-style: italic;
 }
 
 .teleLinks {
-  height: 100%;
-  margin-bottom: 0;
-  overflow: auto;
-  padding-left: 1.5rem;
+	height: 100%;
+	margin-bottom: 0;
+	overflow: auto;
+	padding-left: 1.5rem;
 }
 
 .teleLink {
-  white-space: nowrap;
+	white-space: nowrap;
 }

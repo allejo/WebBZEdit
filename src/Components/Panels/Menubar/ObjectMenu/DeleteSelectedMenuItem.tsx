@@ -4,46 +4,46 @@ import React from 'react';
 import { MenuStateReturn } from 'reakit';
 import { useRecoilState } from 'recoil';
 
+import { documentState, selectionState } from '../../../../atoms';
 import { WorldEditorHelper } from '../../../../Document/Editor/WorldEditorHelper';
 import { IWorld } from '../../../../Document/Obstacles/World';
-import { documentState, selectionState } from '../../../../atoms';
 import MenuItem from '../MenuItem';
 
 interface Props extends MenuStateReturn {}
 
 const DeleteSelectedMenuItem = ({ ...menu }: Props) => {
-  const [document, setDocument] = useRecoilState(documentState);
-  const [selected, setSelected] = useRecoilState(selectionState);
-  const handleOnTriggerMenuItem = () => {
-    const world = produce(document, (draftWorld: IWorld) => {
-      if (!selected) {
-        return;
-      }
+	const [document, setDocument] = useRecoilState(documentState);
+	const [selected, setSelected] = useRecoilState(selectionState);
+	const handleOnTriggerMenuItem = () => {
+		const world = produce(document, (draftWorld: IWorld) => {
+			if (!selected) {
+				return;
+			}
 
-      const editor = new WorldEditorHelper(draftWorld);
-      editor.delObstacle(selected);
+			const editor = new WorldEditorHelper(draftWorld);
+			editor.delObstacle(selected);
 
-      setSelected(null);
-    });
+			setSelected(null);
+		});
 
-    setDocument(world);
-  };
-  const isDisabled = selected === null;
+		setDocument(world);
+	};
+	const isDisabled = selected === null;
 
-  return (
-    <MenuItem
-      {...menu}
-      icon={faTrash}
-      onTrigger={handleOnTriggerMenuItem}
-      shortcut={{
-        key: 'BACKSPACE',
-        meta: true,
-      }}
-      disabled={isDisabled}
-    >
-      Delete Selected
-    </MenuItem>
-  );
+	return (
+		<MenuItem
+			{...menu}
+			icon={faTrash}
+			onTrigger={handleOnTriggerMenuItem}
+			shortcut={{
+				key: 'BACKSPACE',
+				meta: true,
+			}}
+			disabled={isDisabled}
+		>
+			Delete Selected
+		</MenuItem>
+	);
 };
 
 export default DeleteSelectedMenuItem;

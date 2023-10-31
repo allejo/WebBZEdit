@@ -1,48 +1,48 @@
 .wrapper {
-  color: white;
-  display: flex;
-  padding: 1rem;
+	color: white;
+	display: flex;
+	padding: 1rem;
 }
 
 .styleInfo {
-  background-color: #277aa9;
+	background-color: #277aa9;
 }
 
 .styleSuccess {
-  background-color: #397e35;
+	background-color: #397e35;
 }
 
 .styleWarning {
-  background-color: #846d1f;
+	background-color: #846d1f;
 }
 
 .styleDanger {
-  background-color: #d9403d;
+	background-color: #d9403d;
 }
 
 .iconContainer {
-  align-items: center;
-  display: flex;
-  margin-right: 0.75rem;
+	align-items: center;
+	display: flex;
+	margin-right: 0.75rem;
 }
 
 .bodyContainer {
 }
 
 .dismissContainer {
-  align-items: center;
-  display: flex;
-  margin-left: auto;
-  padding-left: 0.75rem;
+	align-items: center;
+	display: flex;
+	margin-left: auto;
+	padding-left: 0.75rem;
 }
 
 .dismissButton {
-  appearance: none;
-  background-color: transparent;
-  border: 0;
-  color: white;
+	appearance: none;
+	background-color: transparent;
+	border: 0;
+	color: white;
 }
 
 .header {
-  font-weight: bold;
+	font-weight: bold;
 }

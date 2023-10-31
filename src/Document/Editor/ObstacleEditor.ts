@@ -8,85 +8,85 @@ import { ITeleporterLink } from '../Obstacles/TeleporterLink';
 import { WorldEditorHelper } from './WorldEditorHelper';
 
 export function addObstacle<T extends IBaseObject>(
-  this: WorldEditorHelper,
-  obstacle: T,
+	this: WorldEditorHelper,
+	obstacle: T,
 ) {
-  if (obstacle._objectType === 'link') {
-    assumeType<ITeleporterLink>(obstacle);
-    this.addLink(obstacle);
+	if (obstacle._objectType === 'link') {
+		assumeType<ITeleporterLink>(obstacle);
+		this.addLink(obstacle);
 
-    return;
-  }
+		return;
+	}
 
-  if (obstacle._objectType === 'teleporter') {
-    assumeType<ITeleporter>(obstacle);
+	if (obstacle._objectType === 'teleporter') {
+		assumeType<ITeleporter>(obstacle);
 
-    obstacle.name = 'tele' + this.world._teleporters.length;
-    this.world._teleporters.push(obstacle._uuid);
-  }
+		obstacle.name = 'tele' + this.world._teleporters.length;
+		this.world._teleporters.push(obstacle._uuid);
+	}
 
-  this.world.children[obstacle._uuid] = obstacle;
+	this.world.children[obstacle._uuid] = obstacle;
 }
 
 export function delObstacle<T extends IBaseObject>(
-  this: WorldEditorHelper,
-  obstacleOrUUID: T | string,
+	this: WorldEditorHelper,
+	obstacleOrUUID: T | string,
 ) {
-  const obstacle =
-    typeof obstacleOrUUID === 'string'
-      ? this.world.children[obstacleOrUUID]
-      : obstacleOrUUID;
+	const obstacle =
+		typeof obstacleOrUUID === 'string'
+			? this.world.children[obstacleOrUUID]
+			: obstacleOrUUID;
 
-  if (obstacle._objectType === 'link') {
-    assumeType<ITeleporterLink>(obstacle);
-    this.delLink(obstacle._uuid);
+	if (obstacle._objectType === 'link') {
+		assumeType<ITeleporterLink>(obstacle);
+		this.delLink(obstacle._uuid);
 
-    return;
-  }
+		return;
+	}
 
-  if (obstacle._objectType === 'teleporter') {
-    assumeType<ITeleporter>(obstacle);
+	if (obstacle._objectType === 'teleporter') {
+		assumeType<ITeleporter>(obstacle);
 
-    this.delLinks(obstacle._links);
-    this.world._teleporters = removeItem(
-      this.world._teleporters,
-      obstacle._uuid,
-    );
-  }
+		this.delLinks(obstacle._links);
+		this.world._teleporters = removeItem(
+			this.world._teleporters,
+			obstacle._uuid,
+		);
+	}
 
-  delete this.world.children[obstacle._uuid];
+	delete this.world.children[obstacle._uuid];
 }
 
 export function renameObstacle<T extends IBaseObject & INameable>(
-  this: WorldEditorHelper,
-  obstacleOrUUID: T | string,
-  proposedName: string,
+	this: WorldEditorHelper,
+	obstacleOrUUID: T | string,
+	proposedName: string,
 ) {
-  const obstacle =
-    typeof obstacleOrUUID === 'string'
-      ? this.world.children[obstacleOrUUID]
-      : obstacleOrUUID;
-  let name = proposedName;
+	const obstacle =
+		typeof obstacleOrUUID === 'string'
+			? this.world.children[obstacleOrUUID]
+			: obstacleOrUUID;
+	let name = proposedName;
 
-  if (obstacle._objectType === 'teleporter') {
-    assumeType<ITeleporter>(obstacle);
+	if (obstacle._objectType === 'teleporter') {
+		assumeType<ITeleporter>(obstacle);
 
-    name = slugify(name);
+		name = slugify(name);
 
-    if (name.trim().length === 0) {
-      name = `tele${this.world._teleporters.length}`;
-    }
+		if (name.trim().length === 0) {
+			name = `tele${this.world._teleporters.length}`;
+		}
 
-    obstacle._links.forEach((uuid) => {
-      const link = this.world.children[uuid] as ITeleporterLink;
+		obstacle._links.forEach((uuid) => {
+			const link = this.world.children[uuid] as ITeleporterLink;
 
-      if (link.from.name === obstacle.name) {
-        link.from.name = name;
-      } else if (link.to.name === obstacle.name) {
-        link.to.name = name;
-      }
-    });
-  }
+			if (link.from.name === obstacle.name) {
+				link.from.name = name;
+			} else if (link.to.name === obstacle.name) {
+				link.to.name = name;
+			}
+		});
+	}
 
-  this.world.children[obstacle._uuid].name = name;
+	this.world.children[obstacle._uuid].name = name;
 }

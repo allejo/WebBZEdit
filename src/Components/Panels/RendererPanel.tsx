@@ -6,22 +6,22 @@ import BZWDocumentRenderer from './Renderer/BZWDocumentRenderer';
 import CameraControls, { CAMERA_DEFAULT_POS } from './Renderer/CameraControls';
 
 const RendererPanel = () => {
-  const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
+	const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
-  return (
-    <Canvas camera={{ position: CAMERA_DEFAULT_POS }}>
-      <RecoilBridge>
-        <Suspense fallback={null}>
-          <BZWDocumentRenderer />
-        </Suspense>
-      </RecoilBridge>
+	return (
+		<Canvas camera={{ position: CAMERA_DEFAULT_POS }}>
+			<RecoilBridge>
+				<Suspense fallback={null}>
+					<BZWDocumentRenderer />
+				</Suspense>
+			</RecoilBridge>
 
-      <hemisphereLight args={[0xffffbb, 0x080820, 0.8]} />
-      <gridHelper args={[800, 40]} />
-      <axesHelper args={[200]} />
-      <CameraControls />
-    </Canvas>
-  );
+			<hemisphereLight args={[0xffffbb, 0x080820, 0.8]} />
+			<gridHelper args={[800, 40]} />
+			<axesHelper args={[200]} />
+			<CameraControls />
+		</Canvas>
+	);
 };
 
 export default RendererPanel;

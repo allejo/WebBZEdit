@@ -1,27 +1,27 @@
 .linkList {
-  padding: 0;
+	padding: 0;
 }
 
 .linkListItem {
-  display: flex;
+	display: flex;
 }
 
 .deletedItem {
-  font-style: italic;
-  text-decoration: line-through;
+	font-style: italic;
+	text-decoration: line-through;
 }
 
 .deleteButton {
-  margin-left: auto;
+	margin-left: auto;
 }
 
 .addLinkContainer {
-  display: flex;
-  padding-right: 1rem;
-  width: 100%;
+	display: flex;
+	padding-right: 1rem;
+	width: 100%;
 }
 
 .teleporterSelection {
-  flex: 1;
-  margin-right: 1rem;
+	flex: 1;
+	margin-right: 1rem;
 }

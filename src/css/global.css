@@ -1,69 +1,69 @@
 :root {
-  --color-black-r: 0;
-  --color-black-g: 0;
-  --color-black-b: 0;
-  --color-grey-dark-r: 50;
-  --color-grey-dark-g: 55;
-  --color-grey-dark-b: 64;
-  --color-grey-medium-r: 34;
-  --color-grey-medium-g: 37;
-  --color-grey-medium-b: 43;
-  --color-grey-light-r: 51;
-  --color-grey-light-g: 55;
-  --color-grey-light-b: 63;
-  --color-white-r: 255;
-  --color-white-g: 255;
-  --color-white-b: 255;
+	--color-black-r: 0;
+	--color-black-g: 0;
+	--color-black-b: 0;
+	--color-grey-dark-r: 50;
+	--color-grey-dark-g: 55;
+	--color-grey-dark-b: 64;
+	--color-grey-medium-r: 34;
+	--color-grey-medium-g: 37;
+	--color-grey-medium-b: 43;
+	--color-grey-light-r: 51;
+	--color-grey-light-g: 55;
+	--color-grey-light-b: 63;
+	--color-white-r: 255;
+	--color-white-g: 255;
+	--color-white-b: 255;
 
-  --color-black: rgb(
-    var(--color-black-r),
-    var(--color-black-g),
-    var(--color-black-b)
-  );
-  --color-grey-dark: rgb(
-    var(--color-grey-dark-r),
-    var(--color-grey-dark-g),
-    var(--color-grey-dark-b)
-  );
-  --color-grey-medium: rgb(
-    var(--color-grey-medium-r),
-    var(--color-grey-medium-g),
-    var(--color-grey-medium-b)
-  );
-  --color-grey-light: rgb(
-    var(--color-grey-light-r),
-    var(--color-grey-light-g),
-    var(--color-grey-light-b)
-  );
-  --color-white: rgb(
-    var(--color-white-r),
-    var(--color-white-g),
-    var(--color-white-b)
-  );
+	--color-black: rgb(
+		var(--color-black-r),
+		var(--color-black-g),
+		var(--color-black-b)
+	);
+	--color-grey-dark: rgb(
+		var(--color-grey-dark-r),
+		var(--color-grey-dark-g),
+		var(--color-grey-dark-b)
+	);
+	--color-grey-medium: rgb(
+		var(--color-grey-medium-r),
+		var(--color-grey-medium-g),
+		var(--color-grey-medium-b)
+	);
+	--color-grey-light: rgb(
+		var(--color-grey-light-r),
+		var(--color-grey-light-g),
+		var(--color-grey-light-b)
+	);
+	--color-white: rgb(
+		var(--color-white-r),
+		var(--color-white-g),
+		var(--color-white-b)
+	);
 
-  --border: 1px solid var(--border-color);
-  --border-color: rgba(
-    var(--color-white-r),
-    var(--color-white-g),
-    var(--color-white-b),
-    0.25
-  );
-  --border-radius: 4px;
+	--border: 1px solid var(--border-color);
+	--border-color: rgba(
+		var(--color-white-r),
+		var(--color-white-g),
+		var(--color-white-b),
+		0.25
+	);
+	--border-radius: 4px;
 
-  --box-shadow: var(--color-black) 5px 5px 10px 0;
+	--box-shadow: var(--color-black) 5px 5px 10px 0;
 
-  --modal-background-color: var(--color-grey-light);
+	--modal-background-color: var(--color-grey-light);
 
-  --tab-selected-background-color: var(--border-color);
+	--tab-selected-background-color: var(--border-color);
 
-  --toggle-tip-background: #4e4e4e;
-  --toggle-tip-color: #fff;
+	--toggle-tip-background: #4e4e4e;
+	--toggle-tip-color: #fff;
 
-  --spacing-extra-small: 0.25rem;
-  --spacing-small: 0.5rem;
-  --spacing-normal: 1rem;
-  --spacing-large: 1.5rem;
-  --spacing-extra-large: 3rem;
+	--spacing-extra-small: 0.25rem;
+	--spacing-small: 0.5rem;
+	--spacing-normal: 1rem;
+	--spacing-large: 1.5rem;
+	--spacing-extra-large: 3rem;
 
-  --z-index-toggletip: 10;
+	--z-index-toggletip: 10;
 }

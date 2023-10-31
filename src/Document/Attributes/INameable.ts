@@ -1,7 +1,7 @@
 export interface INameable {
-  name?: string;
+	name?: string;
 }
 
 export function implementsINameable(value: any): value is INameable {
-  return value.hasOwnProperty('name');
+	return value.hasOwnProperty('name');
 }

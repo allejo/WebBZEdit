@@ -1,12 +1,12 @@
 import {
-  DocumentPostSavedEvent,
-  DocumentPostSavedEventName,
-  IDocumentPostSavedEvent,
+	DocumentPostSavedEvent,
+	DocumentPostSavedEventName,
+	IDocumentPostSavedEvent,
 } from '../Events/IDocumentPostSavedEvent';
 import {
-  DocumentPreSavedEvent,
-  DocumentPreSavedEventName,
-  IDocumentPreSavedEvent,
+	DocumentPreSavedEvent,
+	DocumentPreSavedEventName,
+	IDocumentPreSavedEvent,
 } from '../Events/IDocumentPreSavedEvent';
 import eventBus from '../Utilities/EventBus';
 import { IWorld } from './Obstacles/World';
@@ -19,22 +19,22 @@ import { writeBZWDocument } from './writeBZWDocument';
  * @param world
  */
 export function exportBZWDocument(world: IWorld | null): string {
-  const preSaveEvent = new DocumentPreSavedEvent(world);
+	const preSaveEvent = new DocumentPreSavedEvent(world);
 
-  eventBus.dispatch<IDocumentPreSavedEvent>(
-    DocumentPreSavedEventName,
-    preSaveEvent,
-  );
+	eventBus.dispatch<IDocumentPreSavedEvent>(
+		DocumentPreSavedEventName,
+		preSaveEvent,
+	);
 
-  const updatedWorld = preSaveEvent.getWorld();
-  const rawWorld = updatedWorld ? writeBZWDocument(updatedWorld) : '';
+	const updatedWorld = preSaveEvent.getWorld();
+	const rawWorld = updatedWorld ? writeBZWDocument(updatedWorld) : '';
 
-  const postSaveEvent = new DocumentPostSavedEvent(rawWorld);
+	const postSaveEvent = new DocumentPostSavedEvent(rawWorld);
 
-  eventBus.dispatch<IDocumentPostSavedEvent>(
-    DocumentPostSavedEventName,
-    postSaveEvent,
-  );
+	eventBus.dispatch<IDocumentPostSavedEvent>(
+		DocumentPostSavedEventName,
+		postSaveEvent,
+	);
 
-  return postSaveEvent.getRawWorld();
+	return postSaveEvent.getRawWorld();
 }

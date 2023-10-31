@@ -14,51 +14,51 @@ import DeleteSelectedMenuItem from './ObjectMenu/DeleteSelectedMenuItem';
 import styles from './menu-styles.module.scss';
 
 const ObjectMenu = forwardRef<HTMLButtonElement>((props, ref) => {
-  const menu = useMenuState();
+	const menu = useMenuState();
 
-  return (
-    <>
-      <MenuButton ref={ref} {...menu} {...props} className={styles.menuButton}>
-        Object
-      </MenuButton>
-      <Menu {...menu} aria-label="Object" className={styles.menuDropdown}>
-        <AddObstacleMenuItem
-          icon={faFlag}
-          object="Base"
-          factory={newIBase}
-          {...menu}
-        />
-        <AddObstacleMenuItem
-          {...menu}
-          icon={faCube}
-          object="Box"
-          factory={newIBox}
-          shortcut={{ key: 'B' }}
-        />
-        <AddObstacleMenuItem
-          object="Pyramid"
-          factory={newIPyramid}
-          {...menu}
-          shortcut={{ key: 'P' }}
-        />
-        <AddObstacleMenuItem
-          object="Teleporter"
-          factory={newITeleporter}
-          shortcut={{ key: 'T' }}
-          {...menu}
-        />
-        <AddObstacleMenuItem
-          object="Zone"
-          factory={newIZone}
-          shortcut={{ key: 'Z' }}
-          {...menu}
-        />
-        <MenuSeparator />
-        <ClearSelectionMenuItem {...menu} />
-        <DeleteSelectedMenuItem {...menu} />
-      </Menu>
-    </>
-  );
+	return (
+		<>
+			<MenuButton ref={ref} {...menu} {...props} className={styles.menuButton}>
+				Object
+			</MenuButton>
+			<Menu {...menu} aria-label="Object" className={styles.menuDropdown}>
+				<AddObstacleMenuItem
+					icon={faFlag}
+					object="Base"
+					factory={newIBase}
+					{...menu}
+				/>
+				<AddObstacleMenuItem
+					{...menu}
+					icon={faCube}
+					object="Box"
+					factory={newIBox}
+					shortcut={{ key: 'B' }}
+				/>
+				<AddObstacleMenuItem
+					object="Pyramid"
+					factory={newIPyramid}
+					{...menu}
+					shortcut={{ key: 'P' }}
+				/>
+				<AddObstacleMenuItem
+					object="Teleporter"
+					factory={newITeleporter}
+					shortcut={{ key: 'T' }}
+					{...menu}
+				/>
+				<AddObstacleMenuItem
+					object="Zone"
+					factory={newIZone}
+					shortcut={{ key: 'Z' }}
+					{...menu}
+				/>
+				<MenuSeparator />
+				<ClearSelectionMenuItem {...menu} />
+				<DeleteSelectedMenuItem {...menu} />
+			</Menu>
+		</>
+	);
 });
 
 export default ObjectMenu;

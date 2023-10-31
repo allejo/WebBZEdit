@@ -4,33 +4,33 @@ export type EventBusCallback<T extends {}> = (data: T) => void;
 type EventBusInternalCallback<T> = (e: CustomEvent<T>) => void;
 
 class EventBus {
-  private callbacks: Record<string, EventBusInternalCallback<any>> = {};
+	private callbacks: Record<string, EventBusInternalCallback<any>> = {};
 
-  on<T extends {}>(event: string, callback: EventBusCallback<T>): string {
-    const id = nanoid(7);
+	on<T extends {}>(event: string, callback: EventBusCallback<T>): string {
+		const id = nanoid(7);
 
-    this.callbacks[id] = (e: CustomEvent<T>) => {
-      callback(e.detail);
-    };
+		this.callbacks[id] = (e: CustomEvent<T>) => {
+			callback(e.detail);
+		};
 
-    document.addEventListener(event, this.callbacks[id] as EventListener);
+		document.addEventListener(event, this.callbacks[id] as EventListener);
 
-    return id;
-  }
+		return id;
+	}
 
-  dispatch<T extends {}>(event: string, data: T): void {
-    document.dispatchEvent(new CustomEvent(event, { detail: data }));
-  }
+	dispatch<T extends {}>(event: string, data: T): void {
+		document.dispatchEvent(new CustomEvent(event, { detail: data }));
+	}
 
-  remove(event: string, id: string): boolean {
-    if (!this.callbacks[id]) {
-      return false;
-    }
+	remove(event: string, id: string): boolean {
+		if (!this.callbacks[id]) {
+			return false;
+		}
 
-    document.removeEventListener(event, this.callbacks[id] as EventListener);
+		document.removeEventListener(event, this.callbacks[id] as EventListener);
 
-    return true;
-  }
+		return true;
+	}
 }
 
 const eventBus = new EventBus();

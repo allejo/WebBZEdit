@@ -2,44 +2,44 @@ import { OptionsFlag } from '../Obstacles/Option';
 import { WorldEditorHelper } from './WorldEditorHelper';
 
 export enum FriendlyFireMode {
-  Impossible = 'i',
-  WithPenalty = 'p',
-  WithPenaltyAndSuicide = 's',
+	Impossible = 'i',
+	WithPenalty = 'p',
+	WithPenaltyAndSuicide = 's',
 }
 
 export function getFriendlyFire(this: WorldEditorHelper): FriendlyFireMode {
-  if (this.world._options['-tk'] === true) {
-    return FriendlyFireMode.WithPenalty;
-  }
+	if (this.world._options['-tk'] === true) {
+		return FriendlyFireMode.WithPenalty;
+	}
 
-  if (this.world._options['-noteamkills'] === true) {
-    return FriendlyFireMode.Impossible;
-  }
+	if (this.world._options['-noteamkills'] === true) {
+		return FriendlyFireMode.Impossible;
+	}
 
-  return FriendlyFireMode.WithPenaltyAndSuicide;
+	return FriendlyFireMode.WithPenaltyAndSuicide;
 }
 
 export function setFriendlyFire(
-  this: WorldEditorHelper,
-  mode: FriendlyFireMode,
+	this: WorldEditorHelper,
+	mode: FriendlyFireMode,
 ): void {
-  const ffOpts: OptionsFlag[] = ['-noteamkills', '-tk'];
+	const ffOpts: OptionsFlag[] = ['-noteamkills', '-tk'];
 
-  for (const ffOpt of ffOpts) {
-    delete this.world._options[ffOpt];
-  }
+	for (const ffOpt of ffOpts) {
+		delete this.world._options[ffOpt];
+	}
 
-  switch (mode) {
-    case FriendlyFireMode.Impossible:
-      this.world._options['-noteamkills'] = true;
-      break;
+	switch (mode) {
+		case FriendlyFireMode.Impossible:
+			this.world._options['-noteamkills'] = true;
+			break;
 
-    case FriendlyFireMode.WithPenalty:
-      this.world._options['-tk'] = true;
-      break;
+		case FriendlyFireMode.WithPenalty:
+			this.world._options['-tk'] = true;
+			break;
 
-    case FriendlyFireMode.WithPenaltyAndSuicide:
-    default:
-      break;
-  }
+		case FriendlyFireMode.WithPenaltyAndSuicide:
+		default:
+			break;
+	}
 }

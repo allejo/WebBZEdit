@@ -4,12 +4,12 @@ import { defineConfig } from 'vitest/config';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
-  plugins: [react(), viteTsconfigPaths()],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
-    include: ['./src/**/__tests__/*.[jt]s(x)?'],
-  },
+	base: '/',
+	plugins: [react(), viteTsconfigPaths()],
+	test: {
+		globals: true,
+		environment: 'jsdom',
+		setupFiles: './src/setupTests.ts',
+		include: ['./src/**/__tests__/*.[jt]s(x)?'],
+	},
 });

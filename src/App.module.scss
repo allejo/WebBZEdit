@@ -1,66 +1,66 @@
 @import 'sass/variables';
 
 .Viewport {
-  display: flex;
+	display: flex;
 }
 
 .DebugPanel {
-  width: 400px;
+	width: 400px;
 
-  textarea {
-    border: 0;
-    font-family: monospace;
-    height: 100%;
-    tab-size: 2ch;
-    width: 100%;
-  }
+	textarea {
+		border: 0;
+		font-family: monospace;
+		height: 100%;
+		tab-size: 2ch;
+		width: 100%;
+	}
 }
 
 .Application {
-  display: grid;
-  height: 100vh;
-  grid-template-columns: 1.6fr 0.4fr;
-  grid-template-rows: auto 2.3fr;
-  gap: 0 0;
-  grid-template-areas:
-    'Menubar Menubar'
-    'Renderer Sidebar'
-    'Toolbox Toolbox'
-    'StatusBar StatusBar';
-  width: 100vw;
+	display: grid;
+	height: 100vh;
+	grid-template-columns: 1.6fr 0.4fr;
+	grid-template-rows: auto 2.3fr;
+	gap: 0 0;
+	grid-template-areas:
+		'Menubar Menubar'
+		'Renderer Sidebar'
+		'Toolbox Toolbox'
+		'StatusBar StatusBar';
+	width: 100vw;
 }
 
 .Menubar {
-  background-color: $color-grey-dark;
-  color: $color-white;
-  grid-area: Menubar;
+	background-color: $color-grey-dark;
+	color: $color-white;
+	grid-area: Menubar;
 }
 
 .Toolbox {
-  background-color: $color-grey-dark;
-  color: $color-white;
-  grid-area: Toolbox;
-  padding: 1rem;
+	background-color: $color-grey-dark;
+	color: $color-white;
+	grid-area: Toolbox;
+	padding: 1rem;
 }
 
 .Renderer {
-  grid-area: Renderer;
-  overflow: hidden;
+	grid-area: Renderer;
+	overflow: hidden;
 }
 
 .Sidebar {
-  background-color: $color-grey-light;
-  padding: 1rem;
-  grid-area: Sidebar;
-  max-height: 100%;
-  overflow-y: auto;
+	background-color: $color-grey-light;
+	padding: 1rem;
+	grid-area: Sidebar;
+	max-height: 100%;
+	overflow-y: auto;
 }
 
 .StatusBar {
-  background-color: $color-grey-light;
-  color: $color-white;
-  grid-area: StatusBar;
-  font-size: 0.9rem;
-  padding: 0 1rem;
-  text-align: right;
+	background-color: $color-grey-light;
+	color: $color-white;
+	grid-area: StatusBar;
+	font-size: 0.9rem;
+	padding: 0 1rem;
+	text-align: right;
 }

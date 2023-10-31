@@ -1,9 +1,9 @@
 export interface IPhysicsDriverFriendly {
-  phydrv?: string;
+	phydrv?: string;
 }
 
 export function implementsIPhysicsDriverFriendly(
-  value: any,
+	value: any,
 ): value is IPhysicsDriverFriendly {
-  return value.hasOwnProperty('phydrv');
+	return value.hasOwnProperty('phydrv');
 }

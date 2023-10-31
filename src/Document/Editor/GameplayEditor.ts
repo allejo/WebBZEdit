@@ -1,20 +1,20 @@
 import { WorldEditorHelper } from './WorldEditorHelper';
 
 export function enableJumping(this: WorldEditorHelper, enabled: boolean): void {
-  this.world._options['-j'] = enabled;
+	this.world._options['-j'] = enabled;
 }
 
 export function isJumpingEnabled(this: WorldEditorHelper): boolean {
-  return !!this.world._options['-j'];
+	return !!this.world._options['-j'];
 }
 
 export function enableRicochets(
-  this: WorldEditorHelper,
-  enabled: boolean,
+	this: WorldEditorHelper,
+	enabled: boolean,
 ): void {
-  this.world._options['+r'] = enabled;
+	this.world._options['+r'] = enabled;
 }
 
 export function areRicochetsEnabled(this: WorldEditorHelper): boolean {
-  return !!this.world._options['+r'];
+	return !!this.world._options['+r'];
 }

@@ -1,17 +1,17 @@
 export function writeArray(array: Array<any>): string[] {
-  return array.map((value) => {
-    if (typeof value === 'number') {
-      return writeNumber(value);
-    }
+	return array.map((value) => {
+		if (typeof value === 'number') {
+			return writeNumber(value);
+		}
 
-    return value;
-  });
+		return value;
+	});
 }
 
 export function writeNumber(value: number): string {
-  if (value % 1 === 0) {
-    return value.toFixed(0);
-  }
+	if (value % 1 === 0) {
+		return value.toFixed(0);
+	}
 
-  return value.toFixed(10).replace(/0+$/, '');
+	return value.toFixed(10).replace(/0+$/, '');
 }

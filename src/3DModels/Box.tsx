@@ -9,9 +9,9 @@ import boxWall from '../assets/boxwall.png';
 import boxRoof from '../assets/roof.png';
 
 interface Props {
-  obstacle: IBox;
-  isSelected: boolean;
-  onClick: (obstacle: IBox) => void;
+	obstacle: IBox;
+	isSelected: boolean;
+	onClick: (obstacle: IBox) => void;
 }
 
 // These are magic calculations used to calculating the UV repeat values for
@@ -26,48 +26,48 @@ const Z_MULTIPLIER = 8.5 / 16 / 5;
  * @see https://threejs.org/docs/#api/en/geometries/BoxGeometry
  */
 const Box = ({ obstacle, isSelected, onClick }: Props) => {
-  const { position, size, rotation = 0 } = obstacle;
-  const [bzwSizeX, bzwSizeY, bzwSizeZ] = size;
-  const handleOnClick = () => onClick(obstacle);
+	const { position, size, rotation = 0 } = obstacle;
+	const [bzwSizeX, bzwSizeY, bzwSizeZ] = size;
+	const handleOnClick = () => onClick(obstacle);
 
-  const [_roofTexture, _wallTexture] = useLoader(TextureLoader, [
-    boxRoof,
-    boxWall,
-  ]);
+	const [_roofTexture, _wallTexture] = useLoader(TextureLoader, [
+		boxRoof,
+		boxWall,
+	]);
 
-  const roofTexture = _roofTexture.clone();
-  const wallTexture = _wallTexture.clone();
+	const roofTexture = _roofTexture.clone();
+	const wallTexture = _wallTexture.clone();
 
-  roofTexture.wrapS = roofTexture.wrapT = RepeatWrapping;
-  wallTexture.wrapS = wallTexture.wrapT = RepeatWrapping;
+	roofTexture.wrapS = roofTexture.wrapT = RepeatWrapping;
+	wallTexture.wrapS = wallTexture.wrapT = RepeatWrapping;
 
-  roofTexture.repeat.set(Math.round(bzwSizeX), Math.round(bzwSizeY));
-  roofTexture.needsUpdate = true;
+	roofTexture.repeat.set(Math.round(bzwSizeX), Math.round(bzwSizeY));
+	roofTexture.needsUpdate = true;
 
-  const xTexture = wallTexture.clone();
-  const yTexture = wallTexture.clone();
+	const xTexture = wallTexture.clone();
+	const yTexture = wallTexture.clone();
 
-  xTexture.repeat.set(bzwSizeX * XY_MULTIPLIER, bzwSizeZ * Z_MULTIPLIER);
-  xTexture.needsUpdate = true;
+	xTexture.repeat.set(bzwSizeX * XY_MULTIPLIER, bzwSizeZ * Z_MULTIPLIER);
+	xTexture.needsUpdate = true;
 
-  yTexture.repeat.set(bzwSizeY * XY_MULTIPLIER, bzwSizeZ * Z_MULTIPLIER);
-  yTexture.needsUpdate = true;
+	yTexture.repeat.set(bzwSizeY * XY_MULTIPLIER, bzwSizeZ * Z_MULTIPLIER);
+	yTexture.needsUpdate = true;
 
-  return (
-    <SkinnableBox
-      position={position}
-      size={size}
-      rotation={rotation}
-      onClick={handleOnClick}
-      isSelected={isSelected}
-      topTexture={roofTexture}
-      botTexture={roofTexture}
-      xPosTexture={xTexture}
-      xNegTexture={xTexture}
-      yPosTexture={yTexture}
-      yNegTexture={yTexture}
-    />
-  );
+	return (
+		<SkinnableBox
+			position={position}
+			size={size}
+			rotation={rotation}
+			onClick={handleOnClick}
+			isSelected={isSelected}
+			topTexture={roofTexture}
+			botTexture={roofTexture}
+			xPosTexture={xTexture}
+			xNegTexture={xTexture}
+			yPosTexture={yTexture}
+			yNegTexture={yTexture}
+		/>
+	);
 };
 
 export default Box;

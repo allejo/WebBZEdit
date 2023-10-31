@@ -12,18 +12,18 @@ import WorldMenu from './Menubar/WorldMenu';
 import styles from './MenubarPanel.module.scss';
 
 const MenubarPanel = () => {
-  const menu = useMenuBarState();
+	const menu = useMenuBarState();
 
-  return (
-    <MenuBar {...menu} className={styles.wrapper}>
-      <MenuItem {...menu} as={FileMenu} />
-      <MenuItem {...menu} as={ObjectMenu} />
-      <MenuItem {...menu} as={CameraMenu} />
-      <MenuItem {...menu} as={WorldMenu} />
-      {isDevEnv() && <MenuItem {...menu} as={DebugMenu} />}
-      <MenuItem {...menu} as={HelpMenu} />
-    </MenuBar>
-  );
+	return (
+		<MenuBar {...menu} className={styles.wrapper}>
+			<MenuItem {...menu} as={FileMenu} />
+			<MenuItem {...menu} as={ObjectMenu} />
+			<MenuItem {...menu} as={CameraMenu} />
+			<MenuItem {...menu} as={WorldMenu} />
+			{isDevEnv() && <MenuItem {...menu} as={DebugMenu} />}
+			<MenuItem {...menu} as={HelpMenu} />
+		</MenuBar>
+	);
 };
 
 export default MenubarPanel;

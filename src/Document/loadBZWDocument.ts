@@ -1,7 +1,7 @@
 import {
-  IDocumentParsedEvent,
-  DocumentParsedEvent,
-  DocumentParsedEventName,
+	DocumentParsedEvent,
+	DocumentParsedEventName,
+	IDocumentParsedEvent,
 } from '../Events/IDocumentParsedEvent';
 import eventBus from '../Utilities/EventBus';
 import { IWorld } from './Obstacles/World';
@@ -14,10 +14,10 @@ import { parseBZWDocument } from './parseBZWDocument';
  * @param content The raw BZW contents to be parsed
  */
 export function loadBZWDocument(content: string): IWorld | null {
-  const world = parseBZWDocument(content);
-  const event = new DocumentParsedEvent(world);
+	const world = parseBZWDocument(content);
+	const event = new DocumentParsedEvent(world);
 
-  eventBus.dispatch<IDocumentParsedEvent>(DocumentParsedEventName, event);
+	eventBus.dispatch<IDocumentParsedEvent>(DocumentParsedEventName, event);
 
-  return event.getWorld();
+	return event.getWorld();
 }

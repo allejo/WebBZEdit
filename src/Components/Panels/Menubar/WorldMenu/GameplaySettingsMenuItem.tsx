@@ -3,21 +3,21 @@ import React from 'react';
 import { MenuStateReturn } from 'reakit';
 
 import {
-  GameplaySettingsModalOpenEventName,
-  IGameplaySettingsModalOpenEvent,
+	GameplaySettingsModalOpenEventName,
+	IGameplaySettingsModalOpenEvent,
 } from '../../../../Events/IGameplaySettingsModalOpenEvent';
 import TriggerModalMenuItem from '../shared/TriggerModalMenuItem';
 
 interface Props extends MenuStateReturn {}
 
 const GameplaySettingsMenuItem = ({ ...menu }: Props) => (
-  <TriggerModalMenuItem<IGameplaySettingsModalOpenEvent>
-    eventData={{}}
-    eventName={GameplaySettingsModalOpenEventName}
-    icon={faGamepad}
-    menuName="Gameplay Settings"
-    {...menu}
-  />
+	<TriggerModalMenuItem<IGameplaySettingsModalOpenEvent>
+		eventData={{}}
+		eventName={GameplaySettingsModalOpenEventName}
+		icon={faGamepad}
+		menuName="Gameplay Settings"
+		{...menu}
+	/>
 );
 
 export default GameplaySettingsMenuItem;

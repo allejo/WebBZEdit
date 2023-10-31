@@ -1,86 +1,86 @@
 .wrapper {
-  &[data-form-type='checkbox'] {
-    display: flex;
-    flex-wrap: wrap;
+	&[data-form-type='checkbox'] {
+		display: flex;
+		flex-wrap: wrap;
 
-    .label {
-      margin-bottom: 0;
-      margin-left: 0.5rem;
-      order: 2;
-    }
+		.label {
+			margin-bottom: 0;
+			margin-left: 0.5rem;
+			order: 2;
+		}
 
-    .fieldContainer {
-      order: 1;
-    }
+		.fieldContainer {
+			order: 1;
+		}
 
-    .description {
-      order: 3;
-    }
-  }
+		.description {
+			order: 3;
+		}
+	}
 
-  &[data-form-type='number'] {
-    .input {
-      text-align: right;
-    }
-  }
+	&[data-form-type='number'] {
+		.input {
+			text-align: right;
+		}
+	}
 
-  &[data-form-type='select'] {
-    .fieldContainer {
-      position: relative;
-    }
-  }
+	&[data-form-type='select'] {
+		.fieldContainer {
+			position: relative;
+		}
+	}
 
-  &[data-layout='horizontal'] {
-    align-items: center;
-    display: flex;
+	&[data-layout='horizontal'] {
+		align-items: center;
+		display: flex;
 
-    .label {
-      margin-bottom: 0;
-      margin-right: 1rem;
-    }
-  }
+		.label {
+			margin-bottom: 0;
+			margin-right: 1rem;
+		}
+	}
 }
 
 .label {
-  color: white;
-  margin-bottom: 0.3rem;
+	color: white;
+	margin-bottom: 0.3rem;
 }
 
 .input,
 .selectField {
-  background-color: #52545b;
-  border: 1px solid rgba(#fff, 0.5);
-  border-radius: 3px;
-  color: white;
-  width: 100%;
+	background-color: #52545b;
+	border: 1px solid rgba(#fff, 0.5);
+	border-radius: 3px;
+	color: white;
+	width: 100%;
 }
 
 .input {
-  padding: 0.1rem 0.5rem;
+	padding: 0.1rem 0.5rem;
 
-  &[type='checkbox'] {
-    width: 16px;
-  }
+	&[type='checkbox'] {
+		width: 16px;
+	}
 }
 
 .selectField {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: 0.1rem 2rem 0.1rem 0.5rem;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	padding: 0.1rem 2rem 0.1rem 0.5rem;
 }
 
 .selectFieldArrow {
-  pointer-events: none;
-  position: absolute;
-  right: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
+	pointer-events: none;
+	position: absolute;
+	right: 0.5rem;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .description {
-  color: rgba(#fff, 0.5);
-  font-size: 0.8rem;
-  line-height: 1.2em;
-  margin-top: 0.25rem;
+	color: rgba(#fff, 0.5);
+	font-size: 0.8rem;
+	line-height: 1.2em;
+	margin-top: 0.25rem;
 }

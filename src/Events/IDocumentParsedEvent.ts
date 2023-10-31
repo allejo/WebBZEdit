@@ -1,8 +1,8 @@
 import { IWorld } from '../Document/Obstacles/World';
 
 export interface IDocumentParsedEvent {
-  getWorld(): IWorld | null;
-  setWorld(world: IWorld | null): void;
+	getWorld(): IWorld | null;
+	setWorld(world: IWorld | null): void;
 }
 
 export const DocumentParsedEventName = 'worldDocumentLoaded';
@@ -13,13 +13,13 @@ export const DocumentParsedEventName = 'worldDocumentLoaded';
  * world by having getters and setters to make changes.
  */
 export class DocumentParsedEvent implements IDocumentParsedEvent {
-  constructor(private world: IWorld | null = null) {}
+	constructor(private world: IWorld | null = null) {}
 
-  getWorld(): IWorld | null {
-    return this.world;
-  }
+	getWorld(): IWorld | null {
+		return this.world;
+	}
 
-  setWorld(world: IWorld): void {
-    this.world = world;
-  }
+	setWorld(world: IWorld): void {
+		this.world = world;
+	}
 }

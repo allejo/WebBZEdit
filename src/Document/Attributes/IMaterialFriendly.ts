@@ -1,9 +1,9 @@
 export interface IMaterialFriendly {
-  matref?: string;
+	matref?: string;
 }
 
 export function implementsIMaterialFriendly(
-  value: any,
+	value: any,
 ): value is IMaterialFriendly {
-  return value.hasOwnProperty('matref');
+	return value.hasOwnProperty('matref');
 }

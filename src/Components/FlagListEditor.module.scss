@@ -1,47 +1,47 @@
 .container {
-  &[data-has-count='false'] {
-    .row {
-      grid-template-columns: 2fr 0.2fr;
-    }
-  }
+	&[data-has-count='false'] {
+		.row {
+			grid-template-columns: 2fr 0.2fr;
+		}
+	}
 
-  &[data-has-count='true'] {
-    .row {
-      grid-template-columns: 2fr 0.4fr 0.2fr;
-    }
-  }
+	&[data-has-count='true'] {
+		.row {
+			grid-template-columns: 2fr 0.4fr 0.2fr;
+		}
+	}
 }
 
 .row {
-  display: grid;
-  margin: var(--spacing-small) 0;
+	display: grid;
+	margin: var(--spacing-small) 0;
 }
 
 .flagCol {
-  align-items: center;
-  display: flex;
-  width: 100%;
+	align-items: center;
+	display: flex;
+	width: 100%;
 }
 
 .countCol {
-  text-align: center;
+	text-align: center;
 
-  input {
-    width: 100%;
-  }
+	input {
+		width: 100%;
+	}
 }
 
 .actionCol {
-  text-align: right;
+	text-align: right;
 }
 
 .countCol,
 .actionCol {
-  padding-left: var(--spacing-small);
+	padding-left: var(--spacing-small);
 }
 
 .adder {
-  border-top: var(--border);
-  margin: var(--spacing-normal) 0 0;
-  padding-top: var(--spacing-normal);
+	border-top: var(--border);
+	margin: var(--spacing-normal) 0 0;
+	padding-top: var(--spacing-normal);
 }

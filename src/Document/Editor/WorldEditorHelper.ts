@@ -2,18 +2,18 @@ import { IWorld } from '../Obstacles/World';
 import { getFriendlyFire, setFriendlyFire } from './FriendlyFireEditor';
 import { getGameMode, setGameMode } from './GameModeEditor';
 import {
-  areRicochetsEnabled,
-  enableJumping,
-  enableRicochets,
-  isJumpingEnabled,
+	areRicochetsEnabled,
+	enableJumping,
+	enableRicochets,
+	isJumpingEnabled,
 } from './GameplayEditor';
 import { addObstacle, delObstacle, renameObstacle } from './ObstacleEditor';
 import {
-  addLink,
-  addLinks,
-  clearTeleporterCache,
-  delLink,
-  delLinks,
+	addLink,
+	addLinks,
+	clearTeleporterCache,
+	delLink,
+	delLinks,
 } from './TeleporterEditor';
 
 /**
@@ -29,31 +29,31 @@ import {
  * larger maps.
  */
 export class WorldEditorHelper {
-  constructor(protected world: IWorld) {}
+	constructor(protected world: IWorld) {}
 
-  // Obstacle Management
-  public addObstacle = addObstacle;
-  public delObstacle = delObstacle;
-  public renameObstacle = renameObstacle;
+	// Obstacle Management
+	public addObstacle = addObstacle;
+	public delObstacle = delObstacle;
+	public renameObstacle = renameObstacle;
 
-  // Link Management
-  public addLink = addLink;
-  public addLinks = addLinks;
-  public delLink = delLink;
-  public delLinks = delLinks;
-  public clearTeleporterCache = clearTeleporterCache;
+	// Link Management
+	public addLink = addLink;
+	public addLinks = addLinks;
+	public delLink = delLink;
+	public delLinks = delLinks;
+	public clearTeleporterCache = clearTeleporterCache;
 
-  // Gameplay Management
-  public getGameMode = getGameMode;
-  public setGameMode = setGameMode;
-  public enableJumping = enableJumping;
-  public isJumpingEnabled = isJumpingEnabled;
-  public enableRicochets = enableRicochets;
-  public areRicochetsEnabled = areRicochetsEnabled;
-  public getFriendlyFire = getFriendlyFire;
-  public setFriendlyFire = setFriendlyFire;
+	// Gameplay Management
+	public getGameMode = getGameMode;
+	public setGameMode = setGameMode;
+	public enableJumping = enableJumping;
+	public isJumpingEnabled = isJumpingEnabled;
+	public enableRicochets = enableRicochets;
+	public areRicochetsEnabled = areRicochetsEnabled;
+	public getFriendlyFire = getFriendlyFire;
+	public setFriendlyFire = setFriendlyFire;
 
-  cleanUp = (): void => {
-    this.clearTeleporterCache();
-  };
+	cleanUp = (): void => {
+		this.clearTeleporterCache();
+	};
 }

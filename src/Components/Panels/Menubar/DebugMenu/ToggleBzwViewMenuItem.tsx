@@ -9,16 +9,16 @@ import MenuItem from '../MenuItem';
 interface Props extends MenuStateReturn {}
 
 const ToggleBzwViewMenuItem = ({ ...menu }: Props) => {
-  const [isVisible, setIsVisible] = useRecoilState(bzwViewState);
-  const handleMenuItemClick = () => {
-    setIsVisible(!isVisible);
-  };
+	const [isVisible, setIsVisible] = useRecoilState(bzwViewState);
+	const handleMenuItemClick = () => {
+		setIsVisible(!isVisible);
+	};
 
-  return (
-    <MenuItem {...menu} icon={faFileCode} onTrigger={handleMenuItemClick}>
-      Toggle BZW View
-    </MenuItem>
-  );
+	return (
+		<MenuItem {...menu} icon={faFileCode} onTrigger={handleMenuItemClick}>
+			Toggle BZW View
+		</MenuItem>
+	);
 };
 
 export default ToggleBzwViewMenuItem;

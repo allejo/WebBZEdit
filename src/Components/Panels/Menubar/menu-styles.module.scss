@@ -1,46 +1,46 @@
 @import '../../../sass/variables';
 
 .menuButton {
-  appearance: none;
-  background-color: transparent;
-  border: 0;
-  color: $color-white;
-  padding: 0 1rem;
+	appearance: none;
+	background-color: transparent;
+	border: 0;
+	color: $color-white;
+	padding: 0 1rem;
 
-  &:hover,
-  &[aria-expanded='true'] {
-    background-color: rgba(#fff, 0.1);
-  }
+	&:hover,
+	&[aria-expanded='true'] {
+		background-color: rgba(#fff, 0.1);
+	}
 }
 
 .menuDropdown {
-  background-color: $color-grey-medium;
-  z-index: 10;
+	background-color: $color-grey-medium;
+	z-index: 10;
 
-  [role='menuitem'] {
-    appearance: none;
-    background-color: transparent;
-    border: 0;
-    color: $color-white;
-    display: flex;
-    padding: 0.25rem 1rem;
-    text-align: left;
-    width: 100%;
+	[role='menuitem'] {
+		appearance: none;
+		background-color: transparent;
+		border: 0;
+		color: $color-white;
+		display: flex;
+		padding: 0.25rem 1rem;
+		text-align: left;
+		width: 100%;
 
-    &:hover {
-      background-color: rgba(#fff, 0.1);
-    }
+		&:hover {
+			background-color: rgba(#fff, 0.1);
+		}
 
-    &:last-child {
-      padding-bottom: 0.5rem;
-    }
+		&:last-child {
+			padding-bottom: 0.5rem;
+		}
 
-    &[disabled] {
-      color: rgba(#fff, 0.3);
-    }
-  }
+		&[disabled] {
+			color: rgba(#fff, 0.3);
+		}
+	}
 
-  [role='separator'] {
-    margin: 0.5rem 0.75rem;
-  }
+	[role='separator'] {
+		margin: 0.5rem 0.75rem;
+	}
 }

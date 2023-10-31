@@ -1,24 +1,24 @@
 .fc-muted {
-  color: rgba(
-    var(--color-white-r),
-    var(--color-white-g),
-    var(--color-white-b),
-    0.5
-  );
+	color: rgba(
+		var(--color-white-r),
+		var(--color-white-g),
+		var(--color-white-b),
+		0.5
+	);
 }
 
 .fs-small {
-  font-size: 0.8rem;
+	font-size: 0.8rem;
 }
 
 .fw-bold {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 .fw-normal {
-  font-weight: normal;
+	font-weight: normal;
 }
 
 .ta-center {
-  text-align: center;
+	text-align: center;
 }

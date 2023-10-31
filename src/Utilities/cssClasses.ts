@@ -13,21 +13,21 @@ export type ClassList = ([string, boolean] | boolean | string | undefined)[];
  * @return {string}
  */
 export function classList(classes: ClassList): string {
-  return classes
-    .map((value) => {
-      if (Array.isArray(value)) {
-        const [cls, shouldRender] = value;
+	return classes
+		.map((value) => {
+			if (Array.isArray(value)) {
+				const [cls, shouldRender] = value;
 
-        return shouldRender ? cls : '';
-      }
+				return shouldRender ? cls : '';
+			}
 
-      if (value === true || value === false) {
-        return '';
-      }
+			if (value === true || value === false) {
+				return '';
+			}
 
-      return value;
-    })
-    .join(' ')
-    .replace(/\s{2,}/g, ' ')
-    .trim();
+			return value;
+		})
+		.join(' ')
+		.replace(/\s{2,}/g, ' ')
+		.trim();
 }

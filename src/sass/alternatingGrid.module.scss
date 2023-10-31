@@ -1,17 +1,17 @@
 @import '../sass/variables';
 
 .container {
-  border-top: 1px solid rgba($color-white, 0.25);
-  margin-bottom: 0;
+	border-top: 1px solid rgba($color-white, 0.25);
+	margin-bottom: 0;
 }
 
 .listItem {
-  align-items: center;
-  border-bottom: 1px solid rgba($color-white, 0.25);
-  display: flex;
-  padding: 0.5rem 0.75rem;
+	align-items: center;
+	border-bottom: 1px solid rgba($color-white, 0.25);
+	display: flex;
+	padding: 0.5rem 0.75rem;
 
-  &:nth-child(odd) {
-    background-color: #484848;
-  }
+	&:nth-child(odd) {
+		background-color: #484848;
+	}
 }

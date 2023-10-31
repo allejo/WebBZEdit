@@ -1,13 +1,13 @@
 .stacked {
-  display: flex;
-  flex-direction: column;
-  margin-right: 1rem;
+	display: flex;
+	flex-direction: column;
+	margin-right: 1rem;
 
-  label {
-    margin-bottom: var(--spacing-small);
-  }
+	label {
+		margin-bottom: var(--spacing-small);
+	}
 
-  select {
-    flex-grow: 1;
-  }
+	select {
+		flex-grow: 1;
+	}
 }

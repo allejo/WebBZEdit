@@ -6,7 +6,7 @@
  * @param degrees
  */
 export function deg2rad(degrees: number): number {
-  return degrees * (Math.PI / 180);
+	return degrees * (Math.PI / 180);
 }
 
 /**
@@ -19,18 +19,18 @@ export function deg2rad(degrees: number): number {
  * @param max
  */
 export function safeValueInRange(
-  val: number,
-  min: number,
-  max: number,
+	val: number,
+	min: number,
+	max: number,
 ): number {
-  if (min <= val && val < max) {
-    return val;
-  }
+	if (min <= val && val < max) {
+		return val;
+	}
 
-  const isNegative = val < 0;
-  const absValue = Math.abs(val);
-  const range = max - min;
-  const remainder = absValue % range;
+	const isNegative = val < 0;
+	const absValue = Math.abs(val);
+	const range = max - min;
+	const remainder = absValue % range;
 
-  return isNegative ? max - remainder : min + remainder;
+	return isNegative ? max - remainder : min + remainder;
 }

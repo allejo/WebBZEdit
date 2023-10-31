@@ -3,15 +3,15 @@ import React from 'react';
 import { RepeatWrapping, TextureLoader } from 'three';
 
 import { IPyramid } from '../Document/Obstacles/Pyramid';
-import { deg2rad } from '../Utilities/math';
 import { useHighlightableEdges } from '../hooks/useHighlightableEdges';
+import { deg2rad } from '../Utilities/math';
 
 import pyrWall from '../assets/pyrwall.png';
 
 interface Props {
-  obstacle: IPyramid;
-  isSelected: boolean;
-  onClick: (obstacle: IPyramid) => void;
+	obstacle: IPyramid;
+	isSelected: boolean;
+	onClick: (obstacle: IPyramid) => void;
 }
 
 // The "radius" of this pyramid is from the base's center to one of the four
@@ -34,49 +34,49 @@ const ROTATION_OFFSET = 45;
  * @see https://threejs.org/docs/#api/en/geometries/ConeGeometry
  */
 const Pyramid = ({ isSelected, obstacle, onClick }: Props) => {
-  const highlightableEdges = useHighlightableEdges();
+	const highlightableEdges = useHighlightableEdges();
 
-  const {
-    position: [posX, posY, posZ],
-    size: [sizeX, sizeY, sizeZ],
-    rotation = 0,
-    flipz = false,
-  } = obstacle;
-  const isHighlighted = highlightableEdges.isHovered || isSelected;
+	const {
+		position: [posX, posY, posZ],
+		size: [sizeX, sizeY, sizeZ],
+		rotation = 0,
+		flipz = false,
+	} = obstacle;
+	const isHighlighted = highlightableEdges.isHovered || isSelected;
 
-  const handleOnClick = (e: ThreeEvent<MouseEvent>) => {
-    e.stopPropagation();
-    onClick(obstacle);
-  };
+	const handleOnClick = (e: ThreeEvent<MouseEvent>) => {
+		e.stopPropagation();
+		onClick(obstacle);
+	};
 
-  const texture = useLoader(TextureLoader, pyrWall);
-  texture.wrapS = texture.wrapT = RepeatWrapping;
-  texture.repeat.set(sizeX, sizeY);
+	const texture = useLoader(TextureLoader, pyrWall);
+	texture.wrapS = texture.wrapT = RepeatWrapping;
+	texture.repeat.set(sizeX, sizeY);
 
-  return (
-    <mesh
-      ref={highlightableEdges.meshRef}
-      {...highlightableEdges.meshProps}
-      position={[posX, Math.abs(sizeZ) / 2 + posZ, -posY]}
-      scale={[sizeX * 2, 1, sizeY * 2]}
-      rotation={[0, deg2rad(rotation), flipz ? Math.PI : 0]}
-      onClick={handleOnClick}
-    >
-      <coneBufferGeometry
-        args={[
-          /* radius */ PYRAMID_BASE_RADIUS,
-          /* height */ sizeZ,
-          /* radialSegments */ 4,
-          /* heightSegments */ 1,
-          /* openEnded */ false,
-          /* thetaStart */ deg2rad(ROTATION_OFFSET),
-        ]}
-      />
-      <meshBasicMaterial map={texture} />
-      {/* === Edges Highlighting === */}
-      {highlightableEdges.jsxHighlight({ isHighlighted })}
-    </mesh>
-  );
+	return (
+		<mesh
+			ref={highlightableEdges.meshRef}
+			{...highlightableEdges.meshProps}
+			position={[posX, Math.abs(sizeZ) / 2 + posZ, -posY]}
+			scale={[sizeX * 2, 1, sizeY * 2]}
+			rotation={[0, deg2rad(rotation), flipz ? Math.PI : 0]}
+			onClick={handleOnClick}
+		>
+			<coneBufferGeometry
+				args={[
+					/* radius */ PYRAMID_BASE_RADIUS,
+					/* height */ sizeZ,
+					/* radialSegments */ 4,
+					/* heightSegments */ 1,
+					/* openEnded */ false,
+					/* thetaStart */ deg2rad(ROTATION_OFFSET),
+				]}
+			/>
+			<meshBasicMaterial map={texture} />
+			{/* === Edges Highlighting === */}
+			{highlightableEdges.jsxHighlight({ isHighlighted })}
+		</mesh>
+	);
 };
 
 export default Pyramid;

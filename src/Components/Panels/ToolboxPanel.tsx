@@ -2,9 +2,10 @@ import produce from 'immer';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { documentState, selectionState } from '../../atoms';
 import {
-  implementsIPassableObject,
-  IPassableObject,
+	implementsIPassableObject,
+	IPassableObject,
 } from '../../Document/Attributes/IPassableObject';
 import { implementsISizeable } from '../../Document/Attributes/ISizeable';
 import { IBase } from '../../Document/Obstacles/Base';
@@ -12,10 +13,9 @@ import { IBaseObject } from '../../Document/Obstacles/BaseObject';
 import { IPyramid } from '../../Document/Obstacles/Pyramid';
 import { ITeleporter } from '../../Document/Obstacles/Teleporter';
 import { IZone } from '../../Document/Obstacles/Zone';
-import { documentState, selectionState } from '../../atoms';
 import AlterableControl, {
-  IAlterableControlDataType,
-  canUseAlterableControlToolbox,
+	canUseAlterableControlToolbox,
+	IAlterableControlDataType,
 } from './Toolbox/AlterableControl';
 import BaseControl from './Toolbox/BaseControl';
 import PassabilityControl from './Toolbox/PassabilityControl';
@@ -26,136 +26,136 @@ import ZoneControl from './Toolbox/ZoneControl';
 import styles from './ToolboxPanel.module.scss';
 
 const ToolboxPanel = () => {
-  const [world, setBZWDocument] = useRecoilState(documentState);
-  const selectedUUID = useRecoilValue(selectionState);
+	const [world, setBZWDocument] = useRecoilState(documentState);
+	const selectedUUID = useRecoilValue(selectionState);
 
-  const [selection, setSelection] = useState<IBaseObject | null>(null);
+	const [selection, setSelection] = useState<IBaseObject | null>(null);
 
-  useEffect(() => {
-    if (!world) {
-      return;
-    }
+	useEffect(() => {
+		if (!world) {
+			return;
+		}
 
-    setSelection(selectedUUID ? world.children[selectedUUID] : null);
-  }, [world, selectedUUID]);
+		setSelection(selectedUUID ? world.children[selectedUUID] : null);
+	}, [world, selectedUUID]);
 
-  const handleAlterableOnChange = (data: IAlterableControlDataType) => {
-    if (!world || !selectedUUID) {
-      return;
-    }
+	const handleAlterableOnChange = (data: IAlterableControlDataType) => {
+		if (!world || !selectedUUID) {
+			return;
+		}
 
-    const nextWorld = produce(world, (draftWorld) => {
-      const obstacle: IAlterableControlDataType = draftWorld.children[
-        selectedUUID
-      ] as any;
+		const nextWorld = produce(world, (draftWorld) => {
+			const obstacle: IAlterableControlDataType = draftWorld.children[
+				selectedUUID
+			] as any;
 
-      obstacle.position = data.position;
-      obstacle.rotation = data.rotation;
+			obstacle.position = data.position;
+			obstacle.rotation = data.rotation;
 
-      if (implementsISizeable(obstacle) && implementsISizeable(data)) {
-        obstacle.size = data.size;
-      }
-    });
+			if (implementsISizeable(obstacle) && implementsISizeable(data)) {
+				obstacle.size = data.size;
+			}
+		});
 
-    setBZWDocument(nextWorld);
-  };
+		setBZWDocument(nextWorld);
+	};
 
-  const handlePassabilityOnChange = (data: IPassableObject) => {
-    if (!world || !selectedUUID) {
-      return;
-    }
+	const handlePassabilityOnChange = (data: IPassableObject) => {
+		if (!world || !selectedUUID) {
+			return;
+		}
 
-    const nextWorld = produce(world, (draftWorld) => {
-      const obstacle: IPassableObject = draftWorld.children[
-        selectedUUID
-      ] as any;
+		const nextWorld = produce(world, (draftWorld) => {
+			const obstacle: IPassableObject = draftWorld.children[
+				selectedUUID
+			] as any;
 
-      obstacle.drivethrough = data.drivethrough;
-      obstacle.shootthrough = data.shootthrough;
-    });
+			obstacle.drivethrough = data.drivethrough;
+			obstacle.shootthrough = data.shootthrough;
+		});
 
-    setBZWDocument(nextWorld);
-  };
+		setBZWDocument(nextWorld);
+	};
 
-  const handlePyramidOnChange = (data: IPyramid) => {
-    if (!world || !selectedUUID) {
-      return;
-    }
+	const handlePyramidOnChange = (data: IPyramid) => {
+		if (!world || !selectedUUID) {
+			return;
+		}
 
-    const nextWorld = produce(world, (draftWorld) => {
-      const obstacle: IPyramid = draftWorld.children[selectedUUID] as any;
+		const nextWorld = produce(world, (draftWorld) => {
+			const obstacle: IPyramid = draftWorld.children[selectedUUID] as any;
 
-      obstacle.flipz = data.flipz;
-    });
+			obstacle.flipz = data.flipz;
+		});
 
-    setBZWDocument(nextWorld);
-  };
+		setBZWDocument(nextWorld);
+	};
 
-  const handleBaseOnChange = (data: IBase) => {
-    if (!world || !selectedUUID) {
-      return;
-    }
+	const handleBaseOnChange = (data: IBase) => {
+		if (!world || !selectedUUID) {
+			return;
+		}
 
-    const nextWorld = produce(world, (draftWorld) => {
-      const obstacle: IBase = draftWorld.children[selectedUUID] as any;
+		const nextWorld = produce(world, (draftWorld) => {
+			const obstacle: IBase = draftWorld.children[selectedUUID] as any;
 
-      obstacle.color = data.color;
-    });
+			obstacle.color = data.color;
+		});
 
-    setBZWDocument(nextWorld);
-  };
+		setBZWDocument(nextWorld);
+	};
 
-  const handleZoneOnChange = (data: IZone) => {
-    if (!world || !selectedUUID) {
-      return;
-    }
+	const handleZoneOnChange = (data: IZone) => {
+		if (!world || !selectedUUID) {
+			return;
+		}
 
-    const nextWorld = produce(world, (draftWorld) => {
-      const obstacle: IZone = draftWorld.children[selectedUUID] as any;
+		const nextWorld = produce(world, (draftWorld) => {
+			const obstacle: IZone = draftWorld.children[selectedUUID] as any;
 
-      obstacle.team = data.team;
-      obstacle.safety = data.safety;
-    });
+			obstacle.team = data.team;
+			obstacle.safety = data.safety;
+		});
 
-    setBZWDocument(nextWorld);
-  };
+		setBZWDocument(nextWorld);
+	};
 
-  if (!selection) {
-    return (
-      <div className={styles.noSelectionContainer}>
-        Select an object to edit
-      </div>
-    );
-  }
+	if (!selection) {
+		return (
+			<div className={styles.noSelectionContainer}>
+				Select an object to edit
+			</div>
+		);
+	}
 
-  return (
-    <div className={styles.toolContainer}>
-      {selection && canUseAlterableControlToolbox(selection) && (
-        <AlterableControl data={selection} onChange={handleAlterableOnChange} />
-      )}
-      {selection && implementsIPassableObject(selection) && (
-        <PassabilityControl
-          data={selection}
-          onChange={handlePassabilityOnChange}
-        />
-      )}
-      {selection && selection._objectType === 'pyramid' && (
-        <PyramidControl
-          data={selection as IPyramid}
-          onChange={handlePyramidOnChange}
-        />
-      )}
-      {selection && selection._objectType === 'base' && (
-        <BaseControl data={selection as IBase} onChange={handleBaseOnChange} />
-      )}
-      {selection && selection._objectType === 'teleporter' && (
-        <TeleporterControl data={selection as ITeleporter} />
-      )}
-      {selection && selection._objectType === 'zone' && (
-        <ZoneControl data={selection as IZone} onChange={handleZoneOnChange} />
-      )}
-    </div>
-  );
+	return (
+		<div className={styles.toolContainer}>
+			{selection && canUseAlterableControlToolbox(selection) && (
+				<AlterableControl data={selection} onChange={handleAlterableOnChange} />
+			)}
+			{selection && implementsIPassableObject(selection) && (
+				<PassabilityControl
+					data={selection}
+					onChange={handlePassabilityOnChange}
+				/>
+			)}
+			{selection && selection._objectType === 'pyramid' && (
+				<PyramidControl
+					data={selection as IPyramid}
+					onChange={handlePyramidOnChange}
+				/>
+			)}
+			{selection && selection._objectType === 'base' && (
+				<BaseControl data={selection as IBase} onChange={handleBaseOnChange} />
+			)}
+			{selection && selection._objectType === 'teleporter' && (
+				<TeleporterControl data={selection as ITeleporter} />
+			)}
+			{selection && selection._objectType === 'zone' && (
+				<ZoneControl data={selection as IZone} onChange={handleZoneOnChange} />
+			)}
+		</div>
+	);
 };
 
 export default ToolboxPanel;

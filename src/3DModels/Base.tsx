@@ -15,58 +15,58 @@ import redBaseTop from '../assets/red_basetop.png';
 import redBaseWall from '../assets/red_basewall.png';
 
 interface Props {
-  obstacle: IBase;
-  isSelected: boolean;
-  onClick: (obstacle: IBase) => void;
+	obstacle: IBase;
+	isSelected: boolean;
+	onClick: (obstacle: IBase) => void;
 }
 
 function getTeamTextures(team: IBase['color']): string[] {
-  if (team === 1) {
-    return [redBaseTop, redBaseWall];
-  } else if (team === 2) {
-    return [greenBaseTop, greenBaseWall];
-  } else if (team === 3) {
-    return [blueBaseTop, blueBaseWall];
-  }
+	if (team === 1) {
+		return [redBaseTop, redBaseWall];
+	} else if (team === 2) {
+		return [greenBaseTop, greenBaseWall];
+	} else if (team === 3) {
+		return [blueBaseTop, blueBaseWall];
+	}
 
-  return [purpleBaseTop, purpleBaseWall];
+	return [purpleBaseTop, purpleBaseWall];
 }
 
 const Base = ({ obstacle, isSelected, onClick }: Props) => {
-  const { position, size, rotation = 0 } = obstacle;
-  const handleOnClick = () => onClick(obstacle);
+	const { position, size, rotation = 0 } = obstacle;
+	const handleOnClick = () => onClick(obstacle);
 
-  const [roofTexture, wallTexture] = useLoader(
-    TextureLoader,
-    getTeamTextures(obstacle.color),
-  );
+	const [roofTexture, wallTexture] = useLoader(
+		TextureLoader,
+		getTeamTextures(obstacle.color),
+	);
 
-  wallTexture.wrapS = wallTexture.wrapT = RepeatWrapping;
+	wallTexture.wrapS = wallTexture.wrapT = RepeatWrapping;
 
-  const xTexture = wallTexture;
-  const yTexture = wallTexture.clone();
+	const xTexture = wallTexture;
+	const yTexture = wallTexture.clone();
 
-  xTexture.repeat.set(size[1], size[2]);
-  xTexture.needsUpdate = true;
+	xTexture.repeat.set(size[1], size[2]);
+	xTexture.needsUpdate = true;
 
-  yTexture.repeat.set(size[0], size[2]);
-  yTexture.needsUpdate = true;
+	yTexture.repeat.set(size[0], size[2]);
+	yTexture.needsUpdate = true;
 
-  return (
-    <SkinnableBox
-      position={position}
-      size={size}
-      rotation={rotation}
-      onClick={handleOnClick}
-      isSelected={isSelected}
-      topTexture={roofTexture}
-      botTexture={roofTexture}
-      xPosTexture={xTexture}
-      xNegTexture={xTexture}
-      yPosTexture={yTexture}
-      yNegTexture={yTexture}
-    />
-  );
+	return (
+		<SkinnableBox
+			position={position}
+			size={size}
+			rotation={rotation}
+			onClick={handleOnClick}
+			isSelected={isSelected}
+			topTexture={roofTexture}
+			botTexture={roofTexture}
+			xPosTexture={xTexture}
+			xNegTexture={xTexture}
+			yPosTexture={yTexture}
+			yNegTexture={yTexture}
+		/>
+	);
 };
 
 export default Base;

@@ -1,9 +1,9 @@
 import {
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
+	SetStateAction,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
 } from 'react';
 
 /**
@@ -16,8 +16,8 @@ import {
 type State<T> = { value: T };
 type Callback<T> = (newState: T) => void;
 type ReturnType<T> = [
-  T,
-  (newState: SetStateAction<T>, callback?: Callback<T>) => void,
+	T,
+	(newState: SetStateAction<T>, callback?: Callback<T>) => void,
 ];
 
 /**
@@ -30,32 +30,32 @@ type ReturnType<T> = [
  * @link https://stackoverflow.com/a/61842546
  */
 export function useStateWithCallback<T>(initialState: T): ReturnType<T> {
-  const [state, setState] = useState<State<T>>({ value: initialState });
-  const callbacksRef = useRef<Callback<T> | null>();
+	const [state, setState] = useState<State<T>>({ value: initialState });
+	const callbacksRef = useRef<Callback<T> | null>();
 
-  // Use `useCallback` so that the `setState` function keeps the same ref and
-  // does not trigger subsequent re-renders.
-  const setStateCallback = useCallback(
-    (newState: SetStateAction<T>, callback?: Callback<T>) => {
-      setState(
-        (ps: State<T>): State<T> => ({
-          value: newState instanceof Function ? newState(ps.value) : newState,
-        }),
-      );
+	// Use `useCallback` so that the `setState` function keeps the same ref and
+	// does not trigger subsequent re-renders.
+	const setStateCallback = useCallback(
+		(newState: SetStateAction<T>, callback?: Callback<T>) => {
+			setState(
+				(ps: State<T>): State<T> => ({
+					value: newState instanceof Function ? newState(ps.value) : newState,
+				}),
+			);
 
-      if (callback) {
-        callbacksRef.current = callback;
-      }
-    },
-    [],
-  );
+			if (callback) {
+				callbacksRef.current = callback;
+			}
+		},
+		[],
+	);
 
-  useEffect(() => {
-    if (callbacksRef.current) {
-      callbacksRef.current(state.value);
-      callbacksRef.current = null;
-    }
-  }, [state]);
+	useEffect(() => {
+		if (callbacksRef.current) {
+			callbacksRef.current(state.value);
+			callbacksRef.current = null;
+		}
+	}, [state]);
 
-  return [state.value, setStateCallback];
+	return [state.value, setStateCallback];
 }

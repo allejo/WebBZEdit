@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 
+import { bzwViewState, documentState } from './atoms';
 import HixDocumentLoader from './Components/HixDocumentLoader';
 import AboutModal from './Components/Modals/AboutModal';
 import FlagSettingsModal from './Components/Modals/FlagSettingsModal';
@@ -16,50 +17,49 @@ import ToolboxPanel from './Components/Panels/ToolboxPanel';
 import { exportBZWDocument } from './Document/exportBZWDocument';
 import './EventListeners';
 import { isDevEnv } from './Utilities/developmentUtilities';
-import { bzwViewState, documentState } from './atoms';
 
 import styles from './App.module.scss';
 
 const App: React.FC = () => {
-  const bzwDocument = useRecoilValue(documentState);
-  const isDebugPanelVisible = useRecoilValue(bzwViewState);
+	const bzwDocument = useRecoilValue(documentState);
+	const isDebugPanelVisible = useRecoilValue(bzwViewState);
 
-  return (
-    <div className={styles.Viewport}>
-      <div className={styles.Application}>
-        <div className={styles.Menubar}>
-          <HixDocumentLoader />
-          <MenubarPanel />
-        </div>
-        <div className={styles.Renderer}>
-          <RendererPanel />
-        </div>
-        <div className={styles.Sidebar}>
-          <InventoryPanel />
-        </div>
-        <div className={styles.Toolbox}>
-          <ToolboxPanel />
-        </div>
-        <div className={styles.StatusBar}>
-          <StatusBarPanel />
-        </div>
-        {/* All of the app's modals (merely for organizational purposes) */}
-        <>
-          <AboutModal />
-          <FlagSettingsModal />
-          <GameplaySettingsModal />
-          <TeleporterLinkEditorModal />
-          <WorldSettingsModal />
-          <ZoneFlagEditorModal />
-        </>
-      </div>
-      {isDevEnv() && isDebugPanelVisible && (
-        <div className={styles.DebugPanel}>
-          <textarea disabled value={exportBZWDocument(bzwDocument)} />
-        </div>
-      )}
-    </div>
-  );
+	return (
+		<div className={styles.Viewport}>
+			<div className={styles.Application}>
+				<div className={styles.Menubar}>
+					<HixDocumentLoader />
+					<MenubarPanel />
+				</div>
+				<div className={styles.Renderer}>
+					<RendererPanel />
+				</div>
+				<div className={styles.Sidebar}>
+					<InventoryPanel />
+				</div>
+				<div className={styles.Toolbox}>
+					<ToolboxPanel />
+				</div>
+				<div className={styles.StatusBar}>
+					<StatusBarPanel />
+				</div>
+				{/* All of the app's modals (merely for organizational purposes) */}
+				<>
+					<AboutModal />
+					<FlagSettingsModal />
+					<GameplaySettingsModal />
+					<TeleporterLinkEditorModal />
+					<WorldSettingsModal />
+					<ZoneFlagEditorModal />
+				</>
+			</div>
+			{isDevEnv() && isDebugPanelVisible && (
+				<div className={styles.DebugPanel}>
+					<textarea disabled value={exportBZWDocument(bzwDocument)} />
+				</div>
+			)}
+		</div>
+	);
 };
 
 export default App;

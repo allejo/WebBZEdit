@@ -1,60 +1,60 @@
 @import '../../../sass/variables';
 
 .wrapper {
-  align-items: center;
-  background-color: $color-grey-medium;
-  border-bottom: 1px solid $color-grey-light;
-  color: $color-white;
-  cursor: pointer;
-  display: flex;
-  font-size: 0.9rem;
-  font-weight: bold;
-  padding: 10px;
+	align-items: center;
+	background-color: $color-grey-medium;
+	border-bottom: 1px solid $color-grey-light;
+	color: $color-white;
+	cursor: pointer;
+	display: flex;
+	font-size: 0.9rem;
+	font-weight: bold;
+	padding: 10px;
 
-  &.selected {
-    background-color: $color-red;
-  }
+	&.selected {
+		background-color: $color-red;
+	}
 
-  &.editMode {
-    .body {
-      display: none;
-    }
+	&.editMode {
+		.body {
+			display: none;
+		}
 
-    .editor {
-      display: block;
-    }
-  }
+		.editor {
+			display: block;
+		}
+	}
 }
 
 .thumbnail {
-  margin-right: 10px;
-  width: 40px;
+	margin-right: 10px;
+	width: 40px;
 }
 
 .body {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .teleporter {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .links {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .links ul {
-  list-style-type: none;
-  padding-left: 15px;
+	list-style-type: none;
+	padding-left: 15px;
 }
 
 .editor {
-  background-color: rgba(#fff, 0.05);
-  border: 1px solid white;
-  color: white;
-  display: none;
+	background-color: rgba(#fff, 0.05);
+	border: 1px solid white;
+	color: white;
+	display: none;
 }
