@@ -34,10 +34,10 @@ const AboutModal = () => {
       </p>
       <dl>
         <dt>Version</dt>
-        <dd>{process.env.REACT_APP_VERSION ?? <em>Unknown</em>}</dd>
+        <dd>{import.meta.env.VITE_BUILD_VERSION ?? <em>Unknown</em>}</dd>
 
         <dt>Commit</dt>
-        <dd>{process.env.REACT_APP_COMMIT ?? <em>Unknown</em>}</dd>
+        <dd>{import.meta.env.VITE_BUILD_COMMIT ?? <em>Unknown</em>}</dd>
       </dl>
       <ul>
         <li>

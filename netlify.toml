@@ -6,4 +6,4 @@
 [build]
 base    = ""
 publish = "build"
-command = "REACT_APP_COMMIT=$COMMIT_REF REACT_APP_VERSION=$(cat package.json | jq -r '.version') npm run build"
+command = "VITE_BUILD_COMMIT=$COMMIT_REF VITE_BUILD_VERSION=$(cat package.json | jq -r '.version') npm run build"

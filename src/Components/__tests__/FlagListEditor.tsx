@@ -68,7 +68,8 @@ describe('FlagListEditor Component', () => {
 
     const expected = ['Guided Missile', 'Genocide'];
     flagNames.forEach((el, i) => {
-      expect(el.textContent).toStartWith(expected[i]);
+      expect(el.textContent).not.toBeNull();
+      expect(el.textContent?.startsWith(expected[i])).toEqual(true);
     });
 
     userEvent.click(flagButtons[1]);

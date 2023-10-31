@@ -9,6 +9,8 @@ import React, {
   useState,
 } from 'react';
 
+import { isDevEnv } from '../Utilities/developmentUtilities';
+
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 
@@ -61,7 +63,7 @@ const Timestamp = (props: Props) => {
       timestamp.current = dayjs();
 
       // Only output a warning if we're in a non-production environment
-      if (process.env.NODE_ENV !== 'production') {
+      if (isDevEnv()) {
         console.warn(`"${date}" is not a valid date value`);
       }
     }

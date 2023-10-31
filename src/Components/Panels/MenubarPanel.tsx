@@ -1,6 +1,7 @@
 import React from 'react';
 import { MenuBar, MenuItem, useMenuBarState } from 'reakit';
 
+import { isDevEnv } from '../../Utilities/developmentUtilities';
 import CameraMenu from './Menubar/CameraMenu';
 import DebugMenu from './Menubar/DebugMenu';
 import FileMenu from './Menubar/FileMenu';
@@ -19,9 +20,7 @@ const MenubarPanel = () => {
       <MenuItem {...menu} as={ObjectMenu} />
       <MenuItem {...menu} as={CameraMenu} />
       <MenuItem {...menu} as={WorldMenu} />
-      {process.env.NODE_ENV === 'development' && (
-        <MenuItem {...menu} as={DebugMenu} />
-      )}
+      {isDevEnv() && <MenuItem {...menu} as={DebugMenu} />}
       <MenuItem {...menu} as={HelpMenu} />
     </MenuBar>
   );

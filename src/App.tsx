@@ -15,6 +15,7 @@ import StatusBarPanel from './Components/Panels/StatusBarPanel';
 import ToolboxPanel from './Components/Panels/ToolboxPanel';
 import { exportBZWDocument } from './Document/exportBZWDocument';
 import './EventListeners';
+import { isDevEnv } from './Utilities/developmentUtilities';
 import { bzwViewState, documentState } from './atoms';
 
 import styles from './App.module.scss';
@@ -52,7 +53,7 @@ const App: React.FC = () => {
           <ZoneFlagEditorModal />
         </>
       </div>
-      {process.env.NODE_ENV === 'development' && isDebugPanelVisible && (
+      {isDevEnv() && isDebugPanelVisible && (
         <div className={styles.DebugPanel}>
           <textarea disabled value={exportBZWDocument(bzwDocument)} />
         </div>

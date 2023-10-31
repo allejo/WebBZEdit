@@ -1,11 +1,11 @@
+// @ts-ignore
+import hix from '../assets/hix.bzw?url';
+
 import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 import { loadBZWDocument } from '../Document/loadBZWDocument';
 import { documentState } from '../atoms';
-
-// @ts-ignore
-import hix from '../assets/hix.bzw';
 
 const HixDocumentLoader = () => {
   const setDocument = useSetRecoilState(documentState);

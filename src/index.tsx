@@ -12,9 +12,9 @@ import './css/typography.css';
 import a11yPatterns from './sass/a11yPatterns.module.scss';
 import './sass/spacing.scss';
 
-// Enable color blind patterns for the page
+// Enable color-blind patterns for the page
 const body = document.getElementsByTagName('body');
-body.item(0).classList.add(a11yPatterns.usePatterns);
+body?.item(0)?.classList.add(a11yPatterns.usePatterns);
 
 ReactDOM.render(
   <React.StrictMode>

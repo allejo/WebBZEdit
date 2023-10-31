@@ -5,5 +5,5 @@ export function assertEveryIsNotNull(values: any[], message: string) {
 }
 
 export function isDevEnv() {
-  return process.env.NODE_ENV === 'development';
+  return import.meta.env.DEV;
 }

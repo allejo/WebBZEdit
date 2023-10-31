@@ -97,7 +97,7 @@ describe('BZW Editor Helper', () => {
 
         expect(newLinks).toHaveLength(2);
         expect(newLinks).not.toContain(linkUUID);
-        expect(world.children).not.toContain(linkUUID);
+        expect(world.children).not.toHaveProperty(linkUUID);
       });
     });
 
