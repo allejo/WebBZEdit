@@ -20,7 +20,7 @@ declare global {
 
 extend({ OrbitControls });
 
-const CameraControls: React.FC<any> = (props) => {
+const CameraControls = (props: typeof OrbitControls) => {
 	const pageStatus = usePageStatus();
 	const cameraResetListener = useRef<string>('');
 
@@ -28,7 +28,7 @@ const CameraControls: React.FC<any> = (props) => {
 	const { camera, gl } = useThree();
 
 	useEffect(() => {
-		// @ts-ignore
+		// @ts-expect-error listenToKeyEvents can work on the `window` object, I think?
 		orbitRef.current?.listenToKeyEvents(window);
 	}, [orbitRef]);
 
@@ -68,7 +68,4 @@ const CameraControls: React.FC<any> = (props) => {
 	);
 };
 
-export const CAMERA_DEFAULT_POS: [number, number, number] = [-15, 15, 15];
 export default CameraControls;
-
-Object.freeze(CAMERA_DEFAULT_POS);

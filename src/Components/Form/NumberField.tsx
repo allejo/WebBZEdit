@@ -1,8 +1,9 @@
 import React, { KeyboardEvent, useState } from 'react';
 
+import { FieldProps } from '../../Utilities/contracts';
 import keyboard from '../../Utilities/keyboard';
 import { safeValueInRange } from '../../Utilities/math';
-import BaseFormField, { FieldProps } from './BaseFormField';
+import BaseFormField from './BaseFormField';
 
 interface Props extends FieldProps<number> {
 	minValue?: number;
@@ -88,7 +89,7 @@ const NumberField = ({
 			tag="input"
 			type="number"
 			castStrToType={(s) => (s === null || s === '' ? NaN : +s)}
-			castTypeToStr={(v) => (isNaN(v) ? '' : v + '')}
+			castTypeToStr={(v) => (isNaN(v) ? '' : String(v))}
 			onChange={handleOnChange}
 			onKeyDown={handleKeyPress}
 			onBlur={handleOnBlur}

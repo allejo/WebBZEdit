@@ -9,7 +9,8 @@ import {
 	ZoneEditorOpenEvent,
 	ZoneEditorOpenEventName,
 } from '../../Events/IZoneEditorOpenEvent';
-import Alert, { AlertType } from '../Alert';
+import { AlertType } from '../../Utilities/contracts';
+import Alert from '../Alert';
 import Button from '../Button';
 import FlagListEditor from '../FlagListEditor';
 import ListenerModal from '../ListenerModal';

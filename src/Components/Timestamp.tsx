@@ -64,7 +64,7 @@ const Timestamp = (props: Props) => {
 
 			// Only output a warning if we're in a non-production environment
 			if (isDevEnv()) {
-				console.warn(`"${date}" is not a valid date value`);
+				console.warn(`Not a valid date value`, date);
 			}
 		}
 

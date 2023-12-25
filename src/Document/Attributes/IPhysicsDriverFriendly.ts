@@ -3,7 +3,7 @@ export interface IPhysicsDriverFriendly {
 }
 
 export function implementsIPhysicsDriverFriendly(
-	value: any,
+	value: object,
 ): value is IPhysicsDriverFriendly {
-	return value.hasOwnProperty('phydrv');
+	return 'phydrv' in value;
 }

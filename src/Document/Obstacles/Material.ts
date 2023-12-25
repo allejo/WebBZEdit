@@ -1,34 +1,13 @@
-import { Vector4F } from '../../Utilities/types';
-import { bzwBool, bzwFloat, bzwString, bzwVector4F } from '../attributeParsers';
+import { Vector4F } from '../../Utilities/contracts';
+import {
+	bzwBool,
+	bzwFloat,
+	BZWObjectProperties,
+	bzwString,
+	bzwVector4F,
+} from '../attributeParsers';
 import { INameable } from '../Attributes/INameable';
 import { IBaseObject, newIBaseObject } from './BaseObject';
-
-export const MaterialProperties = {
-	name: bzwString,
-	texture: bzwString,
-	addtexture: bzwString,
-	notextures: bzwBool,
-	notexcolor: bzwBool,
-	notexalpha: bzwBool,
-	texmat: bzwString,
-	dyncol: bzwString,
-	ambient: bzwVector4F,
-	diffuse: bzwVector4F,
-	color: bzwVector4F,
-	specular: bzwVector4F,
-	emission: bzwVector4F,
-	shininess: bzwFloat,
-	resetmat: bzwBool,
-	spheremap: bzwBool,
-	noradar: bzwBool,
-	noshadow: bzwBool,
-	noculling: bzwBool,
-	nosorting: bzwBool,
-	nolighting: bzwBool,
-	alphathresh: bzwFloat,
-	groupalpha: bzwBool,
-	occluder: bzwBool,
-};
 
 export interface IMaterial extends IBaseObject, INameable {
 	texture?: string;
@@ -55,6 +34,33 @@ export interface IMaterial extends IBaseObject, INameable {
 	groupalpha?: boolean;
 	occluder?: boolean;
 }
+
+export const MaterialProperties: BZWObjectProperties<IMaterial> = {
+	name: bzwString,
+	texture: bzwString,
+	addtexture: bzwString,
+	notextures: bzwBool,
+	notexcolor: bzwBool,
+	notexalpha: bzwBool,
+	texmat: bzwString,
+	dyncol: bzwString,
+	ambient: bzwVector4F,
+	diffuse: bzwVector4F,
+	color: bzwVector4F,
+	specular: bzwVector4F,
+	emission: bzwVector4F,
+	shininess: bzwFloat,
+	resetmat: bzwBool,
+	spheremap: bzwBool,
+	noradar: bzwBool,
+	noshadow: bzwBool,
+	noculling: bzwBool,
+	nosorting: bzwBool,
+	nolighting: bzwBool,
+	alphathresh: bzwFloat,
+	groupalpha: bzwBool,
+	occluder: bzwBool,
+};
 
 export function newIMaterial(): IMaterial {
 	return {

@@ -19,7 +19,12 @@ interface Props<T> extends Omit<IModalProps, 'children'> {
  *
  * @see Modal
  */
-const ListenerModal = <T,>({ event, dialog, onOpen, ...props }: Props<T>) => {
+const ListenerModal = <T extends object>({
+	event,
+	dialog,
+	onOpen,
+	...props
+}: Props<T>) => {
 	const [eventData, setEventData] = useState<T>();
 	const eventBusCallbackId = useRef('');
 
@@ -39,7 +44,7 @@ const ListenerModal = <T,>({ event, dialog, onOpen, ...props }: Props<T>) => {
 	let body: ReactNode | [ReactNode, ReactNode];
 	let footer: ReactNode | undefined;
 
-	if (typeof props.children === 'function') {
+	if (props.children instanceof Function) {
 		const result = props.children(eventData);
 
 		if (Array.isArray(result)) {

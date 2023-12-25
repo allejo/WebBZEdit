@@ -1,27 +1,15 @@
 import React from 'react';
 
 import { IAlterable } from '../../../Document/Attributes/IAlterable';
-import {
-	implementsIPositionable,
-	IPositionable,
-} from '../../../Document/Attributes/IPositionable';
+import { IPositionable } from '../../../Document/Attributes/IPositionable';
 import { implementsISizeable } from '../../../Document/Attributes/ISizeable';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
 import { ITankModelObjectType } from '../../../Document/Obstacles/TankModel';
-import { Vector3F } from '../../../Utilities/types';
+import { Vector3F } from '../../../Utilities/contracts';
 import NumberField from '../../Form/NumberField';
 import Vector3FControl from './Vector3FControl';
 
 import styles from './AlterableControl.module.scss';
-
-export function canUseAlterableControlToolbox(
-	value: any,
-): value is IPositionable | IAlterable {
-	const isPositionable = implementsIPositionable(value);
-	const isISizeable = implementsISizeable(value);
-
-	return isPositionable || (isPositionable && isISizeable);
-}
 
 type DataType = IBaseObject & (IPositionable | IAlterable);
 

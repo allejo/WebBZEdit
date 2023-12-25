@@ -4,7 +4,7 @@ import { ITeleporterLink } from '../Obstacles/TeleporterLink';
 import { IWorld } from '../Obstacles/World';
 import { WorldEditorHelper } from './WorldEditorHelper';
 
-let areLinksCached: boolean = false;
+let areLinksCached = false;
 let teleCache: Record<string, string> = {};
 
 export function addLink(this: WorldEditorHelper, link: ITeleporterLink) {
@@ -82,7 +82,7 @@ function cacheLinks(world: IWorld): void {
 			return;
 		}
 
-		teleCache[teleporter.name!] = teleUUID;
+		teleCache[teleporter.name] = teleUUID;
 	});
 
 	areLinksCached = true;

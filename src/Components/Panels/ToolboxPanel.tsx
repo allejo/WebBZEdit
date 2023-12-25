@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { documentState, selectionState } from '../../atoms';
+import { canUseAlterableControlToolbox } from '../../Document/Attributes/helpers';
 import {
 	implementsIPassableObject,
 	IPassableObject,
@@ -14,7 +15,6 @@ import { IPyramid } from '../../Document/Obstacles/Pyramid';
 import { ITeleporter } from '../../Document/Obstacles/Teleporter';
 import { IZone } from '../../Document/Obstacles/Zone';
 import AlterableControl, {
-	canUseAlterableControlToolbox,
 	IAlterableControlDataType,
 } from './Toolbox/AlterableControl';
 import BaseControl from './Toolbox/BaseControl';
@@ -45,9 +45,9 @@ const ToolboxPanel = () => {
 		}
 
 		const nextWorld = produce(world, (draftWorld) => {
-			const obstacle: IAlterableControlDataType = draftWorld.children[
+			const obstacle = draftWorld.children[
 				selectedUUID
-			] as any;
+			] as IAlterableControlDataType;
 
 			obstacle.position = data.position;
 			obstacle.rotation = data.rotation;
@@ -66,9 +66,8 @@ const ToolboxPanel = () => {
 		}
 
 		const nextWorld = produce(world, (draftWorld) => {
-			const obstacle: IPassableObject = draftWorld.children[
-				selectedUUID
-			] as any;
+			type PassableObject = IBaseObject & IPassableObject;
+			const obstacle = draftWorld.children[selectedUUID] as PassableObject;
 
 			obstacle.drivethrough = data.drivethrough;
 			obstacle.shootthrough = data.shootthrough;
@@ -83,7 +82,7 @@ const ToolboxPanel = () => {
 		}
 
 		const nextWorld = produce(world, (draftWorld) => {
-			const obstacle: IPyramid = draftWorld.children[selectedUUID] as any;
+			const obstacle = draftWorld.children[selectedUUID] as IPyramid;
 
 			obstacle.flipz = data.flipz;
 		});
@@ -97,7 +96,7 @@ const ToolboxPanel = () => {
 		}
 
 		const nextWorld = produce(world, (draftWorld) => {
-			const obstacle: IBase = draftWorld.children[selectedUUID] as any;
+			const obstacle: IBase = draftWorld.children[selectedUUID] as IBase;
 
 			obstacle.color = data.color;
 		});
@@ -111,7 +110,7 @@ const ToolboxPanel = () => {
 		}
 
 		const nextWorld = produce(world, (draftWorld) => {
-			const obstacle: IZone = draftWorld.children[selectedUUID] as any;
+			const obstacle: IZone = draftWorld.children[selectedUUID] as IZone;
 
 			obstacle.team = data.team;
 			obstacle.safety = data.safety;

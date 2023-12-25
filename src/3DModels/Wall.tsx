@@ -2,39 +2,32 @@ import { useLoader } from '@react-three/fiber';
 import React, { useMemo } from 'react';
 import { RepeatWrapping, TextureLoader } from 'three';
 
+import { CardinalDirection } from '../Utilities/contracts';
 import SkinnableBox from './Abstract/SkinnableBox';
 
 import worldWall from '../assets/wall.png';
 
-export enum Direction {
-	North,
-	South,
-	East,
-	West,
-}
-
 interface Props {
-	direction: Direction;
+	direction: CardinalDirection;
 	wallHeight: number;
 	worldSize: number;
 }
 
 const Wall = ({ direction, wallHeight, worldSize }: Props) => {
-	const noop = () => {};
 	const [wallTexture] = useLoader(TextureLoader, [worldWall]);
 
 	const position: [number, number, number] = useMemo(() => {
 		switch (direction) {
-			case Direction.North:
+			case CardinalDirection.North:
 				return [0, worldSize, 0];
 
-			case Direction.South:
+			case CardinalDirection.South:
 				return [0, -worldSize, 0];
 
-			case Direction.East:
+			case CardinalDirection.East:
 				return [worldSize, 0, 0];
 
-			case Direction.West:
+			case CardinalDirection.West:
 				return [-worldSize, 0, 0];
 
 			default:
@@ -43,8 +36,8 @@ const Wall = ({ direction, wallHeight, worldSize }: Props) => {
 	}, [direction, worldSize]);
 	const rotation: number = useMemo(() => {
 		switch (direction) {
-			case Direction.North:
-			case Direction.South:
+			case CardinalDirection.North:
+			case CardinalDirection.South:
 				return 0;
 
 			default:
@@ -61,7 +54,6 @@ const Wall = ({ direction, wallHeight, worldSize }: Props) => {
 			position={position}
 			size={[worldSize, 0.01, wallHeight]}
 			rotation={rotation}
-			onClick={noop}
 			topTexture={wallTexture}
 			botTexture={wallTexture}
 			xPosTexture={wallTexture}

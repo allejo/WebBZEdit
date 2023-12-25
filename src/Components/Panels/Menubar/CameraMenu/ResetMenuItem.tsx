@@ -9,7 +9,7 @@ import {
 import eventBus from '../../../../Utilities/EventBus';
 import MenuItem from '../MenuItem';
 
-interface Props extends MenuStateReturn {}
+type Props = MenuStateReturn
 
 const ResetMenuItem = ({ ...menu }: Props) => {
 	const handleOnTriggerMenuItem = () => {

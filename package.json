@@ -8,7 +8,7 @@
 		"fetch:bzdb-docs": "tsx scripts/fetch-bzdb-definitions.ts",
 		"fetch:flag-docs": "tsx scripts/fetch-flags.ts",
 		"husky-setup": "husky install",
-		"lint": "eslint src/",
+		"lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"prepare": "npm-run-all husky-setup fetch:*",
 		"prettify": "prettier --write .",
 		"start": "vite",
@@ -27,20 +27,6 @@
 		]
 	},
 	"prettier": "@allejo/prettier-config",
-	"eslintConfig": {
-		"extends": "react-app",
-		"rules": {
-			"prefer-const": "error"
-		},
-		"overrides": [
-			{
-				"files": [
-					"**/*.ts?(x)"
-				],
-				"rules": {}
-			}
-		]
-	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^1.2.35",
 		"@fortawesome/free-brands-svg-icons": "^5.15.4",
@@ -80,14 +66,20 @@
 		"@types/react": "^17.0.69",
 		"@types/react-dom": "^18.2.14",
 		"@types/three": "^0.130.1",
-		"@types/wicg-file-system-access": "^2020.9.1",
+		"@types/wicg-file-system-access": "^2023.10.2",
+		"@typescript-eslint/eslint-plugin": "^5.61.0",
+		"@typescript-eslint/parser": "^5.61.0",
 		"@vitejs/plugin-react-swc": "^3.4.1",
+		"eslint": "^8.44.0",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.1",
 		"husky": "^6.0.0",
 		"jsdom": "^22.1.0",
 		"node-fetch": "^2.6.1",
 		"npm-run-all": "^4.1.5",
 		"prettier": "^3.0.3",
 		"tsx": "^3.14.0",
+		"type-fest": "^4.8.3",
 		"typescript": "^4.9.5",
 		"vite": "^4.5.0",
 		"vite-plugin-svgr": "^4.1.0",

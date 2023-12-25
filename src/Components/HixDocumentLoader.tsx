@@ -1,4 +1,3 @@
-// @ts-ignore
 import hix from '../assets/hix.bzw?url';
 
 import React, { useEffect } from 'react';
@@ -13,7 +12,8 @@ const HixDocumentLoader = () => {
 	useEffect(() => {
 		fetch(hix)
 			.then((res) => res.text())
-			.then((body) => setDocument(loadBZWDocument(body)));
+			.then((body) => setDocument(loadBZWDocument(body)))
+			.catch(console.error);
 	}, [setDocument]);
 
 	return <div />;

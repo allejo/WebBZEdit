@@ -5,7 +5,7 @@ import React from 'react';
 import TextField from '../TextField';
 
 describe('TextField Component', () => {
-	it('should trigger `onChange` callback when user types', () => {
+	it('should trigger `onChange` callback when user types', async () => {
 		let currentValue = '';
 
 		const { getByLabelText } = render(
@@ -23,10 +23,10 @@ describe('TextField Component', () => {
 		const content = 'I am not log4j';
 		userEvent.type(field, content);
 
-		waitFor(() => expect(currentValue).toEqual(content));
+		await waitFor(() => expect(currentValue).toEqual(content));
 	});
 
-	it('should not let further changes when `allowChange` returns false', () => {
+	it('should not let further changes when `allowChange` returns false', async () => {
 		let currentValue = '';
 
 		const { getByLabelText } = render(
@@ -45,6 +45,6 @@ describe('TextField Component', () => {
 		const content = 'I heart BZFlag';
 		userEvent.type(field, content);
 
-		waitFor(() => expect(currentValue).toEqual(content.substr(0, 5)));
+		await waitFor(() => expect(currentValue).toEqual(content.substr(0, 5)));
 	});
 });

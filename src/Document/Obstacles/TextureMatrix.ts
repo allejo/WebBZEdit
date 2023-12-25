@@ -1,4 +1,4 @@
-import { Vector4F } from '../../Utilities/types';
+import { Vector4F } from '../../Utilities/contracts';
 import {
 	bzwFloat,
 	bzwFloatVector,

@@ -2,8 +2,9 @@ import { Canvas } from '@react-three/fiber';
 import React, { Suspense } from 'react';
 import { useRecoilBridgeAcrossReactRoots_UNSTABLE } from 'recoil';
 
+import { CAMERA_DEFAULT_POS } from '../../Utilities/contracts';
 import BZWDocumentRenderer from './Renderer/BZWDocumentRenderer';
-import CameraControls, { CAMERA_DEFAULT_POS } from './Renderer/CameraControls';
+import CameraControls from './Renderer/CameraControls';
 
 const RendererPanel = () => {
 	const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();

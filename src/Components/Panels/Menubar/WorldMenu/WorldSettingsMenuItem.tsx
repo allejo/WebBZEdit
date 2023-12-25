@@ -8,7 +8,7 @@ import {
 } from '../../../../Events/IWorldSettingsModalOpenEvent';
 import TriggerModalMenuItem from '../shared/TriggerModalMenuItem';
 
-interface Props extends MenuStateReturn {}
+type Props = MenuStateReturn
 
 const WorldSettingsMenuItem = ({ ...menu }: Props) => (
 	<TriggerModalMenuItem<IWorldSettingsModalOpenEvent>

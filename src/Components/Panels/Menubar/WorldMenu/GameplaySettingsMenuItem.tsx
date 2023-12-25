@@ -8,7 +8,7 @@ import {
 } from '../../../../Events/IGameplaySettingsModalOpenEvent';
 import TriggerModalMenuItem from '../shared/TriggerModalMenuItem';
 
-interface Props extends MenuStateReturn {}
+type Props = MenuStateReturn
 
 const GameplaySettingsMenuItem = ({ ...menu }: Props) => (
 	<TriggerModalMenuItem<IGameplaySettingsModalOpenEvent>

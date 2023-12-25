@@ -9,7 +9,7 @@ import { WorldEditorHelper } from '../../../../Document/Editor/WorldEditorHelper
 import { IWorld } from '../../../../Document/Obstacles/World';
 import MenuItem from '../MenuItem';
 
-interface Props extends MenuStateReturn {}
+type Props = MenuStateReturn
 
 const DeleteSelectedMenuItem = ({ ...menu }: Props) => {
 	const [document, setDocument] = useRecoilState(documentState);

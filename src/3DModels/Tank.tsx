@@ -1,6 +1,6 @@
 import { ThreeEvent, useLoader } from '@react-three/fiber';
 import React, { useEffect, useRef, useState } from 'react';
-import { BoxGeometry, EdgesGeometry, LineSegments } from 'three';
+import { BoxGeometry, EdgesGeometry, LineSegments, Object3D } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 import { ITankModel } from '../Document/Obstacles/TankModel';

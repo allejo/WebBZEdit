@@ -3,12 +3,12 @@ import React from 'react';
 import { MeshBasicMaterial, Texture } from 'three';
 
 import { useHighlightableEdges } from '../../hooks/useHighlightableEdges';
+import { Vector3F } from '../../Utilities/contracts';
 import {
 	assertEveryIsNotNull,
 	isDevEnv,
 } from '../../Utilities/developmentUtilities';
 import { deg2rad } from '../../Utilities/math';
-import { Vector3F } from '../../Utilities/types';
 
 export type MaterialParams = ConstructorParameters<typeof MeshBasicMaterial>[0];
 
@@ -16,7 +16,7 @@ interface Props {
 	position: Vector3F;
 	size: Vector3F;
 	rotation: number;
-	onClick: (e: MouseEvent) => void;
+	onClick?: (e: MouseEvent) => void;
 	isSelected?: boolean;
 	isSelectable?: boolean;
 	renderOrder?: number;
@@ -108,7 +108,7 @@ const SkinnableBox = ({
 
 	const handleOnClick = (e: ThreeEvent<MouseEvent>) => {
 		e.stopPropagation();
-		onClick(e);
+		onClick?.(e);
 	};
 
 	// If any of our faces are not configured, then we must force our box to

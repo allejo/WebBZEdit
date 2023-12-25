@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Wall, { Direction } from './Wall';
+import { CardinalDirection } from '../Utilities/contracts';
+import Wall from './Wall';
 
 interface Props {
 	wallHeight: number;
@@ -15,22 +16,22 @@ const WorldBorder = ({ wallHeight, worldSize }: Props) => {
 	return (
 		<>
 			<Wall
-				direction={Direction.North}
+				direction={CardinalDirection.North}
 				wallHeight={wallHeight}
 				worldSize={worldSize}
 			/>
 			<Wall
-				direction={Direction.South}
+				direction={CardinalDirection.South}
 				wallHeight={wallHeight}
 				worldSize={worldSize}
 			/>
 			<Wall
-				direction={Direction.East}
+				direction={CardinalDirection.East}
 				wallHeight={wallHeight}
 				worldSize={worldSize}
 			/>
 			<Wall
-				direction={Direction.West}
+				direction={CardinalDirection.West}
 				wallHeight={wallHeight}
 				worldSize={worldSize}
 			/>

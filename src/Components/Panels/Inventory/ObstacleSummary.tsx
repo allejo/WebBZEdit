@@ -13,6 +13,7 @@ import React, {
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { documentState, selectionState } from '../../../atoms';
+import { INameable } from '../../../Document/Attributes/INameable';
 import { WorldEditorHelper } from '../../../Document/Editor/WorldEditorHelper';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBaseObject } from '../../../Document/Obstacles/BaseObject';
@@ -33,7 +34,7 @@ import thumbZone from '../../../assets/thumb_zone.png';
 import styles from './ObstacleSummary.module.scss';
 
 interface Props {
-	obstacle: IBaseObject;
+	obstacle: IBaseObject & INameable;
 	onClick: (event: MouseEvent, obstacle: IBaseObject) => void;
 	selected: boolean;
 }
@@ -72,9 +73,10 @@ function getThumbnail(object: IBaseObject): JSX.Element {
 	return <span className={styles.empty} />;
 }
 
-function getSummary(obstacle: IBaseObject): JSX.Element {
+function getSummary(obstacle: IBaseObject & INameable): JSX.Element {
 	const displayName =
-		obstacle.name || `${obstacle._objectType} ${obstacle._uuid.substr(0, 8)}`;
+		obstacle.name ??
+		`${obstacle._objectType} ${obstacle._uuid.substring(0, 8)}`;
 
 	if (obstacle._objectType === 'teleporter') {
 		// display teleporters and their links

@@ -38,8 +38,8 @@ const FlagSettingsModal = () => {
 				draftWorld._options['-set'] = {};
 			}
 
-			draftWorld._options['-set']._flagAltitude = flagAltitude + '';
-			draftWorld._options['-set']._flagHeight = flagHeight + '';
+			draftWorld._options['-set']._flagAltitude = String(flagAltitude);
+			draftWorld._options['-set']._flagHeight = String(flagHeight);
 		});
 
 		setBZWDocument(nextWorld);

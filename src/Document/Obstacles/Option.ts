@@ -3,6 +3,8 @@ import {
 	bzwBool,
 	bzwHashable,
 	bzwInt,
+	BZWObjectProperties,
+	BZWParseLine,
 	bzwRepeatable,
 	bzwString,
 } from '../attributeParsers';
@@ -44,7 +46,7 @@ export type MaxPlayersVerbose = {
 
 export type MaxPlayers = MaxPlayersSimple | MaxPlayersVerbose;
 
-export function bzwAccelerations(input: string): Accelerations {
+const bzwAccelerations: BZWParseLine<Accelerations> = (input) => {
 	const accArray = input.split(' ');
 	const linear = accArray[0] ? parseInt(accArray[0]) : 50;
 	const angular = accArray[1] ? parseInt(accArray[1]) : 38;
@@ -53,13 +55,13 @@ export function bzwAccelerations(input: string): Accelerations {
 		linear: linear,
 		angular: angular,
 	};
-}
+};
 
-export function bzwBZDBSetting(input: string): [string, string] {
+const bzwBZDBSetting: BZWParseLine<[string, string]> = (input) => {
 	return input.split(' ') as [string, string];
-}
+};
 
-export function bzwShotLimit(input: string): ShotLimit {
+const bzwShotLimit: BZWParseLine<ShotLimit> = (input) => {
 	const slArray = input.split(' ');
 	const id = slArray[0];
 	const num = parseInt(slArray[1]);
@@ -68,13 +70,13 @@ export function bzwShotLimit(input: string): ShotLimit {
 		flag: id,
 		num: num,
 	};
-}
+};
 
-export function bzwRabbitMode(value: string): RabbitMode {
+const bzwRabbitMode: BZWParseLine<RabbitMode> = (value) => {
 	return value as RabbitMode;
-}
+};
 
-export function bzwMaxPlayers(input: string): MaxPlayers {
+const bzwMaxPlayers: BZWParseLine<MaxPlayers> = (input) => {
 	const maxMPArray = input.split(',');
 
 	if (maxMPArray.length === 1) {
@@ -91,9 +93,9 @@ export function bzwMaxPlayers(input: string): MaxPlayers {
 		purple: parseInt(maxMPArray[4]) || 0,
 		observer: parseInt(maxMPArray[5]) || 0,
 	};
-}
+};
 
-export function bzwFlag(input: string): FlagCount {
+const bzwFlag: BZWParseLine<FlagCount> = (input) => {
 	const flagArray = input.split('{');
 
 	const id = flagArray[0];
@@ -103,9 +105,9 @@ export function bzwFlag(input: string): FlagCount {
 		flag: id,
 		count: count,
 	};
-}
+};
 
-export const OptionsProperties = {
+export const OptionsProperties: BZWObjectProperties<IOptions> = {
 	'-a': bzwAccelerations,
 	'-admsg': bzwRepeatable(bzwString),
 	'-autoteam': bzwBool,

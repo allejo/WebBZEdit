@@ -1,13 +1,22 @@
-import { bzwBool, bzwFloat, bzwString, bzwVector3F } from '../attributeParsers';
+import {
+	bzwBool,
+	bzwFloat,
+	BZWObjectProperties,
+	bzwString,
+	bzwVector3F,
+} from '../attributeParsers';
 import { IMaterialFriendly } from '../Attributes/IMaterialFriendly';
 import { INameable } from '../Attributes/INameable';
-import { IPassableObject } from '../Attributes/IPassableObject';
+import {
+	IPassableObject,
+	newIPassableObject,
+} from '../Attributes/IPassableObject';
 import { IPhysicsDriverFriendly } from '../Attributes/IPhysicsDriverFriendly';
 import { IPositionable } from '../Attributes/IPositionable';
 import { ISizeable } from '../Attributes/ISizeable';
-import { IBaseObject, newIBaseObject, newIPassableObject } from './BaseObject';
+import { IBaseObject, newIBaseObject } from './BaseObject';
 
-export const BoxProperties = {
+export const BoxProperties: BZWObjectProperties<IBox> = {
 	name: bzwString,
 	position: bzwVector3F,
 	size: bzwVector3F,

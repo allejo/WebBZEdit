@@ -1,3 +1,4 @@
+import { MapObjectHeader } from '../contracts';
 import { IBaseObject } from '../Obstacles/BaseObject';
 import {
 	Accelerations,
@@ -22,7 +23,10 @@ export const AttributePriority: Record<string, Record<string, number>> = {
 	},
 };
 
-export const HeaderWriters: Record<string, (o: IBaseObject & any) => string> = {
+export const HeaderWriters: Record<
+	MapObjectHeader,
+	(o: IBaseObject) => string
+> = {
 	teleporter: (tele: ITeleporter) => `${tele._objectType} ${tele.name}`,
 };
 
@@ -46,7 +50,7 @@ export const AttributeWriters: Record<
 			let response = '';
 
 			if ('total' in m) {
-				response = m.total + '';
+				response = String(m.total);
 			} else {
 				const { rogue, red, green, blue, purple, observer } = m;
 				response = [rogue, red, green, blue, purple, observer].join(',');

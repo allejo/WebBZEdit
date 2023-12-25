@@ -5,12 +5,26 @@ export interface IPassableObject {
 }
 
 export function implementsIPassableObject(
-	value: any,
+	value: object,
 ): value is IPassableObject {
 	return (
-		value.hasOwnProperty('drivethrough') &&
-		value.hasOwnProperty('shootthrough') &&
-		value.hasOwnProperty('passable') &&
+		'drivethrough' in value &&
+		'shootthrough' in value &&
+		'passable' in value &&
 		true
 	);
+}
+
+export function newIPassableObject(): IPassableObject {
+	return {
+		drivethrough: false,
+		shootthrough: false,
+		get passable(): boolean {
+			return this.drivethrough && this.shootthrough;
+		},
+		set passable(value: boolean) {
+			this.drivethrough = value;
+			this.shootthrough = value;
+		},
+	};
 }

@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import { selectionState } from '../../../../atoms';
 import MenuItem from '../MenuItem';
 
-interface Props extends MenuStateReturn {}
+type Props = MenuStateReturn
 
 const ClearSelectionMenuItem = ({ ...menu }: Props) => {
 	const [selection, setSelection] = useRecoilState(selectionState);

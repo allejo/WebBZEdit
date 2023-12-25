@@ -16,7 +16,7 @@ import {
 } from '../../../../Utilities/filesystem';
 import MenuItem from '../MenuItem';
 
-interface Props extends MenuStateReturn {}
+type Props = MenuStateReturn;
 
 const SaveMapMenuItem = ({ ...menu }: Props) => {
 	const document = useRecoilValue(documentState);
@@ -39,21 +39,33 @@ const SaveMapMenuItem = ({ ...menu }: Props) => {
 
 		return fileHandle;
 	};
-	const handleMenuItemClick = async () => {
+	const handleMenuItemClick = () => {
 		// @TODO: Can our document state be null in this situation? Should we
 		//    disable the Save button at that point?
 		const bzwRaw = exportBZWDocument(document);
 
 		if (supportsFilesystemAPI()) {
 			try {
-				const fileHandle = await getFileHandle();
-				const stream = await fileHandle.createWritable();
+				(async () => {
+					const fileHandle = await getFileHandle();
+					const stream = await fileHandle.createWritable();
 
-				await stream.write(bzwRaw);
-				await stream.close();
+					await stream.write(bzwRaw);
+					await stream.close();
+				})().catch((e) => {
+					throw e;
+				});
 			} catch (e) {
-				// If the user aborted the selection, disregard
+				if (!(e instanceof DOMException)) {
+					console.error(e);
+
+					throw new Error(
+						'Unknown error occurred while trying to open a file handle',
+					);
+				}
+
 				if (e.code === DOMException.ABORT_ERR) {
+					// no-op: if the user aborted the selection, disregard
 				}
 
 				// @TODO: Handle other potential exception codes?

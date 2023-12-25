@@ -92,7 +92,8 @@ const ToggleTip = ({
 		};
 	}, [location, handleDomClick]);
 
-	popperRef.current?.update();
+	// @TODO when can this fail? and what should I do about it?
+	popperRef.current?.update().catch(console.error);
 
 	const bubbleStyles: object = {
 		...popperRef.current?.state.styles['popper'],

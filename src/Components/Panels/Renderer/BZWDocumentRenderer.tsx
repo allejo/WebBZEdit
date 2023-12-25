@@ -1,5 +1,5 @@
-import React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import React, { useCallback } from 'react';
+import { SetterOrUpdater, useRecoilState, useRecoilValue } from 'recoil';
 
 import Base from '../../../3DModels/Base';
 import Box from '../../../3DModels/Box';
@@ -20,13 +20,16 @@ import {
 import { ITeleporter } from '../../../Document/Obstacles/Teleporter';
 import { IZone } from '../../../Document/Obstacles/Zone';
 
-function handleOnClick(uuid: string | null, setter: any) {
-	return () => setter(uuid);
-}
-
 const BZWDocumentRenderer = () => {
 	const [selection, setSelection] = useRecoilState(selectionState);
 	const document = useRecoilValue(documentState);
+
+	const handleOnClick = useCallback(
+		(uuid: string | null, setter: SetterOrUpdater<string | null>) => {
+			return () => setter(uuid);
+		},
+		[],
+	);
 
 	if (document === null) {
 		return null;

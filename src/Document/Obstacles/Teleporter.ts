@@ -13,7 +13,7 @@ export const TeleporterProperties = {
 
 export interface ITeleporter
 	extends IBaseObject,
-		INameable,
+		Required<INameable>,
 		IPositionable,
 		ISizeable {
 	border: number;

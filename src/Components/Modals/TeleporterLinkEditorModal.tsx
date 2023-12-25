@@ -24,8 +24,9 @@ import {
 	TeleLinkEditorOpenEvent,
 	TeleLinkEditorOpenEventName,
 } from '../../Events/ITeleLinkEditorOpenEvent';
+import { AlertType } from '../../Utilities/contracts';
 import { classList } from '../../Utilities/cssClasses';
-import Alert, { AlertType } from '../Alert';
+import Alert from '../Alert';
 import Button from '../Button';
 import SelectField from '../Form/SelectField';
 import ListenerModal from '../ListenerModal';
@@ -88,7 +89,7 @@ const LinkListItemAdder = ({
 	const teleUUIDs = world?._teleporters ?? [];
 
 	const [teleName, setTeleName] = useState<string>(
-		world?.children[teleUUIDs[0]].name,
+		(world?.children[teleUUIDs[0]]?.name as string) ?? '',
 	);
 	const [teleUUID, setTeleUUID] = useState<string>(teleUUIDs[0]);
 	const [teleSide, setTeleSide] = useState<TeleporterSide>(
@@ -96,7 +97,7 @@ const LinkListItemAdder = ({
 	);
 
 	const handleTeleNameChange = (teleUUID: string) => {
-		setTeleName((world?.children[teleUUID] as ITeleporter).name!);
+		setTeleName((world?.children[teleUUID] as ITeleporter).name);
 		setTeleUUID(teleUUID);
 	};
 	const handleTeleSideChange = (value: string) => {
@@ -107,7 +108,7 @@ const LinkListItemAdder = ({
 			...newITeleporterLink(),
 			_uuid: nanoid(),
 			from: {
-				name: teleporter.name!,
+				name: teleporter.name,
 				side: side,
 			},
 			to: {
@@ -127,7 +128,7 @@ const LinkListItemAdder = ({
 					options={Object.fromEntries(
 						teleUUIDs.map((uuid) => [
 							uuid,
-							(world?.children[uuid] as ITeleporter).name!,
+							(world?.children[uuid] as ITeleporter).name,
 						]),
 					)}
 					hideLabel={true}

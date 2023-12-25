@@ -1,13 +1,14 @@
 import React from 'react';
 
-import BaseFormField, { FieldProps } from './BaseFormField';
+import { FieldProps } from '../../Utilities/contracts';
+import BaseFormField from './BaseFormField';
 
 const CheckboxField = (props: FieldProps<boolean>) => (
 	<BaseFormField
 		tag="input"
 		type="checkbox"
-		castStrToType={(_) => false}
-		castTypeToStr={(_) => ''}
+		castStrToType={() => false}
+		castTypeToStr={() => ''}
 		{...props}
 	/>
 );

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Vector3F } from '../../../Utilities/types';
-import { FieldLayout } from '../../Form/BaseFormField';
+import { FieldLayout, Vector3F } from '../../../Utilities/contracts';
 import NumberField from '../../Form/NumberField';
 
 import styles from './Vector3FControl.module.scss';

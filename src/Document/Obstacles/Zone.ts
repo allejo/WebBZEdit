@@ -1,6 +1,7 @@
 import {
 	bzwFloat,
 	bzwIntVector,
+	BZWObjectProperties,
 	bzwRepeatable,
 	bzwString,
 	bzwStringVector,
@@ -8,6 +9,7 @@ import {
 } from '../attributeParsers';
 import { INameable } from '../Attributes/INameable';
 import { IPositionable } from '../Attributes/IPositionable';
+import { ISizeable } from '../Attributes/ISizeable';
 import { IBaseObject, newIBaseObject } from './BaseObject';
 
 function bzwZoneFlag(value: string): IZoneFlag {
@@ -16,7 +18,22 @@ function bzwZoneFlag(value: string): IZoneFlag {
 	return [chunks[0], +(chunks[1] ?? 1)];
 }
 
-export const ZoneProperties = {
+export interface IZone
+	extends IBaseObject,
+		INameable,
+		IPositionable,
+		ISizeable {
+	zoneflag: IZoneFlag[];
+	flag: string[];
+	team?: (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
+	safety?: (1 | 2 | 3 | 4)[];
+}
+
+export type IZoneFlag = [string, number];
+export type IZoneTeam = Exclude<IZone['team'], undefined>[0];
+export type IZoneSafety = Exclude<IZone['safety'], undefined>[0];
+
+export const ZoneProperties: BZWObjectProperties<IZone> = {
 	name: bzwString,
 	position: bzwVector3F,
 	size: bzwVector3F,
@@ -26,16 +43,6 @@ export const ZoneProperties = {
 	team: bzwIntVector,
 	safety: bzwIntVector,
 };
-
-export interface IZone extends IBaseObject, INameable, IPositionable {
-	zoneflag: IZoneFlag[];
-	flag: string[];
-	team?: (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
-	safety?: (1 | 2 | 3 | 4)[];
-}
-export type IZoneFlag = [string, number];
-export type IZoneTeam = Exclude<IZone['team'], undefined>[0];
-export type IZoneSafety = Exclude<IZone['safety'], undefined>[0];
 
 export function newIZone(): IZone {
 	return {

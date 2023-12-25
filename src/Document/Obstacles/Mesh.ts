@@ -1,7 +1,8 @@
-import { Vector3F } from '../../Utilities/types';
+import { Vector3F } from '../../Utilities/contracts';
 import {
 	bzwBool,
 	bzwFloatVector,
+	BZWObjectProperties,
 	bzwRepeatable,
 	bzwString,
 	bzwVector3F,
@@ -10,22 +11,6 @@ import { INameable } from '../Attributes/INameable';
 import { IPhysicsDriverFriendly } from '../Attributes/IPhysicsDriverFriendly';
 import { IBaseObject, newIBaseObject } from './BaseObject';
 import { IMeshFace } from './MeshFace';
-
-export const MeshProperties = {
-	name: bzwString,
-	inside: bzwRepeatable(bzwVector3F),
-	outside: bzwRepeatable(bzwVector3F),
-	vertex: bzwRepeatable(bzwVector3F),
-	normal: bzwRepeatable(bzwFloatVector),
-	texcoord: bzwRepeatable(bzwFloatVector),
-	shift: bzwRepeatable(bzwVector3F),
-	scale: bzwRepeatable(bzwVector3F),
-	shear: bzwRepeatable(bzwVector3F),
-	spin: bzwRepeatable(bzwFloatVector),
-	phydrv: bzwString,
-	smoothbounce: bzwBool,
-	noclusters: bzwBool,
-};
 
 export interface IMesh extends IBaseObject, INameable, IPhysicsDriverFriendly {
 	inside?: Vector3F[];
@@ -41,11 +26,27 @@ export interface IMesh extends IBaseObject, INameable, IPhysicsDriverFriendly {
 	noclusters?: boolean;
 }
 
+export const MeshProperties: BZWObjectProperties<IMesh> = {
+	name: bzwString,
+	inside: bzwRepeatable(bzwVector3F),
+	outside: bzwRepeatable(bzwVector3F),
+	vertex: bzwRepeatable(bzwVector3F),
+	normal: bzwRepeatable(bzwFloatVector),
+	texcoord: bzwRepeatable(bzwFloatVector),
+	shift: bzwRepeatable(bzwVector3F),
+	scale: bzwRepeatable(bzwVector3F),
+	shear: bzwRepeatable(bzwVector3F),
+	spin: bzwRepeatable(bzwFloatVector),
+	phydrv: bzwString,
+	smoothbounce: bzwBool,
+	noclusters: bzwBool,
+};
+
 export function newIMesh(): IMesh {
 	return {
 		...newIBaseObject('mesh'),
 		get faces(): IMeshFace[] {
-			return Object.values(this.children) as IMeshFace[];
+			return Object.values(this.children as Record<string, IMeshFace>);
 		},
 	};
 }

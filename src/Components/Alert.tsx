@@ -9,16 +9,10 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { HTMLAttributes, ReactNode, useState } from 'react';
 
+import { AlertType } from '../Utilities/contracts';
 import { classList } from '../Utilities/cssClasses';
 
 import styles from './Alert.module.scss';
-
-export enum AlertType {
-	Info,
-	Success,
-	Warning,
-	Danger,
-}
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	type: AlertType;

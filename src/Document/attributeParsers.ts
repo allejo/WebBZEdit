@@ -1,10 +1,17 @@
+import { OmitIndexSignature } from 'type-fest';
+
+import { Vector3F, Vector4F } from '../Utilities/contracts';
+import { assertNotNull } from '../Utilities/developmentUtilities';
+import { IBaseObject } from './Obstacles/BaseObject';
 import {
 	TeleporterReference,
 	TeleporterSide,
 } from './Obstacles/TeleporterLink';
 import { IWorld } from './Obstacles/World';
 
-type KeyType = keyof any;
+export type BZWParseLine<R> = (line: string, world: IWorld) => R;
+
+type KeyType = number | string | symbol;
 
 export type HashableParserCallback<K extends KeyType, V> = (
 	line: string,
@@ -32,43 +39,43 @@ export interface Repeatable<T> {
 	callback: RepeatableParserCallback<T>;
 }
 
-export function bzwRepeatable<T>(cb: Repeatable<T>['callback']): Repeatable<T> {
-	return {
-		type: 'repeatable',
-		callback: cb,
-	};
-}
+export const bzwRepeatable = <T>(
+	cb: Repeatable<T>['callback'],
+): Repeatable<T> => ({
+	type: 'repeatable',
+	callback: cb,
+});
 
-export function bzwBool(_: string): boolean {
+export const bzwBool: BZWParseLine<boolean> = () => {
 	return true;
-}
+};
 
-export function bzwFloat(line: string): number {
+export const bzwFloat: BZWParseLine<number> = (line) => {
 	return Number.parseFloat(line);
-}
+};
 
-export function bzwInt(line: string): number {
+export const bzwInt: BZWParseLine<number> = (line) => {
 	return Number.parseInt(line);
-}
+};
 
-export function bzwString(line: string): string {
+export const bzwString: BZWParseLine<string> = (line) => {
 	// Only use any string value before the `#`; i.e. the non-comment content
 	return line.match(/([^#\n]+)(?!#)/)?.[0] ?? line;
-}
+};
 
-export function bzwStringVector(line: string): string[] {
-	return bzwString(line).split(/[ ]+/);
-}
+export const bzwStringVector: BZWParseLine<string[]> = (line, world) => {
+	return bzwString(line, world).split(/[ ]+/);
+};
 
-export function bzwIntVector(line: string): number[] {
-	return bzwStringVector(line).map((value) => Number.parseInt(value));
-}
+export const bzwIntVector: BZWParseLine<number[]> = (line, world) => {
+	return bzwStringVector(line, world).map((value) => Number.parseInt(value));
+};
 
-export function bzwFloatVector(line: string): number[] {
-	return bzwStringVector(line).map((value) => Number.parseFloat(value));
-}
+export const bzwFloatVector: BZWParseLine<number[]> = (line, world) => {
+	return bzwStringVector(line, world).map((value) => Number.parseFloat(value));
+};
 
-export function bzwVector3F(line: string): [number, number, number] {
+export const bzwVector3F: BZWParseLine<Vector3F> = (line) => {
 	const tokens = line.split(/[ ]+/);
 
 	return [
@@ -76,9 +83,9 @@ export function bzwVector3F(line: string): [number, number, number] {
 		Number.parseFloat(tokens[1]),
 		Number.parseFloat(tokens[2]),
 	];
-}
+};
 
-export function bzwVector4F(line: string): [number, number, number, number] {
+export const bzwVector4F: BZWParseLine<Vector4F> = (line) => {
 	const tokens = line.split(/[ ]+/);
 
 	return [
@@ -87,9 +94,11 @@ export function bzwVector4F(line: string): [number, number, number, number] {
 		Number.parseFloat(tokens[2]),
 		Number.parseFloat(tokens[3]),
 	];
-}
+};
 
-export function bzwTeleRef(line: string, world: IWorld): TeleporterReference {
+export const bzwTeleRef: BZWParseLine<TeleporterReference> = (line, world) => {
+	assertNotNull(world, 'This function requires "world" to be given.');
+
 	let name = line;
 	let side = TeleporterSide.Both;
 	const i = line.lastIndexOf(':');
@@ -117,4 +126,15 @@ export function bzwTeleRef(line: string, world: IWorld): TeleporterReference {
 		name: name,
 		side: side,
 	};
-}
+};
+
+export type BZWParserFunction<T> =
+	| ReturnType<typeof bzwHashable<KeyType, T>>
+	| ReturnType<typeof bzwRepeatable<T>>
+	| BZWParseLine<T>;
+
+export type BZWObjectProperties<T> = {
+	[key in keyof T]: NonNullable<T[key]> extends Array<infer U>
+		? Repeatable<U>
+		: BZWParserFunction<NonNullable<T[key]>>;
+};

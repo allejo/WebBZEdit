@@ -8,7 +8,7 @@ import {
 } from '../../../../Events/IFlagSettingsModalOpenEvent';
 import TriggerModalMenuItem from '../shared/TriggerModalMenuItem';
 
-interface Props extends MenuStateReturn {}
+type Props = MenuStateReturn
 
 const FlagSettingsMenuItem = ({ ...menu }: Props) => (
 	<TriggerModalMenuItem<IFlagSettingsModalOpenEvent>

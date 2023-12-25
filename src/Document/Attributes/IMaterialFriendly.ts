@@ -3,7 +3,7 @@ export interface IMaterialFriendly {
 }
 
 export function implementsIMaterialFriendly(
-	value: any,
+	value: object,
 ): value is IMaterialFriendly {
-	return value.hasOwnProperty('matref');
+	return 'matref' in value;
 }

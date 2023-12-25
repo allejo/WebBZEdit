@@ -4,7 +4,9 @@ import React from 'react';
 
 import FlagListEditor, { IFlagListEditorProps } from '../FlagListEditor';
 
-function noop() {}
+function noop() {
+	// no-op
+}
 
 describe('FlagListEditor Component', () => {
 	it('should render with a no flags warning', () => {
@@ -47,7 +49,7 @@ describe('FlagListEditor Component', () => {
 		expect(flagCounts[0]).toHaveValue(5);
 	});
 
-	it('should support removing flags with counts', async () => {
+	it('should support removing flags with counts', () => {
 		const props: IFlagListEditorProps = {
 			allowCount: true,
 			flags: [

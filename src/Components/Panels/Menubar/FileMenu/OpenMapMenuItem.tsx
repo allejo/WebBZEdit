@@ -11,7 +11,7 @@ import {
 } from '../../../../Utilities/filesystem';
 import MenuItem from '../MenuItem';
 
-interface Props extends MenuStateReturn {}
+type Props = MenuStateReturn;
 
 const OpenMapMenuItem = ({ ...menu }: Props) => {
 	const setDocument = useSetRecoilState(documentState);
@@ -22,16 +22,20 @@ const OpenMapMenuItem = ({ ...menu }: Props) => {
 		setDocument(loadBZWDocument(contents));
 	};
 
-	const handleMenuItemClick = async () => {
+	const handleMenuItemClick = () => {
 		if (supportsFilesystemAPI()) {
 			try {
-				const [fileHandle] = await window.showOpenFilePicker(
-					defaultFilePickerOptions(),
-				);
-				const file = await fileHandle.getFile();
+				(async () => {
+					const [fileHandle] = await window.showOpenFilePicker(
+						defaultFilePickerOptions(),
+					);
+					const file = await fileHandle.getFile();
 
-				loadWorldFileContents(await file.text());
-				setFileHandle(fileHandle);
+					loadWorldFileContents(await file.text());
+					setFileHandle(fileHandle);
+				})().catch((e) => {
+					throw e;
+				});
 			} catch (e) {
 				if (e instanceof DOMException) {
 					// User aborted the file open operation

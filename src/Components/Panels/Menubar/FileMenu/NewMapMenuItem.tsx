@@ -7,7 +7,7 @@ import { documentState } from '../../../../atoms';
 import { loadBZWDocument } from '../../../../Document/loadBZWDocument';
 import MenuItem from '../MenuItem';
 
-interface Props extends MenuStateReturn {}
+type Props = MenuStateReturn
 
 const NewMapMenuItem = ({ ...menu }: Props) => {
 	const setDocument = useSetRecoilState(documentState);

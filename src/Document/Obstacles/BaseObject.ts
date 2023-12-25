@@ -1,33 +1,16 @@
-import { IPassableObject } from '../Attributes/IPassableObject';
+import { MapObjectType } from '../contracts';
 
 export interface IBaseObject {
-	[key: string]: any;
+	[key: string]: unknown;
 
 	_uuid: string;
 	_objectType: string;
 	_infoString: string;
 	_terminator: string;
-	children: Record<string, IBaseObject>;
+	children: Record<string, MapObjectType>;
 }
 
-export function newIPassableObject(): IPassableObject {
-	return {
-		drivethrough: false,
-		shootthrough: false,
-		get passable(): boolean {
-			return this.drivethrough && this.shootthrough;
-		},
-		set passable(value: boolean) {
-			this.drivethrough = value;
-			this.shootthrough = value;
-		},
-	};
-}
-
-export function newIBaseObject(
-	objectType: string,
-	uuid: string = '',
-): IBaseObject {
+export function newIBaseObject(objectType: string, uuid = ''): IBaseObject {
 	return {
 		_uuid: uuid,
 		_objectType: objectType,

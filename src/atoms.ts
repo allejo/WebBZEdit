@@ -33,7 +33,7 @@ export const documentTeles = selector<Record<string, string>>({
 				continue;
 			}
 
-			entries[teleporter.name!] = teleUUID;
+			entries[teleporter.name] = teleUUID;
 		}
 
 		return entries;

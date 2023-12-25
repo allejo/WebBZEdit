@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import { bzwViewState } from '../../../../atoms';
 import MenuItem from '../MenuItem';
 
-interface Props extends MenuStateReturn {}
+type Props = MenuStateReturn
 
 const ToggleBzwViewMenuItem = ({ ...menu }: Props) => {
 	const [isVisible, setIsVisible] = useRecoilState(bzwViewState);

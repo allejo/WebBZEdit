@@ -11,7 +11,6 @@ interface Props {
 }
 
 const Ground = ({ worldSize }: Props) => {
-	const noop = () => {};
 	const [grassTexture] = useLoader(TextureLoader, [grass]);
 
 	grassTexture.wrapS = grassTexture.wrapT = RepeatWrapping;
@@ -23,7 +22,6 @@ const Ground = ({ worldSize }: Props) => {
 			position={[0, 0, 0]}
 			size={[worldSize, worldSize, 0.01]}
 			rotation={0}
-			onClick={noop}
 			topTexture={grassTexture}
 			botTexture={grassTexture}
 			xPosTexture={grassTexture}

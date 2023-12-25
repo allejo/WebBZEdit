@@ -1,4 +1,4 @@
-export function writeArray(array: Array<any>): string[] {
+export function writeArray(array: Array<string | number>): string[] {
 	return array.map((value) => {
 		if (typeof value === 'number') {
 			return writeNumber(value);

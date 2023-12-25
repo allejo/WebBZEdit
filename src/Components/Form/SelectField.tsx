@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 
-import BaseFormField, { FieldProps } from './BaseFormField';
+import { FieldProps } from '../../Utilities/contracts';
+import BaseFormField from './BaseFormField';
 
 type KVPair = {
 	key: string;
@@ -25,7 +26,7 @@ function createKeyValuePairs(options: Props['options']): KVPair[] {
 
 interface Props extends FieldProps<string> {
 	disabledItems?: (number | string)[];
-	formatValue?: (value: any) => string;
+	formatValue?: (value: string) => string;
 	options:
 		| string[]
 		| Record<number | string, string | string[] | Record<string, string>>;
@@ -63,7 +64,7 @@ const SelectField = ({
 			{options.map((option, index) => {
 				if (Array.isArray(option.val)) {
 					return (
-						<optgroup key={option.key + index} label={option.key}>
+						<optgroup key={`${option.key}${index}`} label={option.key}>
 							{option.val.map(kvPairToJsx)}
 						</optgroup>
 					);

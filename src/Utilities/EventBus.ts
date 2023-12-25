@@ -1,12 +1,12 @@
 import { nanoid } from 'nanoid';
 
-export type EventBusCallback<T extends {}> = (data: T) => void;
+export type EventBusCallback<T extends object> = (data: T) => void;
 type EventBusInternalCallback<T> = (e: CustomEvent<T>) => void;
 
 class EventBus {
 	private callbacks: Record<string, EventBusInternalCallback<any>> = {};
 
-	on<T extends {}>(event: string, callback: EventBusCallback<T>): string {
+	on<T extends object>(event: string, callback: EventBusCallback<T>): string {
 		const id = nanoid(7);
 
 		this.callbacks[id] = (e: CustomEvent<T>) => {

@@ -1,6 +1,6 @@
 import { removeItem } from '../../Utilities/arrays';
+import { assumeType } from '../../Utilities/contracts';
 import { slugify } from '../../Utilities/slugify';
-import { assumeType } from '../../Utilities/types';
 import { INameable } from '../Attributes/INameable';
 import { IBaseObject } from '../Obstacles/BaseObject';
 import { ITeleporter } from '../Obstacles/Teleporter';
@@ -21,7 +21,7 @@ export function addObstacle<T extends IBaseObject>(
 	if (obstacle._objectType === 'teleporter') {
 		assumeType<ITeleporter>(obstacle);
 
-		obstacle.name = 'tele' + this.world._teleporters.length;
+		obstacle.name = `tele${this.world._teleporters.length}`;
 		this.world._teleporters.push(obstacle._uuid);
 	}
 

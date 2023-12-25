@@ -9,7 +9,7 @@ interface Props<T> extends Omit<IMenuItemProps, 'children' | 'onTrigger'> {
 	menuName: string;
 }
 
-const TriggerModalMenuItem = <T extends {}>({
+const TriggerModalMenuItem = <T extends object>({
 	eventData,
 	eventName,
 	menuName,
