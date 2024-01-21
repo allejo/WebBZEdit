@@ -121,7 +121,7 @@ export const OptionsProperties = {
   '-mps': bzwInt,
   '-ms': bzwInt,
   '-mts': bzwInt,
-  '-noteamkills': bzwBool,
+  '-noTeamKills': bzwBool,
   '-offa': bzwBool,
   '+r': bzwBool,
   '-rabbit': bzwRabbitMode,
@@ -153,7 +153,7 @@ export interface IOptions extends IBaseObject {
   '-mps'?: number;
   '-ms'?: number;
   '-mts'?: number;
-  '-noteamkills'?: boolean;
+  '-noTeamKills'?: boolean;
   '-offa'?: boolean;
   '+r'?: boolean;
   '-rabbit'?: RabbitMode;

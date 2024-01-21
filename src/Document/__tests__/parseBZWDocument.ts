@@ -501,7 +501,7 @@ describe('BZW Document Parser', () => {
       -mps 420
       -ms 1011
       -mts 777
-      -noteamkills
+      -noTeamKills
       -offa
       +r
       -rabbit killer
@@ -552,7 +552,7 @@ describe('BZW Document Parser', () => {
     expect(option['-mps']).toEqual(420);
     expect(option['-ms']).toEqual(1011);
     expect(option['-mts']).toEqual(777);
-    expect(option['-noteamkills']).toEqual(true);
+    expect(option['-noTeamKills']).toEqual(true);
     expect(option['-offa']).toEqual(true);
     expect(option['+r']).toEqual(true);
     expect(option['-rabbit']).toEqual('killer' as RabbitMode);

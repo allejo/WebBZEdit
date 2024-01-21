@@ -374,7 +374,7 @@ describe('BZW Document Writer', () => {
           '-mps': 100,
           '-ms': 5,
           '-mts': 512,
-          '-noteamkills': true,
+          '-noTeamKills': true,
           '-offa': true,
           '+r': true,
           '-rabbit': 'killer',
@@ -433,7 +433,7 @@ describe('BZW Document Writer', () => {
         -mps 100
         -ms 5
         -mts 512
-        -noteamkills
+        -noTeamKills
         -offa
         +r
         -rabbit killer
