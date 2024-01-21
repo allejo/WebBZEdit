@@ -483,7 +483,7 @@ describe('BZW Document Parser', () => {
       -a 12 45
       -admsg there is a snake in my boot!
       -admsg execute order 66
-      -autoteam
+      -autoTeam
       -c
       +f 23{34}
       +f bad{69}
@@ -528,7 +528,7 @@ describe('BZW Document Parser', () => {
       'there is a snake in my boot!',
       'execute order 66',
     ]);
-    expect(option['-autoteam']).toEqual(true);
+    expect(option['-autoTeam']).toEqual(true);
     expect(option['-c']).toEqual(true);
     expect(option['+f']).toEqual([
       { flag: '23', count: 34 } as FlagCount,

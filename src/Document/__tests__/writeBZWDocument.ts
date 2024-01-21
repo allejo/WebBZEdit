@@ -338,7 +338,7 @@ describe('BZW Document Writer', () => {
             angular: 38,
           },
           '-admsg': ['Welcome to my wonder map!', '  by blast'],
-          '-autoteam': true,
+          '-autoTeam': true,
           '-c': true,
           '+f': [
             {
@@ -417,7 +417,7 @@ describe('BZW Document Writer', () => {
         -a 50 38
         -admsg "Welcome to my wonder map!"
         -admsg "  by blast"
-        -autoteam
+        -autoTeam
         -c
         +f G{10}
         +f US{50}
