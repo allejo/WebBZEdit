@@ -7,6 +7,8 @@
 }
 
 .container {
+  width: 100%;
+
   &[data-vertical='true'] {
     display: flex;
   }
@@ -20,10 +22,12 @@
 
   @include is-vertical(true) {
     border-right: 1px solid white;
+    overflow-y: auto;
   }
 
   @include is-vertical(false) {
     border-bottom: 1px solid white;
+    overflow-x: auto;
   }
 }
 
@@ -72,6 +76,7 @@
 }
 
 .panelContainer {
+  overflow-y: auto;
   width: 100%;
 }
 
