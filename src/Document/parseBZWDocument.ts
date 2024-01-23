@@ -156,8 +156,12 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
 
 function parseLine(line: string, object: IBaseObject, world: IWorld): void {
   const spacePos = line.search(/[ ]|$/);
-  const attribute = line.substring(0, spacePos).toLowerCase();
   const restOfLine = line.substr(spacePos + 1).trim();
+  let attribute = line.substring(0, spacePos);
+
+  if (!object._caseSensitive) {
+    attribute = attribute.toLowerCase();
+  }
 
   const parser =
     ObjectBuilders[object._objectType].parsers[attribute] ?? bzwString;

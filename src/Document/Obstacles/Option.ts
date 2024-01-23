@@ -172,6 +172,7 @@ export interface IOptions extends IBaseObject {
 export function newIOptions(): IOptions {
   return {
     ...newIBaseObject('options'),
+    _caseSensitive: true,
   };
 }
 
