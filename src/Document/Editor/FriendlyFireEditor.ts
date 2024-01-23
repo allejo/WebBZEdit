@@ -12,7 +12,7 @@ export function getFriendlyFire(this: WorldEditorHelper): FriendlyFireMode {
     return FriendlyFireMode.WithPenalty;
   }
 
-  if (this.world._options['-noteamkills'] === true) {
+  if (this.world._options['-noTeamKills'] === true) {
     return FriendlyFireMode.Impossible;
   }
 
@@ -23,7 +23,7 @@ export function setFriendlyFire(
   this: WorldEditorHelper,
   mode: FriendlyFireMode,
 ): void {
-  const ffOpts: OptionsFlag[] = ['-noteamkills', '-tk'];
+  const ffOpts: OptionsFlag[] = ['-noTeamKills', '-tk'];
 
   for (const ffOpt of ffOpts) {
     delete this.world._options[ffOpt];
@@ -31,7 +31,7 @@ export function setFriendlyFire(
 
   switch (mode) {
     case FriendlyFireMode.Impossible:
-      this.world._options['-noteamkills'] = true;
+      this.world._options['-noTeamKills'] = true;
       break;
 
     case FriendlyFireMode.WithPenalty:

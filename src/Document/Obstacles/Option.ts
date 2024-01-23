@@ -108,7 +108,7 @@ export function bzwFlag(input: string): FlagCount {
 export const OptionsProperties = {
   '-a': bzwAccelerations,
   '-admsg': bzwRepeatable(bzwString),
-  '-autoteam': bzwBool,
+  '-autoTeam': bzwBool,
   '-c': bzwBool,
   '+f': bzwRepeatable(bzwFlag),
   '-f': bzwRepeatable(bzwString),
@@ -121,7 +121,7 @@ export const OptionsProperties = {
   '-mps': bzwInt,
   '-ms': bzwInt,
   '-mts': bzwInt,
-  '-noteamkills': bzwBool,
+  '-noTeamKills': bzwBool,
   '-offa': bzwBool,
   '+r': bzwBool,
   '-rabbit': bzwRabbitMode,
@@ -140,7 +140,7 @@ export const OptionsProperties = {
 export interface IOptions extends IBaseObject {
   '-a'?: Accelerations;
   '-admsg'?: string[];
-  '-autoteam'?: boolean;
+  '-autoTeam'?: boolean;
   '-c'?: boolean;
   '-fb'?: boolean;
   '+f'?: FlagCount[];
@@ -153,7 +153,7 @@ export interface IOptions extends IBaseObject {
   '-mps'?: number;
   '-ms'?: number;
   '-mts'?: number;
-  '-noteamkills'?: boolean;
+  '-noTeamKills'?: boolean;
   '-offa'?: boolean;
   '+r'?: boolean;
   '-rabbit'?: RabbitMode;

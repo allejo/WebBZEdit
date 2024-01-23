@@ -343,7 +343,7 @@ describe('BZW Editor Helper', () => {
           description: 'should result in an "impossible" friendly fire mode',
           world: bzw`
             options
-              -noteamkills
+              -noTeamKills
             end
           `,
           expected: FriendlyFireMode.Impossible,
@@ -389,7 +389,7 @@ describe('BZW Editor Helper', () => {
             end
 
             options
-              -noteamkills
+              -noTeamKills
             end
           `,
         },

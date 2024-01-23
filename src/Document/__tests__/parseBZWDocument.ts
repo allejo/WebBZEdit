@@ -483,7 +483,7 @@ describe('BZW Document Parser', () => {
       -a 12 45
       -admsg there is a snake in my boot!
       -admsg execute order 66
-      -autoteam
+      -autoTeam
       -c
       +f 23{34}
       +f bad{69}
@@ -501,7 +501,7 @@ describe('BZW Document Parser', () => {
       -mps 420
       -ms 1011
       -mts 777
-      -noteamkills
+      -noTeamKills
       -offa
       +r
       -rabbit killer
@@ -528,7 +528,7 @@ describe('BZW Document Parser', () => {
       'there is a snake in my boot!',
       'execute order 66',
     ]);
-    expect(option['-autoteam']).toEqual(true);
+    expect(option['-autoTeam']).toEqual(true);
     expect(option['-c']).toEqual(true);
     expect(option['+f']).toEqual([
       { flag: '23', count: 34 } as FlagCount,
@@ -552,7 +552,7 @@ describe('BZW Document Parser', () => {
     expect(option['-mps']).toEqual(420);
     expect(option['-ms']).toEqual(1011);
     expect(option['-mts']).toEqual(777);
-    expect(option['-noteamkills']).toEqual(true);
+    expect(option['-noTeamKills']).toEqual(true);
     expect(option['-offa']).toEqual(true);
     expect(option['+r']).toEqual(true);
     expect(option['-rabbit']).toEqual('killer' as RabbitMode);
