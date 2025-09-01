@@ -64,7 +64,7 @@ const FlagSettingsModal = () => {
         <div className="col-md-6">
           <NumberField
             label="Flag Altitude"
-            description={bzdbDocumentation.getDescription('_flagAltitude')}
+            description={bzdbDocumentation.store['_flagAltitude'].description}
             allowChange={positiveOnly}
             onChange={setFlagAltitude}
             value={flagAltitude}
@@ -73,7 +73,7 @@ const FlagSettingsModal = () => {
         <div className="col-md-6">
           <NumberField
             label="Flag Height"
-            description={bzdbDocumentation.getDescription('_flagHeight')}
+            description={bzdbDocumentation.store['_flagHeight'].description}
             allowChange={positiveOnly}
             onChange={setFlagHeight}
             value={flagHeight}

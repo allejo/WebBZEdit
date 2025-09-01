@@ -1,34 +1,29 @@
+import { Document } from 'flexsearch';
 import produce from 'immer';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { useDialogState } from 'reakit';
 import { useRecoilState } from 'recoil';
 
 import { IOptions } from '../../Document/Obstacles/Option';
 import { BZDBSettingsModalOpenEventName } from '../../Events/IBZDBSettingsModalOpenEvent';
+import bzdbDocumentation, { BZDBDocType } from '../../Utilities/BZDBDocumentor';
 import { documentState } from '../../atoms';
 import { BZDBType } from '../../data/bzdb-types';
+import { useDocumentSearch } from '../../hooks/useFlexSearch';
 import Button from '../Button';
 import BZDBEquationField from '../Form/BZDBEquationField';
 import CheckboxField from '../Form/CheckboxField';
+import TextField from '../Form/TextField';
 import ListenerModal from '../ListenerModal';
 import Markdown from '../Markdown';
 import { Tab, TabList } from '../TabList';
 
-import BZDBDocs from '../../data/bzdb-documention.json';
 import generalStyles from '../../sass/general.module.scss';
 import styles from './BZDBSettingsModal.module.scss';
 
-type BZDBVariableType = typeof BZDBDocs.variables[number];
-
 interface SettingEditorProps {
   onChange: (setting: string, value: any) => void;
-  variable: BZDBVariableType;
+  variable: BZDBDocType;
 }
 
 // https://github.com/BZFlag-Dev/bzflag/blob/a249151/src/common/StateDatabase.cxx#L252-L256
@@ -87,7 +82,7 @@ const SettingEditor = ({ onChange, variable }: SettingEditorProps) => {
         <div>{renderEditor(variable.type ?? 'string')}</div>
       </div>
       <div className={generalStyles.descriptionLike}>
-        <Markdown content={variable.desc} inline />
+        <Markdown content={variable.description} inline />
       </div>
     </div>
   );
@@ -123,37 +118,28 @@ function bzdbReducer(state: BZDBStore, action: ReducerAction) {
   });
 }
 
+const bzdbSearchIndex = new Document({
+  id: 'name',
+  index: [
+    {
+      field: 'name',
+      tokenize: 'reverse',
+    },
+    'description',
+  ],
+  store: ['name', 'description', 'default', 'category'],
+});
+
+bzdbDocumentation.forEach((variable) => {
+  bzdbSearchIndex.add({ ...variable });
+});
+
 const BZDBSettingsModal = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
   const [bzdbStore, bzdbStoreDispatch] = useReducer(bzdbReducer, {});
   const dialog = useDialogState();
-
-  const {
-    bzdbCategories,
-    bzdbDefinitionsByCategory,
-    bzdbDefinitionsByVariable,
-  } = useMemo(() => {
-    const groupedByCat: Record<string, BZDBVariableType[]> = {};
-    const mappedByVariable: Partial<Record<BZDBType, BZDBVariableType>> = {};
-
-    BZDBDocs.variables.forEach((variable) => {
-      const cat = variable.category ?? 'Miscellaneous';
-
-      if (!groupedByCat.hasOwnProperty(cat)) {
-        groupedByCat[cat] = [];
-      }
-
-      groupedByCat[cat].push(variable);
-      mappedByVariable[variable.name as BZDBType] = variable;
-    });
-
-    return {
-      bzdbDefinitionsByCategory: groupedByCat,
-      bzdbCategories: Object.keys(groupedByCat).sort(),
-      bzdbDefinitionsByVariable: mappedByVariable,
-      bzdbVariables: Object.keys(mappedByVariable).sort(),
-    };
-  }, []);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const results = useDocumentSearch(searchQuery, bzdbSearchIndex);
 
   const syncStateToWorld = useCallback(() => {
     bzdbStoreDispatch({
@@ -163,7 +149,7 @@ const BZDBSettingsModal = () => {
   }, [world?._options]);
 
   const handleOnChange = (variable: string, value: string) => {
-    const definition = bzdbDefinitionsByVariable[variable as BZDBType];
+    const definition = bzdbDocumentation.store[variable as BZDBType];
 
     if (value === definition?.default) {
       bzdbStoreDispatch({ type: 'delete', variable });
@@ -184,6 +170,8 @@ const BZDBSettingsModal = () => {
     dialog.hide();
   };
 
+  console.log({ results });
+
   return (
     <ListenerModal
       event={BZDBSettingsModalOpenEventName}
@@ -200,10 +188,17 @@ const BZDBSettingsModal = () => {
       hideOnEsc={false}
       hideOnClickOutside={false}
     >
+      <div>
+        <TextField
+          label="Search"
+          onChange={setSearchQuery}
+          value={searchQuery}
+        />
+      </div>
       <TabList aria-label="BZDB Settings" className={styles.tabList} vertical>
-        {bzdbCategories.map((category) => (
+        {bzdbDocumentation.categories.map((category) => (
           <Tab title={category} key={category}>
-            {bzdbDefinitionsByCategory[category].map((variable) => (
+            {bzdbDocumentation.mapByCategory(category, (variable) => (
               <SettingEditor
                 key={variable.name}
                 onChange={handleOnChange}
