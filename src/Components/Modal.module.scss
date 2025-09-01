@@ -24,6 +24,10 @@
   transform: translateX(-50%);
   width: 600px;
   z-index: 999;
+
+  &.fullWidth {
+    width: calc(100% - 4rem);
+  }
 }
 
 .closeDialog {

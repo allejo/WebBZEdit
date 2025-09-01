@@ -21,6 +21,7 @@ interface Props extends Partial<DialogOptions> {
   dialog: DialogStateReturn;
   className?: string;
   footer?: ReactNode;
+  fullWidth?: boolean;
   onShow?: () => void;
   onDismiss?: () => boolean;
   title: string;
@@ -32,6 +33,7 @@ const Modal = ({
   className,
   dialog,
   footer,
+  fullWidth = false,
   onShow,
   onDismiss,
   children,
@@ -62,7 +64,7 @@ const Modal = ({
         {...dialog}
         aria-label={title}
         {...props}
-        className={styles.dialog}
+        className={classList([styles.dialog, [styles.fullWidth, fullWidth]])}
       >
         <header className={styles.header}>
           <h1>{title}</h1>

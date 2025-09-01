@@ -194,6 +194,7 @@ const BZDBSettingsModal = () => {
           Save
         </Button>
       }
+      fullWidth
       title="BZDB Settings"
       onOpen={syncStateToWorld}
       hideOnEsc={false}
