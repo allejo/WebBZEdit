@@ -48,6 +48,10 @@ export class BZDBDocumentor {
     });
   };
 
+  isNativeField = (field: string): field is BZDBType => {
+    return this.storage.hasOwnProperty(field);
+  };
+
   mapByCategory = <T>(
     category: string,
     callback: (doc: BZDBDocType, index: number, array: BZDBDocType[]) => T,

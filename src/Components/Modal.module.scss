@@ -27,6 +27,7 @@
   z-index: 999;
 
   &.fullWidth {
+    max-width: 1400px;
     width: calc(100% - 4rem);
   }
 }
