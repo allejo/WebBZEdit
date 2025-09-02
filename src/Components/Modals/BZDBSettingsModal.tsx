@@ -1,12 +1,21 @@
 import { Document } from 'flexsearch';
 import produce from 'immer';
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import { useDialogState } from 'reakit';
 import { useRecoilState } from 'recoil';
 
 import { IOptions } from '../../Document/Obstacles/Option';
 import { BZDBSettingsModalOpenEventName } from '../../Events/IBZDBSettingsModalOpenEvent';
-import bzdbDocumentation, { BZDBDocType } from '../../Utilities/BZDBDocumentor';
+import bzdbDocumentation, {
+  BZDBDocType,
+  BZDBDocumentor,
+} from '../../Utilities/BZDBDocumentor';
 import { documentState } from '../../atoms';
 import { BZDBType } from '../../data/bzdb-types';
 import { useDocumentSearch } from '../../hooks/useFlexSearch';
@@ -45,7 +54,7 @@ function isTruthy(value: boolean | number | string | null): boolean {
 }
 
 const SettingEditor = ({ onChange, variable }: SettingEditorProps) => {
-  const [value, setValue] = useState<any>(variable.default);
+  const [value, setValue] = useState<any>(variable.defValue);
 
   const renderEditor = (type: string) => {
     if (type === 'integer' || type === 'float' || type === 'string') {
@@ -118,28 +127,35 @@ function bzdbReducer(state: BZDBStore, action: ReducerAction) {
   });
 }
 
-const bzdbSearchIndex = new Document({
+const bzdbSearchIndex = new Document<BZDBDocType>({
   id: 'name',
+  store: true,
   index: [
     {
+      // @ts-expect-error - flexsearch types are wrong
       field: 'name',
       tokenize: 'reverse',
     },
-    'description',
+    {
+      // @ts-expect-error - flexsearch types are wrong
+      field: 'description',
+      tokenize: 'forward',
+    },
   ],
-  store: ['name', 'description', 'default', 'category'],
 });
 
 bzdbDocumentation.forEach((variable) => {
   bzdbSearchIndex.add({ ...variable });
 });
 
+type MapByCategoryFunc = BZDBDocumentor['mapByCategory'];
+
 const BZDBSettingsModal = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
   const [bzdbStore, bzdbStoreDispatch] = useReducer(bzdbReducer, {});
   const dialog = useDialogState();
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const results = useDocumentSearch(searchQuery, bzdbSearchIndex);
+  const results = useDocumentSearch<BZDBDocType>(searchQuery, bzdbSearchIndex);
 
   const syncStateToWorld = useCallback(() => {
     bzdbStoreDispatch({
@@ -151,7 +167,7 @@ const BZDBSettingsModal = () => {
   const handleOnChange = (variable: string, value: string) => {
     const definition = bzdbDocumentation.store[variable as BZDBType];
 
-    if (value === definition?.default) {
+    if (value === definition?.defValue) {
       bzdbStoreDispatch({ type: 'delete', variable });
     } else {
       bzdbStoreDispatch({ type: 'edit', variable, value });
@@ -170,7 +186,36 @@ const BZDBSettingsModal = () => {
     dialog.hide();
   };
 
-  console.log({ results });
+  const [categories, mapEachInCategory] = useMemo<
+    [string[], MapByCategoryFunc]
+  >(() => {
+    if (results.length === 0) {
+      return [bzdbDocumentation.categories, bzdbDocumentation.mapByCategory];
+    }
+
+    const filteredView: Record<string, Record<string, BZDBDocType>> = {};
+
+    results.forEach((resultSummary) => {
+      resultSummary.result.forEach((result) => {
+        if (!result.doc) {
+          return;
+        }
+
+        if (!filteredView.hasOwnProperty(result.doc.category)) {
+          filteredView[result.doc.category] = {};
+        }
+
+        filteredView[result.doc.category][result.doc.name] = result.doc;
+      });
+    });
+
+    return [
+      Object.keys(filteredView).sort(),
+      (category, cb) => {
+        return Object.values(filteredView[category]).map(cb);
+      },
+    ];
+  }, [results]);
 
   return (
     <ListenerModal
@@ -190,15 +235,17 @@ const BZDBSettingsModal = () => {
     >
       <div>
         <TextField
-          label="Search"
+          label="BZDB Settings Search"
+          hideLabel
           onChange={setSearchQuery}
+          placeholder="Search settings (e.g., _gravity, Agility, etc.)"
           value={searchQuery}
         />
       </div>
       <TabList aria-label="BZDB Settings" className={styles.tabList} vertical>
-        {bzdbDocumentation.categories.map((category) => (
+        {categories.map((category) => (
           <Tab title={category} key={category}>
-            {bzdbDocumentation.mapByCategory(category, (variable) => (
+            {mapEachInCategory(category, (variable) => (
               <SettingEditor
                 key={variable.name}
                 onChange={handleOnChange}

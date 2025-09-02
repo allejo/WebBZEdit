@@ -4,12 +4,14 @@ import data from '../data/bzdb-documention.json';
 
 type DocsType = typeof data;
 
-export interface BZDBDocType {
-  name: string;
+export type BZDBDocType = {
+  category: string;
+  defValue: string;
   description: string;
-  default: string;
-  type: typeof data['variables'][number]['type'];
-}
+  name: string;
+  since: string;
+  type: DocsType['variables'][number]['type'];
+};
 
 export class BZDBDocumentor {
   private readonly grpByCat: Record<string, Record<string, BZDBDocType>> = {};
@@ -20,9 +22,11 @@ export class BZDBDocumentor {
     for (const variable of data.variables) {
       this._fields.push(variable.name as BZDBType);
       this.storage[variable.name] = {
-        name: variable.name,
+        category: variable.category,
+        defValue: variable.default,
         description: variable.desc ?? '',
-        default: variable.default,
+        name: variable.name,
+        since: variable.since ?? 'Unknown',
         type: variable.type,
       };
 
@@ -34,26 +38,26 @@ export class BZDBDocumentor {
     }
   }
 
-  forEach(
+  forEach = (
     callback: (doc: BZDBDocType, index: number, array: BZDBDocType[]) => void,
-  ): void {
+  ): void => {
     const array = this._fields.map((f) => this.storage[f]);
 
     this._fields.forEach((field, index) => {
       callback(this.storage[field], index, array);
     });
-  }
+  };
 
-  mapByCategory<T>(
+  mapByCategory = <T>(
     category: string,
     callback: (doc: BZDBDocType, index: number, array: BZDBDocType[]) => T,
-  ): T[] {
+  ): T[] => {
     if (!this.grpByCat.hasOwnProperty(category)) {
       return [];
     }
 
     return Object.values(this.grpByCat[category]).map(callback);
-  }
+  };
 
   get categories(): string[] {
     return Object.keys(this.grpByCat).sort();

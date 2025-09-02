@@ -5,6 +5,9 @@
 }
 
 .tabList {
+  flex-grow: 1;
+  overflow: hidden;
+
   [data-role='tab-list'] {
     width: 300px;
   }
