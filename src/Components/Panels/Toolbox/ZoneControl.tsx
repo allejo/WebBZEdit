@@ -116,7 +116,7 @@ const ZoneControl = ({ data, onChange }: Props) => {
             <div className="flex-grow-1 mr2">
               <Button
                 type="success"
-                className="w100"
+                className="w-100"
                 onClick={handleOpenEditor('flag')}
               >
                 Flags

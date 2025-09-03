@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import 'bootstrap/dist/css/bootstrap-reboot.min.css';
+import 'bootstrap/dist/css/bootstrap-utilities.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { RecoilRoot } from 'recoil';
@@ -7,7 +8,6 @@ import { RecoilRoot } from 'recoil';
 import App from './App';
 
 import './css/global.css';
-import './css/sizes.css';
 import './css/typography.css';
 import a11yPatterns from './sass/a11yPatterns.module.scss';
 import './sass/spacing.scss';
