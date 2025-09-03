@@ -269,6 +269,12 @@ const BZDBSettingsModal = () => {
     ];
   }, [results]);
 
+  const handleOnDeleteCustom = useCallback((fieldName: string) => {
+    return () => {
+      bzdbStoreDispatch({ type: 'delete', variable: fieldName });
+    };
+  }, []);
+
   return (
     <ListenerModal
       event={BZDBSettingsModalOpenEventName}
@@ -309,14 +315,26 @@ const BZDBSettingsModal = () => {
           )),
           <Tab title="Custom" key="custom">
             {customSettings.map(([variable, value]) => (
-              <SettingEditor
-                key={variable}
-                onChange={handleOnChange}
-                variable={{
-                  name: variable,
-                  defValue: value,
-                }}
-              />
+              <div className="row">
+                <div className="col">
+                  <SettingEditor
+                    key={variable}
+                    onChange={handleOnChange}
+                    variable={{
+                      name: variable,
+                      defValue: value,
+                    }}
+                  />
+                </div>
+                <div className="col-auto">
+                  <Button
+                    type="danger"
+                    onClick={handleOnDeleteCustom(variable)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </div>
             ))}
             <div className="row">
               <div className="col">
