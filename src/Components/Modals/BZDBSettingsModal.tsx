@@ -30,6 +30,16 @@ import { Tab, TabList } from '../TabList';
 import generalStyles from '../../sass/general.module.scss';
 import styles from './BZDBSettingsModal.module.scss';
 
+const ltsLink = (
+  <a
+    href="https://github.com/allejo/lastTankStanding"
+    target="_blank"
+    rel="noreferrer"
+  >
+    Last Tank Standing
+  </a>
+);
+
 // https://github.com/BZFlag-Dev/bzflag/blob/a249151/src/common/StateDatabase.cxx#L252-L256
 const FalsyValues = ['0', 'off', 'false', 'no', 'disable'];
 
@@ -169,6 +179,12 @@ bzdbDocumentation.forEach((variable) => {
 });
 
 type MapByCategoryFunc = BZDBDocumentor['mapByCategory'];
+
+function EmptyArea(props: { message: string }) {
+  return (
+    <div className="border my-3 p-5 fc-muted text-center">{props.message}</div>
+  );
+}
 
 const BZDBSettingsModal = () => {
   const [world, setBZWDocument] = useRecoilState(documentState);
@@ -314,47 +330,64 @@ const BZDBSettingsModal = () => {
             </Tab>
           )),
           <Tab title="Custom" key="custom">
-            {customSettings.map(([variable, value]) => (
-              <div className="row">
+            <div className="d-flex flex-column h-100">
+              <p className="fs-4">Custom BZDB Settings</p>
+              <p>
+                In addition to the valid, or built-in, BZDB Settings, arbitrary
+                settings are allowed as well, and are largely used by
+                third-party plug-ins to configure different behavior. For
+                example, {ltsLink} uses <code>_ltsKickTime</code> to configure
+                the number of seconds between each elimination round.
+              </p>
+              {customSettings.length === 0 && (
+                <EmptyArea message="There are no custom BZDB settings in this map" />
+              )}
+              <div className="flex-grow-1 overflow-auto">
+                {customSettings.map(([variable, value]) => (
+                  <div className="row">
+                    <div className="col">
+                      <SettingEditor
+                        key={variable}
+                        onChange={handleOnChange}
+                        variable={{
+                          name: variable,
+                          defValue: value,
+                        }}
+                      />
+                    </div>
+                    <div className="col-auto">
+                      <Button
+                        type="danger"
+                        onClick={handleOnDeleteCustom(variable)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="row border-1 border-top py-3">
                 <div className="col">
-                  <SettingEditor
-                    key={variable}
-                    onChange={handleOnChange}
-                    variable={{
-                      name: variable,
-                      defValue: value,
-                    }}
+                  <TextField
+                    label="New Custom BZDB Setting Name"
+                    placeholder="e.g., _ltsKickTime"
+                    onChange={setNewSettingName}
+                    value={newSettingName}
                   />
                 </div>
-                <div className="col-auto">
-                  <Button
-                    type="danger"
-                    onClick={handleOnDeleteCustom(variable)}
-                  >
-                    Delete
+                <div className="col">
+                  <TextField
+                    label="New Custom BZDB Setting Value"
+                    placeholder="e.g., 30"
+                    onChange={setNewSettingValue}
+                    value={newSettingValue}
+                  />
+                </div>
+                <div className="col-auto align-self-end">
+                  <Button type="success" onClick={handleOnAddCustom}>
+                    Add Custom Setting
                   </Button>
                 </div>
-              </div>
-            ))}
-            <div className="row">
-              <div className="col">
-                <TextField
-                  label="New Custom BZDB Setting Name"
-                  onChange={setNewSettingName}
-                  value={newSettingName}
-                />
-              </div>
-              <div className="col">
-                <TextField
-                  label="New Custom BZDB Setting Value"
-                  onChange={setNewSettingValue}
-                  value={newSettingValue}
-                />
-              </div>
-              <div className="col-auto align-self-end">
-                <Button type="success" onClick={handleOnAddCustom}>
-                  Add Custom Setting
-                </Button>
               </div>
             </div>
           </Tab>,
