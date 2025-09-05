@@ -18,10 +18,13 @@ import { classList } from '../Utilities/cssClasses';
 import styles from './Modal.module.scss';
 
 interface Props extends Partial<DialogOptions> {
+  badgeText?: string;
   dialog: DialogStateReturn;
   className?: string;
   footer?: ReactNode;
   fullWidth?: boolean;
+  headerLink?: string;
+  headerLinkText?: string;
   onShow?: () => void;
   onDismiss?: () => boolean;
   title: string;
@@ -30,10 +33,13 @@ interface Props extends Partial<DialogOptions> {
 
 const Modal = ({
   title,
+  badgeText,
   className,
   dialog,
   footer,
   fullWidth = false,
+  headerLink,
+  headerLinkText,
   onShow,
   onDismiss,
   children,
@@ -67,14 +73,33 @@ const Modal = ({
         className={classList([styles.dialog, [styles.fullWidth, fullWidth]])}
       >
         <header className={styles.header}>
-          <h1>{title}</h1>
-          <button
-            aria-label="Close dialog"
-            className={styles.closeDialog}
-            onClick={handleOnClickDismiss}
-          >
-            <FontAwesomeIcon fixedWidth={true} icon={faTimes} />
-          </button>
+          <div className={styles.lhs}>
+            <h1>{title}</h1>
+            {badgeText && (
+              <div className="d-flex align-self-start">
+                <span className={styles.badge}>{badgeText}</span>
+              </div>
+            )}
+          </div>
+          <div className={styles.rhs}>
+            {headerLink && headerLinkText && (
+              <a
+                className={styles.headerLink}
+                href={headerLink}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {headerLinkText}
+              </a>
+            )}
+            <button
+              aria-label="Close dialog"
+              className={styles.closeDialog}
+              onClick={handleOnClickDismiss}
+            >
+              <FontAwesomeIcon fixedWidth={true} icon={faTimes} />
+            </button>
+          </div>
         </header>
 
         <div className={classList([styles.body, className])}>{children}</div>

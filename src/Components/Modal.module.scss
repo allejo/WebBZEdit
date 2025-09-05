@@ -6,6 +6,18 @@
   z-index: 999;
 }
 
+.badge {
+  background-color: #ffcb00;
+  border-radius: var(--spacing-extra-small);
+  color: var(--color-black);
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 1;
+  padding: 0.15rem 0.5rem;
+  text-transform: uppercase;
+}
+
 .dialog {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   background-color: var(--modal-background-color);
@@ -46,11 +58,25 @@
   padding-bottom: 1rem;
 
   h1 {
-    flex: 1;
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 0;
   }
+}
+
+.lhs,
+.rhs {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-small);
+}
+
+.lhs {
+}
+
+.rhs {
+  align-items: flex-end;
+  margin-left: auto;
 }
 
 .body {

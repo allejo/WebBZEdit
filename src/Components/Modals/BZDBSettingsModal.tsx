@@ -293,6 +293,7 @@ const BZDBSettingsModal = () => {
 
   return (
     <ListenerModal
+      badgeText="beta"
       event={BZDBSettingsModalOpenEventName}
       className={styles.modalBody}
       dialog={dialog}
@@ -302,6 +303,8 @@ const BZDBSettingsModal = () => {
         </Button>
       }
       fullWidth
+      headerLink="https://forums.bzflag.org/viewtopic.php?t=20647"
+      headerLinkText="Give feedback"
       title="BZDB Settings"
       onOpen={syncStateToLocal}
       hideOnEsc={false}
