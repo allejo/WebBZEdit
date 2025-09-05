@@ -110,7 +110,7 @@ const FlagListEditor = ({ allowCount, flags, onChange }: Props) => {
         <div className={classList([styles.row, styles.adder])}>
           <div className={styles.flagCol}>
             <SelectField
-              className="w100"
+              className="w-100"
               options={flagOptions}
               disabledItems={selectedFlags}
               label="New Flag"

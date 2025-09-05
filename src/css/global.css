@@ -67,3 +67,12 @@
 
   --z-index-toggletip: 10;
 }
+
+a {
+  color: #ffe405;
+}
+
+a:focus,
+a:hover {
+  color: #d1b900;
+}

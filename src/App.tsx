@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 import HixDocumentLoader from './Components/HixDocumentLoader';
 import AboutModal from './Components/Modals/AboutModal';
+import BZDBSettingsModal from './Components/Modals/BZDBSettingsModal';
 import FlagSettingsModal from './Components/Modals/FlagSettingsModal';
 import GameplaySettingsModal from './Components/Modals/GameplaySettingsModal';
 import TeleporterLinkEditorModal from './Components/Modals/TeleporterLinkEditorModal';
@@ -45,6 +46,7 @@ const App: React.FC = () => {
         {/* All of the app's modals (merely for organizational purposes) */}
         <>
           <AboutModal />
+          <BZDBSettingsModal />
           <FlagSettingsModal />
           <GameplaySettingsModal />
           <TeleporterLinkEditorModal />

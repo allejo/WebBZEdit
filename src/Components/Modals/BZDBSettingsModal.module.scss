@@ -1,0 +1,14 @@
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-normal);
+}
+
+.tabList {
+  flex-grow: 1;
+  overflow: hidden;
+
+  [data-role='tab-list'] {
+    width: 300px;
+  }
+}
