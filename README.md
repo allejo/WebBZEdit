@@ -35,23 +35,15 @@ No. I've discussed this with the rest of the BZFlag team, and it didn't quite li
 
 ### Is this project ready for daily use?
 
-No. However, an alpha testing period is planned soon.
-
-### If this project isn't ready for daily use, why make it public?
-
-Because I want to build this in the open and want to see if it grabs the attention of anyone that can help with this project.
+Sorta? There is no support for editing any advanced objects like spheres, groups, and meshes. Support for this will come but I don't know when.
 
 ### I found a bug, how should I report it?
 
-Please don't report bugs at the moment. This project is under heavy development and is not intended for daily use; there are a lot of bugs and incomplete features. I know.
-
-Once I can consider this project to be ready for daily use, then I'll highly encourage reporting bugs!
+Yes! Please open an issue on [GitHub](https://github.com/allejo/WebBZEdit/issues) or in [this BZFlag forums thread](https://forums.bzflag.org/viewtopic.php?t=20647).
 
 ### I have an idea that I think you should totally implement, how can I tell you about it?
 
-Please don't. The roadmap for this project exists in my head right now. There's _a lot_ that I need to plan out and write. I don't want to waste time hearing your idea and simply responding, "I know."
-
-Once this project is stable, I'll gladly take feature requests.
+Same as above, open an issue or post in the forums. I make no guarantees that I'll implement your idea though. Sorry, I just don't have the time.
 
 ### How can I help?
 
