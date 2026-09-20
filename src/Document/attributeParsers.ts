@@ -1,3 +1,4 @@
+import { Tuple, Vector2F, Vector3F, Vector4F } from '../Utilities/types';
 import {
   TeleporterReference,
   TeleporterSide,
@@ -31,6 +32,13 @@ export interface Repeatable<T> {
   type: 'repeatable';
   callback: RepeatableParserCallback<T>;
 }
+
+export type ValidParserCallbacks =
+  | ReturnType<typeof bzwRepeatable>
+  | ReturnType<typeof bzwHashable>
+  | ((line: string, world: IWorld) => unknown);
+
+export type AttributeParsers<T> = Record<keyof T, ValidParserCallbacks>;
 
 export function bzwRepeatable<T>(cb: Repeatable<T>['callback']): Repeatable<T> {
   return {
@@ -68,25 +76,26 @@ export function bzwFloatVector(line: string): number[] {
   return bzwStringVector(line).map((value) => Number.parseFloat(value));
 }
 
-export function bzwVector3F(line: string): [number, number, number] {
+function bzwVectorNF<N extends number>(line: string, n: N): Tuple<N> {
   const tokens = line.split(/[ ]+/);
 
-  return [
-    Number.parseFloat(tokens[0]),
-    Number.parseFloat(tokens[1]),
-    Number.parseFloat(tokens[2]),
-  ];
+  if (tokens.length !== n) {
+    throw new Error(`Expected ${n} values, but got ${tokens.length}`);
+  }
+
+  return tokens.map((value) => Number.parseFloat(value)) as Tuple<N>;
 }
 
-export function bzwVector4F(line: string): [number, number, number, number] {
-  const tokens = line.split(/[ ]+/);
+export function bzwVector2F(line: string): Vector2F {
+  return bzwVectorNF(line, 2);
+}
 
-  return [
-    Number.parseFloat(tokens[0]),
-    Number.parseFloat(tokens[1]),
-    Number.parseFloat(tokens[2]),
-    Number.parseFloat(tokens[3]),
-  ];
+export function bzwVector3F(line: string): Vector3F {
+  return bzwVectorNF(line, 3);
+}
+
+export function bzwVector4F(line: string): Vector4F {
+  return bzwVectorNF(line, 4);
 }
 
 export function bzwTeleRef(line: string, world: IWorld): TeleporterReference {

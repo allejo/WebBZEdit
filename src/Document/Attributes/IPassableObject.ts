@@ -14,3 +14,16 @@ export function implementsIPassableObject(
     true
   );
 }
+export function newIPassableObject(): IPassableObject {
+  return {
+    drivethrough: false,
+    shootthrough: false,
+    get passable(): boolean {
+      return this.drivethrough && this.shootthrough;
+    },
+    set passable(value: boolean) {
+      this.drivethrough = value;
+      this.shootthrough = value;
+    },
+  };
+}

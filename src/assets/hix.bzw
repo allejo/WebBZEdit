@@ -856,3 +856,20 @@ position 0.0 385.0 0.0
 rotation 0.0
 size     7.5 7.5 26.0
 end
+
+cone
+ name example_cone
+ divisions 16
+ flatshading
+ position 0 0 0
+ rotation 0
+ size 10 10 10
+#  shift 0 0 0
+#  shear 0 0 0
+#  scale 1 1 1
+#  spin angle nx ny nz
+#  phydrv physics_driver_name
+#  smoothbounce
+#  matref material
+#  bottom matref material2
+end

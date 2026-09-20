@@ -4,9 +4,11 @@ import { Stack } from '../Utilities/Stack';
 import { BaseProperties, newIBase } from './Obstacles/Base';
 import { IBaseObject } from './Obstacles/BaseObject';
 import { BoxProperties, newIBox } from './Obstacles/Box';
+import { ConeProperties, newICone } from './Obstacles/Cone';
 import { MaterialProperties, newIMaterial } from './Obstacles/Material';
 import { MeshProperties, newIMesh } from './Obstacles/Mesh';
 import { MeshFaceProperties, newIMeshFace } from './Obstacles/MeshFace';
+import { MeshPyramidProperties, newMeshPyramid } from './Obstacles/MeshPyramid';
 import { IOptions, newIOptions, OptionsProperties } from './Obstacles/Option';
 import { newIPyramid, PyramidProperties } from './Obstacles/Pyramid';
 import {
@@ -65,6 +67,12 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
     onObstacleBegin: noop,
     onObstacleComplete: noop,
   },
+  cone: {
+    factory: newICone,
+    parsers: ConeProperties,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
+  },
   face: {
     factory: newIMeshFace,
     parsers: MeshFaceProperties,
@@ -95,6 +103,12 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   mesh: {
     factory: newIMesh,
     parsers: MeshProperties,
+    onObstacleBegin: noop,
+    onObstacleComplete: noop,
+  },
+  meshpyr: {
+    factory: newMeshPyramid,
+    parsers: MeshPyramidProperties,
     onObstacleBegin: noop,
     onObstacleComplete: noop,
   },
@@ -154,10 +168,54 @@ const ObjectBuilders: Record<string, ObjectBuilder> = {
   },
 };
 
+function getAttributes(object: IBaseObject): string[] {
+  return Object.keys(ObjectBuilders[object._objectType].parsers);
+}
+
+/**
+ * Match line content, excluding any trailing comment.
+ *                                                                                                                                                                                                                                                                              Context
+ * ^                                start of string                                                                                                                                                                                                                             15,131 tokens
+ * (                                capture group 1: the non-comment content                                                                                                                                                                                                    6% used
+ *   (?:                            one of:                                                                                                                                                                                                                                     $0.00 spent
+ *     [^'"#]                        an unquoted character that is not '#'
+ *   |                              or                                                                                                                                                                                                                                          LSP
+ *     '(?:[^'\\]|\\.)*'             a single-quoted string, including escaped quotes                                                                                                                                                                                           LSPs are disabled
+ *   |                              or
+ *     "(?:[^"\\]|\\.)*"             a double-quoted string, including escaped quotes
+ *   )*?                            repeat non-greedily, stop at first unquoted '#'
+ * )
+ * (?:\s*#.*)?                      optional: whitespace + '#' comment to end
+ * $                                end of string
+ *
+ * group[1] holds everything before the first '#' that is outside quotes.
+ */
+const EOL_COMMENT_RE = /^((?:[^'"#]|'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")*?)(?:\s*#.*)?$/;
+
+function splitOnAttribute(line: string, object: IBaseObject): [string, string] {
+  const attributes = getAttributes(object);
+
+  for (const attribute of attributes) {
+    if (line.toLowerCase().startsWith(attribute.toLowerCase() + ' ')) {
+      const restOfLine = line.substring(attribute.length).trim();
+
+      return [attribute, restOfLine];
+    }
+  }
+
+  const spacePos = line.search(/' '|$/);
+  const restOfLine = line.substring(spacePos + 1).trim();
+
+  // @TODO I need to throw a warning here about an unknown attribute, but I don't have a logger yet.
+
+  return [line.substring(0, spacePos), restOfLine];
+}
+
 function parseLine(line: string, object: IBaseObject, world: IWorld): void {
-  const spacePos = line.search(/[ ]|$/);
-  const restOfLine = line.substr(spacePos + 1).trim();
-  let attribute = line.substring(0, spacePos);
+  const match = line.match(EOL_COMMENT_RE);
+  const split = splitOnAttribute(match?.[1] ?? line, object);
+  let attribute = split[0];
+  const restOfLine = split[1];
 
   if (!object._caseSensitive) {
     attribute = attribute.toLowerCase();

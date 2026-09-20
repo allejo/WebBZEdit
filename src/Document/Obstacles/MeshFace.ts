@@ -1,7 +1,10 @@
 import { IMaterialFriendly } from '../Attributes/IMaterialFriendly';
-import { IPassableObject } from '../Attributes/IPassableObject';
+import {
+  IPassableObject,
+  newIPassableObject,
+} from '../Attributes/IPassableObject';
 import { bzwBool, bzwIntVector, bzwString } from '../attributeParsers';
-import { IBaseObject, newIBaseObject, newIPassableObject } from './BaseObject';
+import { IBaseObject, newIBaseObject } from './BaseObject';
 
 export const MeshFaceProperties = {
   vertices: bzwIntVector,

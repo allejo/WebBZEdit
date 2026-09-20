@@ -1,3 +1,9 @@
+import { bzwString } from '../attributeParsers';
+
+export const PhysicsDriverFriendlyProperties = {
+  phydrv: bzwString,
+};
+
 export interface IPhysicsDriverFriendly {
   phydrv?: string;
 }

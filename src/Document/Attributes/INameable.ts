@@ -1,3 +1,9 @@
+import { bzwString } from '../attributeParsers';
+
+export const NameableProperties = {
+  name: bzwString,
+};
+
 export interface INameable {
   name?: string;
 }

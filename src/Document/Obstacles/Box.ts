@@ -1,11 +1,14 @@
 import { IMaterialFriendly } from '../Attributes/IMaterialFriendly';
 import { INameable } from '../Attributes/INameable';
-import { IPassableObject } from '../Attributes/IPassableObject';
+import {
+  IPassableObject,
+  newIPassableObject,
+} from '../Attributes/IPassableObject';
 import { IPhysicsDriverFriendly } from '../Attributes/IPhysicsDriverFriendly';
 import { IPositionable } from '../Attributes/IPositionable';
 import { ISizeable } from '../Attributes/ISizeable';
 import { bzwBool, bzwFloat, bzwString, bzwVector3F } from '../attributeParsers';
-import { IBaseObject, newIBaseObject, newIPassableObject } from './BaseObject';
+import { IBaseObject, newIBaseObject } from './BaseObject';
 
 export const BoxProperties = {
   name: bzwString,

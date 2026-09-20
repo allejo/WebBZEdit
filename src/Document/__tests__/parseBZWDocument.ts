@@ -1,5 +1,6 @@
 import { IBase } from '../Obstacles/Base';
 import { IBox } from '../Obstacles/Box';
+import { ICone } from '../Obstacles/Cone';
 import { IMaterial } from '../Obstacles/Material';
 import { IMesh } from '../Obstacles/Mesh';
 import {
@@ -133,6 +134,44 @@ describe('BZW Document Parser', () => {
     expect(pyramid.position).toEqual([3, 4, 5]);
     expect(pyramid.size).toEqual([10, 5, 7]);
     expect(pyramid.flipz).toEqual(true);
+  });
+
+  it('should handle a cone', () => {
+    const bzwBody = `\
+    cone
+     name example_cone
+     divisions 16
+     flatshading
+     position 0 0 0
+     rotation 0
+     size 10 10 10
+     shift 0 0 0
+     shear 0 0 0
+     scale 1 1 1
+     spin 90 2 2 2
+     phydrv physics_driver_name
+     smoothbounce
+     matref material
+     bottom matref material2
+    end
+    `;
+    const world = parseBZWDocument(bzwBody);
+    const cone: ICone = Object.values(world.children).pop() as ICone;
+
+    expect(cone.name).toEqual('example_cone');
+    expect(cone.divisions).toEqual(16);
+    expect(cone.flatshading).toEqual(true);
+    expect(cone.position).toEqual([0, 0, 0]);
+    expect(cone.rotation).toEqual(0);
+    expect(cone.size).toEqual([10, 10, 10]);
+    expect(cone.shift).toEqual([[0, 0, 0]]);
+    expect(cone.shear).toEqual([[0, 0, 0]]);
+    expect(cone.scale).toEqual([[1, 1, 1]]);
+    expect(cone.spin).toEqual([[90, 2, 2, 2]]);
+    expect(cone.phydrv).toEqual('physics_driver_name');
+    expect(cone.smoothbounce).toEqual(true);
+    expect(cone.matref).toEqual('material');
+    expect(cone['bottom matref']).toEqual('material2');
   });
 
   it('should handle a base', () => {

@@ -1,3 +1,9 @@
+import { bzwString } from '../attributeParsers';
+
+export const MaterialFriendlyProperties = {
+  matref: bzwString,
+};
+
 export interface IMaterialFriendly {
   matref?: string;
 }
