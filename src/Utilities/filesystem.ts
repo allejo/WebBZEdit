@@ -11,6 +11,10 @@ export function defaultFilePickerOptions(): FilePickerOptions {
   };
 }
 
+export type WritableFileSystemFileHandle = FileSystemFileHandle & {
+  createWritable(): Promise<FileSystemWritableFileStream>;
+};
+
 export function supportsFilesystemAPI(): boolean {
   return typeof window.showOpenFilePicker !== 'undefined';
 }

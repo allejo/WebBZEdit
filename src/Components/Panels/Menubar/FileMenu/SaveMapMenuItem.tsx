@@ -8,6 +8,7 @@ import { exportBZWDocument } from '../../../../Document/exportBZWDocument';
 import {
   defaultFilePickerOptions,
   supportsFilesystemAPI,
+  WritableFileSystemFileHandle,
 } from '../../../../Utilities/filesystem';
 import {
   documentState,
@@ -48,11 +49,11 @@ const SaveMapMenuItem = ({ ...menu }: Props) => {
     if (supportsFilesystemAPI()) {
       try {
         const fileHandle = await getFileHandle();
-        const stream = await fileHandle.createWritable();
+        const stream = await (fileHandle as WritableFileSystemFileHandle).createWritable();
 
         await stream.write(bzwRaw);
         await stream.close();
-      } catch (e) {
+      } catch (e: any) {
         // If the user aborted the selection, disregard
         if (e.code === DOMException.ABORT_ERR) {
         }

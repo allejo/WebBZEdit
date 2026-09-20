@@ -162,12 +162,10 @@ const bzdbSearchIndex = new Document<BZDBDocType>({
   store: true,
   index: [
     {
-      // @ts-expect-error - flexsearch types are wrong
       field: 'name',
       tokenize: 'reverse',
     },
     {
-      // @ts-expect-error - flexsearch types are wrong
       field: 'description',
       tokenize: 'forward',
     },
