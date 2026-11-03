@@ -3,6 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Base from '../../../3DModels/Base';
 import Box from '../../../3DModels/Box';
+import Cone from '../../../3DModels/Cone';
 import Ground from '../../../3DModels/Ground';
 import Pyramid from '../../../3DModels/Pyramid';
 import Tank from '../../../3DModels/Tank';
@@ -11,6 +12,7 @@ import WorldBorder from '../../../3DModels/WorldBorder';
 import Zone from '../../../3DModels/Zone';
 import { IBase } from '../../../Document/Obstacles/Base';
 import { IBox } from '../../../Document/Obstacles/Box';
+import { ICone } from '../../../Document/Obstacles/Cone';
 import { IPyramid } from '../../../Document/Obstacles/Pyramid';
 import {
   ITankModel,
@@ -48,6 +50,8 @@ const BZWDocumentRenderer = () => {
           return <Box {...props} obstacle={obstacle as IBox} />;
         } else if (obstacle._objectType === 'pyramid') {
           return <Pyramid {...props} obstacle={obstacle as IPyramid} />;
+        } else if (obstacle._objectType === 'cone') {
+          return <Cone {...props} obstacle={obstacle as ICone} />;
         } else if (obstacle._objectType === 'base') {
           return <Base {...props} obstacle={obstacle as IBase} />;
         } else if (obstacle._objectType === 'teleporter') {

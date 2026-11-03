@@ -1,18 +1,10 @@
 import { Vector2F } from '../../Utilities/types';
-import {
-  IMaterialFriendly,
-  MaterialFriendlyProperties,
-} from '../Attributes/IMaterialFriendly';
-import { INameable, NameableProperties } from '../Attributes/INameable';
-import {
-  IPhysicsDriverFriendly,
-  PhysicsDriverFriendlyProperties,
-} from '../Attributes/IPhysicsDriverFriendly';
-import {
-  IPositionable,
-  PositionableProperties,
-} from '../Attributes/IPositionable';
-import { ISizeable, SizeableProperties } from '../Attributes/ISizeable';
+import { MaterialFriendlyProperties } from '../Attributes/IMaterialFriendly';
+import { NameableProperties } from '../Attributes/INameable';
+import { newIPassableObject } from '../Attributes/IPassableObject';
+import { PhysicsDriverFriendlyProperties } from '../Attributes/IPhysicsDriverFriendly';
+import { PositionableProperties } from '../Attributes/IPositionable';
+import { SizeableProperties } from '../Attributes/ISizeable';
 import {
   ITransformable,
   TransformableProperties,
@@ -25,7 +17,8 @@ import {
   bzwString,
   bzwVector2F,
 } from '../attributeParsers';
-import { IBaseObject, newIBaseObject } from './BaseObject';
+import { newIBaseObject } from './BaseObject';
+import { IPyramid } from './Pyramid';
 
 export enum ConeSideNames {
   Edge = 'edge',
@@ -52,14 +45,7 @@ export const ConeProperties: AttributeParsers<ICone> = {
   [`${ConeSideNames.EndSide} matref`]: bzwString,
 };
 
-export interface ICone
-  extends IBaseObject,
-    IMaterialFriendly,
-    INameable,
-    IPositionable,
-    IPhysicsDriverFriendly,
-    ISizeable,
-    ITransformable {
+export interface ICone extends IPyramid, ITransformable {
   divisions: number;
   angle?: number;
   texsize?: Vector2F;
@@ -70,10 +56,12 @@ export interface ICone
 export function newICone(): ICone {
   return {
     ...newIBaseObject('cone'),
+    ...newIPassableObject(),
     position: [0, 0, 0],
     size: [10, 10, 10],
     divisions: 16,
     flatshading: false,
+    flipz: false,
     angle: 360,
     texsize: [-8, -8],
     'edge matref': 'boxwall',
