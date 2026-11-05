@@ -58,6 +58,8 @@ const AlterableControl = ({ data, onChange }: Props) => {
     });
   };
 
+  const isCone = data._objectType === 'cone';
+
   return (
     <section>
       <Vector3FControl
@@ -88,7 +90,13 @@ const AlterableControl = ({ data, onChange }: Props) => {
         minValue={0}
         maxValue={360}
         cycleValues={true}
-        value={data.rotation ?? 0}
+        value={isCone ? 0 : data.rotation ?? 0}
+        disabled={isCone}
+        description={
+          isCone
+            ? "BZFlag doesn't seem respect rotation for cones when rendering; this may be a bug?"
+            : undefined
+        }
       />
     </section>
   );
