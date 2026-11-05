@@ -1,4 +1,5 @@
 import { IBaseObject } from './Obstacles/BaseObject';
+import { ConeDefaults } from './Obstacles/Cone';
 import { IWorld } from './Obstacles/World';
 import { PriorityWriter } from './Writing/PriorityWriter';
 import { writeArray, writeNumber } from './Writing/attributeWriters';
@@ -14,6 +15,12 @@ export interface StyleOptions {
   indentation: 'space' | 'tab';
   indentationWidth?: number;
 }
+
+const ObjectWriters: Record<string, any> = {
+  cone: {
+    defaults: ConeDefaults,
+  },
+};
 
 let styleOptions: StyleOptions = {
   indentation: 'tab',
@@ -42,6 +49,13 @@ function writeObstacle(
       IgnoredAttributes[obstacleType]?.indexOf(attribute) >= 0;
 
     if (isInternal || isIgnored) {
+      return;
+    }
+
+    const defaultAttributeValues = ObjectWriters[obstacleType]?.defaults ?? {};
+    const isDefaultValue = defaultAttributeValues[attribute] === value;
+
+    if (isDefaultValue) {
       return;
     }
 

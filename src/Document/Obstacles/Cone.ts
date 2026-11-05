@@ -1,10 +1,22 @@
 import { Vector2F } from '../../Utilities/types';
-import { MaterialFriendlyProperties } from '../Attributes/IMaterialFriendly';
-import { NameableProperties } from '../Attributes/INameable';
-import { newIPassableObject } from '../Attributes/IPassableObject';
-import { PhysicsDriverFriendlyProperties } from '../Attributes/IPhysicsDriverFriendly';
-import { PositionableProperties } from '../Attributes/IPositionable';
-import { SizeableProperties } from '../Attributes/ISizeable';
+import {
+  IMaterialFriendly,
+  MaterialFriendlyProperties,
+} from '../Attributes/IMaterialFriendly';
+import { INameable, NameableProperties } from '../Attributes/INameable';
+import {
+  IPassableObject,
+  newIPassableObject,
+} from '../Attributes/IPassableObject';
+import {
+  IPhysicsDriverFriendly,
+  PhysicsDriverFriendlyProperties,
+} from '../Attributes/IPhysicsDriverFriendly';
+import {
+  IPositionable,
+  PositionableProperties,
+} from '../Attributes/IPositionable';
+import { ISizeable, SizeableProperties } from '../Attributes/ISizeable';
 import {
   ITransformable,
   TransformableProperties,
@@ -17,8 +29,7 @@ import {
   bzwString,
   bzwVector2F,
 } from '../attributeParsers';
-import { newIBaseObject } from './BaseObject';
-import { IPyramid } from './Pyramid';
+import { IBaseObject, newIBaseObject } from './BaseObject';
 
 export enum ConeSideNames {
   Edge = 'edge',
@@ -26,6 +37,17 @@ export enum ConeSideNames {
   StartSide = 'startside',
   EndSide = 'endside',
 }
+
+export const ConeDefaults = {
+  divisions: 16,
+  flatshading: true,
+  angle: 360,
+  texsize: [-8, -8] as Vector2F,
+  'edge matref': 'boxwall',
+  'bottom matref': 'roof',
+  'startside matref': 'wall',
+  'endside matref': 'wall',
+} as const;
 
 export const ConeProperties: AttributeParsers<ICone> = {
   ...TransformableProperties,
@@ -45,7 +67,15 @@ export const ConeProperties: AttributeParsers<ICone> = {
   [`${ConeSideNames.EndSide} matref`]: bzwString,
 };
 
-export interface ICone extends IPyramid, ITransformable {
+export interface ICone
+  extends IBaseObject,
+    IMaterialFriendly,
+    INameable,
+    IPhysicsDriverFriendly,
+    IPassableObject,
+    IPositionable,
+    ISizeable,
+    ITransformable {
   divisions: number;
   angle?: number;
   texsize?: Vector2F;
@@ -57,16 +87,8 @@ export function newICone(): ICone {
   return {
     ...newIBaseObject('cone'),
     ...newIPassableObject(),
+    ...ConeDefaults,
     position: [0, 0, 0],
     size: [10, 10, 10],
-    divisions: 16,
-    flatshading: false,
-    flipz: false,
-    angle: 360,
-    texsize: [-8, -8],
-    'edge matref': 'boxwall',
-    'bottom matref': 'roof',
-    'startside matref': 'wall',
-    'endside matref': 'wall',
   };
 }

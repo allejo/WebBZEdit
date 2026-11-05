@@ -1,4 +1,5 @@
 import { newIBox } from '../Obstacles/Box';
+import { newICone } from '../Obstacles/Cone';
 import { newIMesh } from '../Obstacles/Mesh';
 import { newIMeshFace } from '../Obstacles/MeshFace';
 import { IOptions, newIOptions } from '../Obstacles/Option';
@@ -450,6 +451,40 @@ describe('BZW Document Writer', () => {
         -st 30
         -sw 5
         -tk
+      end
+    `);
+  });
+
+  it('should print out a cone object excluding defaults', () => {
+    const world: IWorld = {
+      ...newIWorld(),
+      children: {
+        cone: {
+          ...newICone(),
+          name: 'example_cone',
+          position: [10, 20, 30],
+          size: [5, 10, 15],
+          divisions: 8,
+          flipz: false,
+        },
+      },
+    };
+
+    const actual = writeBZWDocument(world, {
+      indentation: 'space',
+      indentationWidth: 2,
+    });
+
+    expect(actual).toEqual(bzw`
+      world
+        size 800
+      end
+
+      cone
+        name example_cone
+        position 10 20 30
+        size 5 10 15
+        divisions 8
       end
     `);
   });
