@@ -1,4 +1,27 @@
 .wrapper {
+  &:has(:disabled) {
+    .fieldContainer,
+    .input,
+    .selectField {
+      cursor: not-allowed;
+    }
+
+    .input {
+      -moz-appearance: textfield;
+    }
+
+    .input,
+    .selectField {
+      background-color: #26272b;
+      color: #6b6e76;
+    }
+
+    .input::-webkit-outer-spin-button,
+    .input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  }
+
   &[data-form-type='checkbox'] {
     display: flex;
     flex-wrap: wrap;
@@ -19,6 +42,11 @@
   }
 
   &[data-form-type='number'] {
+    .description,
+    .input {
+      max-width: 150px;
+    }
+
     .input {
       text-align: right;
     }
