@@ -22,6 +22,7 @@ export function buildConeGeometry(
   sweepAngle: number,
   divisions: number,
   texsize: Vector2F,
+  flatshading: boolean,
 ): BufferGeometry | null {
   const [sx, sy, sz] = size.map(Math.abs);
 
@@ -137,7 +138,10 @@ export function buildConeGeometry(
 
   geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
   geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2));
-  geometry.computeVertexNormals();
+
+  if (!flatshading) {
+    geometry.computeVertexNormals();
+  }
 
   return geometry;
 }

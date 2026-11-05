@@ -1,4 +1,4 @@
-import { Vector2F } from '../../Utilities/types';
+import { Vector2F, Vector3F } from '../../Utilities/types';
 import {
   IMaterialFriendly,
   MaterialFriendlyProperties,
@@ -39,10 +39,12 @@ export enum ConeSideNames {
 }
 
 export const ConeDefaults = {
+  size: [10, 10, 10] as Vector3F,
   divisions: 16,
-  flatshading: true,
+  flatshading: false,
   angle: 360,
   texsize: [-8, -8] as Vector2F,
+  smoothbounce: false,
   'edge matref': 'boxwall',
   'bottom matref': 'roof',
   'startside matref': 'wall',
@@ -89,6 +91,5 @@ export function newICone(): ICone {
     ...newIPassableObject(),
     ...ConeDefaults,
     position: [0, 0, 0],
-    size: [10, 10, 10],
   };
 }

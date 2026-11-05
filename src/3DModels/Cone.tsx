@@ -2,7 +2,7 @@ import { ThreeEvent, useLoader } from '@react-three/fiber';
 import React, { useEffect, useMemo } from 'react';
 import { RepeatWrapping, TextureLoader } from 'three';
 
-import { ICone } from '../Document/Obstacles/Cone';
+import { ConeDefaults, ICone } from '../Document/Obstacles/Cone';
 import { useHighlightableEdges } from '../hooks/useHighlightableEdges';
 import { buildConeGeometry } from './Abstract/ConeGeometryFactory';
 
@@ -28,9 +28,10 @@ const Cone = ({ obstacle, isSelected, onClick }: Props) => {
     position: [posX, posY, posZ],
     size,
     // rotation = 0,
-    angle = 360,
-    divisions,
-    texsize = [-8, -8],
+    angle = ConeDefaults.angle,
+    divisions = ConeDefaults.divisions,
+    texsize = ConeDefaults.texsize,
+    flatshading = ConeDefaults.flatshading,
   } = obstacle;
   const isHighlighted = highlightableEdges.isHovered || isSelected;
 
@@ -40,7 +41,7 @@ const Cone = ({ obstacle, isSelected, onClick }: Props) => {
   textures.forEach((t) => (t.wrapS = t.wrapT = RepeatWrapping));
 
   const geometry = useMemo(
-    () => buildConeGeometry(size, angle, divisions, texsize),
+    () => buildConeGeometry(size, angle, divisions, texsize, flatshading),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [...size, angle, divisions, ...texsize],
   );

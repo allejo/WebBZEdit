@@ -9,6 +9,7 @@ import {
 import { implementsISizeable } from '../../Document/Attributes/ISizeable';
 import { IBase } from '../../Document/Obstacles/Base';
 import { IBaseObject } from '../../Document/Obstacles/BaseObject';
+import { ICone } from '../../Document/Obstacles/Cone';
 import { IPyramid } from '../../Document/Obstacles/Pyramid';
 import { ITeleporter } from '../../Document/Obstacles/Teleporter';
 import { IZone } from '../../Document/Obstacles/Zone';
@@ -18,6 +19,7 @@ import AlterableControl, {
   canUseAlterableControlToolbox,
 } from './Toolbox/AlterableControl';
 import BaseControl from './Toolbox/BaseControl';
+import ConeControl from './Toolbox/ConeControl';
 import PassabilityControl from './Toolbox/PassabilityControl';
 import PyramidControl from './Toolbox/PyramidControl';
 import TeleporterControl from './Toolbox/TeleporterControl';
@@ -55,6 +57,23 @@ const ToolboxPanel = () => {
       if (implementsISizeable(obstacle) && implementsISizeable(data)) {
         obstacle.size = data.size;
       }
+    });
+
+    setBZWDocument(nextWorld);
+  };
+
+  const handleConeOnChange = (data: ICone) => {
+    if (!world || !selectedUUID) {
+      return;
+    }
+
+    const nextWorld = produce(world, (draftWorld) => {
+      const obstacle: ICone = draftWorld.children[selectedUUID] as any;
+
+      obstacle.divisions = data.divisions;
+      obstacle.flatshading = data.flatshading;
+      obstacle.angle = data.angle;
+      obstacle.smoothbounce = data.smoothbounce;
     });
 
     setBZWDocument(nextWorld);
@@ -153,6 +172,9 @@ const ToolboxPanel = () => {
       )}
       {selection && selection._objectType === 'zone' && (
         <ZoneControl data={selection as IZone} onChange={handleZoneOnChange} />
+      )}
+      {selection && selection._objectType === 'cone' && (
+        <ConeControl data={selection as ICone} onChange={handleConeOnChange} />
       )}
     </div>
   );
