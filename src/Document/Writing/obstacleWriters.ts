@@ -11,7 +11,10 @@ import { TeleporterReference } from '../Obstacles/TeleporterLink';
 
 export const AttributePriority: Record<string, Record<string, number>> = {
   _global: {
-    name: -1,
+    name: -5,
+    position: -4,
+    size: -3,
+    rotation: -1,
     drivethrough: 50,
     shootthrough: 51,
     passable: 52,
