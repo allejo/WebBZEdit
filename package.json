@@ -33,6 +33,7 @@
     "compile": "react-scripts build",
     "fetch:bzdb-docs": "tsx scripts/fetch-bzdb-definitions.ts",
     "fetch:flag-docs": "tsx scripts/fetch-flags.ts",
+    "generate:thumbnails": "tsx scripts/generate-thumbnails.ts",
     "husky-setup": "husky install",
     "lint": "eslint src/",
     "prepare": "npm-run-all husky-setup fetch:*",
@@ -87,6 +88,7 @@
     "node-fetch": "^2.6.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
+    "puppeteer": "^25.16.0",
     "tsx": "^4.23.13",
     "typescript": "^4.9.5"
   }

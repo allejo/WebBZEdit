@@ -26,6 +26,7 @@ import thumbBaseGreen from '../../../assets/thumb_base_green.png';
 import thumbBasePurple from '../../../assets/thumb_base_purple.png';
 import thumbBaseRed from '../../../assets/thumb_base_red.png';
 import thumbBox from '../../../assets/thumb_box.png';
+import thumbCone from '../../../assets/thumb_cone.png';
 import thumbPyramid from '../../../assets/thumb_pyramid.png';
 import thumbTank from '../../../assets/thumb_tank.png';
 import thumbTeleporter from '../../../assets/thumb_teleporter.png';
@@ -41,6 +42,7 @@ interface Props {
 const obstacleThumbs: Record<string, string> = {
   base: '',
   box: thumbBox,
+  cone: thumbCone,
   pyramid: thumbPyramid,
   teleporter: thumbTeleporter,
   zone: thumbZone,

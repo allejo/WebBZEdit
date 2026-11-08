@@ -4,6 +4,7 @@ import { Menu, MenuButton, MenuSeparator, useMenuState } from 'reakit/Menu';
 
 import { newIBase } from '../../../Document/Obstacles/Base';
 import { newIBox } from '../../../Document/Obstacles/Box';
+import { newICone } from '../../../Document/Obstacles/Cone';
 import { newIPyramid } from '../../../Document/Obstacles/Pyramid';
 import { newITeleporter } from '../../../Document/Obstacles/Teleporter';
 import { newIZone } from '../../../Document/Obstacles/Zone';
@@ -34,6 +35,12 @@ const ObjectMenu = forwardRef<HTMLButtonElement>((props, ref) => {
           object="Box"
           factory={newIBox}
           shortcut={{ key: 'B' }}
+        />
+        <AddObstacleMenuItem
+          {...menu}
+          object="Cone"
+          factory={newICone}
+          shortcut={{ key: 'C' }}
         />
         <AddObstacleMenuItem
           object="Pyramid"

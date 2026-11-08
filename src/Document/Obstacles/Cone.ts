@@ -39,7 +39,7 @@ export enum ConeSideNames {
 }
 
 export const ConeDefaults = {
-  size: [10, 10, 10] as Vector3F,
+  size: [10, 10, 15] as Vector3F,
   divisions: 16,
   flatshading: false,
   angle: 360,

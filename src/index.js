@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { RecoilRoot } from 'recoil';
 
 import App from './App';
+import ThumbnailSheet from './Thumbnails/ThumbnailSheet';
 
 import './css/global.css';
 import './css/typography.css';
@@ -19,7 +20,7 @@ body.item(0).classList.add(a11yPatterns.usePatterns);
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <App />
+      {window.location.search === '?thumbnails' ? <ThumbnailSheet /> : <App />}
     </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root'),
