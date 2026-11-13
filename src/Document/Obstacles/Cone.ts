@@ -91,5 +91,6 @@ export function newICone(): ICone {
     ...newIPassableObject(),
     ...ConeDefaults,
     position: [0, 0, 0],
+    rotation: 0,
   };
 }
