@@ -25,6 +25,8 @@ export type ValueValidator<T> = (value: T) => boolean;
 type BaseFieldProps = HTMLAttributes<HTMLInputElement>;
 type Blacklist = 'onChange';
 
+export type FormFieldEvent = SyntheticEvent<SupportedHTMLElements>;
+
 export enum FieldLayout {
   Stacked = 'default',
   Horizontal = 'horizontal',
@@ -89,6 +91,16 @@ type Props<T> = {
    * @since 0.0.0
    */
   castTypeToStr: (value: T) => string;
+
+  /**
+   * This callback is used to handle changes to the input value. It will be called
+   * whenever the value changes, and it will be passed the new value and the
+   * event that triggered the change.
+   *
+   * @param value
+   * @param event
+   */
+  onChange: (value: T, event: FormFieldEvent) => void;
 } & (InputProps | SelectProps | TextareaProps);
 
 const BaseFormField = <T,>({
@@ -107,13 +119,13 @@ const BaseFormField = <T,>({
   tag,
   value,
   ...props
-}: FieldProps<T> & Props<T>) => {
+}: Omit<FieldProps<T>, 'onChange'> & Props<T>) => {
   const type = tag === 'input' ? (props as InputProps).type : tag;
 
   const elementId = labelProps.id ?? slugify(label);
   const isCheckbox = tag === 'input' && type === 'checkbox';
 
-  const handleOnChange = (e: SyntheticEvent<SupportedHTMLElements>) => {
+  const handleOnChange = (e: FormFieldEvent) => {
     let castedValue;
 
     if (isCheckbox) {
@@ -126,7 +138,7 @@ const BaseFormField = <T,>({
     const isValueAllowed = allowChange(castedValue as T);
 
     if (isValueAllowed) {
-      onChange(castedValue as T);
+      onChange(castedValue as T, e);
     }
   };
 

@@ -2,7 +2,7 @@ import React, { KeyboardEvent, useState } from 'react';
 
 import keyboard from '../../Utilities/keyboard';
 import { safeValueInRange } from '../../Utilities/math';
-import BaseFormField, { FieldProps } from './BaseFormField';
+import BaseFormField, { FieldProps, FormFieldEvent } from './BaseFormField';
 
 interface Props extends FieldProps<number> {
   minValue?: number;
@@ -20,26 +20,30 @@ const NumberField = ({
 }: Props) => {
   const [inFocus, setInFocus] = useState(false);
 
-  const hasLowerBound = () => minValue !== undefined;
-  const hasUpperBound = () => maxValue !== undefined;
-  const isFullRange = () => hasLowerBound() && hasUpperBound();
+  const safeOnChange = (value: number) => {
+    console.log(
+      `safeOnChange: value=${value}, minValue=${minValue}, maxValue=${maxValue}`,
+    );
+    const safeValue = safeValueInRange(value, minValue, maxValue, cycleValues);
+
+    onChange(safeValue);
+  };
 
   const handleOnBlur = () => {
     setInFocus(false);
-
-    if (isFullRange()) {
-      const safeValue = safeValueInRange(value, minValue!, maxValue!);
-
-      if (value !== safeValue) {
-        onChange(safeValue);
-      }
-    } else if (hasLowerBound() && value < minValue!) {
-      onChange(minValue!);
-    } else if (hasUpperBound() && value > maxValue!) {
-      onChange(maxValue!);
-    }
+    safeOnChange(value);
   };
-  const handleOnChange = (newValue: number) => {
+  const handleOnChange = (newValue: number, event: FormFieldEvent) => {
+    const { inputType } = event.nativeEvent as InputEvent;
+    const fromSpinner =
+      inputType === undefined || inputType === 'insertReplacementText';
+
+    if (fromSpinner) {
+      safeOnChange(newValue);
+
+      return;
+    }
+
     if (isNaN(newValue)) {
       setInFocus(true);
     } else {
@@ -64,22 +68,7 @@ const NumberField = ({
         newValue -= modifier;
       }
 
-      // We have a valid range of numbers
-      if (cycleValues && isFullRange()) {
-        newValue = safeValueInRange(newValue, minValue!, maxValue!);
-      } else {
-        if (hasLowerBound() && newValue < minValue!) {
-          onChange(minValue!);
-          return;
-        }
-
-        if (hasUpperBound() && newValue > maxValue!) {
-          onChange(maxValue!);
-          return;
-        }
-      }
-
-      onChange(newValue);
+      safeOnChange(newValue);
     }
   };
 

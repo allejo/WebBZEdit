@@ -10,26 +10,46 @@ export function deg2rad(degrees: number): number {
 }
 
 /**
- * Return a value that is within the specified range. If `value` is less than
- * `min` (inclusive) or greater than `max` (inclusive), then it will "cycle"
- * through the numbers and return a value within the specified range.
+ * Return a value that is within the specified range.
+ *
+ * If `value` is less than `min` (inclusive) or greater than `max` (exclusive),
+ * then it will return the respective bounds. Otherwise, it will return the
+ * value itself.
  *
  * @param val
  * @param min
  * @param max
+ * @param cycle If true, the value will be cycled within the range instead of clamped.
  */
 export function safeValueInRange(
   val: number,
-  min: number,
-  max: number,
+  min?: number,
+  max?: number,
+  cycle = false,
 ): number {
-  if (min <= val && val <= max) {
+  if (min == null || max == null) {
+    if (cycle) {
+      throw new Error(
+        'Cannot cycle values when min or max is undefined. Please provide both min and max.',
+      );
+    }
+
+    if (min != null) {
+      return Math.max(min, val);
+    }
+
+    if (max != null) {
+      return Math.min(max, val);
+    }
+
     return val;
   }
 
-  if (val <= min) {
-    return min;
+  const span = max - min;
+
+  if (cycle) {
+    return min + ((((val - min) % span) + span) % span);
   }
 
-  return max;
+  return Math.min(Math.max(val, min), max);
 }
