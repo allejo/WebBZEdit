@@ -3,14 +3,11 @@ import { safeValueInRange } from '../math';
 describe('Math Utility Functions', () => {
   describe('safeValueInRange', () => {
     const data = [
-      [370, 0, 360, false, 360],
       [15, 0, 360, false, 15],
       [-1, 0, 360, false, 0],
       [-450, 0, 360, false, 0],
       [0, 0, 360, false, 0],
-      [360, 0, 360, false, 360],
       [350, 360, 400, false, 360],
-      [450, 360, 400, false, 400],
       [15, 0, 360, true, 15],
       [-1, 0, 360, true, 359],
       [-450, 0, 360, true, 270],
@@ -25,6 +22,42 @@ describe('Math Utility Functions', () => {
     data.forEach(([actual, min, max, cycle, expected]) => {
       it(`should return ${expected} when given ${actual} with a range of ${min}-${max} and cycle=${cycle}`, () => {
         expect(safeValueInRange(actual, min, max, cycle)).toEqual(expected);
+      });
+    });
+
+    it('should keep values below `max` when it is exclusive', () => {
+      expect(safeValueInRange(360, 0, 360)).toBeLessThan(360);
+      expect(safeValueInRange(370, 0, 360)).toBeLessThan(360);
+      expect(safeValueInRange(450, 360, 400)).toBeGreaterThanOrEqual(360);
+      expect(safeValueInRange(450, 360, 400)).toBeLessThan(400);
+    });
+
+    it('should keep values below `max` for large ranges', () => {
+      const max = 1e300;
+
+      expect(safeValueInRange(max, 0, max)).toBeLessThan(max);
+    });
+
+    describe('with inclusive bounds', () => {
+      it('should allow `max` when not cycling', () => {
+        expect(safeValueInRange(360, 0, 360, false, true)).toEqual(360);
+        expect(safeValueInRange(400, 0, 360, false, true)).toEqual(360);
+      });
+
+      it('should cycle through both bounds', () => {
+        expect(safeValueInRange(359, 1, 360, true, true)).toEqual(359);
+        expect(safeValueInRange(360, 1, 360, true, true)).toEqual(360);
+        expect(safeValueInRange(361, 1, 360, true, true)).toEqual(1);
+        expect(safeValueInRange(362, 1, 360, true, true)).toEqual(2);
+      });
+    });
+
+    describe('with exclusive bounds', () => {
+      it('should cycle through the upper bound', () => {
+        expect(safeValueInRange(358, 0, 360, true, false)).toEqual(358);
+        expect(safeValueInRange(359, 0, 360, true, false)).toEqual(359);
+        expect(safeValueInRange(360, 0, 360, true, false)).toEqual(0);
+        expect(safeValueInRange(361, 0, 360, true, false)).toEqual(1);
       });
     });
 

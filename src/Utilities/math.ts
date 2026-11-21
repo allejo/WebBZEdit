@@ -20,12 +20,14 @@ export function deg2rad(degrees: number): number {
  * @param min
  * @param max
  * @param cycle If true, the value will be cycled within the range instead of clamped.
+ * @param inclusive If true, the bounds are inclusive.
  */
 export function safeValueInRange(
   val: number,
   min?: number,
   max?: number,
   cycle = false,
+  inclusive = false,
 ): number {
   if (min == null || max == null) {
     if (cycle) {
@@ -34,22 +36,19 @@ export function safeValueInRange(
       );
     }
 
-    if (min != null) {
-      return Math.max(min, val);
-    }
-
-    if (max != null) {
-      return Math.min(max, val);
-    }
-
-    return val;
+    return Math.min(Math.max(val, min ?? -Infinity), max ?? Infinity);
   }
 
-  const span = max - min;
-
   if (cycle) {
+    const span = max - min + (inclusive ? 1 : 0);
+
     return min + ((((val - min) % span) + span) % span);
   }
 
-  return Math.min(Math.max(val, min), max);
+  const upper =
+    inclusive || !Number.isFinite(max)
+      ? max
+      : max - Math.max(Number.EPSILON, Math.abs(max) * Number.EPSILON);
+
+  return Math.min(Math.max(val, min), upper);
 }

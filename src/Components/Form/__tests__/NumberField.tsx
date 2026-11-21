@@ -155,6 +155,7 @@ describe('NumberField Component', () => {
       minValue: 0,
       maxValue: 360,
       cycleValues: true,
+      inclusive: false,
     });
     const field = getByLabelText('Amount');
 
@@ -169,11 +170,42 @@ describe('NumberField Component', () => {
       minValue: 0,
       maxValue: 360,
       cycleValues: true,
+      inclusive: false,
     });
     const field = getByLabelText('Amount');
 
     fireEvent.keyDown(field, { key: 'ArrowDown' });
 
     expect(onChange).toHaveBeenLastCalledWith(359);
+  });
+
+  it('should keep the upper bound when cycling inclusively', () => {
+    const { getByLabelText } = renderField({
+      initialValue: 359,
+      minValue: 1,
+      maxValue: 360,
+      cycleValues: true,
+      inclusive: true,
+    });
+    const field = getByLabelText('Amount');
+
+    fireEvent.keyDown(field, { key: 'ArrowUp' });
+
+    expect(onChange).toHaveBeenLastCalledWith(360);
+  });
+
+  it('should cycle past the upper bound when cycling inclusively', () => {
+    const { getByLabelText } = renderField({
+      initialValue: 360,
+      minValue: 1,
+      maxValue: 360,
+      cycleValues: true,
+      inclusive: true,
+    });
+    const field = getByLabelText('Amount');
+
+    fireEvent.keyDown(field, { key: 'ArrowUp' });
+
+    expect(onChange).toHaveBeenLastCalledWith(1);
   });
 });

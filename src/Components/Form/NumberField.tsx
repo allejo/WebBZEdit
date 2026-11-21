@@ -8,6 +8,7 @@ interface Props extends FieldProps<number> {
   minValue?: number;
   maxValue?: number;
   cycleValues?: boolean;
+  inclusive?: boolean;
 }
 
 const NumberField = ({
@@ -16,6 +17,7 @@ const NumberField = ({
   maxValue,
   onChange,
   value,
+  inclusive = true,
   ...props
 }: Props) => {
   const [inFocus, setInFocus] = useState(false);
@@ -24,7 +26,13 @@ const NumberField = ({
     console.log(
       `safeOnChange: value=${value}, minValue=${minValue}, maxValue=${maxValue}`,
     );
-    const safeValue = safeValueInRange(value, minValue, maxValue, cycleValues);
+    const safeValue = safeValueInRange(
+      value,
+      minValue,
+      maxValue,
+      cycleValues,
+      inclusive,
+    );
 
     onChange(safeValue);
   };

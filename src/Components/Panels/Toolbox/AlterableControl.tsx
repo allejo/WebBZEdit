@@ -89,7 +89,8 @@ const AlterableControl = ({ data, onChange }: Props) => {
         onChange={handleRotationOnChange}
         minValue={0}
         maxValue={360}
-        cycleValues={true}
+        cycleValues
+        inclusive={false}
         value={isCone ? 0 : data.rotation ?? 0}
         disabled={isCone}
         description={

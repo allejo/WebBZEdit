@@ -30,6 +30,8 @@ const ConeControl = ({ data, onChange }: Props) => {
           value={data.angle ?? ConeDefaults.angle}
           minValue={1}
           maxValue={360}
+          cycleValues
+          inclusive
         />
       </div>
 
